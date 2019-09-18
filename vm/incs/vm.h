@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:03:25 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/18 02:49:42 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/18 19:16:08 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,33 @@
 # define VM_H
 
 # include "op.h"
+# include <unistd.h>
 
+/*
+** Corewar error codes
+*/
 enum
 {
-	ERR_DIGIT = 1,
+	IS_OK,
+	ERR_DIGIT,
 	ERR_NEGATIVE,
 	ERR_PARAM,
 	ERR_FILENAME,
 	ERR_MAX_CHAMP,
 	ERR_NUMBER,
+	ERR_NO_CHAMP,
+	ERR_OPEN,
+	ERR_LSEEK,
+	ERR_MALLOC,
+	ERR_READ,
 };
 
 typedef struct		s_process
 {
 	int				id;
 	char			*name;
+	off_t			size;
+	void			*data;
 	char			reg[REG_NUMBER][REG_SIZE];
 	char			pc[REG_SIZE];
 	char			carry;
@@ -42,6 +54,11 @@ typedef struct		s_env
 	t_process		proc[MAX_PLAYERS];
 }					t_env;
 
+void				free_env(t_env *e);
+
+int					corewar_errors(int errnb, char *arg, t_env *e);
+
 int					get_args(char **av, t_env *e);
+int					get_champions(t_env *e);
 
 #endif
