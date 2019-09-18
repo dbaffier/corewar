@@ -1,0 +1,6 @@
+obj
+objs
+corewar
+*.o
+*.a
+.vscode
