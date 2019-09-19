@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/19 22:19:33 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/19 23:24:16 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ typedef struct		s_data
 {
 	int				cursor;
 	int				fd;
-	int				prec_type;
+	int				type[3];
+	short			t_bin;
 }					t_data;
 
 typedef struct		s_opc
@@ -54,6 +55,7 @@ typedef struct		s_opc
 	char			*opcode;
 }					t_opc;
 
+//////////// main hexdump
 int			cw_hexdump(char *file);
 int			create_corfile(char *file);
 void		dump(char *file, void * addr, int len);

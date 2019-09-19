@@ -6,11 +6,53 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 22:36:59 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/19 00:52:18 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/19 23:23:04 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw_hexdup.h"
+
+void	set_binary(t_data *d, int type)
+{
+	short bin;
+
+	bin = data->t_bin;
+	if (type == 1) ////////////// direct
+	{
+		bin = bin << 1;
+		bin |= 1;
+		bin <<= 1;
+	}
+	if (type == 2) /////////////// indirect
+	{
+		bin <<= 1;
+		bin |= 1;
+		bin <<= 1;
+		bin |= 1;
+	}
+	if (type == 3) ////////////// registre
+	{
+		bin <<= 2;
+		bin |= 1;
+	}
+	if (type == 0) ////////////// end or no arg
+		bin <<= 2;
+	data->t_bin = bin;
+}
+
+void	write_type(t_data *data)
+{
+	int i;
+
+	i = 0;
+	while (i < 4)
+	{
+		set_binary(data, data->tab[i]);
+		i++;
+	}
+	set_binary(data, 0);
+	bin_to_hex(data);
+}
 
 void	write_opc(t_data *data, char *opc)
 {
@@ -23,19 +65,6 @@ void	write_opc(t_data *data, char *opc)
 		i++;
 	write(data->fd, &tab[i].code, 2);
 	data->cursor = data->cursor + 2;
-}
-
-void	write_type(t_data *data, int type)
-{
-	if (type & DIRECT)
-	{
-	}
-	if (type & UNDIRECT)
-	{
-	}
-	if (type & REGISTRE)
-	{
-	}
 }
 
 int		way_to_corewar(t_data *data)
