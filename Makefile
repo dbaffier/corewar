@@ -6,42 +6,40 @@
 #    By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/18 16:01:33 by bmellon           #+#    #+#              #
-#    Updated: 2019/09/19 23:16:34 by gbourgeo         ###   ########.fr        #
+#    Updated: 2019/09/20 00:34:03 by gbourgeo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= corewar
 
-CC			= gcc 
-CFLAGS		= -Wall -Werror -Wextra
-CFLAGS		+= -std=c11 -Wmissing-prototypes -pedantic -pedantic-errors
-
-INCS		= -I$(LFT_PATH)/inc -I$(VM_INC_D)
-
-OBJS_DIR	= $(VM_DIR)objs/
-
-LFT_PATH	= libft/
-LFT_LIB		= $(LFT_PATH)libft.a
-LFT_LINK	= -L$(LFT_PATH) -lft
-
-OBJS_VM		+= $(addprefix $(OBJS_DIR), $(SRCS_VM:.c=.o))
-
-VM_DIR		=	vm/
+VM_DIR		= vm/
 VM_SRC_D	= $(VM_DIR)srcs/
-VM_INC_D	= $(VM_DIR)incs
-SRCS_VM		+=	args.c		\
+VM_INC_D	= $(VM_DIR)incs/
+VM_SRC		+=	args.c		\
 				champ.c		\
 				main.c		\
 				op.c		\
 				errors.c	\
 				arena.c		\
 
-RED			= \x1b[1;31m
-GREEN		= \x1b[1;32m
-RESET		= \x1b[0m
+CC			= gcc 
+CFLAGS		= -Wall -Werror -Wextra
+CFLAGS		+= -std=c11 -Wmissing-prototypes -pedantic -pedantic-errors
+
+INCS		= -I$(LFT_DIR)inc -I$(VM_INC_D)
+LIBS		= -L$(LFT_DIR) -lft
+
+OBJS_DIR	= $(VM_DIR)objs/
+OBJS_VM		+= $(addprefix $(OBJS_DIR), $(VM_SRC:.c=.o))
 
 DEP_DIR		= .deps/
 DEP			= $(addprefix $(DEP_DIR), $(SRC:.c=.d))
+
+LFT_DIR		= libft/
+
+RED			= \x1b[1;31m
+GREEN		= \x1b[1;32m
+RESET		= \x1b[0m
 
 all: $(DEP_DIR) $(OBJS_DIR) lib $(NAME)
 
@@ -52,10 +50,10 @@ $(OBJS_DIR):
 	@mkdir -p $@
 
 lib:
-	@make -C $(LFT_PATH)
+	@make -C $(LFT_DIR)
 
 $(NAME): $(OBJS_VM)
-	@$(CC) -o $@ $^ $(LFT_LINK)
+	$(CC) -o $@ $^ $(LIBS)
 	@echo "RELEASE THE $(RED) C O R E W A R $(RESET)"
 
 $(OBJS_DIR)%.o: $(VM_SRC_D)%.c
@@ -71,11 +69,11 @@ $(DEP_DIR)%.d: ;
 clean:
 	@$(RM) -rf $(OBJS_DIR)
 	@$(RM) -rf $(DEP_DIR)
-	@make -C $(LFT_PATH) clean
+	@make -C $(LFT_DIR) clean
 
 fclean: clean
 	@$(RM) $(NAME)
-	@make -C $(LFT_PATH) fclean
+	@make -C $(LFT_DIR) fclean
 
 re: fclean all
 

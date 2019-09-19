@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 16:05:42 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/19 23:07:21 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/20 01:02:51 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,6 @@ static int		get_data(int fd, t_process *proc)
 	}
 	if (ret)
 		return (ERR_READ);
-	// ft_printf("%ld %ld %ld\n", off, sizeof(t_header), sizeof(unsigned int));
-	// ft_printf("%lx %s %lx %s\n",
-	// ((t_header *)proc->data)->magic,
-	// ((t_header *)proc->data)->prog_name,
-	// ((t_header *)proc->data)->prog_size,
-	// ((t_header *)proc->data)->comment);
 	if (off <= sizeof(t_header))
 		return (ERR_SIZE_LOW);
 	if (byteswap_32(((t_header *)proc->file)->magic) != COREWAR_EXEC_MAGIC)

@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:05:10 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/19 23:17:36 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/20 00:49:51 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,31 +16,23 @@
 
 static int		usage(char *progname)
 {
-	ft_dprintf(2, "Usage :\n%s ", progname);
+	ft_dprintf(2, "Usage :%s ", progname);
 	ft_dprintf(2, "[-dump nbr_cycles] [[-n number] champion1.cor] ...\n");
 	return (1);
 }
 
-static void		debug_champ(t_env *e)
+static void		introduce_champ(t_env *e)
 {
 	int			i;
-	int			off;
+	t_header	*play;
 
-	return ;
 	i = 0;
-	ft_printf("ID\t|\tNAME\t|\tDATA\n\n");
+	ft_printf("Introducing contestants...\n");
 	while (i < e->nb_players)
 	{
-		ft_printf("%d\t| %s\t| ", e->proc[i].id, e->proc[i].name);
-		off = 0;
-		while (off < e->proc[i].file_size)
-		{
-			ft_printf("%02x", ((char *)(e->proc[i].file))[off]);
-			off++;
-			if (off % 4 == 0)
-				ft_printf(" ");
-		}
-		ft_printf("\n");
+		play = (t_header *)e->proc[i].file;
+		ft_printf("* Player %d, weighting %d bytes, \"%s\" (\"%s\") !\n",
+		e->proc[i].id, e->proc[i].data_size, play->prog_name, play->comment);
 		i++;
 	}
 }
@@ -50,10 +42,11 @@ static void		debug_map(unsigned char *arena, size_t size)
 	size_t		i;
 
 	i = 0;
-	ft_printf("ARENA\n");
 	while (i < size)
 	{
-		ft_printf("%02X", arena[i]);
+		if (i % 32 == 0)
+			ft_printf("0x%04x : ", i);
+		ft_printf("%02x", arena[i]);
 		i++;
 		if (i % 32 == 0)
 			ft_printf("\n");
@@ -71,7 +64,7 @@ int				main(int ac, char **av)
 	e.progname = (e.progname) ? e.progname + 1 : av[0];
 	if (ac < 2 || get_args(av, &e) || get_champions(&e) || get_arena(&e))
 		return (usage(av[0]));
-	debug_champ(&e);
+	introduce_champ(&e);
 	debug_map(e.arena, MEM_SIZE);
 	free_env(&e);
 	return (42);
