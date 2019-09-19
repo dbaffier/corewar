@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/09/19 18:30:50 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/19 22:43:27 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ typedef struct					s_header
 
 typedef struct					s_type
 {
-	int							one;
-	int							two;
-	int							three;
+	char						one;
+	char						two;
+	char						three;
 }								t_type;
 
 typedef struct					s_op

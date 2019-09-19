@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:03:25 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/19 18:30:48 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/19 23:08:24 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ enum
 	ERR_READ,
 	ERR_SIZE_LOW,
 	ERR_MAGIC,
+	ERR_SIZE_DIFF,
 	ERR_SIZE_HIGH,
 };
 
@@ -42,8 +43,9 @@ typedef struct		s_process
 {
 	int				id;
 	char			*name;
-	off_t			size;
-	void			*data;
+	off_t			file_size;
+	void			*file;
+	int				data_size;
 	char			reg[REG_NUMBER][REG_SIZE];
 	char			pc[REG_SIZE];
 	char			carry;

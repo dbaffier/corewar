@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 16:05:42 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/19 02:23:22 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/19 23:07:21 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,33 @@ static uint32_t	byteswap_32(uint32_t x)
 static int		get_data(int fd, t_process *proc)
 {
 	ssize_t		ret;
-	ssize_t		off;
+	size_t		off;
 	char		buff[1024];
 
 	off = 0;
 	while ((ret = read(fd, buff, sizeof(buff))) > 0)
 	{
-		ft_memcpy((char *)proc->data + off, buff, ret);
+		ft_memcpy((char *)proc->file + off, buff, ret);
 		off += ret;
 	}
 	if (ret)
 		return (ERR_READ);
-	if (off <= 4 + PROG_NAME_LENGTH + COMMENT_LENGTH)
+	// ft_printf("%ld %ld %ld\n", off, sizeof(t_header), sizeof(unsigned int));
+	// ft_printf("%lx %s %lx %s\n",
+	// ((t_header *)proc->data)->magic,
+	// ((t_header *)proc->data)->prog_name,
+	// ((t_header *)proc->data)->prog_size,
+	// ((t_header *)proc->data)->comment);
+	if (off <= sizeof(t_header))
 		return (ERR_SIZE_LOW);
-	if (byteswap_32(((int *)proc->data)[0]) != COREWAR_EXEC_MAGIC)
+	if (byteswap_32(((t_header *)proc->file)->magic) != COREWAR_EXEC_MAGIC)
 		return (ERR_MAGIC);
-	if (off - (4 + PROG_NAME_LENGTH + COMMENT_LENGTH) > CHAMP_MAX_SIZE)
+	off -= sizeof(t_header);
+	if (off != byteswap_32(((t_header *)proc->file)->prog_size))
+		return (ERR_SIZE_DIFF);
+	if (off > CHAMP_MAX_SIZE)
 		return (ERR_SIZE_HIGH);
+	proc->data_size = off;
 	return (IS_OK);
 }
 
@@ -54,9 +64,9 @@ int				get_champions(t_env *e)
 	{
 		if ((fd = open(e->proc[i].name, O_RDONLY)) < 0)
 			return (corewar_errors(ERR_OPEN, e->proc[i].name, e));
-		if ((e->proc[i].size = lseek(fd, 0, SEEK_END)) < 0)
+		if ((e->proc[i].file_size = lseek(fd, 0, SEEK_END)) < 0)
 			return (corewar_errors(ERR_LSEEK, e->proc[i].name, e));
-		if ((e->proc[i].data = malloc(e->proc[i].size)) == NULL)
+		if ((e->proc[i].file = malloc(e->proc[i].file_size)) == NULL)
 			return (corewar_errors(ERR_MALLOC, e->proc[i].name, e));
 		if (lseek(fd, 0, SEEK_SET) < 0)
 			return (corewar_errors(ERR_LSEEK, e->proc[i].name, e));

@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 16:12:33 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/18 23:02:18 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/19 23:17:54 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void		free_env(t_env *e)
 	i = 0;
 	while (i < e->nb_players)
 	{
-		if (e->proc[i].data)
-			free(e->proc[i].data);
-		e->proc[i].data = NULL;
+		if (e->proc[i].file)
+			free(e->proc[i].file);
+		e->proc[i].file = NULL;
 		i++;
 	}
 }
@@ -42,8 +42,9 @@ int			corewar_errors(int errnb, char *arg, t_env *e)
 		"impossible to lseek file for",
 		"malloc failed for",
 		"read failed for",
-		"invalid champion: wrong header size for",
-		"invalid champion: wrong magic number for",
+		"invalid champion: size too small for",
+		"invalid champion: invalid header for",
+		"invalid champion: champion size differ from header for",
 		"invalid champion: size too big for",
 	};
 
