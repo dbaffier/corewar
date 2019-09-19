@@ -6,7 +6,7 @@
 #    By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/18 16:01:33 by bmellon           #+#    #+#              #
-#    Updated: 2019/09/18 18:40:03 by gbourgeo         ###   ########.fr        #
+#    Updated: 2019/09/18 23:33:01 by gbourgeo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,11 +29,12 @@ OBJS_VM		+= $(addprefix $(OBJS_DIR), $(SRCS_VM:.c=.o))
 VM_DIR		=	vm/
 VM_SRC_D	= $(VM_DIR)srcs/
 VM_INC_D	= $(VM_DIR)incs
-SRCS_VM		+=	args.c	\
-				champ.c	\
-				main.c	\
-				op.c	\
-				errors.c
+SRCS_VM		+=	args.c		\
+				champ.c		\
+				main.c		\
+				op.c		\
+				errors.c	\
+				arena.c		\
 
 RED			= \x1b[1;31m
 GREEN		= \x1b[1;32m
@@ -52,7 +53,7 @@ $(NAME): $(OBJS_VM)
 	@echo "RELEASE THE $(RED) C O R E W A R $(RESET)"
 
 $(OBJS_DIR)%.o: $(VM_SRC_D)%.c
-	@$(CC) $(CFLAGS) -o $@ -c $< $(INCS)
+	$(CC) $(CFLAGS) -o $@ -c $< $(INCS)
 
 clean:
 	@$(RM) -rf $(OBJS_DIR)

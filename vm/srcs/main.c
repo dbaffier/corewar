@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:05:10 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/18 19:28:30 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/19 02:23:24 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int				main(int ac, char **av)
 	ft_memset(&e, 0, sizeof(e));
 	e.progname = ft_strrchr(av[0], '/');
 	e.progname = (e.progname) ? e.progname + 1 : av[0];
-	if (ac < 2 || get_args(av, &e) || get_champions(&e))
+	if (ac < 2 || get_args(av, &e) || get_champions(&e) || get_arena(&e))
 		return (usage(av[0]));
 	debug_champ(&e);
 	free_env(&e);

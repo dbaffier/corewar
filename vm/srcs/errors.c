@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 16:12:33 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/18 18:40:35 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/18 23:02:18 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,12 @@ int			corewar_errors(int errnb, char *arg, t_env *e)
 		"number already taken",
 		"missing champion.",
 		"impossible to open file",
-		"impossible to get file size for",
+		"impossible to lseek file for",
 		"malloc failed for",
 		"read failed for",
+		"invalid champion: wrong header size for",
+		"invalid champion: wrong magic number for",
+		"invalid champion: size too big for",
 	};
 
 	ft_dprintf(2, "%s: %s", e->progname, error[errnb]);

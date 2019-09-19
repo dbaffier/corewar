@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:03:25 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/18 19:16:08 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/19 02:23:18 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ enum
 	ERR_LSEEK,
 	ERR_MALLOC,
 	ERR_READ,
+	ERR_SIZE_LOW,
+	ERR_MAGIC,
+	ERR_SIZE_HIGH,
 };
 
 typedef struct		s_process
@@ -52,6 +55,7 @@ typedef struct		s_env
 	int				nb_cycle;
 	int				nb_players;
 	t_process		proc[MAX_PLAYERS];
+	void			*arena;
 }					t_env;
 
 void				free_env(t_env *e);
@@ -60,5 +64,6 @@ int					corewar_errors(int errnb, char *arg, t_env *e);
 
 int					get_args(char **av, t_env *e);
 int					get_champions(t_env *e);
+int					get_arena(t_env *e);
 
 #endif
