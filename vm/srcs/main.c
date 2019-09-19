@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:05:10 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/20 00:49:51 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/20 01:25:48 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,13 @@
 
 static int		usage(char *progname)
 {
-	ft_dprintf(2, "Usage :%s ", progname);
-	ft_dprintf(2, "[-dump nbr_cycles] [[-n number] champion1.cor] ...\n");
+	ft_dprintf(2, "Usage : %s ", progname);
+	ft_dprintf(2, "[-dump nbr_cycles] [[-n number] champion1.cor] ...\n\n");
+	ft_dprintf(2, "\t-dump nbr_cycles\t: ");
+	ft_dprintf(2, "Dumps memory after 'nbr_cycles' cycles then exits.\n");
+	ft_dprintf(2, "\t-n number\t\t: ");
+	ft_dprintf(2, "Fix a number to player. If missing, the player will ");
+	ft_dprintf(2, "have the first available number.\n");
 	return (1);
 }
 
