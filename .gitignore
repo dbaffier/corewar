@@ -1,5 +1,6 @@
-.o
-.swp
-.swo
-a.out
-.dSYM
+*.o
+*.a
+*.swp
+*.swo
+*.out
+*.dSYM
