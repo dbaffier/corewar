@@ -4,3 +4,5 @@ corewar
 *.o
 *.a
 .vscode
+*.dSYM
+*.out
