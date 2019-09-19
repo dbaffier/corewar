@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/18 23:56:11 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/19 22:19:33 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CW_HEXDUMP_H
 
 # include "libft.h"
+# include "ft_printf.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -55,5 +56,6 @@ typedef struct		s_opc
 
 int			cw_hexdump(char *file);
 int			create_corfile(char *file);
+void		dump(char *file, void * addr, int len);
 
 #endif 
