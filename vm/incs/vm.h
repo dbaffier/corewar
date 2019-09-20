@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:03:25 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/19 23:08:24 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/20 04:13:11 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct		s_process
 	char			reg[REG_NUMBER][REG_SIZE];
 	char			pc[REG_SIZE];
 	char			carry;
+	int				cycle_left;
 }					t_process;
 
 typedef struct		s_env
@@ -58,6 +59,7 @@ typedef struct		s_env
 	int				nb_players;
 	t_process		proc[MAX_PLAYERS];
 	void			*arena;
+	size_t			nb_cycles;
 }					t_env;
 
 void				free_env(t_env *e);
