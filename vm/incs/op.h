@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/09/20 01:04:45 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/20 21:53:31 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ typedef struct					s_header
 
 typedef struct					s_type
 {
-	char						param_data;
+	char						*param_data;
+	char						param_type;
 	int							param_size;
 }								t_type;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/20 00:33:07 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/20 21:53:24 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@
 
 void	op_dl(t_process *proc, t_env *e, t_op *op)
 {
-	// get in data le 1st param et le load dans le registre en 2nd param
+	// load le 1er parametre dans le registre passé en 2nd parametre
 	// si le 1st param = 0 le carry passe a 1
-	char	registre[REG_SIZE];
 
-	get_params_len(op->arg_type, 2);
-	params = get_params_data(op, params, 2);
-	registre = get_reg_data(o, params, 2, (char *)proc->file);
-	e->arena= load_data(firstparam, (int)registre);
-	proc->carry = firstparam == 0 ? 1 : 0;
+	get_params_len(op->params, 2);
+	get_reg_data(op->params, 2, (char *)proc->file);
+	e->arena= load_data(op->params, (int)registre);
+	proc->carry = params[1].data == 0 ? 1 : 0;
 }
 
 // DIRECT STORE
@@ -38,8 +36,8 @@ void	op_ds(t_process *proc)
 	int		secondparam;
 	char	registre[REG_SIZE];
 
-	registre = get_reg_data(proc->file, 1);
-	secondparam = get_param(proc->file, 2);
-	proc->file = load_data((int)registre, secondparam);
-	proc->carry = firstparam == 0 ? 1 : 0;
+	get_reg_data(proc->file, 1);
+	get_param(proc->file, 2);
+	load_data((int)registre, secondparam);
+	proc->carry = params[1].data == 0 ? 1 : 0;
 }
