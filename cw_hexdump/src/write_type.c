@@ -12,7 +12,7 @@
 
 #include "cw_hexdump.h"
 
-static void		set_binary(t_data *d, int type)
+static void		set_binary(t_data *data, int type)
 {
 	short bin;
 
@@ -47,9 +47,9 @@ void		write_type(t_data *data)
 	i = 0;
 	while (i < 4)
 	{
-		set_binary(data, data->tab[i]);
+		set_binary(data, data->type[i]);
 		i++;
 	}
 	set_binary(data, 0);
-	dprintf(data->fd, "%x", data->t_bin);
+	write(data->fd, &data->t_bin, 1);
 }

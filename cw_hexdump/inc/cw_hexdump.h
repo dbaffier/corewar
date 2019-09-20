@@ -24,22 +24,22 @@
 
 # define COR_EXT	".cor"
 
-# define LIVE	{"01", "live"}
-# define LD		{"02", "ld"}
-# define ST		{"03", "st"}
-# define ADD	{"04", "add"}
-# define SUB	{"05", "sub"}
-# define AND	{"06", "and"}
-# define OR		{"07", "or"}
-# define XOR	{"08", "xor"}
-# define ZJMP	{"09", "zjmp"}
-# define LDI	{"0a", "ldi"}
-# define STI	{"0b", "sti"}
-# define FORK	{"0c", "fork"}
-# define LLD	{"0d", "lld"}
-# define LLDI	{"0e", "lldi"}
-# define LFORK	{"0f", "lfork"}
-# define AFF	{"10", "aff"}
+# define LIVE	{1, "live"}
+# define LD		{2, "ld"}
+# define ST		{3, "st"}
+# define ADD	{4, "add"}
+# define SUB	{5, "sub"}
+# define AND	{6, "and"}
+# define OR		{7, "or"}
+# define XOR	{8, "xor"}
+# define ZJMP	{9, "zjmp"}
+# define LDI	{10, "ldi"}
+# define STI	{11, "sti"}
+# define FORK	{12, "fork"}
+# define LLD	{13, "lld"}
+# define LLDI	{14, "lldi"}
+# define LFORK	{15, "lfork"}
+# define AFF	{16, "aff"}
 
 typedef struct		s_data
 {

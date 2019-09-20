@@ -21,6 +21,5 @@ void	write_opc(t_data *data, char *opc)
 	i = 0;
 	while (ft_strcmp(opc, tab[i].opcode) != 0)
 		i++;
-	write(data->fd, &tab[i].code, 2);
-	data->cursor = data->cursor + 2;
+	write(data->fd, &tab[i].code, 1);
 }
