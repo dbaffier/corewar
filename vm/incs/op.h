@@ -77,16 +77,19 @@ typedef struct					s_header
 
 typedef struct					s_type
 {
-	char						one;
-	char						two;
-	char						three;
+	char						param_data;
+	int							param_size;
 }								t_type;
 
 typedef struct					s_op
 {
 	char						*reg_name;
 	unsigned short				reg_nb;
+<<<<<<< HEAD
 	char 						arg_type[3];
+=======
+	t_type						params[3];
+>>>>>>> afa722a543a775a2b29bf12c5ebb69e85f5b3c1f
 	unsigned char				opcode;
 	unsigned int				cycle;
 	char						*complete_name;
