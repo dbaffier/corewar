@@ -16,15 +16,15 @@
 
 // DIRECT_LOAD
 
-void	op_dl(t_process *proc, t_env *e)
+void	op_dl(t_process *proc, t_env *e, t_op *op)
 {
 	// get in data le 1st param et le load dans le registre en 2nd param
 	// si le 1st param = 0 le carry passe a 1
-	int		firstparam;
 	char	registre[REG_SIZE];
 
-	firstparam = get_param(proc->file, 1);
-	registre = get_reg_data(proc->file, 2);
+	get_params_len(op->arg_type, 2);
+	params = get_params_data(op, params, 2);
+	registre = get_reg_data(o, params, 2, (char *)proc->file);
 	e->arena= load_data(firstparam, (int)registre);
 	proc->carry = firstparam == 0 ? 1 : 0;
 }
