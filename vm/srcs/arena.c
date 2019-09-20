@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   arena.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:29:48 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/20 04:13:27 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/21 00:56:04 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
 
-#include "ft_printf.h"
 int				get_arena(t_env *e)
 {
 	int			i;
@@ -26,6 +25,7 @@ int				get_arena(t_env *e)
 	{
 		pc = i * (MEM_SIZE / e->nb_players);
 		ft_memcpy(e->proc[i].pc, (unsigned char *)&pc, sizeof(e->proc[i].pc));
+		ft_memcpy(e->proc[i].reg[0], &e->proc[i].id, REG_SIZE);
 		ft_memcpy((char *)e->arena + pc,
 		(char *)e->proc[i].file + sizeof(t_header), e->proc[i].data_size);
 		i++;

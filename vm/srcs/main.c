@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:05:10 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/20 04:13:28 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/21 01:01:59 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int				main(int ac, char **av)
 	if (ac < 2 || get_args(av, &e) || get_champions(&e) || get_arena(&e))
 		return (usage(av[0]));
 	introduce_champ(&e);
+	launch_game(&e);
 	debug_map(e.arena, MEM_SIZE);
 	free_env(&e);
-	return (42);
 }

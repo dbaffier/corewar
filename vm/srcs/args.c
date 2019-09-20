@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 00:25:07 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/20 04:13:28 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/21 01:03:01 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-#include "ft_printf.h"
+#include "libft.h"
 
 static int		get_number(char *av, int *value)
 {

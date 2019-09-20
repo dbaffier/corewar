@@ -6,34 +6,48 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/20 21:55:49 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/21 01:24:37 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+#include "libft.h"
 
-void	get_params_len(t_type *params, int nbparam)
+void	get_types(char types, t_param *params_type)
 {
-	int		index;
+	char	param_len;
+	int		i;
 
-	index = nbparam - 1;
-	while (nbparam > 0)
-	{
-		if (params[index].param_data & T_REG)
-			params[index].param_size = 1;
-		else if (params[index].param_data & T_DIR)
-			params[index].param_size = 2;
-		else if (params[index].param_data & T_IND)
-			params[index].param_size = 4;
-		else if (params[index].param_data & T_LAB)
-			params[index].param_size = 8;
-		nbparam--;
-		index--;
+	i = 0;
+	while (i < 3)
+	{	
+		param_len = types;
+		param_len = param_len >> 6;
+		params_type[i].param_ = param_len;
+		types = types << 2;
+		i++;
 	}
-	return (params);
 }
 
-void	get_reg_data(t_type *params, int nbparam, char *data, int pc)
+void	get_params_len(t_param *params, int nbparam, char type)
+{
+
+	get_types(type, params);
+	i = 0;
+	while (nbparam > 0)
+	{
+		if (params[i]->param_type == 1)
+			params[i]->param_size = 1;
+		else if (params[i]->param_type == 2)
+			params[i]->param_size = 4;
+		else if (params[i]->param_type == 3)
+			params[i]->param_size = 2;
+		nbparam--;
+		i++;
+	}
+}
+
+void	get_param_data(t_param params, int nbparam, char *data, int pc)
 {
 	int		i;
 	int		take;
@@ -41,11 +55,11 @@ void	get_reg_data(t_type *params, int nbparam, char *data, int pc)
 
 	len = 0;
 	i = 0;
+	while (take < params.param_size)
+		params[i].param_data = data[pc + 1 + take++];
 	while (i < nbparam - 1)
 	{
 		take = 0;
-		if (i > 0)
-			len = params[i].param_size;
 		while (take < params[i].param_size)
 		{
 			params[i].param_data = data[

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+         #
+#    By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/18 16:01:33 by bmellon           #+#    #+#              #
-#    Updated: 2019/09/20 00:34:03 by gbourgeo         ###   ########.fr        #
+#    Updated: 2019/09/20 22:25:11 by bmellon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ VM_SRC		+=	args.c		\
 				op.c		\
 				errors.c	\
 				arena.c		\
+				game.c		\
 
 CC			= gcc 
 CFLAGS		= -Wall -Werror -Wextra

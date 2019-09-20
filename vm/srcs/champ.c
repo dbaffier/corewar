@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   champ.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 16:05:42 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/20 04:13:24 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/21 01:04:00 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "vm.h"
-#include "ft_printf.h"
+#include "libft.h"
 
 static uint32_t	byteswap_32(uint32_t x)
 {
@@ -57,15 +57,17 @@ int				get_champions(t_env *e)
 	while (i < e->nb_players)
 	{
 		if ((fd = open(e->proc[i].name, O_RDONLY)) < 0)
-			return (corewar_errors(ERR_OPEN, e->proc[i].name, e));
-		if ((e->proc[i].file_size = lseek(fd, 0, SEEK_END)) < 0)
-			return (corewar_errors(ERR_LSEEK, e->proc[i].name, e));
-		if ((e->proc[i].file = malloc(e->proc[i].file_size)) == NULL)
-			return (corewar_errors(ERR_MALLOC, e->proc[i].name, e));
-		if (lseek(fd, 0, SEEK_SET) < 0)
-			return (corewar_errors(ERR_LSEEK, e->proc[i].name, e));
-		ret = get_data(fd, &e->proc[i]);
-		close(fd);
+			ret = ERR_OPEN;
+		else if ((e->proc[i].file_size = lseek(fd, 0, SEEK_END)) < 0)
+			ret = ERR_LSEEK;
+		else if ((e->proc[i].file = malloc(e->proc[i].file_size)) == NULL)
+			ret = ERR_MALLOC;
+		else if (lseek(fd, 0, SEEK_SET) < 0)
+			ret = ERR_LSEEK;
+		else
+			ret = get_data(fd, &e->proc[i]);
+		if (fd >= 0)
+			close(fd);
 		if (ret)
 			return (corewar_errors(ret, e->proc[i].name, e));
 		i++;

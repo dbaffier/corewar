@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/09/20 21:57:46 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/21 00:52:59 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef char	t_arg_type;
 # define T_REG					1
 # define T_DIR					2
 # define T_IND					4
-# define T_LAB					8
 
 # define PROG_NAME_LENGTH		(128)
 # define COMMENT_LENGTH			(2048)
@@ -75,18 +74,11 @@ typedef struct					s_header
 	char						comment[COMMENT_LENGTH + 1];
 }								t_header;
 
-typedef struct					s_type
-{
-	char						*param_data;
-	char						param_type;
-	int							param_size;
-}								t_type;
-
 typedef struct					s_op
 {
 	char						*reg_name;
 	unsigned short				reg_nb;
-	char 						arg_type[3];
+	char 						types;
 	unsigned char				opcode;
 	unsigned int				cycle;
 	char						*complete_name;

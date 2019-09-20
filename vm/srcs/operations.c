@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/20 21:57:46 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/21 01:24:36 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	op_ld(t_process *proc, unsigned char *arena, t_op *op)
 {
 	// load le 1er parametre dans le registre passé en 2nd parametre
 	// si le 1st param = 0 le carry passe a 1
+	t_param		params[3];
 
-	get_params_len(op->params, 2);
-	get_reg_data(op->params, 2, (char *)proc->file);
-	e->arena= load_data(op->params, (int)registre);
+	get_params_len(&params, 2, op->types);
+	get_param_data(&params, 2, (char *)proc->file, (REG_SIZE)proc->pc);
 	proc->carry = params[1].data == 0 ? 1 : 0;
 }
 
