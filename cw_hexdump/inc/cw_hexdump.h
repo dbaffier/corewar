@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/19 23:24:16 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/19 23:35:06 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,16 @@ typedef struct		s_opc
 
 //////////// main hexdump
 int			cw_hexdump(char *file);
+
+//////////// generate .cor
 int			create_corfile(char *file);
+
+//////////// flush memory
 void		dump(char *file, void * addr, int len);
 
+//////////// write type
+void		write_type(t_data *data);
+
+/////////// write opcode
+void		write_opc(t_data *data, char *opc);
 #endif 

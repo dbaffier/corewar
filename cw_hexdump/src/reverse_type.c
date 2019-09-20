@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   way_to_corewar.c                                   :+:      :+:    :+:   */
+/*   reverse_type.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/18 22:36:59 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/19 23:36:25 by mmonier          ###   ########.fr       */
+/*   Created: 2019/09/19 23:38:45 by mmonier           #+#    #+#             */
+/*   Updated: 2019/09/20 01:16:11 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cw_hexdup.h"
+#include "cw_hexdump.h"
 
-int		way_to_corewar(t_data *data)
+/*static short	hex_to_bin(char *type)
+{		
+
+}*/
+
+void			reverse_type(char *type)
 {
-	while ()
-	{
-		if ()
-			write_opc(data, opc);
-		if ()
-			write_type(data, type);
-		if ()
-			write_arg(data, arg);
+	int bin;
 
-	}
+	bin = type;
+	printf("%x\n", bin);
+}
+
+int			main(void)
+{
+	reverse_type("e4");
 	return (0);
 }

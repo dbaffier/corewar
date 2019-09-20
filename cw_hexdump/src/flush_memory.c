@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 19:52:15 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/19 22:19:46 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/20 03:33:20 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,12 @@ void		dump(char *file, void *addr, int len)
 			ft_printf("\t");
 		i++;
 	}
+}
+
+int		main(void)
+{
+	char str[] = "truc un peu long parce quil en faut bien un";
+
+	dump("str", &str, sizeof(str));
+	return (0);
 }
