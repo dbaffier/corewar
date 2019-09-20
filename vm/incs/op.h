@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/09/20 04:13:21 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/20 21:54:27 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,7 @@ typedef struct					s_op
 {
 	char						*reg_name;
 	unsigned short				reg_nb;
-<<<<<<< HEAD
 	char 						arg_type[3];
-=======
-	t_type						params[3];
->>>>>>> afa722a543a775a2b29bf12c5ebb69e85f5b3c1f
 	unsigned char				opcode;
 	unsigned int				cycle;
 	char						*complete_name;
