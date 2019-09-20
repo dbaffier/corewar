@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:05:10 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/20 01:25:48 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/20 04:13:28 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static void		debug_map(unsigned char *arena, size_t size)
 	size_t		i;
 
 	i = 0;
+	return;
 	while (i < size)
 	{
 		if (i % 32 == 0)

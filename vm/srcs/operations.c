@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/20 21:53:24 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/20 21:57:46 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 // DIRECT_LOAD
 
-void	op_dl(t_process *proc, t_env *e, t_op *op)
+void	op_ld(t_process *proc, unsigned char *arena, t_op *op)
 {
 	// load le 1er parametre dans le registre passé en 2nd parametre
 	// si le 1st param = 0 le carry passe a 1
@@ -29,7 +29,7 @@ void	op_dl(t_process *proc, t_env *e, t_op *op)
 
 // DIRECT STORE
 
-void	op_ds(t_process *proc)
+void	op_st(t_process *proc)
 {
 	// inverse de load charge le registre passe en 1st param dans le 2nd param
 	// meme fonctionnement pour le carry

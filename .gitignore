@@ -6,3 +6,4 @@ corewar
 .vscode
 *.dSYM
 *.out
+.deps
