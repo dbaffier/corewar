@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsplit.c                                      :+:      :+:    :+:   */
+/*   split_wp.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/23 12:41:27 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/20 21:41:03 by dbaffier         ###   ########.fr       */
+/*   Created: 2019/09/20 21:40:56 by dbaffier          #+#    #+#             */
+/*   Updated: 2019/09/20 22:40:34 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "libft.h"
 
-static int			ft_count_words(const char *s, char c)
+static int			ft_count_words(const char *s)
 {
 	int		word;
 	int		i;
@@ -23,7 +24,7 @@ static int			ft_count_words(const char *s, char c)
 		return (0);
 	while (s[i])
 	{
-		if (s[i] == c && s[i + 1] != c)
+		if ((s[i] == ' ' || s[i] == '\t')  && s[i + 1] != ' ' && s[i + 1] != '\t')
 			word++;
 		i++;
 	}
@@ -32,7 +33,7 @@ static int			ft_count_words(const char *s, char c)
 	return (word);
 }
 
-char				*ft_mallocd2(const char *s, char c, int *i)
+static char				*ft_mallocd2(const char *s, int *i)
 {
 	char	*d;
 	int		k;
@@ -40,19 +41,19 @@ char				*ft_mallocd2(const char *s, char c, int *i)
 	if (!(d = (char *)malloc(sizeof(d) * (ft_strlen(s)))))
 		return (NULL);
 	k = 0;
-	while (s[*i] != c && s[*i])
+	while (s[*i] != ' ' && s[*i] != '\t' && s[*i])
 	{
 		d[k] = s[*i];
 		k++;
 		(*i)++;
 	}
 	d[k] = '\0';
-	while (s[*i] == c && s[*i])
+	while ((s[*i] == '\t' || s[*i] == ' ')  && s[*i])
 		(*i)++;
 	return (d);
 }
 
-char				**ft_strsplit(const char *s, char c)
+char				**ft_strsplitws(const char *s)
 {
 	int		i;
 	int		j;
@@ -63,14 +64,14 @@ char				**ft_strsplit(const char *s, char c)
 	j = 0;
 	if (!s)
 		return (NULL);
-	nb_word = ft_count_words(s, c);
-	if (!(tab = (char **)malloc(sizeof(s) * (ft_count_words(s, c) + 2))))
+	nb_word = ft_count_words(s);
+	if (!(tab = (char **)malloc(sizeof(s) * (ft_count_words(s) + 2))))
 		return (NULL);
-	while (s[i] == c && s[i])
+	while ((s[i] == '\t' || s[i] == ' ') && s[i])
 		i++;
 	while (j < nb_word && s[i])
 	{
-		tab[j] = ft_mallocd2(s, c, &i);
+		tab[j] = ft_mallocd2(s, &i);
 		j++;
 	}
 	tab[j] = NULL;

@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:19:41 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/20 03:33:11 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/22 00:27:05 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <stdio.h>
 
 # define ERR_FILE			1
 # define ERR_EXTENSION		2
@@ -35,14 +36,16 @@
 # define ERR_STR_OVERFLOW	"too much argument given"
 
 enum {
-	LABEL = 0,
+	LABEL = 1,
 	OP_CODE,
 	PARAM,
 	DOT,
+	DOT_ARG,
 	DIRECT,
 	UNDIRECT,
 	REGISTER,
 };
+
 
 typedef struct		s_token
 {
@@ -68,11 +71,13 @@ int			asm_file_open(t_env *e, char *file);
 int			asm_file(int ac, char **av);
 
 char		*str_s_e(char *line, int s, int e);
+char		**ft_strsplitws(const char *s);
 int			create_label(t_token **head, char *val, size_t *i);
 int			create_dot(t_token **head, char *val, size_t *i);
 int			grep_opcode(t_token **head, char *line, size_t st, size_t *i);
+int			grep_arg(t_token *head, char *line, size_t *i);
 int			is_label(char *line, int start);
-int			tok_create(t_aolist *head, char *line);
+int			tok_create(t_aolist *head, char **line);
 int			parser(t_env *e, char *file);
 void		ft_freetab(char ***table);
 void		push_front(void *head, void *new, int type);

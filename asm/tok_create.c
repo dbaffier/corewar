@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:00:21 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/20 03:33:10 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/21 22:10:58 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 int		create_token(t_token **head, char *line, size_t st, size_t *i)
 {
 	if (grep_opcode(head, line, st, i) > 0)
+		return (ERR_MALLOC);
+	if (grep_arg(*head, line, i) > 0)
 		return (ERR_MALLOC);
 	return (0);
 }
@@ -69,29 +71,28 @@ static int	grep_comment(t_aolist *head, char **line)
 	return (0);
 }
 
-int		tok_create(t_aolist *head, char *line)
+int		tok_create(t_aolist *head, char **line)
 {
 	t_token		*tok;
+	char		*dup;
 	size_t		i;
 
 	i = 0;
 	tok = NULL;
-	if (ft_strchr(line, COMMENT_CHAR))
-		if (grep_comment(head, &line) > 0)
+	if (ft_strchr(*line, COMMENT_CHAR))
+		if (grep_comment(head, line) > 0)
 			return (ERR_MALLOC);
-	ft_printf("line : [%s]\n", line);
-	while (line[i])
+	dup = *line;
+	while (dup[i])
 	{
-		ft_printf("[%c]\n", line[i]);
-		if (line[i] == ' ' || line[i] == '\t')
+		if (dup[i] == ' ' || dup[i] == '\t')
 			i++;
-		else if (line[i])
+		else if (dup[i])
 		{
-			if (tokenize(&tok, line, &i) > 0)
+			if (tokenize(&tok, dup, &i) > 0)
 				return (ERR_MALLOC);
 		}
 	}
-	ft_printf("\n");
 	head->tok = tok;
 	return (0);
 }

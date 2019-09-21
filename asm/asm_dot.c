@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   grep_opcode.c                                      :+:      :+:    :+:   */
+/*   asm_dot.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/19 23:25:39 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/22 00:27:03 by dbaffier         ###   ########.fr       */
+/*   Created: 2019/09/21 00:02:04 by dbaffier          #+#    #+#             */
+/*   Updated: 2019/09/21 21:35:21 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "asm.h"
 #include "libft.h"
 #include "ft_printf.h"
-#include "asm.h"
 
-static char		*dup_val(char *line, size_t *i)
+static char		*dup_dot(char *line, size_t *i)
 {
 	char		*new;
 	size_t		s;
@@ -22,7 +22,7 @@ static char		*dup_val(char *line, size_t *i)
 
 	s = *i;
 	e = 0;
-	while (line[*i] && line[*i] != ' ' && line[*i] != '\t')
+	while (line[*i] && line[*i] != '\"' && line[*i] != '\t' && line[*i] != ' ')
 		*i = *i + 1;
 	if (!(new = malloc(sizeof(char) * (*i - s) + 1)))
 		return (NULL);
@@ -36,21 +36,22 @@ static char		*dup_val(char *line, size_t *i)
 	return (new);
 }
 
-static char	*dup_opcode(char *line, size_t *i)
-{	
+static char	*dup_all(char *val, size_t *i)
+{
 	char		*new;
 	size_t		s;
 	size_t		e;
 
 	s = *i;
 	e = 0;
-	while (line[*i] && ft_isalnum(line[*i]))
+	while (val[*i] && val[*i] != '\"')
 		*i = *i + 1;
+	*i = *i + 1;
 	if (!(new = malloc(sizeof(char) * (*i - s) + 1)))
 		return (NULL);
-	while (line[s] && s < *i)
+	while (val[s] && s < (*i - 1))
 	{
-		new[e] = line[s];
+		new[e] = val[s];
 		s++;
 		e++;
 	}
@@ -58,28 +59,59 @@ static char	*dup_opcode(char *line, size_t *i)
 	return (new);
 }
 
-int		grep_opcode(t_token **head, char *line, size_t st, size_t *i)
+int		quoted(char *val, size_t *i)
 {
+	int		j;
+	
+	while (val[*i] && (val[*i] == ' ' || val[*i] == '\t'))
+		*i = *i + 1;
+	if (val[*i] == '\"')
+	{
+		*i = *i + 1;
+		j = *i;
+		while (val[j])
+		{
+			if (val[j] == '\"')
+			{
+				j++;
+				while (val[j] && (val[j] == ' ' || val[j] == '\t'))
+					j++;
+				if (val[j] == '\0')
+					return (1);
+				else
+					return (0);
+			}
+			j++;
+		}
+		return (0);
+	}
+	else
+		return (0);
+}
+
+int		create_dot(t_token **head, char *val, size_t *i)
+{
+	t_token		*ptr;
 	t_token		*new;
-	t_token		*curr;
+	t_token		*next;
 
 	if (!(new = ft_memalloc(sizeof(t_token))))
 		return (ERR_MALLOC);
-	if (!(new->val = dup_opcode(line, i)))
+	new->val = dup_dot(val, i);
+	new->type = DOT;
+	if (!(next = ft_memalloc(sizeof(t_token))))
 		return (ERR_MALLOC);
-	new->type = OP_CODE;
-	if (!(new->next = ft_memalloc(sizeof(t_token))))
-		return (ERR_MALLOC);
-	if (grep_arg(new->next, line, i) > 0)
-		return (ERR_MALLOC);
+	next->val = quoted(val, i) ? dup_all(val, i) : NULL;
+	next->type = DOT_ARG;
+	new->next = next;
 	if (*head == NULL)
 		*head = new;
 	else
 	{
-		curr = *head;
-		while (curr->next)
-			curr = curr->next;
-		curr->next = new;
+		ptr = *head;
+		while (ptr->next)
+			ptr = ptr->next;
+		ptr->next = new;
 	}
 	return (0);
 }

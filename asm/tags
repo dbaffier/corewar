@@ -1,0 +1,20 @@
+Mmain	main.c	/^int main(int ac, char **av)$/
+asm_file	asm_file.c	/^int			asm_file(int ac, char **av)$/
+asm_file_open	asm_file.c	/^int			asm_file_open(t_env *e, char *file)$/
+create_dot	header_create.c	/^int		create_dot(t_token **head, char *val, size_t /
+create_label	label_create.c	/^int		create_label(t_token **head, char *val, size_/
+create_token	tok_create.c	/^int		create_token(t_token **head, char *line, size/
+dup_val	grep_opcode.c	/^static char		*dup_val(char *line, size_t *i)$/
+err_file	main.c	/^static int	err_file(int err)$/
+eval_asm_file	asm_file.c	/^static int	eval_asm_file(char *file)$/
+ft_freetab	tools.c	/^void		ft_freetab(char ***table)$/
+grep_arg	grep_opcode.c	/^static int		grep_arg(t_token *ptr, char *line, siz/
+grep_comment	tok_create.c	/^static int	grep_comment(t_aolist *head, char **lin/
+grep_opcode	grep_opcode.c	/^int		grep_opcode(t_token **head, char *line, size_/
+is_label	label_create.c	/^int		is_label(char *line, int start)$/
+parser	asm_parse.c	/^int		parser(t_env *e, char *file)$/
+push_front	tools.c	/^void	push_front(void *head, void *new, int type)$/
+str_s_e	tools.c	/^char	*str_s_e(char *line, int s, int e)$/
+tok_create	tok_create.c	/^int		tok_create(t_aolist *head, char *line)$/
+token_lst	asm_parse.c	/^static int token_lst(t_env *e)$/
+tokenize	tok_create.c	/^int		tokenize(t_token **head, char *line, size_t */

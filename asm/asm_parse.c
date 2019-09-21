@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 01:48:11 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/20 02:05:29 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/22 00:27:04 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ static int token_lst(t_env *e)
 		{
 			if (c == 0 && ++c)
 			{
-				if ((tok_create(lst, line)) > 0)
+				if ((tok_create(lst, &line)) > 0)
 					return (ERR_MALLOC);
 			}
 			else
 			{
 				new = ft_memalloc(sizeof(t_aolist));
-				if ((tok_create(new, line)) > 0)
+				if ((tok_create(new, &line)) > 0)
 					return (ERR_MALLOC);
 				push_front(lst, new, 0);
 			}
@@ -59,6 +59,8 @@ int		parser(t_env *e, char *file)
 		return (ERR_MALLOC);
 	for (t_aolist *p = e->aolist; p; p = p->next)
 	{
+		if (p->comment)
+			ft_printf("p->comment [%s]\n", p->comment);
 		for (t_token *t = p->tok; t; t = t->next)
 			printf("[%s] with type [%d]\n", t->val, t->type);
 		ft_printf("new aolist\n");
