@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 23:35:31 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/21 02:52:30 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/21 23:26:01 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,5 @@ void	write_opc(t_data *data, char *opc)
 	while (ft_strcmp(opc, tab[i].opcode) != 0)
 		i++;
 	write(data->fd, &tab[i].code, 1);
+//	data->func = tab[i].func;
 }

@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/21 01:21:50 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/21 23:28:16 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,22 @@
 
 # define COR_EXT	".cor"
 
-# define LIVE		{1, "live"}
-# define LD			{2, "ld"}
-# define ST			{3, "st"}
-# define ADD		{4, "add"}
-# define SUB		{5, "sub"}
-# define AND		{6, "and"}
-# define OR			{7, "or"}
-# define XOR		{8, "xor"}
-# define ZJMP		{9, "zjmp"}
-# define LDI		{10, "ldi"}
-# define STI		{11, "sti"}
-# define FORK		{12, "fork"}
-# define LLD		{13, "lld"}
-# define LLDI		{14, "lldi"}
-# define LFORK		{15, "lfork"}
-# define AFF		{16, "aff"}
+# define LIVE		{1, "live"}//, &w_live}
+# define LD			{2, "ld"}//, &w_ld}
+# define ST			{3, "st"}//, &w_st}
+# define ADD		{4, "add"}//, &w_add}
+# define SUB		{5, "sub"}//, &w_sub}
+# define AND		{6, "and"}//, &w_and}
+# define OR			{7, "or"}//, &w_or}
+# define XOR		{8, "xor"}//, &w_xor}
+# define ZJMP		{9, "zjmp"}//, &w_zjmp}
+# define LDI		{10, "ldi"}//, &w_ldi}
+# define STI		{11, "sti"}//, &w_sti}
+# define FORK		{12, "fork"}//, &w_fork}
+# define LLD		{13, "lld"}//, &w_lld}
+# define LLDI		{14, "lldi"}//, &w_lldi}
+# define LFORK		{15, "lfork"}//, &w_lfork}
+# define AFF		{16, "aff"}//, &w_aff}
 
 # define DIRECT		1
 # define INDIRECT	2
@@ -50,19 +50,21 @@
 
 typedef struct		s_data
 {
+	short			t_bin;
 	int				cursor;
 	int				fd;
 	int				type[3];
-	short			t_bin;
+	int				size;
 	char			*name;
 	char			*comment;
-	int				size;
+//	void			(*func)(struct s_data *data);
 }					t_data;
 
 typedef struct		s_opc
 {
 	int				code;
 	char			*opcode;
+//	void			(*func)(t_data *data);
 }					t_opc;
 
 //////////// main hexdump
