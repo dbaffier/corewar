@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:03:25 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/21 01:23:59 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/21 20:02:10 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ typedef struct		s_process
 	int				cycle_left;
 	int				is_alive;
 	int				is_dead;
+	t_process		*next_proc;
 }					t_process;
 
 typedef struct		s_param
 
 	char			param_data[4];
-	int				param_size;
-	char			param_type;ss
+	char			param_size;
 }					t_param;
 
 typedef struct		s_env
