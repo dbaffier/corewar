@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 23:30:34 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/19 23:33:22 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/21 00:13:04 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,20 @@ static void		set_binary(t_data *data, int type)
 	short bin;
 
 	bin = data->t_bin;
-	if (type == 1) ////////////// direct
+	if (type == DIRECT) ////////////// direct
 	{
 		bin = bin << 1;
 		bin |= 1;
 		bin <<= 1;
 	}
-	if (type == 2) /////////////// indirect
+	if (type == INDIRECT) /////////////// indirect
 	{
 		bin <<= 1;
 		bin |= 1;
 		bin <<= 1;
 		bin |= 1;
 	}
-	if (type == 3) ////////////// registre
+	if (type == REGISTER) ////////////// registre
 	{
 		bin <<= 2;
 		bin |= 1;

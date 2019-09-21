@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   way_to_corewar.c                                   :+:      :+:    :+:   */
+/*   write_magic.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/18 22:36:59 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/21 03:14:22 by mmonier          ###   ########.fr       */
+/*   Created: 2019/09/20 21:29:53 by mmonier           #+#    #+#             */
+/*   Updated: 2019/09/20 22:55:13 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw_hexdump.h"
 
-int		way_to_corewar(t_data *data)
+void		write_magic(t_data *data)
 {
-	write_magic(data);
-	write_header(data, NAME);
-	write_header(data, COMMENT);
-	write_opc(data, "ld");
-	write_type(data);
-	write_param(data, "42", 3);
-	write_param(data, "1", 0);
-	return (0);
+	int		zero;
+	int		magic;
+
+	zero = 0x0;
+	magic = 0xf383ea;
+	write(data->fd, &zero, 1);
+	write(data->fd, &magic, 3);
 }

@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:28:27 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/18 20:32:41 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/21 00:32:54 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ static char		*basename(char *file)
 	char		*b_name;
 
 	len = basename_len(file);
-	if (!(b_name = (char *)malloc(sizeof(char) * len + 4)))
+	i = 0;
+	if (!(b_name = (char *)malloc(sizeof(char) * len + 4 + 1)))
 		return (NULL);
 	while (file && i < len + 1)
 	{

@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   reverse_type.c                                     :+:      :+:    :+:   */
+/*   write_param.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/19 23:38:45 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/20 01:16:11 by mmonier          ###   ########.fr       */
+/*   Created: 2019/09/21 00:59:16 by mmonier           #+#    #+#             */
+/*   Updated: 2019/09/21 03:10:48 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw_hexdump.h"
 
-/*static short	hex_to_bin(char *type)
-{		
-
-}*/
-
-void			reverse_type(char *type)
+void		write_param(t_data *data, char *param, int size)
 {
-	int bin;
+	short	dec;
+	short	bin;
+	short	zero;
 
-	bin = type;
-	printf("%x\n", bin);
-}
-
-int			main(void)
-{
-	reverse_type("e4");
-	return (0);
+	dec = ft_atoi(param);
+	bin = binary(dec);
+	zero = 0x0;
+	while (size--)
+		write(data->fd, &zero, 1);
+	write(data->fd, &bin, 1);
 }
