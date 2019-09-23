@@ -6,66 +6,66 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 00:28:15 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/23 03:15:16 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/24 01:10:40 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw_hexdump.h"
 
+static void	print_continue(t_data *data)
+{
+	wattron(data->main_win, A_BLINK);
+	mvwprintw(data->main_win, 12, 55, "Press enter to continue...", 123);
+	wattroff(data->main_win, A_BLINK);
+	wrefresh(data->main_win);
+}
+
 void		*thread_quit(void *thread)
 {
-	t_thread *arg;
+	t_thread	*arg;
+	char		c;
 
 	arg = thread;
 	while (1)
 	{
-		char c = wgetch(arg->main_win);
+		c = wgetch(arg->main_win);
 		if (c == '\n')
 		{
 			arg->stop = 1;
-			break;
+			break ;
 		}
 	}
-	return(NULL);
+	return (NULL);
 }
 
-int		print_first(t_data *data)
+int			print_first(t_data *data)
 {
-	WINDOW		*pad;
 	pthread_t	thread;
 	t_thread	arg;
-	char		*msg;
 	int			i;
 
-	pad = newpad(1, 100);
-	msg = ft_strdup("With this visu you will be able to see a bit more about how corewar works");
 	ft_memset(&arg, 0, sizeof(t_thread));
 	arg.main_win = data->main_win;
 	pthread_create(&thread, NULL, thread_quit, &arg);
 	while (!arg.stop)
 	{
-		if (msg && msg[i])
+		if (MSG && MSG[i])
 		{
-			waddch(pad, msg[i]);
-			copywin(pad, data->main_win, 0, 0, 10, 5, 10, 5 + 100, 0);
+			mvwprintw(data->main_win, data->y, data->x, "%c", MSG[i]);
 			wrefresh(data->main_win);
+			data->x++;
 			wait_or_enter(data, 1);
 			i++;
 		}
 		else
-		{
-			wattron(data->main_win, A_BLINK);
-			mvwprintw(data->main_win, 12, 55, "Press enter to continue...", 123);
-			wattroff(data->main_win, A_BLINK);
-			wrefresh(data->main_win);
-		}
+			print_continue(data);
 	}
 	wclear(data->main_win);
 	wrefresh(data->main_win);
 	return (0);
 }
 
-int		init_screen(t_data *data)
+int			init_screen(t_data *data)
 {
 	initscr();
 	clear();
@@ -77,6 +77,8 @@ int		init_screen(t_data *data)
 	init_pair(1, COLOR_RED, COLOR_BLACK);
 	init_pair(2, COLOR_GREEN, COLOR_BLACK);
 	data->main_win = newwin(0, 0, 0, 0);
+	data->y = 10;
+	data->x = 5;
 	wattron(data->main_win, COLOR_PAIR(0));
 	wrefresh(data->main_win);
 	print_first(data);

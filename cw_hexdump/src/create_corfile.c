@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:28:27 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/21 00:32:54 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/24 00:49:56 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int		basename_len(char *file)
 	while (file && len--)
 	{
 		if (file[len] == '.')
-			break;
+			break ;
 		extension_len++;
 	}
 	return (len - extension_len);
@@ -65,12 +65,10 @@ int				create_corfile(char *file)
 {
 	char		*b_name;
 	int			fd;
-	
+
 	if ((b_name = basename(file)) == NULL)
 		return (ERR_MALLOC);
-	if ((fd = open(b_name, O_CREAT|O_RDWR, 0700)) < 0)
+	if ((fd = open(b_name, O_CREAT | O_RDWR, 0700)) < 0)
 		return (ERR_OPEN);
 	return (fd);
 }
-
-

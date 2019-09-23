@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/23 03:26:38 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/24 01:09:45 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define PADDING	4
 
 # define COR_EXT	".cor"
+# define MSG		"With this visu you will be able to see a bit more about how corewar works"
 
 # define LIVE		{1, "live"}//, &w_live}
 # define LD			{2, "ld"}//, &w_ld}
@@ -59,15 +60,20 @@ typedef struct		s_data
 {
 	short			t_bin;
 	int				pc;
-	int				print_cursor;
+	int				x;
+	int				y;
 	int				fd;
 	int				flag;
 	int				type[3];
 	int				size;
+	int				i;
+	int				zero;
+	int				check;
 	WINDOW			*main_win;
 	char			*name;
 	char			*comment;
 	char			*file_name;
+	unsigned char	*buffer;
 //	void			(*func)(struct s_data *data);
 }					t_data;
 
@@ -111,5 +117,13 @@ short		binary(char c);
 
 int			init_screen(t_data *data);
 int			wait_or_enter(t_data *data, int sleeping);
+void		print_hex(t_data *data);
+void		print_buff(t_data *data);
+int			fill_buff(t_data *data, unsigned char buff);
+int			len_hex(unsigned char bin);
+void		nprint_nb(t_data *data, int base, unsigned char n, char letter);
+void		print_file_name(t_data *data);
+void		print_compilation(t_data *data);
+void		print_dot(t_data *data);
 
 #endif 
