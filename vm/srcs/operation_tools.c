@@ -13,34 +13,28 @@
 #include "vm.h"
 #include "libft.h"
 
-/*
-** void	get_types(char *types, t_param *params_type)
-** {
-**	char	param_len;
-**	int		i;
-**
-**	i = 0;
-**	while (i < 3)
-**	{	
-**		param_len = types;
-**		param_len = param_len >> 6;
-**		params_type[i].param_size = param_len
-**		types = types << 2;
-**		i++;
-**	}
-**}
-*/
+void	get_types(char types, t_param *params_type)
+{
+	char	param_len;
+	int		i;
+	
+	i = 0;
+	while (i < 3)
+	{	
+		param_len = types;
+		param_len = param_len >> 6;
+		params_type[i].param_size = param_len;
+		types = types << 2;
+		i++;
+	}
+}
 
-void	get_params_len(t_param *params, int nbparam, char *types, char opcode)
+
+void	get_params_len(t_param *params, int nbparam, char types, char opcode)
 {
 	int		i;
 
-	i = 0;
-	while (i < 3)
-	{
-		params[i].param_size = types[i];
-		i++;
-	}
+	get_types(types, params);
 	i = 0;
 	while (nbparam > 0)
 	{

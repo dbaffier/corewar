@@ -65,7 +65,7 @@ typedef struct			s_process
 
 typedef struct		s_param
 {
-	char			param_data[4];
+	unsigned char			param_data[4];
 	char			param_size;
 }					t_param;
 
