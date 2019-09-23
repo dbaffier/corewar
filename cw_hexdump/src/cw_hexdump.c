@@ -81,6 +81,7 @@ int				main(int ac, char **av)
 	data.size = 21;
 	data.file_name = ft_strdup("test.cor");
 	cw_hexdump(&data, str);
+	print_hex(&data);
 	endwin();
 	close(data.fd);
 	return (0);

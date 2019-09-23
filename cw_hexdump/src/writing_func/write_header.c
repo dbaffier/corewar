@@ -12,27 +12,13 @@
 
 #include "cw_hexdump.h"
 
-static void		print_name(t_data *data)
-{
-		wattron(data->main_win, COLOR_PAIR(2));
-		mvwprintw(data->main_win, 3, data->print_cursor + 1, ".name");
-		wattroff(data->main_win, COLOR_PAIR(2));
-		wrefresh(data->main_win);
-		data->print_cursor = data->print_cursor + 5 + 1;
-		wait_or_enter(data, 10);
-}
-
 static void		write_name(t_data *data)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	if (data->flag & FLAG_N)
-		print_name(data);
 	while (data->name && data->name[i])
-	{
 		write(data->fd, &data->name[i++], 1);
-	}
 	lseek(data->fd, 135 + PADDING, SEEK_SET);
 	write(data->fd, &data->size, 1);
 }
