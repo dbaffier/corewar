@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 16:12:33 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/21 00:57:41 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/22 22:09:28 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int			corewar_errors(int errnb, char *arg, t_env *e)
 		"invalid filename",
 		"too many champions received",
 		"number already taken",
-		"missing champion.",
+		"missing champion",
 		"impossible to open file",
 		"impossible to lseek file for",
 		"malloc failed for",

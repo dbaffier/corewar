@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:03:25 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/21 20:02:10 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/23 03:20:23 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,24 +47,24 @@ enum
 	ERR_SIZE_HIGH,
 };
 
-typedef struct		s_process
+typedef struct			s_process
 {
-	int				id;
-	char			*name;
-	off_t			file_size;
-	void			*file;
-	int				data_size;
-	char			reg[REG_NUMBER][REG_SIZE];
-	char			pc[REG_SIZE];
-	char			carry;
-	int				cycle_left;
-	int				is_alive;
-	int				is_dead;
-	t_process		*next_proc;
-}					t_process;
+	int					id;
+	char				*name;
+	off_t				file_size;
+	void				*file;
+	int					data_size;
+	char				reg[REG_NUMBER][REG_SIZE];
+	char				pc[REG_SIZE];
+	char				carry;
+	int					cycle_left;
+	int					is_alive;
+	int					is_dead;
+	struct s_process	*next_proc;
+}						t_process;
 
 typedef struct		s_param
-
+{
 	char			param_data[4];
 	char			param_size;
 }					t_param;
@@ -89,4 +89,25 @@ int					get_arena(t_env *e);
 
 void				launch_game(t_env *e);
 
+void				op_live(t_op *op, t_env *e, int i);
+void				op_ld(t_op *op, t_env *e, int i);
+void				op_st(t_op *op, t_env *e, int i);
+void				op_add(t_op *op, t_env *e, int i);
+void				op_sub(t_op *op, t_env *e, int i);
+void				op_and(t_op *op, t_env *e, int i);
+void				op_or(t_op *op, t_env *e, int i);
+void				op_xor(t_op *op, t_env *e, int i);
+void				op_zjmp(t_op *op, t_env *e, int i);
+void				op_ldi(t_op *op, t_env *e, int i);
+void				op_sti(t_op *op, t_env *e, int i);
+void				op_fork(t_op *op, t_env *e, int i);
+void				op_lld(t_op *op, t_env *e, int i);
+void				op_ldi(t_op *op, t_env *e, int i);
+void				op_lfork(t_op *op, t_env *e, int i);
+void				op_aff(t_op *op, t_env *e, int i);
+
+void				get_params_len(t_param *params, int nbparam,
+		char *types, char opcode);
+void				get_param_data(t_param *params, int nbparam,
+		char *data, int pc);
 #endif

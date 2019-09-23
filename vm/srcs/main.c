@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:05:10 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/21 01:01:59 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/23 02:11:01 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ static void		debug_map(unsigned char *arena, size_t size)
 	size_t		i;
 
 	i = 0;
-	return;
 	while (i < size)
 	{
 		if (i % 32 == 0)

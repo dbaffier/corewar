@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/21 18:50:28 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/23 03:20:26 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,60 +14,106 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-// DIRECT_LOAD 0x02
+/*
+** LIVE 0x01
+** renvoie un live pour le processus qui l'appelle
+** si le 1st param = 0 le carry passe a 1
+*/
 
-void	op_ld(t_process *proc, t_op *op)
+void	op_live(t_op *op, t_env *e, int i)
 {
-	// load le 1er parametre dans le registre passé en 2nd parametre
-	// si le 1st param = 0 le carry passe a 1
 	t_param		params[3];
+	t_process	*proc;
 
-	get_params_len(&params, 2, op->types, op->opcode);
-	get_param_data(&params, 2, (char *)proc->file, (REG_SIZE)proc->pc);
+	proc = &e->proc[i];
+	get_params_len(params, 1, op->types, op->opcode);
+	get_param_data(params, 1, (char *)proc->file, (int)proc->pc);
+	i = 0;
+	while (i < MAX_PLAYERS)
+	{
+		if (params[0].param_data == e->proc[i]->id)
+		{
+			e->proc[i]->cycle_left = CYCLE_TO_DIE;
+			ft_printf("corewar : Player [%d] is alive. Keep fighting.\n",
+					e->proc[i]->id);
+			return ;
+		}
+		i++;
+	}
+	ft_printf("corewar : Wrong parameter [%d] player id does not exist . No one
+			to keep alive.\n", params[0].param_data);
+}
+
+/*
+** DIRECT_LOAD 0x02
+** load le 1er parametre dans le registre passé en 2nd parametre
+** si le 1st param = 0 le carry passe a 1
+*/
+
+void	op_ld(t_op *op, t_env *e, int i)
+{
+	t_param		params[3];
+	t_process	*proc;
+
+	proc = e->proc[i];
+	get_params_len(params, 2, op->types, op->opcode);
+	get_param_data(params, 2, (char *)proc->file, (int)proc->pc);
 	proc->reg[params[1].param_data] = (REG_SIZE)proc->pc +
 		params[0].param_data % IDX_MOD;
 	proc->carry = params[1].data == 0 ? 1 : 0;
 }
 
-// DIRECT STORE 0x03
+/*
+** DIRECT STORE 0x03
+** inverse de load charge le registre passe en 1st param dans le 2nd param
+** meme fonctionnement pour le carry
+*/
 
-void	op_st(t_process *proc, t_op *op)
+void	op_st(t_op *op, t_env *e, int i)
 {
-	// inverse de load charge le registre passe en 1st param dans le 2nd param
-	// meme fonctionnement pour le carry
 	t_param		params[3];
+	t_process	*proc;
 
-	get_params_len(&params, 2, op->types, op->opcode);
-	get_param_data(&params, 2, (char *)proc->file, (REG_SIZE)proc->pc);
-	params[1].param_data = (REG_SIZE)proc->pc +
+	proc = e->proc[i];
+	get_params_len(params, 2, op->types, op->opcode);
+	get_param_data(params, 2, (char *)proc->file, (int)proc->pc);
+	params[1].param_data = (int)proc->pc +
 		reg[param[0].param_data] % IDX_MOD;
 	proc->carry = params[1].data == 0 ? 1 : 0;
 }
 
-// ADD 0x04
+/*
+** ADD 0x04
+** ajoute le 1er param et le 2nd et stocke le resultat dans le 3eme
+** meme fonctionnement pour le carry
+*/
 
-void	op_add(t_process *proc, t_op *op)
+void	op_add(t_op *op, t_env *e, int i)
 {
-	// ajoute le 1er param et le 2nd et stocke le resultat dans le 3eme
-	// meme fonctionnement pour le carry
 	t_param		params[3];
+	t_process	*proc;
 
-	get_params_len(&params, 3, op->types, op->opcode);
-	get_param_data(&params, 3, (char *)proc->file, (REG_SIZE)proc->pc);
+	proc = e->proc[i];
+	get_params_len(params, 3, op->types, op->opcode);
+	get_param_data(params, 3, (char *)proc->file, (REG_SIZE)proc->pc);
 	proc->reg[param[2].param_data] = param[0].param_data + param[1].param_data;
 	proc->carry = proc->reg[params[2].data] == 0 ? 1 : 0;
 }
 
-// SUB 0x05
+/*
+** SUB 0x05
+** soustraie le 1er param et le 2nd et stocke le resultat dans le 3eme
+** meme fonctionnement pour le carry
+*/
 
-void	op_sub(t_process *proc, t_op *op)
+void	op_sub(t_op *op, t_env *e, int i)
 {
-	// soustraie le 1er param et le 2nd et stocke le resultat dans le 3eme
-	// meme fonctionnement pour le carry
 	t_param		params[3];
+	t_process	*proc;
 
-	get_params_len(&params, 3, op->types, op->opcode);
-	get_param_data(&params, 3, (char *)proc->file, (REG_SIZE)proc->pc);
+	proc = e->proc[i];
+	get_params_len(params, 3, op->types, op->opcode);
+	get_param_data(params, 3, (char *)proc->file, (REG_SIZE)proc->pc);
 	proc->reg[param[2].param_data] = param[0].param_data - param[1].param_data;
 	proc->carry = proc->reg[params[2].data] == 0 ? 1 : 0;
 }

@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/09/21 20:02:09 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/22 21:41:23 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct					s_op
 {
 	char						*reg_name;
 	unsigned short				reg_nb;
-	char 						types;
+	char 						types[3];
 	unsigned char				opcode;
 	unsigned int				cycle;
 	char						*complete_name;

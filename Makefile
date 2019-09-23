@@ -6,7 +6,7 @@
 #    By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/18 16:01:33 by bmellon           #+#    #+#              #
-#    Updated: 2019/09/20 22:25:11 by bmellon          ###   ########.fr        #
+#    Updated: 2019/09/23 01:30:48 by bmellon          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,18 @@ NAME		= corewar
 VM_DIR		= vm/
 VM_SRC_D	= $(VM_DIR)srcs/
 VM_INC_D	= $(VM_DIR)incs/
-VM_SRC		+=	args.c		\
-				champ.c		\
-				main.c		\
-				op.c		\
-				errors.c	\
-				arena.c		\
-				game.c		\
+VM_SRC		+=	args.c				\
+				champ.c				\
+				main.c				\
+				op.c				\
+				errors.c			\
+				arena.c				\
+				game.c				\
+				operations_tools.c	\
+				operations1_5.c		\
+				operations6_10.c	\
+				operations11_15.c	\
+				operations_aff.c	\
 
 CC			= gcc 
 CFLAGS		= -Wall -Werror -Wextra
