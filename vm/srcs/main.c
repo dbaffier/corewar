@@ -26,19 +26,17 @@ static int		usage(char *progname)
 	return (1);
 }
 
-static void		introduce_champ(t_env *e)
+static void		introduce_champ(t_process *proc)
 {
-	int			i;
 	t_header	*play;
 
-	i = 0;
 	ft_printf("Introducing contestants...\n");
-	while (i < e->nb_players)
+	while (proc)
 	{
-		play = (t_header *)e->proc[i].file;
+		play = (t_header *)proc->file;
 		ft_printf("* Player %d, weighting %d bytes, \"%s\" (\"%s\") !\n",
-		e->proc[i].id, e->proc[i].data_size, play->prog_name, play->comment);
-		i++;
+		proc->id, proc->data_size, play->prog_name, play->comment);
+		proc = proc->next;
 	}
 }
 
@@ -69,7 +67,7 @@ int				main(int ac, char **av)
 	e.progname = (e.progname) ? e.progname + 1 : av[0];
 	if (ac < 2 || get_args(av, &e) || get_arena(&e))
 		return (usage(av[0]));
-	introduce_champ(&e);
+	introduce_champ(e.proc);
 	launch_game(&e);
 	debug_map(e.arena, MEM_SIZE);
 	free_env(&e);

@@ -17,13 +17,13 @@ void	get_types(char types, t_param *params_type)
 {
 	char	param_len;
 	int		i;
-	
+
 	i = 0;
 	while (i < 3)
 	{	
 		param_len = types;
 		param_len = param_len >> 6;
-		params_type[i].param_size = param_len;
+		params_type[i].size = param_len;
 		types = types << 2;
 		i++;
 	}
@@ -36,42 +36,40 @@ void	get_params_len(t_param *params, int nbparam, char types, char opcode)
 
 	get_types(types, params);
 	i = 0;
-	while (nbparam > 0)
+	while (i < nbparam)
 	{
-		if (params[i].param_size == 1)
-			params[i].param_size = 1;
-		else if (params[i].param_size == 2)
+		if (params[i].size == 1)
+			params[i].size = 1;
+		else if (params[i].size == 2)
 		{
 			if (opcode == 9 || opcode == 10 || opcode == 11 || opcode == 12 ||
 					opcode == 14 || opcode == 15)
-				params[i].param_size = 2;
+				params[i].size = 2;
 			else
-				params[i].param_size = 4;
+				params[i].size = 4;
 		}
-		else if (params[i].param_size == 3)
-			params[i].param_size = 2;
-		nbparam--;
+		else if (params[i].size == 3)
+			params[i].size = 2;
 		i++;
 	}
 }
 
-void	get_param_data(t_param *params, int nbparam, char *data, int pc)
+void	get_params_data(t_param *params, int nbparam, char *data, int pc)
 {
 	int		i;
-	int		take;
+	int		size;
 
 	i = 0;
-	take = -1;
-	while (++take < params[0].param_size)
-		params[i].value[take] = data[pc + 1 + take];
-	i++;
+	size = 0;
 	while (i < nbparam)
 	{
-		take = -1;
-		while (++take < params[i].param_size)
-			params[i].value[take] = data[pc + 1 +
-			params[i - 1].param_size + take];
-		params[i].param_size += params[i - 1].param_size;
+		if (params[i].size == 2)
+			params[i].value = *(short *)((char *)data[pc + 1 + size]);
+		else if (params[i].size == 4)
+			params[i].value = *(int *)((char *)data[pc + 1 + size]);
+		else if (params[i].size == 1)
+			params[i].value = *((char *)data[pc + 1 + size]);
+		size += params[i].size;
 		i++;
 	}
 }

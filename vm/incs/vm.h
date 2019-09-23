@@ -29,6 +29,7 @@
 /*
 ** Corewar error codes
 */
+
 enum
 {
 	IS_OK,
@@ -63,19 +64,20 @@ typedef struct			s_process
 	void				*file;
 	int					data_size;
 	char				reg[REG_NUMBER][REG_SIZE];
-	char				pc[REG_SIZE];
+	char				pc/*[REG_SIZE]*/;
 	char				carry;
 	int					cycle_left;
 	int					is_alive;
 	int					is_dead;
 	t_live				**live;
 	struct s_process	*next;
+	struct s_process	*prev;
 }						t_process;
 
 typedef struct			s_param
 {
 	int					value;
-	char				param_size;
+	char				size;
 }						t_param;
 
 typedef struct			s_env
@@ -119,6 +121,6 @@ void					op_aff(t_op *op, t_env *e, int i);
 
 void					get_params_len(t_param *params, int nbparam, \
 		char types, char opcode);
-void					get_param_data(t_param *params, int nbparam, \
+void					get_params_data(t_param *params, int nbparam, \
 		char *data, int pc);
 #endif

@@ -26,13 +26,12 @@ void	op_live(t_op *op, t_env *e, int i)
 	t_process	*proc;
 
 	proc = &e->proc[i];
-	get_params_len(params, 1, (char *)proc->file[(int)proc->pc + 1], op->opcode);
-	get_param_data(params, 1, (char *)proc->file, (int)proc->pc);
-	*(int *)params[0].param_data = (int)params[0].param_data;
+	get_params_len(params, 1, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
+	get_params_data(params, 1, (char *)proc->file, (int)proc->pc);
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{
-		if (data == e->proc[i].id)
+		if (params[0].value == e->proc[i].id)
 		{
 			e->proc[i].cycle_left = CYCLE_TO_DIE;
 			ft_printf("corewar : Player [%d] is alive. Keep fighting.\n",
@@ -41,7 +40,7 @@ void	op_live(t_op *op, t_env *e, int i)
 		}
 		i++;
 	}
-	ft_printf("corewar : Wrong parameter [%d] player id does not exist . No one to keep alive.\n", params[0].param_data);
+	ft_printf("corewar : Wrong parameter [%d] player id does not exist . No one to keep alive.\n", params[0].value);
 }
 
 /*
@@ -56,28 +55,10 @@ void	op_ld(t_op *op, t_env *e, int i)
 	t_process	*proc;
 
 	proc = &e->proc[i];
-	get_params_len(params, 2, op->types, op->opcode);
-	get_param_data(params, 2, (char *)proc->file, (int)proc->pc);
-	// oui je demandais si fallait faire plein de if ou si j'etais, nono cest ca ok bisous ;) atta en fait c'est chiant
-	// regarde
-//	(char *)proc->file + *(int *)proc->pc + 1 + get_param_len();
-	/* ici quel registre tu veux + sa taille? */
-	// celui la, hm, nan, dans la memoireah
-	// 
-	// le retour de ma fonction p aeut pas varier mdr 
-	//le registre passe en 2eme parametre
-
-	// nan tkt, toujours un int, quoique, ton retour ca sera REG_CAST xD easy ;) ;)
-//	params[0].param_data = 
-	*(char *)(params[1].param_data) = (char)(params[1].param_data);
-	if (params[0].param_size == 2)
-		*(short *)params[0].param_data = (short)params[0].param_data;
-	else if (params[0].param_size == 4)
-		*(int *)params[0].param_data = (int)params[0].param_data;
-	*(REG_CAST *)proc->reg[(char)params[1].param_data] = (REG_CAST)proc->pc + params[0].param_data % IDX_MOD;
-	// oui mais comment est ce que je get de la memoire en int ? operation_tools
-//get_param_data ? ui, ok attend
-	proc->carry = (params[1].param_data == 0) ? 1 : 0;
+	get_params_len(params, 2, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
+	get_params_data(params, 2, (char *)proc->file, (int)proc->pc);
+	proc->reg[params[1].value][/* seul dieu sait quoi mettre*/0] = proc->pc + params[0].value % IDX_MOD;
+	proc->carry = (params[1].value == 0) ? 1 : 0;
 }
 
 /*
@@ -92,11 +73,14 @@ void	op_st(t_op *op, t_env *e, int i)
 	t_process	*proc;
 
 	proc = &e->proc[i];
-	get_params_len(params, 2, op->types, op->opcode);
-	get_param_data(params, 2, (char *)proc->file, (REG_CAST)proc->pc);
-	*(REG_CAST *)params[1].param_data = (REG_CAST)proc->pc +
-		(REG_CAST)proc->reg[(REG_CAST)params[0].param_data] % IDX_MOD;
-	proc->carry = ((REG_CAST)params[1].param_data == 0) ? 1 : 0;
+	get_params_len(params, 2, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
+	get_params_data(params, 2, (char *)proc->file, proc->pc);
+
+	if (params[1].size == 2)
+		params[1].value = proc->pc + (short)proc->reg[params[0].value] % IDX_MOD;
+	else if (params[1].size == 1)
+		params[1].value = proc->pc + (char)proc->reg[params[0].value] % IDX_MOD;
+	proc->carry = params[1].value == 0 ? 1 : 0;
 }
 
 /*
@@ -111,12 +95,11 @@ void	op_add(t_op *op, t_env *e, int i)
 	t_process	*proc;
 
 	proc = &e->proc[i];
-	get_params_len(params, 3, op->types, op->opcode);
-	get_param_data(params, 3, (char *)proc->file, (REG_CAST)proc->pc);
-	*(REG_CAST *)proc->reg[(REG_CAST)params[2].param_data] =
-		(REG_CAST)params[0].param_data + (REG_CAST)params[1].param_data;
-	proc->carry = ((REG_CAST)proc->reg[(REG_CAST)params[2].param_data] == 0) ?
-		1 : 0;
+	get_params_len(params, 3, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
+	get_params_data(params, 3, (char *)proc->file, proc->pc);
+	proc->reg[params[2].value][/* seul dieu sait quoi mettre*/0] = params[0].value +
+	params[1].value;
+	proc->carry = params[0].value + params[1].value == 0 ? 1 : 0;
 }
 
 /*
@@ -131,10 +114,8 @@ void	op_sub(t_op *op, t_env *e, int i)
 	t_process	*proc;
 
 	proc = &e->proc[i];
-	get_params_len(params, 3, op->types, op->opcode);
-	get_param_data(params, 3, (char *)proc->file, (REG_CAST)proc->pc);
-	*(REG_CAST *)proc->reg[(REG_CAST)params[2].param_data] =
-		(REG_CAST)params[0].param_data - (REG_CAST)params[1].param_data;
-	proc->carry = ((REG_CAST)proc->reg[(REG_CAST)params[2].param_data] == 0) ?
-		1 : 0;
+	get_params_len(params, 3, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
+	get_params_data(params, 3, (char *)proc->file, proc->pc);
+	proc->reg[params[2].value][/* seul dieu sait quoi mettre*/0] = params[0].value - params[1].value;
+	proc->carry = params[0].value - params[1].value == 0 ? 1 : 0;
 }

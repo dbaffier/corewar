@@ -25,12 +25,11 @@ void	op_and(t_op *op, t_env *e, int i)
 	t_param		params[3];
 	t_process	*proc;
 
-	proc = e->proc[i];
-	get_params_len(&params, 3, op->types, op->opcode);
-	get_param_data(&params, 3, (char *)proc->file, (REG_SIZE)proc->pc);
-	proc->reg[param[2].param_data] =
-		(param[0].param_data & param[1].param_data) % IDX_MOD;
-	proc->carry = proc->reg[params[2].data] == 0 ? 1 : 0;
+	proc = &e->proc[i];
+	get_params_len(params, 3, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
+	get_params_data(params, 3, (char *)proc->file, proc->pc);
+	proc->reg[params[2].value][/* seul dieu sait quoi mettre*/0] = (params[0].value & params[1].value) % IDX_MOD;
+	proc->carry = (params[0].value & params[1].value) == 0 ? 1 : 0;
 }
 
 /*
@@ -44,12 +43,11 @@ void	op_or(t_op *op, t_env *e, int i)
 	t_param		params[3];
 	t_process	*proc;
 
-	proc = e->proc[i];
-	get_params_len(&params, 3, op->types, op->opcode);
-	get_param_data(&params, 3, (char *)proc->file, (REG_SIZE)proc->pc);
-	proc->reg[param[2].param_data] =
-	(param[0].param_data | param[1].param_data) % IDX_MOD;
-	proc->carry = proc->reg[params[2].data] == 0 ? 1 : 0;
+	proc = &e->proc[i];
+	get_params_len(params, 3, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
+	get_params_data(params, 3, (char *)proc->file, proc->pc);
+	proc->reg[params[2].value][/* seul dieu sait quoi mettre*/0] = (params[0].value | params[1].value) % IDX_MOD;
+	proc->carry = (params[0].value | params[1].value) == 0 ? 1 : 0;
 }
 
 /*
@@ -63,12 +61,11 @@ void	op_xor(t_op *op, t_env *e, int i)
 	t_param		params[3];
 	t_process	*proc;
 
-	proc = e->proc[i];
-	get_params_len(&params, 3, op->types, op->opcode);
-	get_param_data(&params, 3, (char *)proc->file, (REG_SIZE)proc->pc);
-	proc->reg[param[2].param_data] =
-		(param[0].param_data ^ param[1].param_data) % IDX_MOD;
-	proc->carry = proc->reg[params[2].data] == 0 ? 1 : 0;
+	proc = &e->proc[i];
+	get_params_len(params, 3, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
+	get_params_data(params, 3, (char *)proc->file, proc->pc);
+	proc->reg[params[2].value][/* seul dieu sait quoi mettre*/0] = (params[0].value ^ params[1].value) % IDX_MOD;
+	proc->carry = (params[0].value ^ params[1].value) == 0 ? 1 : 0;
 }
 
 /*
@@ -81,12 +78,13 @@ void	op_zjmp(t_op *op, t_env *e, int i)
 	t_param		params[3];
 	t_process	*proc;
 
-	proc = e->proc[i];
+	proc = &e->proc[i];
 	if (proc->carry == 1)
 	{
-		get_params_len(&params, 1, op->types, op->opcode);
-		get_param_data(&params, 1, (char *)proc->file, (REG_SIZE)proc->pc);
-		op->direct_size += param[0].param_data;
+		get_params_len(params, 1, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
+		get_params_data(params, 1, (char *)proc->file, proc->pc);
+		proc->pc = params[0].value;
+
 	}
 }
 
@@ -103,10 +101,10 @@ void	op_ldi(t_op *op, t_env *e, int i)
 	char		addr;
 	t_process	*proc;
 
-	proc = e->proc[i];
-	get_params_len(&params, 3, op->types, op->opcode);
-	get_param_data(&params, 3, (char *)proc->file, (REG_SIZE)proc->pc);
-	addr = (params[0].param_data + params[1].param_data) % IDX_MOD;
-	proc->reg[params[2].param_data] = (char *)proc->file[addr];
+	proc = &e->proc[i];
+	get_params_len(params, 3, ((char *)proc->file)[proc->pc + 1], op->opcode);
+	get_params_data(params, 3, (char *)proc->file, proc->pc);
+	addr = (params[0].value + params[1].value) % IDX_MOD;
+	proc->reg[params[2].value][/* seul dieu sait quoi mettre*/0] = ((char *)proc->file)[(int)addr];
 	proc->carry = addr == 0 ? 1 : 0;
 }
