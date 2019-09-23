@@ -28,6 +28,7 @@ int				get_arena(t_env *e)
 		ft_memcpy(e->proc[i].reg[0], &e->proc[i].id, REG_SIZE);
 		ft_memcpy((char *)e->arena + pc,
 		(char *)e->proc[i].file + sizeof(t_header), e->proc[i].data_size);
+		e->proc[i].live = &e->live;
 		i++;
 	}
 	return (IS_OK);

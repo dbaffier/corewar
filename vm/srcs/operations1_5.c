@@ -27,7 +27,7 @@ void	op_live(t_op *op, t_env *e, int i)
 
 	proc = &e->proc[i];
 	get_params_len(params, 1, op->types, op->opcode);
-	get_param_data(params, 1, (char *)proc->file, (int)proc->pc);
+	get_param_data(params, 1, (char *)proc->file, (REG_CAST)proc->pc);
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{
@@ -59,7 +59,7 @@ void	op_ld(t_op *op, t_env *e, int i)
 	proc = &e->proc[i];
 	get_params_len(params, 2, op->types, op->opcode);
 	get_param_data(params, 2, (char *)proc->file, (int)proc->pc);
-	reg = ft_atoi_base(params[1].param_data, "0123456789");
+	reg = *(int *)params[1].param_data;//ft_atoi_base(params[1].param_data, "0123456789");
 	parameter = ft_atoi_base(params[0].param_data, "01234556789");
 	*(REG_CAST *)proc->reg[reg] = (REG_CAST)proc->pc + parameter % IDX_MOD;
 	proc->carry = (reg == 0) ? 1 : 0;

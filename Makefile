@@ -15,8 +15,8 @@ NAME		= corewar
 VM_DIR		= vm/
 VM_SRC_D	= $(VM_DIR)srcs/
 VM_INC_D	= $(VM_DIR)incs/
-VM_SRC		+=	args.c				\
-				champ.c				\
+VM_SRC		+=	get_args.c			\
+				get_player.c		\
 				main.c				\
 				op.c				\
 				errors.c			\

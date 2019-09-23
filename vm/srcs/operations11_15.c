@@ -47,7 +47,7 @@ void	op_fork(t_op *op, t_env *e, int i)
 	t_param		params[3];
 	t_process	*proc;
 
-	proc = e->proc[i];
+	proc = &e->proc[i];
 	get_params_len(&params, 1, op->types, op->opcode);
 	get_param_data(&params, 1, (char *)proc->file, (REG_SIZE)proc->pc);
 	if (params[0].param_data != 0)

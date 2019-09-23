@@ -67,7 +67,7 @@ int				main(int ac, char **av)
 	ft_memset(&e, 0, sizeof(e));
 	e.progname = ft_strrchr(av[0], '/');
 	e.progname = (e.progname) ? e.progname + 1 : av[0];
-	if (ac < 2 || get_args(av, &e) || get_champions(&e) || get_arena(&e))
+	if (ac < 2 || get_args(av, &e) || get_arena(&e))
 		return (usage(av[0]));
 	introduce_champ(&e);
 	launch_game(&e);

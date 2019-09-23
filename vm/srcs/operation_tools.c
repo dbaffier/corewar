@@ -76,7 +76,7 @@ void	get_param_data(t_param *params, int nbparam, char *data, int pc)
 		take = -1;
 		while (++take < params[i].param_size)
 			params[i].param_data[take] = data[pc + 1 +
-				params[i - 1].param_size + take];
+			params[i - 1].param_size + take];
 		params[i].param_size += params[i - 1].param_size;
 		i++;
 	}

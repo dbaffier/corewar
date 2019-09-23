@@ -1,6 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
+/*   get_args.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/23 19:51:14 by gbourgeo          #+#    #+#             */
+/*   Updated: 2019/09/23 19:51:14 by gbourgeo         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
@@ -30,46 +42,6 @@ static int		get_number(char *av, int *value)
 	return (ERR_DIGIT);
 }
 
-static int		get_id(t_env *e, int *i)
-{
-	*i = 0;
-	while (*i < e->nb_players)
-	{
-		if (e->proc[*i].id == e->proc[e->nb_players].id)
-			return (ERR_NUMBER);
-		(*i)++;
-	}
-	return (IS_OK);
-}
-
-static int		store_id(t_env *e, char *av)
-{
-	int			i;
-
-	i = 0;
-	if (e->nb_players >= MAX_PLAYERS)
-		return (ERR_MAX_CHAMP);
-	if (e->proc[e->nb_players].id == 0)
-	{
-		e->proc[e->nb_players].id = 1;
-		while (i < e->nb_players)
-		{
-			if (e->proc[e->nb_players].id == e->proc[i].id)
-			{
-				e->proc[e->nb_players].id++;
-				i = 0;
-			}
-			else
-				i++;
-		}
-	}
-	else if (get_id(e, &i))
-		return (ERR_NUMBER);
-	e->proc[i].name = av;
-	e->nb_players++;
-	return (IS_OK);
-}
-
 int				get_args(char **av, t_env *e)
 {
 	int		i;
@@ -85,7 +57,7 @@ int				get_args(char **av, t_env *e)
 		else if (ft_strequ(av[i], "-n"))
 			err = get_number(av[++i], &e->proc[e->nb_players].id);
 		else if ((tmp = ft_strrchr(av[i], '.')) && ft_strequ(tmp, ".cor"))
-			err = store_id(e, av[i]);
+			err = get_player(e, av[i]);
 		else
 			err = (av[i][0] == '-') ? ERR_PARAM : ERR_FILENAME;
 		if (err)

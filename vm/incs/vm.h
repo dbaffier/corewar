@@ -22,6 +22,8 @@
 #  define REG_CAST short
 # elif REG_SIZE == 4
 #  define REG_CAST int
+# else
+#  define REG_CAST long
 #endif
 
 /*
@@ -60,23 +62,25 @@ typedef struct			s_process
 	int					cycle_left;
 	int					is_alive;
 	int					is_dead;
+	t_live				**live;
 	struct s_process	*next_proc;
 }						t_process;
 
 typedef struct		s_param
 {
-	char			param_data[4];
+	unsigned char	param_data[4];
 	char			param_size;
 }					t_param;
 
 typedef struct		s_env
 {
 	char			*progname;
-	int				nb_cycle;
+	int				dump_cycle;
 	int				nb_players;
-	t_process		proc[MAX_PLAYERS];
+	t_process		*proc;
 	void			*arena;
 	size_t			nb_cycles;
+	t_live			*live;
 }					t_env;
 
 void				free_env(t_env *e);
