@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 23:25:39 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/22 00:27:03 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/23 02:09:34 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,20 @@ static char	*dup_opcode(char *line, size_t *i)
 	return (new);
 }
 
+static int	set_opcode(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (g_op_tab[i].opcode != 0)
+	{
+		if (!ft_strcmp(g_op_tab[i].reg_name, str))
+			return (g_op_tab[i].opcode);
+		i++;
+	}
+	return (0);
+}
+
 int		grep_opcode(t_token **head, char *line, size_t st, size_t *i)
 {
 	t_token		*new;
@@ -65,8 +79,9 @@ int		grep_opcode(t_token **head, char *line, size_t st, size_t *i)
 
 	if (!(new = ft_memalloc(sizeof(t_token))))
 		return (ERR_MALLOC);
-	if (!(new->val = dup_opcode(line, i)))
+	if (!(new->lab = dup_opcode(line, i)))
 		return (ERR_MALLOC);
+	new->val = set_opcode(new->lab);
 	new->type = OP_CODE;
 	if (!(new->next = ft_memalloc(sizeof(t_token))))
 		return (ERR_MALLOC);
@@ -75,11 +90,6 @@ int		grep_opcode(t_token **head, char *line, size_t st, size_t *i)
 	if (*head == NULL)
 		*head = new;
 	else
-	{
-		curr = *head;
-		while (curr->next)
-			curr = curr->next;
-		curr->next = new;
-	}
+		push_front(*head, new, 1);
 	return (0);
 }

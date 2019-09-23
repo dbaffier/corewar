@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   header_create.c                                    :+:      :+:    :+:   */
+/*   asm_size.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/18 22:31:42 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/18 22:55:17 by dbaffier         ###   ########.fr       */
+/*   Created: 2019/09/22 17:49:43 by dbaffier          #+#    #+#             */
+/*   Updated: 2019/09/22 23:21:52 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,31 @@
 #include "ft_printf.h"
 #include "asm.h"
 
-int		create_dot(t_token **head, char *val, size_t *i)
-{
-	t_token		*ptr;
-	t_token		*new;
 
-	if (!(new = ft_memalloc(sizeof(t_token))))
-		return (ERR_MALLOC);
-	*i = *i + 1;
-	new->val = val;
-	new->type = DOT;
-	if (*head == NULL)
-		*head = new;
-	else
+size_t		chunk_size(t_token *tok, int id)
+{
+	size_t		size;
+
+	size = 1;
+	if (tok->type == LABEL)
+		tok = tok->next;
+	tok = tok->next;
+	if (g_op_tab[id].encoding_byte)
+		size++;
+	while (tok)
 	{
-		ptr = *head;
-		while (ptr->next)
-			ptr = ptr->next;
-		ptr->next = new;
+		if (tok->type & T_IND)
+			size += 2;
+		else if (tok->type & T_DIR)
+		{
+			if (g_op_tab[id].direct_size != 0)
+				size += 2;
+			else
+				size += 4;
+		}
+		else
+			size += 1;
+		tok = tok->next;
 	}
+	return (size);
 }

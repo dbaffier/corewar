@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 19:09:46 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/20 21:40:22 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/22 18:52:40 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,27 +48,4 @@ void		ft_freetab(char ***table)
 			free(*table);
 			*table = (char **)0;
 		}
-}
-
-void	push_front(void *head, void *new, int type)
-{
-	t_token		*ptrr;
-	t_aolist	*ptr;
-
-	ptr = NULL;
-	ptrr = NULL;
-	if (type == 1)
-	{
-		ptrr = (t_token *)head;
-		while (ptrr->next)
-			ptrr = ptrr->next;
-		ptrr->next = (t_token *)new;
-	}
-	else
-	{
-		ptr = (t_aolist *)head;
-		while (ptr->next)
-			ptr = ptr->next;
-		ptr->next = (t_aolist *)new;
-	}
 }

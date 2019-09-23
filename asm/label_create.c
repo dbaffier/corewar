@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 19:05:46 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/21 21:35:51 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/23 00:47:29 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		create_label(t_token **head, char *val, size_t *i)
 
 	if (!(new = ft_memalloc(sizeof(t_token))))
 		return (ERR_MALLOC);
-	if (!(new->val = dup_label(val, i)))
+	if (!(new->lab = dup_label(val, i)))
 		return (ERR_MALLOC);
 	new->type = LABEL;
 	*i = *i + 1;

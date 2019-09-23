@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 00:02:04 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/21 21:35:21 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/23 00:50:46 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ int		create_dot(t_token **head, char *val, size_t *i)
 
 	if (!(new = ft_memalloc(sizeof(t_token))))
 		return (ERR_MALLOC);
-	new->val = dup_dot(val, i);
+	new->lab = dup_dot(val, i);
 	new->type = DOT;
 	if (!(next = ft_memalloc(sizeof(t_token))))
 		return (ERR_MALLOC);
-	next->val = quoted(val, i) ? dup_all(val, i) : NULL;
+	next->lab = quoted(val, i) ? dup_all(val, i) : NULL;
 	next->type = DOT_ARG;
 	new->next = next;
 	if (*head == NULL)

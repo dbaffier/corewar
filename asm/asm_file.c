@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:17:03 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/20 20:55:43 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/22 19:43:15 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int			asm_file_open(t_env *e, char *file)
 
 	if ((fd = open(file, O_RDONLY)) == -1)
 		return (ERR_OPEN);
+	e->fd_name = file;
 	e->fd = fd;
 	return (0);
 }
