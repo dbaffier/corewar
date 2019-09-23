@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arena.c                                            :+:      :+:    :+:   */
+/*   get_arena.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/18 23:29:48 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/21 00:56:04 by bmellon          ###   ########.fr       */
+/*   Created: 2019/09/23 21:02:58 by gbourgeo          #+#    #+#             */
+/*   Updated: 2019/09/23 21:02:58 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,22 @@
 int				get_arena(t_env *e)
 {
 	int			i;
+	t_process	*proc;
 	size_t		pc;
 
 	i = 0;
+	proc = e->proc;
 	if ((e->arena = ft_memalloc(MEM_SIZE)) == NULL)
 		return (ERR_MALLOC);
-	while (i < e->nb_players)
+	while (proc)
 	{
 		pc = i * (MEM_SIZE / e->nb_players);
-		ft_memcpy(e->proc[i].pc, (unsigned char *)&pc, sizeof(e->proc[i].pc));
-		ft_memcpy(e->proc[i].reg[0], &e->proc[i].id, REG_SIZE);
+		ft_memcpy(proc->pc, (unsigned char *)&pc, REG_SIZE);
+		ft_memcpy(proc->reg[0], &proc->id, REG_SIZE);
 		ft_memcpy((char *)e->arena + pc,
-		(char *)e->proc[i].file + sizeof(t_header), e->proc[i].data_size);
-		e->proc[i].live = &e->live;
-		i++;
+		(char *)proc->file + sizeof(t_header), proc->data_size);
+		proc->live = &e->live;
+		proc = proc->next;
 	}
 	return (IS_OK);
 }

@@ -16,7 +16,6 @@
 static void			check_players_alive(t_process *proc, int nb)
 {
 	int		i;
-	int		nb_alive;
 
 	i = 0;
 	while (i < nb)
@@ -45,7 +44,6 @@ void			launch_game(t_env *e)
 		while (i--)
 		{
 
-			i--;
 		}
 	}
 }

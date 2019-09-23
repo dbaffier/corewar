@@ -53,9 +53,9 @@ int				get_args(char **av, t_env *e)
 	while (av[i])
 	{
 		if (ft_strequ(av[i], "-dump"))
-			err = get_number(av[++i], &e->nb_cycle);
+			err = get_number(av[++i], &e->dump_cycle);
 		else if (ft_strequ(av[i], "-n"))
-			err = get_number(av[++i], &e->proc[e->nb_players].id);
+			err = get_number(av[++i], &e->id);
 		else if ((tmp = ft_strrchr(av[i], '.')) && ft_strequ(tmp, ".cor"))
 			err = get_player(e, av[i]);
 		else

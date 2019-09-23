@@ -10,18 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   champ.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/18 16:05:42 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/21 01:04:00 by bmellon          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <fcntl.h>
 #include "vm.h"
 #include "libft.h"
@@ -59,70 +47,69 @@ static int		get_data(int fd, t_process *proc)
 	return (IS_OK);
 }
 
-static int		get_champions(t_env *e)
+static int		get_player_data(t_process *proc)
 {
-	int			i;
 	int			fd;
 	off_t		ret;
 
-	i = 0;
-	while (i < e->nb_players)
-	{
-		if ((fd = open(e->proc[i].name, O_RDONLY)) < 0)
-			ret = ERR_OPEN;
-		else if ((e->proc[i].file_size = lseek(fd, 0, SEEK_END)) < 0)
-			ret = ERR_LSEEK;
-		else if ((e->proc[i].file = malloc(e->proc[i].file_size)) == NULL)
-			ret = ERR_MALLOC;
-		else if (lseek(fd, 0, SEEK_SET) < 0)
-			ret = ERR_LSEEK;
-		else
-			ret = get_data(fd, &e->proc[i]);
-		if (fd >= 0)
-			close(fd);
-		if (ret)
-			return (corewar_errors(ret, e->proc[i].name, e));
-		i++;
-	}
-	return (IS_OK);
+	ret = IS_OK;
+	if ((fd = open(proc->name, O_RDONLY)) < 0)
+		ret = ERR_OPEN;
+	else if ((proc->file_size = lseek(fd, 0, SEEK_END)) < 0)
+		ret = ERR_LSEEK;
+	else if ((proc->file = malloc(proc->file_size)) == NULL)
+		ret = ERR_MALLOC;
+	else if (lseek(fd, 0, SEEK_SET) < 0)
+		ret = ERR_LSEEK;
+	else
+		ret = get_data(fd, proc);
+	if (fd >= 0)
+		close(fd);
+	return (ret);
 }
 
-static int		get_id(t_env *e, int *i)
+static int		check_id(t_process *proc, int *id)
 {
-	*i = 0;
-	while (*i < e->nb_players)
-	{
-		if (e->proc[*i].id == e->proc[e->nb_players].id)
-			return (ERR_NUMBER);
-		(*i)++;
-	}
+	t_process	*tmp;
+
+	tmp = proc;
+	if (*id)
+		while (proc)
+		{
+			if (proc->id == *id)
+				return (ERR_NUMBER);
+			proc = proc->next;
+		}
+	else
+		while (tmp)
+		{
+			if (tmp->id == *id)
+			{
+				(*id)++;
+				tmp = proc;
+			}
+		}
 	return (IS_OK);
 }
 
 int				get_player(t_env *e, char *av)
 {
-	int			i;
+	t_process	*tmp;
 
-	i = 0;
 	if (e->nb_players >= MAX_PLAYERS)
 		return (ERR_MAX_CHAMP);
-	if (e->proc[e->nb_players].id == 0)
-	{
-		e->proc[e->nb_players].id = 1;
-		while (i < e->nb_players)
-		{
-			if (e->proc[e->nb_players].id == e->proc[i].id)
-			{
-				e->proc[e->nb_players].id++;
-				i = 0;
-			}
-			else
-				i++;
-		}
-	}
-	else if (get_id(e, &i))
+	if (check_id(e->proc, &e->id))
 		return (ERR_NUMBER);
-	e->proc[i].name = av;
+	tmp = e->proc;
+	if ((e->proc = ft_memalloc(sizeof(*e->proc))) == NULL)
+	{
+		e->proc = tmp;
+		return (ERR_MALLOC);
+	}
+	e->proc->id = e->id;
+	e->proc->name = av;
+	e->proc->next = tmp;
+	e->id = 0;
 	e->nb_players++;
-	return (IS_OK);
+	return (get_player_data(e->proc));
 }

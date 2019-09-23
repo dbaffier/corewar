@@ -13,21 +13,39 @@
 #include "vm.h"
 #include "ft_printf.h"
 
-void		free_env(t_env *e)
+static void		free_proc(t_process **proc)
 {
-	int		i;
-
-	i = 0;
-	while (i < e->nb_players)
-	{
-		if (e->proc[i].file)
-			free(e->proc[i].file);
-		e->proc[i].file = NULL;
-		i++;
-	}
+	if (proc)
+		if (*proc)
+		{
+			free_proc(&(*proc)->next);
+			if ((*proc)->file)
+				free((*proc)->file);
+			free(*proc);
+			*proc = NULL;
+		}
 }
 
-int			corewar_errors(int errnb, char *arg, t_env *e)
+static void		free_live(t_live **live)
+{
+	if (live)
+		if (*live)
+		{
+			free_live(&(*live)->next);
+			free(*live);
+			*live = NULL;
+		}
+}
+
+void			free_env(t_env *e)
+{
+	free_proc(&e->proc);
+	free_live(&e->live);
+	if (e->arena)
+		free(e->arena);
+}
+
+int				corewar_errors(int errnb, char *arg, t_env *e)
 {
 	static char	*error[] = {
 		NULL,

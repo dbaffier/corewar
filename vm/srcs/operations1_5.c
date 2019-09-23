@@ -24,12 +24,11 @@ void	op_live(t_op *op, t_env *e, int i)
 {
 	t_param		params[3];
 	t_process	*proc;
-	int			data;
 
 	proc = &e->proc[i];
 	get_params_len(params, 1, (char *)proc->file[(int)proc->pc + 1], op->opcode);
 	get_param_data(params, 1, (char *)proc->file, (int)proc->pc);
-	data = (int)params[0].param_data;
+	*(int *)params[0].param_data = (int)params[0].param_data;
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{
@@ -42,7 +41,7 @@ void	op_live(t_op *op, t_env *e, int i)
 		}
 		i++;
 	}
-	ft_printf("corewar : Wrong parameter [%d] player id does not exist . No one to keep alive.\n", data);
+	ft_printf("corewar : Wrong parameter [%d] player id does not exist . No one to keep alive.\n", params[0].param_data);
 }
 
 /*
@@ -55,15 +54,30 @@ void	op_ld(t_op *op, t_env *e, int i)
 {
 	t_param		params[3];
 	t_process	*proc;
-	char		reg;
 
 	proc = &e->proc[i];
 	get_params_len(params, 2, op->types, op->opcode);
 	get_param_data(params, 2, (char *)proc->file, (int)proc->pc);
-	reg = (char)(params[1].param_data);
-	parameter = params[0].param_data;
-	*(REG_CAST *)proc->reg[reg] = (REG_CAST)proc->pc + parameter % IDX_MOD;
-	proc->carry = (reg == 0) ? 1 : 0;
+	// oui je demandais si fallait faire plein de if ou si j'etais, nono cest ca ok bisous ;) atta en fait c'est chiant
+	// regarde
+//	(char *)proc->file + *(int *)proc->pc + 1 + get_param_len();
+	/* ici quel registre tu veux + sa taille? */
+	// celui la, hm, nan, dans la memoireah
+	// 
+	// le retour de ma fonction p aeut pas varier mdr 
+	//le registre passe en 2eme parametre
+
+	// nan tkt, toujours un int, quoique, ton retour ca sera REG_CAST xD easy ;) ;)
+//	params[0].param_data = 
+	*(char *)(params[1].param_data) = (char)(params[1].param_data);
+	if (params[0].param_size == 2)
+		*(short *)params[0].param_data = (short)params[0].param_data;
+	else if (params[0].param_size == 4)
+		*(int *)params[0].param_data = (int)params[0].param_data;
+	*(REG_CAST *)proc->reg[(char)params[1].param_data] = (REG_CAST)proc->pc + params[0].param_data % IDX_MOD;
+	// oui mais comment est ce que je get de la memoire en int ? operation_tools
+//get_param_data ? ui, ok attend
+	proc->carry = (params[1].param_data == 0) ? 1 : 0;
 }
 
 /*

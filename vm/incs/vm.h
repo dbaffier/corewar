@@ -13,8 +13,8 @@
 #ifndef VM_H
 # define VM_H
 
-# include "op.h"
 # include <unistd.h>
+# include "op.h"
 
 # if REG_SIZE == 1
 #  define REG_CAST char
@@ -24,7 +24,7 @@
 #  define REG_CAST int
 # else
 #  define REG_CAST long
-#endif
+# endif
 
 /*
 ** Corewar error codes
@@ -49,6 +49,12 @@ enum
 	ERR_SIZE_HIGH,
 };
 
+typedef struct			s_live
+{
+	int					id;
+	struct s_live		*next;
+}						t_live;
+
 typedef struct			s_process
 {
 	int					id;
@@ -63,55 +69,56 @@ typedef struct			s_process
 	int					is_alive;
 	int					is_dead;
 	t_live				**live;
-	struct s_process	*next_proc;
+	struct s_process	*next;
 }						t_process;
 
-typedef struct		s_param
+typedef struct			s_param
 {
-	unsigned char	param_data[4];
-	char			param_size;
-}					t_param;
+	int					value;
+	char				param_size;
+}						t_param;
 
-typedef struct		s_env
+typedef struct			s_env
 {
-	char			*progname;
-	int				dump_cycle;
-	int				nb_players;
-	t_process		*proc;
-	void			*arena;
-	size_t			nb_cycles;
-	t_live			*live;
-}					t_env;
+	char				*progname;
+	int					dump_cycle;
+	int					id;
+	int					nb_players;
+	t_process			*proc;
+	void				*arena;
+	size_t				nb_cycles;
+	t_live				*live;
+}						t_env;
 
-void				free_env(t_env *e);
+void					free_env(t_env *e);
 
-int					corewar_errors(int errnb, char *arg, t_env *e);
+int						corewar_errors(int errnb, char *arg, t_env *e);
 
-int					get_args(char **av, t_env *e);
-int					get_champions(t_env *e);
-int					get_arena(t_env *e);
+int						get_args(char **av, t_env *e);
+int						get_player(t_env *e, char *av);
+int						get_arena(t_env *e);
 
-void				launch_game(t_env *e);
+void					launch_game(t_env *e);
 
-void				op_live(t_op *op, t_env *e, int i);
-void				op_ld(t_op *op, t_env *e, int i);
-void				op_st(t_op *op, t_env *e, int i);
-void				op_add(t_op *op, t_env *e, int i);
-void				op_sub(t_op *op, t_env *e, int i);
-void				op_and(t_op *op, t_env *e, int i);
-void				op_or(t_op *op, t_env *e, int i);
-void				op_xor(t_op *op, t_env *e, int i);
-void				op_zjmp(t_op *op, t_env *e, int i);
-void				op_ldi(t_op *op, t_env *e, int i);
-void				op_sti(t_op *op, t_env *e, int i);
-void				op_fork(t_op *op, t_env *e, int i);
-void				op_lld(t_op *op, t_env *e, int i);
-void				op_ldi(t_op *op, t_env *e, int i);
-void				op_lfork(t_op *op, t_env *e, int i);
-void				op_aff(t_op *op, t_env *e, int i);
+void					op_live(t_op *op, t_env *e, int i);
+void					op_ld(t_op *op, t_env *e, int i);
+void					op_st(t_op *op, t_env *e, int i);
+void					op_add(t_op *op, t_env *e, int i);
+void					op_sub(t_op *op, t_env *e, int i);
+void					op_and(t_op *op, t_env *e, int i);
+void					op_or(t_op *op, t_env *e, int i);
+void					op_xor(t_op *op, t_env *e, int i);
+void					op_zjmp(t_op *op, t_env *e, int i);
+void					op_ldi(t_op *op, t_env *e, int i);
+void					op_sti(t_op *op, t_env *e, int i);
+void					op_fork(t_op *op, t_env *e, int i);
+void					op_lld(t_op *op, t_env *e, int i);
+void					op_ldi(t_op *op, t_env *e, int i);
+void					op_lfork(t_op *op, t_env *e, int i);
+void					op_aff(t_op *op, t_env *e, int i);
 
-void				get_params_len(t_param *params, int nbparam,
-		char *types, char opcode);
-void				get_param_data(t_param *params, int nbparam,
+void					get_params_len(t_param *params, int nbparam, \
+		char types, char opcode);
+void					get_param_data(t_param *params, int nbparam, \
 		char *data, int pc);
 #endif
