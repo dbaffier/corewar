@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 23:30:34 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/22 00:05:33 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/22 19:26:56 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,5 @@ void		write_type(t_data *data)
 	}
 	set_binary(data, 0);
 	write(data->fd, &data->t_bin, 1);
+	data->pc = data->pc + 1;
 }

@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 22:36:59 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/21 03:14:22 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/22 19:43:12 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,15 @@ int		way_to_corewar(t_data *data)
 	write_header(data, COMMENT);
 	write_opc(data, "ld");
 	write_type(data);
-	write_param(data, "42", 3);
-	write_param(data, "1", 0);
+	write_param(data, "42", 4);
+	write_param(data, "1", 1);
+	write_opc(data, "ld");
+	write_type(data);
+	write_param(data, "42", 4);
+	write_param(data, "1", 1);
+	write_opc(data, "ld");
+	write_type(data);
+	write_param(data, "42", 4);
+	write_param(data, "1", 1);
 	return (0);
 }

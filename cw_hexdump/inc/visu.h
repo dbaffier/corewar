@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   write_param.c                                      :+:      :+:    :+:   */
+/*   visu.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/21 00:59:16 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/22 18:13:51 by mmonier          ###   ########.fr       */
+/*   Created: 2019/09/22 22:09:14 by mmonier           #+#    #+#             */
+/*   Updated: 2019/09/23 00:34:33 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef VISU_H
+# define VISU_H
+
 #include "cw_hexdump.h"
 
-void		write_param(t_data *data, char *param, int size)
-{
-	short	dec;
-	short	bin;
-	short	zero;
 
-	dec = ft_atoi(param);
-	bin = binary(dec);
-	lseek(data->fd, data->pc + size, SEEK_SET);
-	write(data->fd, &bin, 1);
-	data->pc = data->pc + size;
-}
+#endif

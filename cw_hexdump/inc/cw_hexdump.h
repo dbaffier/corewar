@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/21 23:28:16 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/23 03:26:38 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,19 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <ncurses.h>
+# include <curses.h>
+# include <pthread.h>
+# include <unistd.h>
 
 # define ERR_OPEN	-1
 # define ERR_MALLOC 5
 
+# define FLAG_N		(1 << 0)
+
 # define NAME		1
 # define COMMENT	2
+# define PADDING	4
 
 # define COR_EXT	".cor"
 
@@ -51,12 +58,16 @@
 typedef struct		s_data
 {
 	short			t_bin;
-	int				cursor;
+	int				pc;
+	int				print_cursor;
 	int				fd;
+	int				flag;
 	int				type[3];
 	int				size;
+	WINDOW			*main_win;
 	char			*name;
 	char			*comment;
+	char			*file_name;
 //	void			(*func)(struct s_data *data);
 }					t_data;
 
@@ -66,6 +77,12 @@ typedef struct		s_opc
 	char			*opcode;
 //	void			(*func)(t_data *data);
 }					t_opc;
+
+typedef struct		s_thread
+{
+	WINDOW			*main_win;
+	int				stop;
+}					t_thread;
 
 //////////// main hexdump
 int			cw_hexdump(t_data *data, char *file);
@@ -91,5 +108,8 @@ void		write_header(t_data *data, int type);
 void		write_magic(t_data *data);
 ////////// binary conversion
 short		binary(char c);
+
+int			init_screen(t_data *data);
+int			wait_or_enter(t_data *data, int sleeping);
 
 #endif 

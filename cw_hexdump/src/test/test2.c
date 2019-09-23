@@ -4,7 +4,7 @@
 
 int		main(void)
 {
-	int bin;
+	unsigned char bin;
 	int fd;
 	int len;
 	int mod = 0;
