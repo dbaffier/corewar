@@ -24,14 +24,16 @@ void	op_live(t_op *op, t_env *e, int i)
 {
 	t_param		params[3];
 	t_process	*proc;
+	int			data;
 
 	proc = &e->proc[i];
-	get_params_len(params, 1, op->types, op->opcode);
-	get_param_data(params, 1, (char *)proc->file, (REG_CAST)proc->pc);
+	get_params_len(params, 1, (char *)proc->file[(int)proc->pc + 1], op->opcode);
+	get_param_data(params, 1, (char *)proc->file, (int)proc->pc);
+	data = (int)params[0].param_data;
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{
-		if ((int)params[0].param_data == e->proc[i].id)
+		if (data == e->proc[i].id)
 		{
 			e->proc[i].cycle_left = CYCLE_TO_DIE;
 			ft_printf("corewar : Player [%d] is alive. Keep fighting.\n",
@@ -40,7 +42,7 @@ void	op_live(t_op *op, t_env *e, int i)
 		}
 		i++;
 	}
-	ft_printf("corewar : Wrong parameter [%d] player id does not exist . No one to keep alive.\n", params[0].param_data);
+	ft_printf("corewar : Wrong parameter [%d] player id does not exist . No one to keep alive.\n", data);
 }
 
 /*
@@ -53,14 +55,13 @@ void	op_ld(t_op *op, t_env *e, int i)
 {
 	t_param		params[3];
 	t_process	*proc;
-	int			reg;
-	int			parameter;
+	char		reg;
 
 	proc = &e->proc[i];
 	get_params_len(params, 2, op->types, op->opcode);
 	get_param_data(params, 2, (char *)proc->file, (int)proc->pc);
-	reg = *(int *)params[1].param_data;//ft_atoi_base(params[1].param_data, "0123456789");
-	parameter = ft_atoi_base(params[0].param_data, "01234556789");
+	reg = (char)(params[1].param_data);
+	parameter = params[0].param_data;
 	*(REG_CAST *)proc->reg[reg] = (REG_CAST)proc->pc + parameter % IDX_MOD;
 	proc->carry = (reg == 0) ? 1 : 0;
 }
