@@ -31,7 +31,7 @@ void	op_live(t_op *op, t_env *e, int i)
 	i = 0;
 	while (i < MAX_PLAYERS)
 	{
-		if (params[0].param_data == e->proc[i].id)
+		if ((int)params[0].param_data == e->proc[i].id)
 		{
 			e->proc[i].cycle_left = CYCLE_TO_DIE;
 			ft_printf("corewar : Player [%d] is alive. Keep fighting.\n",
@@ -53,16 +53,16 @@ void	op_ld(t_op *op, t_env *e, int i)
 {
 	t_param		params[3];
 	t_process	*proc;
-	int			register;
+	int			reg;
 	int			parameter;
 
 	proc = &e->proc[i];
 	get_params_len(params, 2, op->types, op->opcode);
 	get_param_data(params, 2, (char *)proc->file, (int)proc->pc);
-	register = ft_atoi_base(params[1].param_data, "0123456789");
+	reg = ft_atoi_base(params[1].param_data, "0123456789");
 	parameter = ft_atoi_base(params[0].param_data, "01234556789");
-	proc->reg[register] = (int)proc->pc + parameter % IDX_MOD;
-	proc->carry = register == 0 ? 1 : 0;
+	*(REG_CAST *)proc->reg[reg] = (REG_CAST)proc->pc + parameter % IDX_MOD;
+	proc->carry = (reg == 0) ? 1 : 0;
 }
 
 /*
@@ -76,12 +76,12 @@ void	op_st(t_op *op, t_env *e, int i)
 	t_param		params[3];
 	t_process	*proc;
 
-	proc = e->proc[i];
+	proc = &e->proc[i];
 	get_params_len(params, 2, op->types, op->opcode);
-	get_param_data(params, 2, (char *)proc->file, (int)proc->pc);
-	params[1].param_data = (int)proc->pc +
-		reg[param[0].param_data] % IDX_MOD;
-	proc->carry = params[1].data == 0 ? 1 : 0;
+	get_param_data(params, 2, (char *)proc->file, (REG_CAST)proc->pc);
+	*(REG_CAST *)params[1].param_data = (REG_CAST)proc->pc +
+		(REG_CAST)proc->reg[(REG_CAST)params[0].param_data] % IDX_MOD;
+	proc->carry = ((REG_CAST)params[1].param_data == 0) ? 1 : 0;
 }
 
 /*
@@ -95,11 +95,13 @@ void	op_add(t_op *op, t_env *e, int i)
 	t_param		params[3];
 	t_process	*proc;
 
-	proc = e->proc[i];
+	proc = &e->proc[i];
 	get_params_len(params, 3, op->types, op->opcode);
-	get_param_data(params, 3, (char *)proc->file, (REG_SIZE)proc->pc);
-	proc->reg[param[2].param_data] = param[0].param_data + param[1].param_data;
-	proc->carry = proc->reg[params[2].data] == 0 ? 1 : 0;
+	get_param_data(params, 3, (char *)proc->file, (REG_CAST)proc->pc);
+	*(REG_CAST *)proc->reg[(REG_CAST)params[2].param_data] =
+		(REG_CAST)params[0].param_data + (REG_CAST)params[1].param_data;
+	proc->carry = ((REG_CAST)proc->reg[(REG_CAST)params[2].param_data] == 0) ?
+		1 : 0;
 }
 
 /*
@@ -113,9 +115,11 @@ void	op_sub(t_op *op, t_env *e, int i)
 	t_param		params[3];
 	t_process	*proc;
 
-	proc = e->proc[i];
+	proc = &e->proc[i];
 	get_params_len(params, 3, op->types, op->opcode);
-	get_param_data(params, 3, (char *)proc->file, (REG_SIZE)proc->pc);
-	proc->reg[param[2].param_data] = param[0].param_data - param[1].param_data;
-	proc->carry = proc->reg[params[2].data] == 0 ? 1 : 0;
+	get_param_data(params, 3, (char *)proc->file, (REG_CAST)proc->pc);
+	*(REG_CAST *)proc->reg[(REG_CAST)params[2].param_data] =
+		(REG_CAST)params[0].param_data - (REG_CAST)params[1].param_data;
+	proc->carry = ((REG_CAST)proc->reg[(REG_CAST)params[2].param_data] == 0) ?
+		1 : 0;
 }
