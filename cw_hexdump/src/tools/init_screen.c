@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 00:28:15 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/24 01:10:40 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/24 02:36:11 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,10 @@ static void	print_continue(t_data *data)
 void		*thread_quit(void *thread)
 {
 	t_thread	*arg;
+	WINDOW		*win;
 	char		c;
 
-	arg = thread;
+	arg = (t_thread *)thread;
 	while (1)
 	{
 		c = wgetch(arg->main_win);
@@ -35,7 +36,7 @@ void		*thread_quit(void *thread)
 			break ;
 		}
 	}
-	return (NULL);
+	return(NULL);
 }
 
 int			print_first(t_data *data)
@@ -44,6 +45,7 @@ int			print_first(t_data *data)
 	t_thread	arg;
 	int			i;
 
+	i = 0;
 	ft_memset(&arg, 0, sizeof(t_thread));
 	arg.main_win = data->main_win;
 	pthread_create(&thread, NULL, thread_quit, &arg);
@@ -60,6 +62,7 @@ int			print_first(t_data *data)
 		else
 			print_continue(data);
 	}
+//	pthread_cancel(thread);
 	wclear(data->main_win);
 	wrefresh(data->main_win);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/24 01:09:45 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/24 02:16:26 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void		write_header(t_data *data, int type);
 ////////// write magic number
 void		write_magic(t_data *data);
 ////////// binary conversion
-short		binary(char c);
+short		binary(char dec);
 
 int			init_screen(t_data *data);
 int			wait_or_enter(t_data *data, int sleeping);
