@@ -42,24 +42,6 @@ static void		introduce_champ(t_process *proc)
 	}
 }
 
-static void		debug_map(unsigned char *arena, size_t size)
-{
-	size_t		i;
-
-	i = 0;
-	while (i < size)
-	{
-		if (i % 32 == 0)
-			ft_printf("0x%04x : ", i);
-		ft_printf("%02x", arena[i]);
-		i++;
-		if (i % 32 == 0)
-			ft_printf("\n");
-		else
-			ft_printf(" ");
-	}
-}
-
 int				main(int ac, char **av)
 {
 	t_env	e;
@@ -67,10 +49,10 @@ int				main(int ac, char **av)
 	ft_memset(&e, 0, sizeof(e));
 	e.progname = ft_strrchr(av[0], '/');
 	e.progname = (e.progname) ? e.progname + 1 : av[0];
+	e.dump_cycle = -1;
 	if (ac < 2 || get_args(av, &e) || get_arena(&e))
 		return (usage(av[0]));
 	introduce_champ(e.proc);
 	launch_game(&e);
-	debug_map(e.arena, MEM_SIZE);
 	free_env(&e);
 }

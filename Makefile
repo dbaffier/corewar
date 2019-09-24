@@ -16,19 +16,21 @@ VM_DIR		= vm/
 VM_SRC_D	= $(VM_DIR)srcs/
 VM_INC_D	= $(VM_DIR)incs/
 VM_SRC		+=	main.c				\
+				dump_map.c			\
 				errors.c			\
 				get_args.c			\
 				get_player.c		\
 				get_arena.c			\
 				op.c				\
 				launch_game.c		\
+				remove_player.c		\
 #				operation_tools.c	\
 				operations1_5.c		\
 				operations6_10.c	\
 				operations11_15.c	\
 				operations_aff.c	\
 
-CC			= gcc 
+CC			= gcc
 CFLAGS		= -Wall -Werror -Wextra
 CFLAGS		+= -std=c11 -Wmissing-prototypes -pedantic -pedantic-errors
 
@@ -39,7 +41,7 @@ OBJS_DIR	= $(VM_DIR)objs/
 OBJS_VM		+= $(addprefix $(OBJS_DIR), $(VM_SRC:.c=.o))
 
 DEP_DIR		= .deps/
-DEP			= $(addprefix $(DEP_DIR), $(SRC:.c=.d))
+DEP			= $(addprefix $(DEP_DIR), $(VM_SRC:.c=.d))
 
 LFT_DIR		= libft/
 

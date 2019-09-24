@@ -13,17 +13,21 @@
 #include "vm.h"
 #include "libft.h"
 
-static int		get_number(char *av, int *value)
+static int		get_number(char *av, int *value, int min_value)
 {
 	int			i;
 
 	i = 0;
+	while (av[i] && ft_isspace(av[i]))
+		i++;
+	if (av[i] == '-')
+		i++;
 	while (av[i] && ft_isdigit(av[i]))
 		i++;
 	if (!av[i])
 	{
 		*value = ft_atoi(av);
-		if (*value > 0)
+		if (*value >= min_value)
 			return (IS_OK);
 		return (ERR_NEGATIVE);
 	}
@@ -41,9 +45,9 @@ int				get_args(char **av, t_env *e)
 	while (av[i])
 	{
 		if (ft_strequ(av[i], "-dump"))
-			err = get_number(av[++i], &e->dump_cycle);
+			err = get_number(av[++i], &e->dump_cycle, 0);
 		else if (ft_strequ(av[i], "-n"))
-			err = get_number(av[++i], &e->id);
+			err = get_number(av[++i], &e->id, 1);
 		else if ((tmp = ft_strrchr(av[i], '.')) && ft_strequ(tmp, ".cor"))
 			err = get_player(e, av[i]);
 		else

@@ -93,38 +93,6 @@ static int		check_id(t_process *proc, int *id)
 	return (IS_OK);
 }
 
-static void			insert_process(t_process *proc, t_process **head)
-{
-	// t_process		*tail;
-
-	proc->next = *head;
-	if (*head)
-		(*head)->prev = proc;
-	*head = proc;
-	// if ((tail = *head) != NULL)
-	// {
-	// 	while (tail->next && tail->id < proc->id)
-	// 		tail = tail->next;
-	// 	if (tail->id < proc->id)
-	// 	{
-	// 		tail->next = proc;
-	// 		proc->prev = tail;
-	// 	}
-	// 	else
-	// 	{
-	// 		proc->prev = tail->prev;
-	// 		if (proc->prev)
-	// 			proc->prev->next = proc;
-	// 		else
-	// 			*head = proc;
-	// 		tail->prev = proc;
-	// 		proc->next = tail;
-	// 	}
-	// }
-	// else
-	// 	*head = proc;
-}
-
 int				get_player(t_env *e, char *av)
 {
 	t_process	*proc;
@@ -137,7 +105,10 @@ int				get_player(t_env *e, char *av)
 		return (ERR_MALLOC);
 	proc->id = e->id;
 	proc->name = av;
-	insert_process(proc, &e->proc);
+	proc->next = e->proc;
+	if (proc->next)
+		proc->next->prev = proc;
+	e->proc = proc;
 	e->id = 0;
 	e->nb_players++;
 	return (get_player_data(proc));

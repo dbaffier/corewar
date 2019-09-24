@@ -26,21 +26,9 @@ static void		free_proc(t_process **proc)
 		}
 }
 
-static void		free_live(t_live **live)
-{
-	if (live)
-		if (*live)
-		{
-			free_live(&(*live)->next);
-			free(*live);
-			*live = NULL;
-		}
-}
-
 void			free_env(t_env *e)
 {
 	free_proc(&e->proc);
-	free_live(&e->live);
 	if (e->arena)
 		free(e->arena);
 }

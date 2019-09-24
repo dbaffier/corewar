@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/17 18:03:25 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/23 03:20:23 by bmellon          ###   ########.fr       */
+/*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
+/*   Updated: 2019/09/24 03:16:00 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ enum
 
 typedef struct			s_live
 {
-	int					id;
-	struct s_live		*next;
+	int					last_id;
+	size_t				total;
 }						t_live;
 
 typedef struct			s_process
@@ -67,9 +67,8 @@ typedef struct			s_process
 	char				pc[REG_SIZE];
 	char				carry;
 	int					cycle_left;
-	int					is_alive;
-	int					is_dead;
-	t_live				**live;
+	int					is_alive; /* must be 0 or 1 */
+	t_live				*live;
 	struct s_process	*next;
 	struct s_process	*prev;
 }						t_process;
@@ -88,8 +87,8 @@ typedef struct			s_env
 	int					nb_players;
 	t_process			*proc;
 	void				*arena;
-	size_t				nb_cycles;
-	t_live				*live;
+	int					cycle_to_die;
+	t_live				live;
 }						t_env;
 
 void					free_env(t_env *e);
@@ -99,8 +98,10 @@ int						corewar_errors(int errnb, char *arg, t_env *e);
 int						get_args(char **av, t_env *e);
 int						get_player(t_env *e, char *av);
 int						get_arena(t_env *e);
+t_process				*remove_player(t_process *proc, t_process **head);
 
 void					launch_game(t_env *e);
+void					dump_map(unsigned char *arena, size_t size);
 
 void					op_live(t_op *op, t_env *e, int i);
 void					op_ld(t_op *op, t_env *e, int i);

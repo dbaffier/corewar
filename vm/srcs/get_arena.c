@@ -13,7 +13,6 @@
 #include "vm.h"
 #include "libft.h"
 
-#include "ft_printf.h"
 int				get_arena(t_env *e)
 {
 	int			i;
@@ -35,5 +34,6 @@ int				get_arena(t_env *e)
 		proc = proc->next;
 		i--;
 	}
+	e->cycle_to_die = CYCLE_TO_DIE;
 	return (IS_OK);
 }

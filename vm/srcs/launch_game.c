@@ -10,40 +10,54 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "vm.h"
+#include "libft.h"
 
-static void			check_players_alive(t_process *proc, int nb)
+static void			check_live_total(t_live *live, int *cycle_to_die)
 {
-	int		i;
+	if (live->total == NBR_LIVE)
+		if ((*cycle_to_die = *cycle_to_die - CYCLE_DELTA) < 0)
+			*cycle_to_die = 0;
+	ft_memset(live, 0, sizeof(*live));
+}
 
-	i = 0;
-	while (i < nb)
+static int			check_players_alive(t_process **head, t_env *e)
+{
+	t_process	*proc;
+	int			alive;
+
+	alive = 0;
+	proc = *head;
+	while (proc)
 	{
-		if (!proc[i].is_alive)
+		alive += proc->is_alive;
+		if (!proc->is_alive)
 		{
-			if (proc[i].is_dead == 0)
-				system("afplay ~/Desktop/roblox-death-sound-effect.mp3");
-			proc[i].is_dead = 1;
 		}
-		i++;
+		else
+			proc = proc->next;
 	}
+	check_live_total(&e->live, &e->cycle_to_die);
+	return (alive);
 }
 
 void			launch_game(t_env *e)
 {
-	int		i;
-	int		nb_cycles;
+	t_process	*proc;
+	size_t		nb_cycles;
 
 	nb_cycles = 0;
-	while (0)
+	while (1)
 	{
-		if (nb_cycles == CYCLE_TO_DIE)
-			check_players_alive(e->proc, e->nb_players);
-		i = e->nb_players;
-		while (i--)
+		proc = e->proc;
+		if (e->dump_cycle > -1 && (size_t)e->dump_cycle == nb_cycles)
 		{
-			;
+			dump_map(e->arena, MEM_SIZE);
+			return ;
 		}
+		if ((nb_cycles + 1) % e->cycle_to_die == 0)
+			if (!check_players_alive(&e->proc, e))
+				break ;
+		nb_cycles++;
 	}
 }
