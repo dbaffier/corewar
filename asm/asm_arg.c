@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 21:40:14 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/23 00:58:00 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/24 02:38:11 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ static void		parse_splited(t_token *ptr, char *str)
 	}
 	else
 	{
-		ptr->val = ft_atoi(str);
+		ptr->lab = str;
 		ptr->type = T_IND;
 	}
 }
 
-static int		parse_arg(t_token *ptr, char **splited)
+static t_token		*parse_arg(t_token *ptr, char **splited, size_t *size)
 {
 	size_t		i;
 	t_token		*save;
@@ -56,26 +56,36 @@ static int		parse_arg(t_token *ptr, char **splited)
 	while (splited[i])
 	{
 		parse_splited(ptr, splited[i]);
+		if (splited[i + 1])
+		{
+			if (!(ptr->next = ft_memalloc(sizeof(t_token))))
+				return (NULL);
+			ptr = ptr->next;
+			*size = *size + 1;
+		}
 		i++;
 	}
-	return (0);
+	return (ptr);
 }
 
 int		grep_arg(t_token *ptr, char *line, size_t *i)
 {
 	size_t		j;
+	size_t		size;
 	t_token		*save;
 	char		**arg;
 	char		**splited;
 
 	j = 0;
+	size = 0;
 	save = ptr;
 	if ((arg = ft_strsplit(&line[*i], ',')) == NULL)
 		return (ERR_MALLOC);
 	while (arg[j])
 	{
 		splited = ft_strsplitws(arg[j]);
-		parse_arg(ptr, splited);
+		if (!(ptr = parse_arg(ptr, splited, &size)))
+			return (ERR_MALLOC);
 		if (arg[j + 1])
 		{
 			if (!(ptr->next = ft_memalloc(sizeof(t_token))))
@@ -84,8 +94,11 @@ int		grep_arg(t_token *ptr, char *line, size_t *i)
 		}
 		free(splited);
 		j++;
+		size++;
 	}
-	ptr->arg_n = j;
+	printf("size ---- : [%zu]\n", size);
+	printf("j : [%zu]\n", j);
+	save->arg_n = size;
 	ft_freetab(&arg);
 	while (line[*i])
 		*i = *i + 1;

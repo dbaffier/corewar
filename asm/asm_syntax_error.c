@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 01:20:28 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/23 03:32:38 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/24 01:43:08 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ int		syntax_error(t_env *e, int error, t_token *tok, int line)
 		ft_printf("%s\n", tab[error]);
 	else
 	{
-		if (tok->type == LABEL)
+		if (error == ERR_ARG_N)
+			ft_dprintf(2, "too much arguments on line [%d]\n", line);
+		else if (tok->type == LABEL)
 			ft_dprintf(2, "lexical error on label [%s] on line [%d]\n", tok->lab, line);
 		else if (tok->type == OP_CODE)
 			ft_dprintf(2, "lexical error on [%s] on line [%d]\n", tok->lab, line);

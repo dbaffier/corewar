@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:19:41 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/23 03:04:47 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/24 01:44:53 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define ERR_COMMENT_LEN	4
 # define ERR_LAB			5
 # define ERR_LAB_FOUND		6
+# define ERR_OPCODE			7
+# define ERR_ARG_N			8
 
 # define ERR_STR_FILE		"filename too short"
 # define ERR_STR_EXTENSION	"file extension is not correct"
@@ -114,6 +116,8 @@ int			syntax_analysis(t_env *e, t_aolist *aolist);
 int			asm_syntax_label(t_env *e, t_aolist *head, t_token *curr);
 int			evaluate_header(t_env *e, t_aolist *head);
 int			asm_syntax_header(t_env *e, t_aolist *head);
+int			asm_syntax_op(t_env *e, t_aolist *head, t_token *curr);
+int			asm_syntax_arg(t_env *e, t_aolist *head, t_token *curr);
 int			asm_lexical_label(char *lab);
 int			syntax_error(t_env *e, int error, t_token *tok, int line);
 

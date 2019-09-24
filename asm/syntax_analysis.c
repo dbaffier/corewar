@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 19:46:48 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/23 02:54:44 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/24 00:35:28 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,12 @@ int		syntax_analysis(t_env *e, t_aolist *aolist)
 	{
 		curr = aolist->tok;
 		if (curr->type == LABEL)
+		{
 			curr = curr->next;
-		asm_syntax_label(e, head, curr->next);
+			asm_syntax_label(e, head, curr->next);
+		}
+		asm_syntax_op(e, head, curr);
+		asm_syntax_arg(e, head, curr->next);
 		aolist = aolist->next;
 	}
 	return (0);
