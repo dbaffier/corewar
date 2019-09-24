@@ -53,13 +53,14 @@ enum
 typedef struct			s_live
 {
 	int					last_id;
+	char				last_name[PROG_NAME_LENGTH + 1];
 	size_t				total;
 }						t_live;
 
 typedef struct			s_process
 {
 	int					id;
-	char				*name;
+	char				*file_name;
 	off_t				file_size;
 	void				*file;
 	int					data_size;
@@ -88,6 +89,7 @@ typedef struct			s_env
 	t_process			*proc;
 	void				*arena;
 	int					cycle_to_die;
+	int					checks;
 	t_live				live;
 }						t_env;
 

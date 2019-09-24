@@ -53,7 +53,7 @@ static int		get_player_data(t_process *proc)
 	off_t		ret;
 
 	ret = IS_OK;
-	if ((fd = open(proc->name, O_RDONLY)) < 0)
+	if ((fd = open(proc->file_name, O_RDONLY)) < 0)
 		ret = ERR_OPEN;
 	else if ((proc->file_size = lseek(fd, 0, SEEK_END)) < 0)
 		ret = ERR_LSEEK;
@@ -104,7 +104,7 @@ int				get_player(t_env *e, char *av)
 	if ((proc = ft_memalloc(sizeof(*proc))) == NULL)
 		return (ERR_MALLOC);
 	proc->id = e->id;
-	proc->name = av;
+	proc->file_name = av;
 	proc->next = e->proc;
 	if (proc->next)
 		proc->next->prev = proc;
