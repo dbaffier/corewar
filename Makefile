@@ -15,13 +15,13 @@ NAME		= corewar
 VM_DIR		= vm/
 VM_SRC_D	= $(VM_DIR)srcs/
 VM_INC_D	= $(VM_DIR)incs/
-VM_SRC		+=	get_args.c			\
-				get_player.c		\
-				main.c				\
-				op.c				\
+VM_SRC		+=	main.c				\
 				errors.c			\
-				arena.c				\
-				game.c				\
+				get_args.c			\
+				get_player.c		\
+				get_arena.c			\
+				op.c				\
+				launch_game.c		\
 #				operation_tools.c	\
 				operations1_5.c		\
 				operations6_10.c	\

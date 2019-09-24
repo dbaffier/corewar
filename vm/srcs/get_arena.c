@@ -13,25 +13,27 @@
 #include "vm.h"
 #include "libft.h"
 
+#include "ft_printf.h"
 int				get_arena(t_env *e)
 {
 	int			i;
 	t_process	*proc;
 	size_t		pc;
 
-	i = 0;
+	i = e->nb_players - 1;
 	proc = e->proc;
 	if ((e->arena = ft_memalloc(MEM_SIZE)) == NULL)
-		return (ERR_MALLOC);
+		return (corewar_errors(ERR_MALLOC, NULL, e));
 	while (proc)
 	{
 		pc = i * (MEM_SIZE / e->nb_players);
-		ft_memcpy(proc->pc, (unsigned char *)&pc, REG_SIZE);
+		ft_memcpy(proc->pc, &pc, REG_SIZE);
 		ft_memcpy(proc->reg[0], &proc->id, REG_SIZE);
 		ft_memcpy((char *)e->arena + pc,
 		(char *)proc->file + sizeof(t_header), proc->data_size);
 		proc->live = &e->live;
 		proc = proc->next;
+		i--;
 	}
 	return (IS_OK);
 }

@@ -31,12 +31,14 @@ static void		introduce_champ(t_process *proc)
 	t_header	*play;
 
 	ft_printf("Introducing contestants...\n");
+	while (proc->next)
+		proc = proc->next;
 	while (proc)
 	{
 		play = (t_header *)proc->file;
 		ft_printf("* Player %d, weighting %d bytes, \"%s\" (\"%s\") !\n",
 		proc->id, proc->data_size, play->prog_name, play->comment);
-		proc = proc->next;
+		proc = proc->prev;
 	}
 }
 

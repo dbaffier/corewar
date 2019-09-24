@@ -54,5 +54,5 @@ int				get_args(char **av, t_env *e)
 	}
 	if (!e->nb_players)
 		return (corewar_errors(ERR_NO_CHAMP, NULL, e));
-	return (IS_OK);
+	return (0);
 }

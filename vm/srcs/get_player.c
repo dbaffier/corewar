@@ -80,7 +80,7 @@ static int		check_id(t_process *proc, int *id)
 				return (ERR_NUMBER);
 			proc = proc->next;
 		}
-	else
+	else if ((*id = 1))
 		while (tmp)
 		{
 			if (tmp->id == *id)
@@ -88,36 +88,41 @@ static int		check_id(t_process *proc, int *id)
 				(*id)++;
 				tmp = proc;
 			}
+			tmp = tmp->next;
 		}
 	return (IS_OK);
 }
 
 static void			insert_process(t_process *proc, t_process **head)
 {
-	t_process		*tail;
+	// t_process		*tail;
 
-	if ((tail = *head) != NULL)
-	{
-		while (tail->next && tail->id < proc->id)
-			tail = tail->next;
-		if (tail->id < proc->id)
-		{
-			tail->next = proc;
-			proc->prev = tail;
-		}
-		else
-		{
-			proc->prev = tail->prev;
-			if (proc->prev)
-				proc->prev->next = proc;
-			else
-				*head = proc;
-			tail->prev = proc;
-			proc->next = tail;
-		}
-	}
-	else
-		*head = proc;
+	proc->next = *head;
+	if (*head)
+		(*head)->prev = proc;
+	*head = proc;
+	// if ((tail = *head) != NULL)
+	// {
+	// 	while (tail->next && tail->id < proc->id)
+	// 		tail = tail->next;
+	// 	if (tail->id < proc->id)
+	// 	{
+	// 		tail->next = proc;
+	// 		proc->prev = tail;
+	// 	}
+	// 	else
+	// 	{
+	// 		proc->prev = tail->prev;
+	// 		if (proc->prev)
+	// 			proc->prev->next = proc;
+	// 		else
+	// 			*head = proc;
+	// 		tail->prev = proc;
+	// 		proc->next = tail;
+	// 	}
+	// }
+	// else
+	// 	*head = proc;
 }
 
 int				get_player(t_env *e, char *av)

@@ -64,7 +64,7 @@ typedef struct			s_process
 	void				*file;
 	int					data_size;
 	char				reg[REG_NUMBER][REG_SIZE];
-	char				pc/*[REG_SIZE]*/;
+	char				pc[REG_SIZE];
 	char				carry;
 	int					cycle_left;
 	int					is_alive;
