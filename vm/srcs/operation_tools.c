@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/23 03:20:21 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/25 13:24:45 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_process	*new_proc(t_process *proc, int value)
 	new = ft_memalloc(sizeof(t_process));
 	ft_memcpy(new, proc, sizeof(t_process));
 	*(REG_CAST *)new->pc = (*(REG_CAST)proc->pc + *(REG_CAST)value) % IDX_MOD;
+	new->prev = proc;
+	new->next = NULL;
 	return (new);
 }
 
@@ -64,7 +66,7 @@ void	get_params_len(t_param *params, int nbparam, char types, char opcode)
 	}
 }
 
-void	get_params_data(t_param *params, int nbparam, char *data, int pc)
+void	get_params_data(t_param *params, int nbparam, unsigned char *data, int pc)
 {
 	int		i;
 	int		size;

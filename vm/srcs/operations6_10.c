@@ -6,7 +6,7 @@
 /*   By: bmellon <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/23 03:20:20 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/25 13:26:42 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@
 ** meme fonctionnement pour le carry
 */
 
-void	op_and(t_process *proc, t_op *op, t_env *e)
+void	op_and(t_process *proc, t_env *e)
 {
 	t_param		params[3];
 	int			len;
 	int			i;
 
 	i = 0;
-	get_params_len(params, 3, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 6);
-	get_params_data(params, 3, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
+	get_params_len(params, 3, *(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1, 6);
+	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
 	*(REG_CAST *)proc->reg[params[2].value] = (params[0].value & params[1].value) % IDX_MOD;
 	proc->carry = (params[0].value & params[1].value) == 0 ? 1 : 0;
 	while (i < 3 && params[i].size != 0)
@@ -42,15 +42,15 @@ void	op_and(t_process *proc, t_op *op, t_env *e)
 ** meme fonctionnement pour le carry
 */
 
-void	op_or(t_process *proc, t_op *op, t_env *e)
+void	op_or(t_process *proc, t_env *e)
 {
 	t_param		params[3];
 	int			len;
 	int			i;
 
 	i = 0;
-	get_params_len(params, 3, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 7);
-	get_params_data(params, 3, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
+	get_params_len(params, 3, *(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1, 7);
+	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
 	*(REG_CAST *)proc->reg[params[2].value] = (params[0].value | params[1].value) % IDX_MOD;
 	proc->carry = (params[0].value | params[1].value) == 0 ? 1 : 0;
 	while (i < 3 && params[i].size != 0)
@@ -64,15 +64,15 @@ void	op_or(t_process *proc, t_op *op, t_env *e)
 ** meme fonctionnement pour le carry
 */
 
-void	op_xor(t_process *proc, t_op *op, t_env *e)
+void	op_xor(t_process *proc, t_env *e)
 {
 	t_param		params[3];
 	int			len;
 	int			i;
 
 	i = 0;
-	get_params_len(params, 3, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 8);
-	get_params_data(params, 3, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
+	get_params_len(params, 3, *(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1, 8);
+	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
 	*(REG_CAST *)proc->reg[params[2].value] = (params[0].value ^ params[1].value) % IDX_MOD;
 	proc->carry = (params[0].value ^ params[1].value) == 0 ? 1 : 0;
 	while (i < 3 && params[i].size != 0)
@@ -85,7 +85,7 @@ void	op_xor(t_process *proc, t_op *op, t_env *e)
 ** jump a l'adresse donnee en parametre si le carry est a un, sinon fail
 */
 
-void	op_zjmp(t_process *proc, t_op *op, t_env *e)
+void	op_zjmp(t_process *proc, t_env *e)
 {
 	t_param		params[3];
 	int			len;
@@ -94,8 +94,8 @@ void	op_zjmp(t_process *proc, t_op *op, t_env *e)
 	i = 0;
 	if (proc->carry == 1)
 	{
-		get_params_len(params, 1, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 9);
-		get_params_data(params, 1, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
+		get_params_len(params, 1, *(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1, 9);
+		get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
 		*(REG_CAST *)proc->pc = params[0].value;
 	}
 	while (i < 3 && params[i].size != 0)
@@ -110,7 +110,7 @@ void	op_zjmp(t_process *proc, t_op *op, t_env *e)
 ** si l'addition = 0 le carry passe a 1
 */
 
-void	op_ldi(t_process *proc, t_op *op, t_env *e)
+void	op_ldi(t_process *proc, t_env *e)
 {
 	t_param		params[3];
 	int			addr;
@@ -118,10 +118,10 @@ void	op_ldi(t_process *proc, t_op *op, t_env *e)
 	int			i;
 
 	i = 0;
-	get_params_len(params, 3, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 10);
-	get_params_data(params, 3, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
+	get_params_len(params, 3, *(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1, 10);
+	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
 	addr = (params[0].value + params[1].value) % IDX_MOD;
-	*(REG_CAST *)proc->reg[params[2].value] = ((*(unsigned char *)e->arena + *(REG_CAST *)proc->pc)[addr];
+	*(REG_CAST *)proc->reg[params[2].value] = (*(unsigned char *)e->arena)[proc->pc + addr]; //avec les reg_cast compile pas
 	proc->carry = addr == 0 ? 1 : 0;
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;

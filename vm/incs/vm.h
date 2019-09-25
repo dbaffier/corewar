@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/24 03:16:00 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/25 13:25:14 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,25 +112,26 @@ void					ncurses_end(void);
 void					launch_game(t_env *e);
 void					dump_map(unsigned char *arena, size_t size);
 
-void					op_live(t_process *proc, t_op *op, t_env *e);
-void					op_ld(t_process *proc, t_op *op, t_env *e);
-void					op_st(t_process *proc, t_op *op, t_env *e);
-void					op_add(t_process *proc, t_op *op, t_env *e);
-void					op_sub(t_process *proc, t_op *op, t_env *e);
-void					op_and(t_process *proc, t_op *op, t_env *e);
-void					op_or(t_process *proc, t_op *op, t_env *e);
-void					op_xor(t_process *proc, t_op *op, t_env *e);
-void					op_zjmp(t_process *proc, t_op *op, t_env *e);
-void					op_ldi(t_process *proc, t_op *op, t_env *e);
-void					op_sti(t_process *proc, t_op *op, t_env *e);
-void					op_fork(t_process *proc, t_op *op, t_env *e);
-void					op_lld(t_process *proc, t_op *op, t_env *e);
-void					op_ldi(t_process *proc, t_op *op, t_env *e);
-void					op_lfork(t_process *proc, t_op *op, t_env *e);
-void					op_aff(t_process *proc, t_op *op, t_env *e);
+void					op_live(t_process *proc, t_env *e);
+void					op_ld(t_process *proc, t_env *e);
+void					op_st(t_process *proc, t_env *e);
+void					op_add(t_process *proc, t_env *e);
+void					op_sub(t_process *proc, t_env *e);
+void					op_and(t_process *proc, t_env *e);
+void					op_or(t_process *proc, t_env *e);
+void					op_xor(t_process *proc, t_env *e);
+void					op_zjmp(t_process *proc, t_env *e);
+void					op_ldi(t_process *proc, t_env *e);
+void					op_sti(t_process *proc, t_env *e);
+void					op_fork(t_process *proc, t_env *e);
+void					op_lld(t_process *proc, t_env *e);
+void					op_ldi(t_process *proc, t_env *e);
+void					op_lfork(t_process *proc, t_env *e);
+void					op_aff(t_process *proc, t_env *e);
 
 void					get_params_len(t_param *params, int nbparam, \
 		char types, char opcode);
 void					get_params_data(t_param *params, int nbparam, \
-		char *data, int pc);
+		unsigned char *data, int pc);
+t_process				*new_proc(t_process *proc, int value);
 #endif
