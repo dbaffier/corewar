@@ -57,7 +57,9 @@ void	op_fork(t_process *proc, t_env *e)
 	get_params_len(params, 1, *(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1, 12);
 	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
 	if (params[0].value != 0)
+	{
 		proc->next = new_proc(proc, params[0].value);
+	}
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;
 	*((REG_CAST *)proc->pc) += len + 2;

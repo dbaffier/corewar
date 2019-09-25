@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cw_ncurse.h                                        :+:      :+:    :+:   */
+/*   vm_ncurse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:40:54 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/25 00:04:56 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/25 16:12:09 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # include <ncurses.h>
 # include "op.h"
+
+# define ARENA_VALUE_PER_LINE	64
+# define ARENA_LINE_LEN			(ARENA_VALUE_PER_LINE * 3)
+# define ARENA_COL_LEN			(MEM_SIZE / ARENA_VALUE_PER_LINE)
 
 typedef struct		s_ncurse
 {
@@ -25,7 +29,5 @@ typedef struct		s_ncurse
 	WINDOW			*infoWin;
 	WINDOW			*infoLine;
 }					t_ncurse;
-
-struct s_ncurse		ncu;
 
 #endif

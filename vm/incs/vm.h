@@ -15,6 +15,7 @@
 
 # include <unistd.h>
 # include "op.h"
+# include "vm_ncurse.h"
 
 # if REG_SIZE == 1
 #  define REG_CAST char
@@ -87,6 +88,7 @@ typedef struct			s_param
 typedef struct			s_env
 {
 	char				*progname;
+	t_ncurse			ncu;
 	pid_t				pid;
 	int					dump_cycle;
 	int					id;
@@ -98,20 +100,49 @@ typedef struct			s_env
 	t_live				live;
 }						t_env;
 
+struct s_env			g_env;
+
+/*
+** Signals Handlers
+*/
+void					corewar_end(int i);
+void					ncurses_resizeWindow(int sig);
+
+/*
+** Errors && Free Functions
+*/
 int						corewar_errors(int errnb, char *arg, t_env *e);
 void					free_env(t_env *e);
 
+/*
+** Get arguments Functions
+*/
 int						get_args(char **av, t_env *e);
 int						get_player(t_env *e, char *av);
 int						get_arena(t_env *e);
 t_process				*remove_player(t_process *proc, t_process **head);
 
+/*
+** Ncurses Functions
+*/
 int						ncurse_view(t_env *e);
-void					ncurses_end(void);
+void					ncurses_end(t_env *e);
+int						ncurses_termTooSmall(t_env *e);
+int						createArenaBox(t_env *e);
+int						createInfoBox(t_env *e);
+int						createInfoLine(t_env *e);
+int						ncurses_error(char *str, t_env *e);
+void					ncurses_affArena(t_env *e);
 
+/*
+** Game Functions
+*/
 void					launch_game(t_env *e);
 void					dump_map(unsigned char *arena, size_t size);
 
+/*
+** Instructions Functions
+*/
 void					op_live(t_process *proc, t_env *e);
 void					op_ld(t_process *proc, t_env *e);
 void					op_st(t_process *proc, t_env *e);

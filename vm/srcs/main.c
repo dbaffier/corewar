@@ -30,7 +30,13 @@ static void		introduce_champ(t_process *proc)
 {
 	t_header	*play;
 
-	ft_printf("Introducing contestants...\n");
+	if (!e->pid)
+		ft_printf("Introducing contestants...\n");
+	else
+	{
+		wclear(e->ncu.infoLine);
+		wrefresh(e->ncu.infoLine);
+	}
 	while (proc->next)
 		proc = proc->next;
 	while (proc)
@@ -42,28 +48,21 @@ static void		introduce_champ(t_process *proc)
 	}
 }
 
-static void		corewar_end(int i)
-{
-	if (i != SIGINT)
-		return ;
-	ncurses_end();
-	exit(1);
-}
-
 int				main(int ac, char **av)
 {
-	t_env	e;
+	t_env	*e;
 
-	ft_memset(&e, 0, sizeof(e));
-	e.progname = ft_strrchr(av[0], '/');
-	e.progname = (e.progname) ? e.progname + 1 : av[0];
-	e.dump_cycle = -1;
-	if (ac < 2 || get_args(av, &e) || get_arena(&e))
+	e = &g_env;
+	ft_memset(e, 0, sizeof(*e));
+	e->progname = ft_strrchr(av[0], '/');
+	e->progname = (e->progname) ? e->progname + 1 : av[0];
+	e->dump_cycle = -1;
+	if (ac < 2 || get_args(av, e) || get_arena(e))
 		return (usage(av[0]));
-	introduce_champ(e.proc);
+	introduce_champ(e->proc);
 	signal(SIGINT, corewar_end);
-	launch_game(&e);
-	if (e.pid)
-		waitpid(e.pid, NULL, 0);
-	free_env(&e);
+	launch_game(e);
+	if (e->pid)
+		waitpid(e->pid, NULL, 0);
+	free_env(e);
 }

@@ -19,9 +19,10 @@ t_process	*new_proc(t_process *proc, int value)
 
 	new = ft_memalloc(sizeof(t_process));
 	ft_memcpy(new, proc, sizeof(t_process));
-	*(REG_CAST *)new->pc = (*(REG_CAST)proc->pc + *(REG_CAST)value) % IDX_MOD;
+	*(REG_CAST *)new->pc = (*(REG_CAST *)proc->pc + value) % IDX_MOD;
 	new->prev = proc;
-	new->next = NULL;
+	if ((new->next = proc->next) != NULL)
+		new->next->prev = new;
 	return (new);
 }
 
