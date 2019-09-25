@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 00:00:51 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/24 02:17:26 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/25 21:27:14 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static int		len_binary(char dec)
 		dec /= 2;
 		len++;
 	}
+	if (len == 0)
+		return (1);
 	return (len);
 }
 
@@ -31,7 +33,7 @@ static char		*str_binary(char dec)
 	char	*stock;
 
 	i = 0;
-	if (!(stock = (char *)malloc(sizeof(char) * len_binary(dec) + 2)))
+	if (!(stock = (char *)malloc(sizeof(char) * len_binary(dec) + 1)))
 		return (NULL);
 	while (dec > 0)
 	{
@@ -53,7 +55,7 @@ short			binary(char dec)
 	if (!(stock = str_binary(dec)))
 		return (ERR_MALLOC);
 	i = ft_strlen(stock) - 1;
-	while (stock && stock[i] && i >= 0)
+	while (i >= 0 && stock && stock[i])
 	{
 		if (stock[i] == 49)
 			bin |= 1;

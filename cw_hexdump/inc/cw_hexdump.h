@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/25 19:06:16 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/26 00:45:53 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <curses.h>
 # include <pthread.h>
 # include <unistd.h>
+# include <sys/types.h>
+# include <signal.h>
 
 # define ERR_OPEN	-1
 # define ERR_MALLOC 5
@@ -60,6 +62,7 @@
 typedef struct		s_data
 {
 	short			t_bin;
+	int				pos;
 	int				pc;
 	int				x;
 	int				y;
@@ -128,5 +131,8 @@ void		print_compilation(t_data *data);
 void		print_dot(t_data *data);
 void		print_end(t_data *data);
 void		print_menu(t_data *data);
+void		starting_color(t_data *data);
+void		reset_colors(t_data *data);
+void		print_legend(t_data *data, int x, int y);
 
 #endif 

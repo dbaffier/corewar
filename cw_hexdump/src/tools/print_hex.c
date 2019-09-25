@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:46:53 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/24 00:46:58 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/25 23:29:34 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int				len_hex(unsigned char bin)
 {
 	int len;
 
+	len = 0;
 	while (bin > 0)
 	{
 		len++;
@@ -79,6 +80,7 @@ void			print_hex(t_data *data)
 	init_struct(data);
 	while (read(data->fd, &buff, 1) > 0)
 	{
+		starting_color(data);
 		if (fill_buff(data, buff) == 1)
 		{
 			data->zero = 0;
@@ -97,5 +99,6 @@ void			print_hex(t_data *data)
 	}
 	print_buff(data);
 	free(data->buffer);
+	reset_colors(data);
 	wait_or_enter(data, 10000);
 }
