@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 00:42:45 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/24 01:57:57 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/25 18:50:39 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,27 @@ void			print_zero(t_data *data)
 	data->x = data->x + 1;
 }
 
+void			print_zero_line(t_data *data)
+{
+	int i;
+
+	i = 0;
+	data->x = 3;
+	while (ZERO_LINE[i])
+	{
+		mvwprintw(data->main_win, data->y, data->x + 1, "%c", ZERO_LINE[i++]); 
+		wrefresh(data->main_win);
+		data->x = data->x + 1;
+		wait_or_enter(data, 3);
+	}
+	data->x = 1;
+	data->y = data->y + 1;
+	mvwprintw(data->main_win, data->y, data->x + 2, "*");
+	wrefresh(data->main_win);
+	data->check = 1;
+	data->y = data->y + 1;
+}
+
 void			print_buff(t_data *data)
 {
 	int i;
@@ -46,7 +67,7 @@ void			print_buff(t_data *data)
 	i = 0;
 	while (data->buffer[i] || i < 16)
 	{
-		starting_color(data);
+		//starting_color(data);
 		//ending_color(data);
 		if (i % 8 == 0)
 		{
@@ -78,13 +99,7 @@ int				fill_buff(t_data *data, unsigned char buff)
 			return (1);
 		}
 		if (data->check == 0)
-		{
-			data->x = 1;
-			mvwprintw(data->main_win, data->y, data->x + 1, "*");
-			wrefresh(data->main_win);
-			data->y = data->y + 1;
-			data->check = 1;
-		}
+			print_zero_line(data);
 		data->zero = 0;
 		return (0);
 	}

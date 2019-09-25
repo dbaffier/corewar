@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/24 02:16:26 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/25 19:06:16 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 
 # define COR_EXT	".cor"
 # define MSG		"With this visu you will be able to see a bit more about how corewar works"
+# define ZERO_LINE	"00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00"
 
 # define LIVE		{1, "live"}//, &w_live}
 # define LD			{2, "ld"}//, &w_ld}
@@ -125,5 +126,7 @@ void		nprint_nb(t_data *data, int base, unsigned char n, char letter);
 void		print_file_name(t_data *data);
 void		print_compilation(t_data *data);
 void		print_dot(t_data *data);
+void		print_end(t_data *data);
+void		print_menu(t_data *data);
 
 #endif 
