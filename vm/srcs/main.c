@@ -42,6 +42,14 @@ static void		introduce_champ(t_process *proc)
 	}
 }
 
+static void		corewar_end(int i)
+{
+	if (i != SIGINT)
+		return ;
+	ncurses_end();
+	exit(1);
+}
+
 int				main(int ac, char **av)
 {
 	t_env	e;
@@ -53,6 +61,9 @@ int				main(int ac, char **av)
 	if (ac < 2 || get_args(av, &e) || get_arena(&e))
 		return (usage(av[0]));
 	introduce_champ(e.proc);
+	signal(SIGINT, corewar_end);
 	launch_game(&e);
+	if (e.pid)
+		waitpid(e.pid, NULL, 0);
 	free_env(&e);
 }

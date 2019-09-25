@@ -33,10 +33,13 @@
 enum
 {
 	IS_OK,
+	ERR_HELP,
 	ERR_DIGIT,
 	ERR_NEGATIVE,
 	ERR_PARAM,
 	ERR_FILENAME,
+	ERR_FORK,
+	ERR_NCU_INIT,
 	ERR_MAX_CHAMP,
 	ERR_NUMBER,
 	ERR_NO_CHAMP,
@@ -67,7 +70,8 @@ typedef struct			s_process
 	char				reg[REG_NUMBER][REG_SIZE];
 	char				pc[REG_SIZE];
 	char				carry;
-	int					cycle_left;
+	size_t				instruction_wait;
+	int					instruction;
 	int					is_alive; /* must be 0 or 1 */
 	t_live				*live;
 	struct s_process	*next;
@@ -83,6 +87,7 @@ typedef struct			s_param
 typedef struct			s_env
 {
 	char				*progname;
+	pid_t				pid;
 	int					dump_cycle;
 	int					id;
 	int					nb_players;
@@ -93,34 +98,36 @@ typedef struct			s_env
 	t_live				live;
 }						t_env;
 
-void					free_env(t_env *e);
-
 int						corewar_errors(int errnb, char *arg, t_env *e);
+void					free_env(t_env *e);
 
 int						get_args(char **av, t_env *e);
 int						get_player(t_env *e, char *av);
 int						get_arena(t_env *e);
 t_process				*remove_player(t_process *proc, t_process **head);
 
+int						ncurse_view(t_env *e);
+void					ncurses_end(void);
+
 void					launch_game(t_env *e);
 void					dump_map(unsigned char *arena, size_t size);
 
-void					op_live(t_op *op, t_env *e, int i);
-void					op_ld(t_op *op, t_env *e, int i);
-void					op_st(t_op *op, t_env *e, int i);
-void					op_add(t_op *op, t_env *e, int i);
-void					op_sub(t_op *op, t_env *e, int i);
-void					op_and(t_op *op, t_env *e, int i);
-void					op_or(t_op *op, t_env *e, int i);
-void					op_xor(t_op *op, t_env *e, int i);
-void					op_zjmp(t_op *op, t_env *e, int i);
-void					op_ldi(t_op *op, t_env *e, int i);
-void					op_sti(t_op *op, t_env *e, int i);
-void					op_fork(t_op *op, t_env *e, int i);
-void					op_lld(t_op *op, t_env *e, int i);
-void					op_ldi(t_op *op, t_env *e, int i);
-void					op_lfork(t_op *op, t_env *e, int i);
-void					op_aff(t_op *op, t_env *e, int i);
+void					op_live(t_process *proc, t_op *op, t_env *e);
+void					op_ld(t_process *proc, t_op *op, t_env *e);
+void					op_st(t_process *proc, t_op *op, t_env *e);
+void					op_add(t_process *proc, t_op *op, t_env *e);
+void					op_sub(t_process *proc, t_op *op, t_env *e);
+void					op_and(t_process *proc, t_op *op, t_env *e);
+void					op_or(t_process *proc, t_op *op, t_env *e);
+void					op_xor(t_process *proc, t_op *op, t_env *e);
+void					op_zjmp(t_process *proc, t_op *op, t_env *e);
+void					op_ldi(t_process *proc, t_op *op, t_env *e);
+void					op_sti(t_process *proc, t_op *op, t_env *e);
+void					op_fork(t_process *proc, t_op *op, t_env *e);
+void					op_lld(t_process *proc, t_op *op, t_env *e);
+void					op_ldi(t_process *proc, t_op *op, t_env *e);
+void					op_lfork(t_process *proc, t_op *op, t_env *e);
+void					op_aff(t_process *proc, t_op *op, t_env *e);
 
 void					get_params_len(t_param *params, int nbparam, \
 		char types, char opcode);

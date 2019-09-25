@@ -34,6 +34,19 @@ static int		get_number(char *av, int *value, int min_value)
 	return (ERR_DIGIT);
 }
 
+static int		get_option(int *i, char **av, t_env *e)
+{
+	if (ft_strequ(av[*i], "-dump"))
+		return (get_number(av[++(*i)], &e->dump_cycle, 0));
+	if (ft_strequ(av[*i], "-n"))
+		return (get_number(av[++(*i)], &e->id, 1));
+	if (ft_strequ(av[*i], "-h"))
+		return (ERR_HELP);
+	if (ft_strequ(av[*i], "-v"))
+		return (ncurse_view(e));
+	return (IS_OK);
+}
+
 int				get_args(char **av, t_env *e)
 {
 	int		i;
@@ -44,10 +57,8 @@ int				get_args(char **av, t_env *e)
 	err = 0;
 	while (av[i])
 	{
-		if (ft_strequ(av[i], "-dump"))
-			err = get_number(av[++i], &e->dump_cycle, 0);
-		else if (ft_strequ(av[i], "-n"))
-			err = get_number(av[++i], &e->id, 1);
+		if (av[i][0] == '-')
+			err = get_option(&i, av, e);
 		else if ((tmp = ft_strrchr(av[i], '.')) && ft_strequ(tmp, ".cor"))
 			err = get_player(e, av[i]);
 		else

@@ -21,40 +21,46 @@
 ** si l'addition = 0 le carry passe a 1
 */
 
-void	op_sti(t_op *op, t_env *e, int i)
+void	op_sti(t_process *proc, t_op *op, t_env *e)
 {
 	t_param		params[3];
-	char		addr;
-	t_process	*proc;
+	int			addr;
+	int			len;
+	int			i;
 
-	proc = &e->proc[i];
-	get_params_len(params, 3, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
-	get_params_data(params, 3, (char *)proc->file, proc->pc);
+	i = 0;
+	get_params_len(params, 3, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 11);
+	get_params_data(params, 3, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc); // pas bon, proc->file :'(
 	addr = (params[1].value + params[2].value) % IDX_MOD;
-	((char *)proc->file)[(int)addr] = (char)proc->reg[params[0].value];
+	((*(unsigned char *)e->arena + *(REG_CAST *)proc->pc)[addr] = *(REG_CAST *)proc->reg[params[0].value];
 	proc->carry = addr == 0 ? 1 : 0;
+	while (i < 3 && params[i].size != 0)
+		len = params[i++].size;
+	*((REG_CAST *)proc->pc) += len + 2;
 }
 
 
 /*
 **FORK 0x0C
+** Cree un nouveau processus
 ** fork un nouveau processus a l'adresse du premier parametre
-** si l'adresse = 0 bah jsp
+** si l'adresse = 0 bah jsp <- lol mdrrrr
 */
 
-void	op_fork(t_op *op, t_env *e, int i)
+void	op_fork(t_process *proc, t_op *op, t_env *e)
 {
 	t_param		params[3];
-	t_process	*proc;
+	int			len;
+	int			i;
 
-	proc = &e->proc[i];
-	get_params_len(params, 1, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
-	get_params_data(params, 1, (char *)proc->file, proc->pc);
+	i = 0;
+	get_params_len(params, 1, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 12);
+	get_params_data(params, 1, (unsigned char *)e->arena + *(REG_CAST)proc->pc, *(REG_CAST *)proc->pc);
 	if (params[0].value != 0)
-	{
-		ft_memcpy(proc->next, proc, sizeof(t_process));
-		proc->next->pc = (proc->pc + params[0].value) % IDX_MOD;
-	}                     
+		proc->next = new_proc(proc, params[0].value);
+	while (i < 3 && params[i].size != 0)
+		len = params[i++].size;
+	*((REG_CAST *)proc->pc) += len + 2;
 }
 
 /*
@@ -63,36 +69,44 @@ void	op_fork(t_op *op, t_env *e, int i)
 ** si le 1st param = 0 le carry passe a 1
 */
 
-void	op_lld(t_op *op, t_env *e, int i)
+void	op_lld(t_process *proc, t_op *op, t_env *e)
 {
 	t_param		params[3];
-	t_process	*proc;
+	int			len;
+	int			i;
 
-	proc = &e->proc[i];
-	get_params_len(params, 2, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
-	get_params_data(params, 2, (char *)proc->file, proc->pc);
-	proc->reg[params[1].value][/* seul dieu sait quoi mettre*/0] = proc->pc + params[0].value;
+	i = 0;
+	get_params_len(params, 2, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 13);
+	get_params_data(params, 2, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc); // pas bon, proc->file :'(
+	*(REG_CAST *)proc->reg[params[1].value] = *(REG_CAST *)proc->pc + params[0].value;
 	proc->carry = params[1].value == 0 ? 1 : 0;
+	while (i < 3 && params[i].size != 0)
+		len = params[i++].size;
+	*((REG_CAST *)proc->pc) += len + 2;
 }
 
 /*
-**LLDI 0x0E
+** LLDI 0x0E
 ** ldi sans restriction d'adressage
 ** si l'addition = 0 le carry passe a 1
 */
 
-void	op_ldi(t_op *op, t_env *e, int i)
+void	op_ldi(t_process *proc, t_op *op, t_env *e)
 {
 	t_param		params[3];
-	char		addr;
-	t_process	*proc;
+	int			addr;
+	int			len;
+	int			i;
 
-	proc = &e->proc[i];
-	get_params_len(params, 3, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
-	get_params_data(params, 3, (char *)proc->file, proc->pc);
+	i = 0;
+	get_params_len(params, 3, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 14);
+	get_params_data(params, 3, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc); // pas bon, proc->file :'(
 	addr = (params[0].value + params[1].value);
-	proc->reg[params[2].value][/* seul dieu sait quoi mettre*/0] = ((char *)proc->file)[(int)addr];
+	*(REG_CAST *)proc->reg[params[2].value] = ((*(unsigned char *)e->arena + *(REG_CAST *)proc->pc)[addr];
 	proc->carry = addr == 0 ? 1 : 0;
+	while (i < 3 && params[i].size != 0)
+		len = params[i++].size;
+	*((REG_CAST *)proc->pc) += len + 2;
 }
 
 /*
@@ -101,14 +115,18 @@ void	op_ldi(t_op *op, t_env *e, int i)
 ** si l'adresse = 0 bah jsp
 */
 
-void	op_lfork(t_op *op, t_env *e, int i)
+void	op_lfork(t_process *proc, t_op *op, t_env *e)
 {
 	t_param		params[3];
-	t_process	*proc;
+	int			len;
+	int			i;
 
-	proc = &e->proc[i];
-	get_params_len(params, 1, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
-	get_params_data(params, 1, (char *)proc->file, proc->pc);
+	i = 0;
+	get_params_len(params, 1, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 15);
+	get_params_data(params, 1, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc); // pas bon, proc->file :'(
 	ft_memcpy(proc->next, proc, sizeof(t_process));
-	proc->next->pc = proc->pc + params[0].value;
+	*(REG_CAST *)proc->next->pc = *(REG_CAST *)proc->pc + params[0].value;
+	while (i < 3 && params[i].size != 0)
+		len = params[i++].size;
+	*((REG_CAST *)proc->pc) += len + 2;
 }

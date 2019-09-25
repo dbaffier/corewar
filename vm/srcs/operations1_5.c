@@ -20,27 +20,34 @@
 ** si le 1st param = 0 le carry passe a 1
 */
 
-void	op_live(t_op *op, t_env *e, int i)
+void	op_live(t_process *proc, t_op *op, t_env *e)
 {
 	t_param		params[3];
-	t_process	*proc;
+	t_process	*tail;
+	int			len;
+	int			i;
 
-	proc = &e->proc[i];
-	get_params_len(params, 1, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
-	get_params_data(params, 1, (char *)proc->file, (int)proc->pc);
 	i = 0;
-	while (i < MAX_PLAYERS)
+	get_params_len(params, 1, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 1);
+	get_params_data(params, 1, (char *)proc->file, *(REG_CAST *)proc->pc);
+	tail = e->proc;
+	while (tail)
 	{
-		if (params[0].value == e->proc[i].id)
+		if (params[0].value == tail->id)
 		{
-			e->proc[i].cycle_left = CYCLE_TO_DIE;
-			ft_printf("corewar : Player [%d] is alive. Keep fighting.\n",
-					e->proc[i].id);
-			return ;
+			e->live.last_id = params[0].value;
+			ft_strncpy(e->live.last_name, ((t_header *)tail->file)->prog_name,
+				PROG_NAME_LENGTH + 1);
+			break ;
 		}
-		i++;
+		tail = tail->next;
 	}
-	ft_printf("corewar : Wrong parameter [%d] player id does not exist . No one to keep alive.\n", params[0].value);
+	ft_printf("%s: un processus dit que le joueur %d(%s) est en vie\n",
+		e->progname, params[0].value, (tail) ? e->live.last_name : "?");
+	e->live.total++;
+	while (i < 3 && params[i].size != 0)
+		len = params[i++].size;
+	*((REG_CAST *)proc->pc) += len + 2;
 }
 
 /*
@@ -49,16 +56,20 @@ void	op_live(t_op *op, t_env *e, int i)
 ** si le 1st param = 0 le carry passe a 1
 */
 
-void	op_ld(t_op *op, t_env *e, int i)
+void	op_ld(t_process *proc, t_op *op, t_env *e)
 {
 	t_param		params[3];
-	t_process	*proc;
+	int			len;
+	int			i;
 
-	proc = &e->proc[i];
-	get_params_len(params, 2, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
-	get_params_data(params, 2, (char *)proc->file, (int)proc->pc);
-	proc->reg[params[1].value][/* seul dieu sait quoi mettre*/0] = proc->pc + params[0].value % IDX_MOD;
+	i = 0;
+	get_params_len(params, 2, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 2);
+	get_params_data(params, 2, (char *)proc->file, *(REG_CAST *)proc->pc);
+	*(REG_CAST *)proc->reg[params[1].value - 1] = *(REG_CAST *)proc->pc + (params[0].value % IDX_MOD);
 	proc->carry = (params[1].value == 0) ? 1 : 0;
+	while (i < 3 && params[i].size != 0)
+		len = params[i++].size;
+	*((REG_CAST *)proc->pc) += len + 2;
 }
 
 /*
@@ -67,20 +78,24 @@ void	op_ld(t_op *op, t_env *e, int i)
 ** meme fonctionnement pour le carry
 */
 
-void	op_st(t_op *op, t_env *e, int i)
+void	op_st(t_process *proc, t_op *op, t_env *e)
 {
 	t_param		params[3];
-	t_process	*proc;
+	int			len;
+	int			i;
 
-	proc = &e->proc[i];
-	get_params_len(params, 2, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
-	get_params_data(params, 2, (char *)proc->file, proc->pc);
+	i = 0;
+	get_params_len(params, 2, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 3);
+	get_params_data(params, 2, (char *)proc->file, *(REG_CAST *)proc->pc);
 
 	if (params[1].size == 2)
-		params[1].value = proc->pc + (short)proc->reg[params[0].value] % IDX_MOD;
+		params[1].value = *(REG_CAST *)proc->pc + (*(REG_CAST *)proc->reg[params[0].value - 1] % IDX_MOD);
 	else if (params[1].size == 1)
-		params[1].value = proc->pc + (char)proc->reg[params[0].value] % IDX_MOD;
+		params[1].value = *(REG_CAST *)proc->pc + (*(REG_CAST *)proc->reg[params[0].value - 1] % IDX_MOD);
 	proc->carry = params[1].value == 0 ? 1 : 0;
+	while (i < 3 && params[i].size != 0)
+		len = params[i++].size;
+	*((REG_CAST *)proc->pc) += len + 2;
 }
 
 /*
@@ -89,17 +104,22 @@ void	op_st(t_op *op, t_env *e, int i)
 ** meme fonctionnement pour le carry
 */
 
-void	op_add(t_op *op, t_env *e, int i)
+
+void	op_add(t_process *proc, t_op *op, t_env *e)
 {
 	t_param		params[3];
-	t_process	*proc;
+	int			len;
+	int			i;
 
-	proc = &e->proc[i];
-	get_params_len(params, 3, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
-	get_params_data(params, 3, (char *)proc->file, proc->pc);
-	proc->reg[params[2].value][/* seul dieu sait quoi mettre*/0] = params[0].value +
+	i = 0;
+	get_params_len(params, 3, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 4);
+	get_params_data(params, 3, (char *)proc->file, *(REG_CAST *)proc->pc);
+	*(REG_CAST *)proc->reg[params[2].value] = params[0].value +
 	params[1].value;
 	proc->carry = params[0].value + params[1].value == 0 ? 1 : 0;
+	while (i < 3 && params[i].size != 0)
+		len = params[i++].size;
+	*((REG_CAST *)proc->pc) += len + 2;
 }
 
 /*
@@ -108,14 +128,18 @@ void	op_add(t_op *op, t_env *e, int i)
 ** meme fonctionnement pour le carry
 */
 
-void	op_sub(t_op *op, t_env *e, int i)
+void	op_sub(t_process *proc, t_op *op, t_env *e)
 {
 	t_param		params[3];
-	t_process	*proc;
+	int			len;
+	int			i;
 
-	proc = &e->proc[i];
-	get_params_len(params, 3, ((char *)proc->file)[(char)proc->pc + 1], op->opcode);
-	get_params_data(params, 3, (char *)proc->file, proc->pc);
-	proc->reg[params[2].value][/* seul dieu sait quoi mettre*/0] = params[0].value - params[1].value;
+	i = 0;
+	get_params_len(params, 3, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 5);
+	get_params_data(params, 3, (char *)proc->file, *(REG_CAST *)proc->pc);
+	*(REG_CAST *)proc->reg[params[2].value] = params[0].value - params[1].value;
 	proc->carry = params[0].value - params[1].value == 0 ? 1 : 0;
+	while (i < 3 && params[i].size != 0)
+		len = params[i++].size;
+	*((REG_CAST *)proc->pc) += len + 2;
 }

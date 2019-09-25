@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   remove_player.c                                    :+:      :+:    :+:   */
+/*   cw_ncurse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/24 03:45:03 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/25 02:26:38 by gbourgeo         ###   ########.fr       */
+/*   Created: 2019/09/24 23:40:54 by gbourgeo          #+#    #+#             */
+/*   Updated: 2019/09/25 00:04:56 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "vm.h"
+#ifndef CW_NCURSE_H
+# define CW_NCURSE_H
 
-t_process			*remove_player(t_process *proc, t_process **head)
+# include <ncurses.h>
+# include "op.h"
+
+typedef struct		s_ncurse
 {
-	t_process	*next;
+	WINDOW			*mainWin;
+	WINDOW			*arenaWinBox;
+	WINDOW			*arenaWin;
+	WINDOW			*infoWinBox;
+	WINDOW			*infoWin;
+	WINDOW			*infoLine;
+}					t_ncurse;
 
-	next = proc->next;
-	if (proc->prev)
-		proc->prev->next = proc->next;
-	else
-		*head = proc->next;
-	if (proc->next)
-		proc->next->prev = proc->prev;
-	free(proc);
-	system("afplay ~/Desktop/roblox-death-sound-effect.mp3 2>&-");
-	return (next);
-}
+struct s_ncurse		ncu;
+
+#endif

@@ -37,10 +37,12 @@ int				corewar_errors(int errnb, char *arg, t_env *e)
 {
 	static char	*error[] = {
 		NULL,
+		"-- help",
 		"value must contains only numbers",
 		"value must be strictly positive",
 		"unknown parameter",
 		"invalid filename",
+		"forking failed",
 		"too many champions received",
 		"number already taken",
 		"missing champion",

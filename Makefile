@@ -21,8 +21,9 @@ VM_SRC		+=	main.c				\
 				get_args.c			\
 				get_player.c		\
 				get_arena.c			\
-				op.c				\
+				ncurse_view.c		\
 				launch_game.c		\
+				op.c				\
 				remove_player.c		\
 #				operation_tools.c	\
 				operations1_5.c		\
@@ -35,7 +36,7 @@ CFLAGS		= -Wall -Werror -Wextra
 CFLAGS		+= -std=c11 -Wmissing-prototypes -pedantic -pedantic-errors
 
 INCS		= -I$(LFT_DIR)inc -I$(VM_INC_D)
-LIBS		= -L$(LFT_DIR) -lft
+LIBS		= -L$(LFT_DIR) -lft -lncurses
 
 OBJS_DIR	= $(VM_DIR)objs/
 OBJS_VM		+= $(addprefix $(OBJS_DIR), $(VM_SRC:.c=.o))
