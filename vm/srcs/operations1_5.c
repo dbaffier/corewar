@@ -28,7 +28,7 @@ void	op_live(t_process *proc, t_env *e)
 	int			i;
 
 	i = 0;
-	get_params_len(params, 1, *(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 1);
+	get_params_len(params, 1, *(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1, 1);
 	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
 	tail = e->proc;
 	while (tail)

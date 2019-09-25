@@ -42,7 +42,6 @@ void	get_types(char types, t_param *params_type)
 	}
 }
 
-
 void	get_params_len(t_param *params, int nbparam, char types, char opcode)
 {
 	int		i;
@@ -67,6 +66,17 @@ void	get_params_len(t_param *params, int nbparam, char types, char opcode)
 	}
 }
 
+int		get_value(unsigned char *data, int index, int size)
+{
+	int		i;
+	char	tab[size - 1];
+
+	i = -1;
+	while(++i < size)
+		tab[i] = data[index + i];
+	return (ft_atoi_base(tab, 16));
+}
+
 void	get_params_data(t_param *params, int nbparam, unsigned char *data, int pc)
 {
 	int		i;
@@ -76,12 +86,7 @@ void	get_params_data(t_param *params, int nbparam, unsigned char *data, int pc)
 	size = 0;
 	while (i < nbparam)
 	{
-		if (params[i].size == 2)
-			params[i].value = *(short *)((char *)data[pc + 1 + size]);
-		else if (params[i].size == 4)
-			params[i].value = *(int *)((char *)data[pc + 1 + size]);
-		else if (params[i].size == 1)
-			params[i].value = *((char *)data[pc + 1 + size]);
+		params[i].value = get_value(data, pc + 1 + size, params[i].size);
 		size += params[i].size;
 		i++;
 	}

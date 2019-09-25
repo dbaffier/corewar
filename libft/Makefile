@@ -134,6 +134,7 @@ SRCS = 	ft_memset.c										\
 		get_next_line.c									\
 		ft_strfjoin.c									\
 		ft_rand.c										\
+		ft_atoi_base.c									\
 
 OBJS = $(SRCS:.c=.o)
 

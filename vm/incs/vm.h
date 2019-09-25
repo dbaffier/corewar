@@ -156,7 +156,7 @@ void					op_ldi(t_process *proc, t_env *e);
 void					op_sti(t_process *proc, t_env *e);
 void					op_fork(t_process *proc, t_env *e);
 void					op_lld(t_process *proc, t_env *e);
-void					op_ldi(t_process *proc, t_env *e);
+void					op_lldi(t_process *proc, t_env *e);
 void					op_lfork(t_process *proc, t_env *e);
 void					op_aff(t_process *proc, t_env *e);
 
@@ -165,4 +165,7 @@ void					get_params_len(t_param *params, int nbparam, \
 void					get_params_data(t_param *params, int nbparam, \
 		unsigned char *data, int pc);
 t_process				*new_proc(t_process *proc, int value);
+void					get_types(char types, t_param *params_type);
+int						get_value(unsigned char *data, int index, \
+		int size);
 #endif

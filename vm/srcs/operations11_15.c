@@ -32,7 +32,7 @@ void	op_sti(t_process *proc, t_env *e)
 	get_params_len(params, 3, *(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1, 11);
 	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
 	addr = (params[1].value + params[2].value) % IDX_MOD;
-	((*(unsigned char *)e->arena + *(REG_CAST *)proc->pc)[addr] = *(REG_CAST *)proc->reg[params[0].value];
+	((unsigned char *)e->arena)[*(REG_CAST *)proc->pc + addr] = *(REG_CAST *)proc->reg[params[0].value];
 	proc->carry = addr == 0 ? 1 : 0;
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;
@@ -93,7 +93,7 @@ void	op_lld(t_process *proc, t_env *e)
 ** si l'addition = 0 le carry passe a 1
 */
 
-void	op_ldi(t_process *proc, t_env *e)
+void	op_lldi(t_process *proc, t_env *e)
 {
 	t_param		params[3];
 	int			addr;
@@ -104,7 +104,7 @@ void	op_ldi(t_process *proc, t_env *e)
 	get_params_len(params, 3, *(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1, 14);
 	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
 	addr = (params[0].value + params[1].value);
-	*(REG_CAST *)proc->reg[params[2].value] = ((*(unsigned char *)e->arena + *(REG_CAST *)proc->pc)[addr];
+	*(REG_CAST *)proc->reg[params[2].value] = ((unsigned char *)e->arena)[*(REG_CAST *)proc->pc + addr];
 	proc->carry = addr == 0 ? 1 : 0;
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;

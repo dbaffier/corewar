@@ -29,7 +29,7 @@ VM_SRC		+=	main.c				\
 				op.c				\
 				remove_player.c		\
 				signals.c			\
-#				operation_tools.c	\
+				operation_tools.c	\
 				operations1_5.c		\
 				operations6_10.c	\
 				operations11_15.c	\

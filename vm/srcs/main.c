@@ -26,7 +26,7 @@ static int		usage(char *progname)
 	return (1);
 }
 
-static void		introduce_champ(t_process *proc)
+static void		introduce_champ(t_process *proc, t_env *e)
 {
 	t_header	*play;
 
@@ -59,7 +59,7 @@ int				main(int ac, char **av)
 	e->dump_cycle = -1;
 	if (ac < 2 || get_args(av, e) || get_arena(e))
 		return (usage(av[0]));
-	introduce_champ(e->proc);
+	introduce_champ(e->proc, e);
 	signal(SIGINT, corewar_end);
 	launch_game(e);
 	if (e->pid)

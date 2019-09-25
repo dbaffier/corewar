@@ -19,14 +19,12 @@
 ** Affiche le char qui est donne en 1er param si il est nul carry = 1
 */
 
-void	op_aff(t_op *op, t_env *e, int i)
+void	op_aff(t_process *proc, t_env *e)
 {
 	t_param		params[3];
-	t_process	*proc;
 
-	proc = &e->proc[i];
 	get_params_len(params, 1, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 1);
-	get_params_data(params, 1, (char *)proc->file, *(REG_CAST *)proc->pc);
-	ft_printf("corewar : [%s] : \"%c\"\n", proc->name, params[0].value);
+	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
+	ft_printf("corewar : [%s] : \"%c\"\n", proc->file_name, params[0].value);
 	proc->carry = params[0].value == 0 ? 1 : 0;
 }
