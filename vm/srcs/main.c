@@ -26,17 +26,11 @@ static int		usage(char *progname)
 	return (1);
 }
 
-static void		introduce_champ(t_process *proc, t_env *e)
+static void		introduce_champ(t_process *proc)
 {
 	t_header	*play;
 
-	if (!e->pid)
-		ft_printf("Introducing contestants...\n");
-	else
-	{
-		wclear(e->ncu.infoLine);
-		wrefresh(e->ncu.infoLine);
-	}
+	ft_printf("Introducing contestants...\n");
 	while (proc->next)
 		proc = proc->next;
 	while (proc)
@@ -57,12 +51,14 @@ int				main(int ac, char **av)
 	e->progname = ft_strrchr(av[0], '/');
 	e->progname = (e->progname) ? e->progname + 1 : av[0];
 	e->dump_cycle = -1;
+	signal(SIGINT, corewar_end);
 	if (ac < 2 || get_args(av, e) || get_arena(e))
 		return (usage(av[0]));
-	introduce_champ(e->proc, e);
-	signal(SIGINT, corewar_end);
+	if (!e->ncu.mainWin)
+		introduce_champ(e->proc);
+	else
+		ncurses_init(e);
 	launch_game(e);
-	if (e->pid)
-		waitpid(e->pid, NULL, 0);
+	ncurses_end(e);
 	free_env(e);
 }

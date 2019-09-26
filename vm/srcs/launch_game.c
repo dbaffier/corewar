@@ -71,7 +71,7 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 			proc->instruction = *((unsigned char *)e->arena + *(REG_CAST *)proc->pc);
 			if (proc->instruction > 0
 			&& proc->instruction < (int)(sizeof(op_tab) / sizeof(op_tab[0])))
-				ft_printf("instruction : %d IN RANGE\n", proc->instruction);// proc->instruction_wait += op_tab[proc->instruction - 1].cycle;
+				proc->instruction_wait += op_tab[proc->instruction - 1].cycle;
 			else
 			{
 				proc->instruction = 0;
@@ -89,10 +89,16 @@ void			launch_game(t_env *e)
 {
 	t_process	*proc;
 	size_t		nb_cycles;
+	int			ch;
 
 	nb_cycles = 0;
 	while (1)
 	{
+		ch = wgetch(e->ncu.mainWin);
+		if (ch == ERR)
+			break ;
+		else if (ch != 's')
+			continue ;
 		proc = e->proc;
 		if (e->dump_cycle > -1 && (size_t)e->dump_cycle == nb_cycles)
 		{

@@ -37,15 +37,14 @@ int				corewar_errors(int errnb, char *arg, t_env *e)
 {
 	static char	*error[] = {
 		NULL,
-		"-- help",
+		"-- help\t",
 		"value must contains only numbers",
 		"value must be strictly positive",
 		"unknown parameter",
 		"invalid filename",
-		"forking failed",
 		"too many champions received",
 		"number already taken",
-		"missing champion",
+		"missing champion.\t",
 		"impossible to open file",
 		"impossible to lseek file for",
 		"malloc failed for",
@@ -54,10 +53,16 @@ int				corewar_errors(int errnb, char *arg, t_env *e)
 		"invalid champion: invalid header for",
 		"invalid champion: champion size differ from header for",
 		"invalid champion: size too big for",
+		"ncurses: Failed to init main Window.\t",
+		"ncurses: Failed to init arena Window Box.\t",
+		"ncurses: Failed to init arena Window.\t",
+		"Failed to init info Window Box.\t",
+		"Failed to init info Window.\t",
+		"Failed to init infoLine Window.\t",
 	};
 
 	ft_dprintf(2, "%s: %s", e->progname, error[errnb]);
-	if (arg)
+	if (error[errnb][ft_strlen(error[errnb]) - 1] != '\t')
 		ft_dprintf(2, " `%s'", arg);
 	ft_dprintf(2, "\n");
 	free_env(e);

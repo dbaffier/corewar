@@ -21,10 +21,9 @@ VM_SRC		+=	main.c				\
 				get_args.c			\
 				get_player.c		\
 				get_arena.c			\
-				ncurse_view.c		\
-				ncurses_error.c		\
-				ncurses_func.c		\
-				ncurses_func2.c		\
+				ncurses_init_end.c	\
+				ncurses_create.c	\
+				ncurses_aff.c		\
 				launch_game.c		\
 				op.c				\
 				remove_player.c		\

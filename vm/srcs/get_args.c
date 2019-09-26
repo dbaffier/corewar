@@ -43,7 +43,7 @@ static int		get_option(int *i, char **av, t_env *e)
 	if (ft_strequ(av[*i], "-h"))
 		return (ERR_HELP);
 	if (ft_strequ(av[*i], "-v"))
-		return (ncurse_view(e));
+		return (ncurses_init(e));
 	return (IS_OK);
 }
 

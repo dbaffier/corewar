@@ -39,8 +39,6 @@ enum
 	ERR_NEGATIVE,
 	ERR_PARAM,
 	ERR_FILENAME,
-	ERR_FORK,
-	ERR_NCU_INIT,
 	ERR_MAX_CHAMP,
 	ERR_NUMBER,
 	ERR_NO_CHAMP,
@@ -52,6 +50,12 @@ enum
 	ERR_MAGIC,
 	ERR_SIZE_DIFF,
 	ERR_SIZE_HIGH,
+	ERR_NCURSE_MAINWIN,
+	ERR_NCURSE_ARENABOX,
+	ERR_NCURSE_ARENAWIN,
+	ERR_NCURSE_INFOBOX,
+	ERR_NCURSE_INFOWIN,
+	ERR_NCURSE_INFOLINE,
 };
 
 typedef struct			s_live
@@ -75,6 +79,7 @@ typedef struct			s_process
 	int					instruction;
 	int					is_alive; /* must be 0 or 1 */
 	t_live				*live;
+	short				color[2];
 	struct s_process	*next;
 	struct s_process	*prev;
 }						t_process;
@@ -89,7 +94,6 @@ typedef struct			s_env
 {
 	char				*progname;
 	t_ncurse			ncu;
-	pid_t				pid;
 	int					dump_cycle;
 	int					id;
 	int					nb_players;
@@ -125,14 +129,14 @@ t_process				*remove_player(t_process *proc, t_process **head);
 /*
 ** Ncurses Functions
 */
-int						ncurse_view(t_env *e);
+int						ncurses_init(t_env *e);
 void					ncurses_end(t_env *e);
 int						ncurses_termTooSmall(t_env *e);
 int						createArenaBox(t_env *e);
 int						createInfoBox(t_env *e);
 int						createInfoLine(t_env *e);
-int						ncurses_error(char *str, t_env *e);
 void					ncurses_affArena(t_env *e);
+void					ncurses_affInfo(t_env *e);
 
 /*
 ** Game Functions
