@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:03:52 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/25 22:37:57 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/26 21:21:39 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,10 @@ int				main(int ac, char **av)
 		print_end(&data);
 		endwin();
 	}
+	if ((data.flag & FLAG_O) && !(data.flag & FLAG_N))
+		print_fsize(&data);
+	if ((data.flag & FLAG_P) || (data.flag & FLAG_GP))
+		print_path(&data);
 	close(data.fd);
 	return (0);
 }

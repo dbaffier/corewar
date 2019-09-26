@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/26 00:45:53 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/26 21:20:25 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <unistd.h>
 # include <sys/types.h>
 # include <signal.h>
+# include <limits.h>
 
 # define ERR_OPEN	-1
 # define ERR_MALLOC 5
@@ -31,9 +32,13 @@
 
 # define FLAG_N		(1 << 0)
 # define FLAG_O		(1 << 1)
+# define FLAG_P		(1 << 2)
+# define FLAG_GP	(1 << 3)
 
 # define DASH_N		{FLAG_N, 'n'}
 # define DASH_O		{FLAG_O, 'o'}
+# define DASH_P		{FLAG_P, 'p'}
+# define DASH_GP	{FLAG_GP, 'P'}
 
 # define NAME		1
 # define COMMENT	2
@@ -148,5 +153,7 @@ void		starting_color(t_data *data);
 void		reset_colors(t_data *data);
 void		print_legend(t_data *data, int x, int y);
 void		print_offset(t_data *data);
+void		print_fsize(t_data *data);
+void		print_path(t_data *data);
 
 #endif 

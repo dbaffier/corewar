@@ -1,15 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_flag.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/26 21:17:34 by mmonier           #+#    #+#             */
+/*   Updated: 2019/09/26 21:24:25 by mmonier          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "cw_hexdump.h"
 
 void		print_usage(int error)
 {
-	ft_dprintf(2, "usage: ./asm [-n] [file ...]\n");
+	ft_dprintf(2, "usage: ./asm [-Pnop] [file ...]\n");
 	exit(0);
 }
 
 int			set_msk(t_data *data, char c)
 {
-	t_flags	tab[2] = {DASH_N, DASH_O};
+	t_flags	tab[4] = {DASH_N, DASH_O, DASH_P, DASH_GP};
 	int		i;
 
 	i = 0;

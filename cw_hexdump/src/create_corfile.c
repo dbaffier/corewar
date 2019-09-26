@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:28:27 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/24 02:05:36 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/26 21:04:54 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static char		*basename(char *file)
 		b_name[i] = file[i];
 		i++;
 	}
-	return (add_extention(b_name, i - 1));
+	return (add_extention(b_name, i));
 }
 
 int				create_corfile(char *file)
