@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/09/22 19:01:56 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/24 01:45:00 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,17 @@ typedef struct		header_s
   unsigned int		prog_size;
   char				comment[COMMENT_LENGTH + 1];
 }					header_t;
+
+typedef struct					s_op
+{
+	char						*reg_name;
+	unsigned short				reg_nb;
+	int							types[3];
+	unsigned char				opcode;
+	unsigned int				cycle;
+	char						*complete_name;
+	int							encoding_byte;
+	int							direct_size;
+}								t_op;
 
 #endif

@@ -1,3 +1,3 @@
-vm/objs/op.o: vm/srcs/op.c vm/incs/op.h
+objs/op.o: asm/parsing/op.c incs/op.h
 
-vm/incs/op.h:
+incs/op.h:
