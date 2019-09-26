@@ -30,7 +30,6 @@ void	print_end(t_data *data)
 			break ;
 		if (c == 114)
 		{
-			data->pos = 0;
 			wclear(data->main_win);
 			print_compilation(data);
 			print_menu(data);

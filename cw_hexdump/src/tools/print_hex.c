@@ -57,6 +57,9 @@ static void		init_struct(t_data *data)
 	lseek(data->fd, 0, SEEK_SET);
 	data->y = 3;
 	data->x = 1;
+	data->pos = 0;
+	data->zero = 0;
+	data->i = 0;
 	if (!(data->buffer = ft_memalloc(sizeof(unsigned char) * 17)))
 		return ;
 }
