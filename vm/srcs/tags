@@ -1,0 +1,13 @@
+colors	ncurses_init_end.c	/^static void		colors(t_env *e)$/
+corewar_end	signals.c	/^void				corewar_end(int i)$/
+createArenaBox	ncurses_create.c	/^int				createArenaBox(t_env *e)$/
+createInfoBox	ncurses_create.c	/^int				createInfoBox(t_env *e)$/
+createInfoLine	ncurses_create.c	/^int				createInfoLine(t_env *e)$/
+dump_map	dump_map.c	/^void			dump_map(unsigned char *arena, size_t size)/
+ncurses_affArena	ncurses_aff.c	/^void			ncurses_affArena(t_env *e)$/
+ncurses_affInfo	ncurses_aff.c	/^void			ncurses_affInfo(t_env *e)$/
+ncurses_end	ncurses_init_end.c	/^void			ncurses_end(t_env *e)$/
+ncurses_init	ncurses_init_end.c	/^int				ncurses_init(t_env *e)$/
+ncurses_resizeWindow	signals.c	/^void				ncurses_resizeWindow(int sig)$/
+ncurses_termTooSmall	ncurses_create.c	/^int				ncurses_termTooSmall(t_env *e)$/
+remove_player	remove_player.c	/^t_process			*remove_player(t_process *proc, t_proc/

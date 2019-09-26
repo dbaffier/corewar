@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 21:22:14 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/23 21:22:14 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/27 00:34:48 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ static int			check_players_alive(t_process **head, t_env *e)
 
 static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 {
-	static void	(*instruction_function[])(t_process *, t_op *, t_env *) = {
-		// op_live, op_live, op_ld, op_st, op_add, op_sub, op_and, op_or, op_xor,
-		// op_zjmp, op_ldi, op_sti, op_fork, op_lld, op_ldi, op_lfork, op_aff,
+	static void	(*instruction_function[])(t_process *, t_env *) = {
+		op_live, op_live, op_ld, op_st, op_add, op_sub, op_and, op_or, op_xor,
+		op_zjmp, op_ldi, op_sti, op_fork, op_lld, op_ldi, op_lfork, op_aff,
 		NULL,
 	};
 
@@ -70,17 +70,16 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 		{
 			proc->instruction = *((unsigned char *)e->arena + *(REG_CAST *)proc->pc);
 			if (proc->instruction > 0
-			&& proc->instruction < (int)(sizeof(op_tab) / sizeof(op_tab[0])))
+				&& (proc->instruction > (int)(sizeof(op_tab) / sizeof(op_tab[0]))))
 				proc->instruction_wait += op_tab[proc->instruction - 1].cycle;
 			else
 			{
 				proc->instruction = 0;
-				if ((*(int *)proc->pc += 1) > MEM_SIZE)
-					*(int *)proc->pc = 0;
+				*(int *)proc->pc %= MEM_SIZE;
 			}
 		}
 		else
-			(void)instruction_function;// instruction_function[proc->instruction](proc, op_tab, e);
+			instruction_function[proc->instruction](proc, e);
 	}
 	return (1);
 }
@@ -95,10 +94,10 @@ void			launch_game(t_env *e)
 	while (1)
 	{
 		ch = wgetch(e->ncu.mainWin);
-		if (ch == ERR)
+		/*if (ch == ERR)
 			break ;
 		else if (ch != 's')
-			continue ;
+			continue ;*/
 		proc = e->proc;
 		if (e->dump_cycle > -1 && (size_t)e->dump_cycle == nb_cycles)
 		{

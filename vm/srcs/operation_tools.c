@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/25 13:24:45 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/27 00:34:50 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,16 @@ void	get_params_len(t_param *params, int nbparam, char types, char opcode)
 int		get_value(unsigned char *data, int index, int size)
 {
 	int		i;
-	char	tab[size - 1];
+	char	tab[size];
 
-	i = -1;
-	while(++i < size)
+	i = 0;
+	while(i < size)
+	{
+		printf("i = [%d], size = [%d]\n", i, size);
 		tab[i] = data[index + i];
+		i++;
+	}
+	tab[i] = '\0';
 	return (ft_atoi_base(tab, 16));
 }
 
