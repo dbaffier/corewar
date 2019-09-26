@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:03:52 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/24 00:56:39 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/25 22:37:57 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,6 @@ int				main(int ac, char **av)
 		print_usage(ERR_FLAG);
 	if (data.flag & FLAG_N)
 		init_screen(&data);
-	/*if (av[1] && ft_strcmp(av[1], "-n") == 0)
-	{
-		data.flag |= FLAG_N;
-		init_screen(&data);
-	}*/
 	data.type[0] = DIRECT;
 	data.type[1] = REGISTER;
 	data.type[2] = 0;
@@ -65,8 +60,13 @@ int				main(int ac, char **av)
 	data.size = 21;
 	data.file_name = ft_strdup("test.cor");
 	cw_hexdump(&data, str);
-	print_hex(&data);
-	endwin();
+	if (data.flag & FLAG_N)
+	{
+		print_menu(&data);
+		print_hex(&data);
+		print_end(&data);
+		endwin();
+	}
 	close(data.fd);
 	return (0);
 }

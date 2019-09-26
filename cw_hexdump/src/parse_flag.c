@@ -9,14 +9,15 @@ void		print_usage(int error)
 
 int			set_msk(t_data *data, char c)
 {
-	t_flags	tab[1] = {DASH_N};
+	t_flags	tab[2] = {DASH_N, DASH_O};
 	int		i;
 
+	i = 0;
 	while (i < sizeof(tab) / sizeof(tab[i]))
 	{
 		if (c == tab[i].opt)
 		{
-			data->flag |= FLAG_N;
+			data->flag |= tab[i].msk;
 			return (1);
 		}
 		i++;

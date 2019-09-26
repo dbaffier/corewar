@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 00:28:15 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/24 02:36:11 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/26 00:56:45 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static void	print_continue(t_data *data)
 void		*thread_quit(void *thread)
 {
 	t_thread	*arg;
-	WINDOW		*win;
 	char		c;
 
 	arg = (t_thread *)thread;
@@ -32,7 +31,8 @@ void		*thread_quit(void *thread)
 		c = wgetch(arg->main_win);
 		if (c == '\n')
 		{
-			arg->stop = 1;
+			arg->stop = 0;
+			pthread_exit(NULL);
 			break ;
 		}
 	}
@@ -42,14 +42,17 @@ void		*thread_quit(void *thread)
 int			print_first(t_data *data)
 {
 	pthread_t	thread;
+	void		*thread_ret;
 	t_thread	arg;
 	int			i;
 
 	i = 0;
+	thread_ret = NULL;
 	ft_memset(&arg, 0, sizeof(t_thread));
 	arg.main_win = data->main_win;
-	pthread_create(&thread, NULL, &thread_quit, (void *)&arg);
-	while (!arg.stop)
+	arg.stop = 1;
+	pthread_create(&thread, NULL, thread_quit, &arg);
+	while (arg.stop)
 	{
 		if (MSG && MSG[i])
 		{
@@ -62,7 +65,6 @@ int			print_first(t_data *data)
 		else
 			print_continue(data);
 	}
-	pthread_cancel(thread);
 	wclear(data->main_win);
 	wrefresh(data->main_win);
 	return (0);
@@ -79,7 +81,12 @@ int			init_screen(t_data *data)
 	init_pair(0, COLOR_WHITE, COLOR_BLACK);
 	init_pair(1, COLOR_RED, COLOR_BLACK);
 	init_pair(2, COLOR_GREEN, COLOR_BLACK);
+	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(4, COLOR_BLUE, COLOR_BLACK);
+	init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
+	init_pair(6, COLOR_CYAN, COLOR_BLACK);
 	data->main_win = newwin(0, 0, 0, 0);
+	keypad(data->main_win, TRUE);
 	data->y = 10;
 	data->x = 5;
 	wattron(data->main_win, COLOR_PAIR(0));

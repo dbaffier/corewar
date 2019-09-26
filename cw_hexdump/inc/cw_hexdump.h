@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/24 02:16:26 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/26 00:45:53 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,18 @@
 # include <curses.h>
 # include <pthread.h>
 # include <unistd.h>
+# include <sys/types.h>
+# include <signal.h>
 
 # define ERR_OPEN	-1
 # define ERR_MALLOC 5
 # define ERR_FLAG	6
 
 # define FLAG_N		(1 << 0)
+# define FLAG_O		(1 << 1)
 
 # define DASH_N		{FLAG_N, 'n'}
+# define DASH_O		{FLAG_O, 'o'}
 
 # define NAME		1
 # define COMMENT	2
@@ -37,6 +41,7 @@
 
 # define COR_EXT	".cor"
 # define MSG		"With this visu you will be able to see a bit more about how corewar works"
+# define ZERO_LINE	"00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00"
 
 # define LIVE		{1, "live"}//, &w_live}
 # define LD			{2, "ld"}//, &w_ld}
@@ -62,6 +67,7 @@
 typedef struct		s_data
 {
 	short			t_bin;
+	int				pos;
 	int				pc;
 	int				x;
 	int				y;
@@ -130,11 +136,17 @@ int			init_screen(t_data *data);
 int			wait_or_enter(t_data *data, int sleeping);
 void		print_hex(t_data *data);
 void		print_buff(t_data *data);
-int			fill_buff(t_data *data, unsigned char buff);
+int			fill_buffer(t_data *data, unsigned char buff);
 int			len_hex(unsigned char bin);
 void		nprint_nb(t_data *data, int base, unsigned char n, char letter);
 void		print_file_name(t_data *data);
 void		print_compilation(t_data *data);
 void		print_dot(t_data *data);
+void		print_end(t_data *data);
+void		print_menu(t_data *data);
+void		starting_color(t_data *data);
+void		reset_colors(t_data *data);
+void		print_legend(t_data *data, int x, int y);
+void		print_offset(t_data *data);
 
 #endif 
