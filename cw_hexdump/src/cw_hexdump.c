@@ -48,11 +48,15 @@ int				main(int ac, char **av)
 	char	str[] = "test.s";
 
 	ft_memset(&data, 0, sizeof(t_data));
-	if (av[1] && ft_strcmp(av[1], "-n") == 0)
+	if (parse_flag(&data, av) == ERR_FLAG)
+		print_usage(ERR_FLAG);
+	if (data.flag & FLAG_N)
+		init_screen(&data);
+	/*if (av[1] && ft_strcmp(av[1], "-n") == 0)
 	{
 		data.flag |= FLAG_N;
 		init_screen(&data);
-	}
+	}*/
 	data.type[0] = DIRECT;
 	data.type[1] = REGISTER;
 	data.type[2] = 0;

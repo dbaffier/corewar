@@ -25,8 +25,11 @@
 
 # define ERR_OPEN	-1
 # define ERR_MALLOC 5
+# define ERR_FLAG	6
 
 # define FLAG_N		(1 << 0)
+
+# define DASH_N		{FLAG_N, 'n'}
 
 # define NAME		1
 # define COMMENT	2
@@ -77,6 +80,12 @@ typedef struct		s_data
 //	void			(*func)(struct s_data *data);
 }					t_data;
 
+typedef struct		s_flags
+{
+	int				msk;
+	char			opt;
+}					t_flags;
+
 typedef struct		s_opc
 {
 	int				code;
@@ -90,6 +99,8 @@ typedef struct		s_thread
 	int				stop;
 }					t_thread;
 
+int			parse_flag(t_data *data, char **av);
+void		print_usage(int error);
 //////////// main hexdump
 int			cw_hexdump(t_data *data, char *file);
 int			way_to_corewar(t_data *data);

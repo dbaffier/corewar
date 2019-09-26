@@ -48,7 +48,7 @@ int			print_first(t_data *data)
 	i = 0;
 	ft_memset(&arg, 0, sizeof(t_thread));
 	arg.main_win = data->main_win;
-	pthread_create(&thread, NULL, thread_quit, &arg);
+	pthread_create(&thread, NULL, &thread_quit, (void *)&arg);
 	while (!arg.stop)
 	{
 		if (MSG && MSG[i])
@@ -62,7 +62,7 @@ int			print_first(t_data *data)
 		else
 			print_continue(data);
 	}
-//	pthread_cancel(thread);
+	pthread_cancel(thread);
 	wclear(data->main_win);
 	wrefresh(data->main_win);
 	return (0);
