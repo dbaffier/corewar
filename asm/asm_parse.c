@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 01:48:11 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/24 00:34:11 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/25 20:53:08 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,12 @@ int		parser(t_env *e, char *file)
 	//	return (err_syntax(ret));
 	for (t_aolist *p = e->aolist; p; p = p->next)
 	{
+		printf("Head line : [%d]\n", p->line);
 		for (t_token *t = p->tok; t; t = t->next)
 		{
 			if (p->comment)
 				ft_printf("\t\tp->comment [%s]\n", p->comment);
+			printf("\t\t size : [%d]\n", t->arg_n);
 			printf("\t\tbin : [%d]\n", t->bin);
 			printf("\t\tt->lab : [%s]\n", t->lab);
 			printf("\t\tint val : [%d]\n", t->val);

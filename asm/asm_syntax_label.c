@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 19:57:32 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/23 18:08:40 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/26 22:01:05 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,28 @@ int			asm_lexical_label(char *lab)
 	return (0);
 }
 
+int			asm_syntax_labelled(t_env *e, t_aolist *head)
+{
+	while (head)
+	{
+		if (head->tok->type == LABEL)
+		{
+			if (head->tok->lab && !head->tok->lab[0])
+				return (syntax_error(e, E_LEXICAL, head->tok->lab, head->line));
+			if (asm_lexical_label(head->tok->lab))
+				return (syntax_error(e, E_LEXICAL, head->tok->lab, head->line));
+		}
+		head = head->next;
+	}
+	return (0);
+}
+
 int			asm_syntax_label(t_env *e, t_aolist *head, t_token *curr)
 {
-	while (curr)
-	{
-		if (curr->type & T_LAB)
-		{
-			if (asm_lexical_label(curr->lab))
-				return (syntax_error(e, ERR_LAB, curr, head->line));
-			if (!(head->lab = brother_link(head, curr)))
-				return (syntax_error(e, ERR_LAB_FOUND, curr, head->line));
-			curr->bin = lab_val(head, head->lab);
-		}
-		curr = curr->next;
-	}
+	if (asm_lexical_label(curr->lab))
+		return (syntax_error(e, E_LEXICAL, curr->err, head->line));
+	if (!(head->lab = brother_link(e->aolist, curr)))
+		return (syntax_error(e, E_LAB, curr->err, head->line));
+	curr->bin = lab_val(head, head->lab);
 	return (0);
 }

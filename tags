@@ -1,21 +1,52 @@
 Mmain	asm/main.c	/^int main(int ac, char **av)$/
+asm_comment	asm/asm_comment.c	/^int	asm_comment(t_aolist *head, char **line)$/
 asm_file	asm/asm_file.c	/^int			asm_file(int ac, char **av)$/
 asm_file_open	asm/asm_file.c	/^int			asm_file_open(t_env *e, char *file)$/
-create_dot	asm/header_create.c	/^int		create_dot(t_token **head, char *val, size_t /
+asm_lexical_label	asm/asm_syntax_label.c	/^int			asm_lexical_label(char *lab)$/
+asm_syntax_arg	asm/asm_syntax_arg.c	/^int		asm_syntax_arg(t_env *e, t_aolist *head, t_to/
+asm_syntax_header	asm/asm_syntax_header.c	/^int		asm_syntax_header(t_env *e, t_aolist *head)$/
+asm_syntax_label	asm/asm_syntax_label.c	/^int			asm_syntax_label(t_env *e, t_aolist *head, t/
+asm_syntax_labelled	asm/asm_syntax_label.c	/^int			asm_syntax_labelled(t_env *e, t_aolist *head/
+asm_syntax_op	asm/asm_syntax_op.c	/^int		asm_syntax_op(t_env *e, t_aolist *head, t_tok/
+brother_link	asm/asm_syntax_label.c	/^t_aolist	*brother_link(t_aolist *head, t_token *cu/
+chunk_size	asm/asm_size.c	/^size_t		chunk_size(t_token *tok, int id)$/
+create_dot	asm/asm_dot.c	/^int		create_dot(t_token **head, char *val, size_t /
 create_label	asm/label_create.c	/^int		create_label(t_token **head, char *val, size_/
 create_token	asm/tok_create.c	/^int		create_token(t_token **head, char *line, size/
-dup_val	asm/label_create.c	/^static char		*dup_val(char *line, size_t *i)$/
+dup_all	asm/asm_dot.c	/^static char	*dup_all(char *val, size_t *i)$/
+dup_dot	asm/asm_dot.c	/^static char		*dup_dot(char *line, size_t *i)$/
+dup_label	asm/label_create.c	/^static char		*dup_label(char *line, size_t *i)$/
+dup_opcode	asm/grep_opcode.c	/^static char	*dup_opcode(char *line, size_t *i)$/
+dup_val	asm/grep_opcode.c	/^static char		*dup_val(char *line, size_t *i)$/
 err_file	asm/main.c	/^static int	err_file(int err)$/
 eval_asm_file	asm/asm_file.c	/^static int	eval_asm_file(char *file)$/
+evaluate_sc	asm/asm_arg.c	/^int		evaluate_sc(char *line, size_t i)$/
+ft_count_words	asm/split_wp.c	/^static int			ft_count_words(const char *s)$/
+ft_freetab	asm/tools.c	/^void		ft_freetab(char ***table)$/
+ft_mallocd2	asm/split_wp.c	/^static char				*ft_mallocd2(const char *s, int *i)/
+ft_strsplitws	asm/split_wp.c	/^char				**ft_strsplitws(const char *s)$/
+grep_arg	asm/asm_arg.c	/^int		grep_arg(t_token *ptr, char *line, size_t *i)/
+grep_opcode	asm/grep_opcode.c	/^int		grep_opcode(t_token **head, char *line, size_/
 header_t	incs/op.h	/^}					header_t;$/
 is_label	asm/label_create.c	/^int		is_label(char *line, int start)$/
+lab_val	asm/asm_syntax_label.c	/^static int	lab_val(t_aolist *curr, t_aolist *next)/
+parse_arg	asm/asm_arg.c	/^static t_token		*parse_arg(t_token *ptr, char **sp/
+parse_splited	asm/asm_arg.c	/^static void		parse_splited(t_token *ptr, char *str/
 parser	asm/asm_parse.c	/^int		parser(t_env *e, char *file)$/
+push_front	asm/asm_aolist.c	/^void	push_front(void *head, void *new, int type)$/
+quoted	asm/asm_dot.c	/^int		quoted(char *val, size_t *i)$/
+set_id	asm/asm_aolist.c	/^int		set_id(t_token *head)$/
+set_opcode	asm/grep_opcode.c	/^static int	set_opcode(char *str)$/
+size_full	asm/syntax_analysis.c	/^static size_t	size_full(t_aolist *aolist)$/
 str_s_e	asm/tools.c	/^char	*str_s_e(char *line, int s, int e)$/
+syntax_analysis	asm/syntax_analysis.c	/^int		syntax_analysis(t_env *e, t_aolist *aolist)$/
+syntax_error	asm/asm_syntax_error.c	/^int		syntax_error(t_env *e, int error, t_token *to/
 t_aolist	incs/asm/asm.h	/^}					t_aolist;$/
 t_arg_type	incs/op.h	/^typedef char	t_arg_type;$/
 t_env	incs/vm.h	/^}					t_env;$/
+t_op	incs/asm/op.h	/^}								t_op;$/
 t_process	incs/vm.h	/^}					t_process;$/
 t_token	incs/asm/asm.h	/^}					t_token;$/
-tok_create	asm/tok_create.c	/^int		tok_create(t_token **head, char *line)$/
+tok_create	asm/tok_create.c	/^int		tok_create(t_aolist *head, char **line)$/
 token_lst	asm/asm_parse.c	/^static int token_lst(t_env *e)$/
 tokenize	asm/tok_create.c	/^int		tokenize(t_token **head, char *line, size_t */

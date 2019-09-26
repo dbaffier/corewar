@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 17:49:43 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/22 23:21:52 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/25 20:00:53 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ size_t		chunk_size(t_token *tok, int id)
 	size_t		size;
 
 	size = 1;
+	if (!tok->next)
+		return (1);
 	if (tok->type == LABEL)
 		tok = tok->next;
 	tok = tok->next;

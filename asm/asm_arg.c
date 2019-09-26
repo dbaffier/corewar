@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 21:40:14 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/24 02:38:11 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/26 21:58:38 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@
 
 static void		parse_splited(t_token *ptr, char *str)
 {
+	ptr->err = str;
 	if (str[0] == 'r')
 	{
-		ptr->val = ft_atoi(str + 1);
+		ptr->lab = str + 1;
 		ptr->type = T_REG;
 	}
 	else if (str[0] == DIRECT_CHAR)
@@ -30,7 +31,7 @@ static void		parse_splited(t_token *ptr, char *str)
 		}
 		else
 		{
-			ptr->val = ft_atoi(str + 1);
+			ptr->lab = str + 1;
 			ptr->type = T_DIR;
 		}
 	}
@@ -68,6 +69,17 @@ static t_token		*parse_arg(t_token *ptr, char **splited, size_t *size)
 	return (ptr);
 }
 
+int		evaluate_sc(char *line, size_t i)
+{
+	while (line[i])
+	{
+		if (line[i] == ',' && line[i + 1] == ',')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int		grep_arg(t_token *ptr, char *line, size_t *i)
 {
 	size_t		j;
@@ -79,6 +91,15 @@ int		grep_arg(t_token *ptr, char *line, size_t *i)
 	j = 0;
 	size = 0;
 	save = ptr;
+	if (evaluate_sc(line, *i))
+	{
+		free(ptr);
+		ptr = NULL;
+		while (line[*i])
+			*i = *i + 1;
+		save->arg_n = -1;
+		return (0);
+	}
 	if ((arg = ft_strsplit(&line[*i], ',')) == NULL)
 		return (ERR_MALLOC);
 	while (arg[j])
@@ -96,8 +117,6 @@ int		grep_arg(t_token *ptr, char *line, size_t *i)
 		j++;
 		size++;
 	}
-	printf("size ---- : [%zu]\n", size);
-	printf("j : [%zu]\n", j);
 	save->arg_n = size;
 	ft_freetab(&arg);
 	while (line[*i])

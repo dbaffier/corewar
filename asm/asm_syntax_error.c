@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 01:20:28 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/24 01:43:08 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/26 22:01:35 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "ft_printf.h"
 #include "asm.h"
 
-int		syntax_error(t_env *e, int error, t_token *tok, int line)
+int		syntax_error(t_env *e, int error, char *str, int line)
 {
 	static char		*tab[] = { NULL,  ERR_STR_NAME, ERR_STR_NAME_LEN,
 		ERR_STR_COMMENT, ERR_STR_COMMENT_LEN};
@@ -23,21 +23,16 @@ int		syntax_error(t_env *e, int error, t_token *tok, int line)
 		ft_printf("%s\n", tab[error]);
 	else
 	{
-		if (error == ERR_ARG_N)
-			ft_dprintf(2, "too much arguments on line [%d]\n", line);
-		else if (tok->type == LABEL)
-			ft_dprintf(2, "lexical error on label [%s] on line [%d]\n", tok->lab, line);
-		else if (tok->type == OP_CODE)
-			ft_dprintf(2, "lexical error on [%s] on line [%d]\n", tok->lab, line);
-		else if (error == ERR_LAB)
-		{
-			ft_dprintf(2, "lexical error at [TOKEN][%s] on line [%d]\n", tok->lab, line);
-			ft_dprintf(2, "authorized char : \"abcdefghijklmnopqrstuvwxyz_0123456789\"\n");
-		}
-		else if (error == ERR_LAB_FOUND)
-			ft_dprintf(2, "lexical error at [TOKEN][%s] on line [%d] was not found \n", tok->lab, line);
+		if (error == E_LEXICAL)
+			ft_dprintf(2, ERR_LEXICAL, str, line);
+		else if (error == E_SYNTAX)
+			ft_dprintf(2, ERR_SYNTAX, str, line);
+		else if (error == E_PARAM)
+			ft_dprintf(2, ERR_PARAM, str, line);
+		else if (error == E_LAB)
+			ft_dprintf(2, ERR_LAB, str, line);
 		else
-			ft_printf("Error\n");
+			ft_printf("ERROR\n");
 	}
 	(void)e;
 	exit(1);

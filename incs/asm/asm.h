@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:19:41 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/24 01:44:53 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/26 23:11:15 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,21 @@
 # define ERR_OPEN			5
 # define ERR_MALLOC			6
 
+
 # define ERR_NAME_H			1
 # define ERR_NAME_LEN		2
 # define ERR_COMMENT_H		3
 # define ERR_COMMENT_LEN	4
-# define ERR_LAB			5
-# define ERR_LAB_FOUND		6
-# define ERR_OPCODE			7
-# define ERR_ARG_N			8
+# define E_LEXICAL			6
+# define E_SYNTAX			7
+# define E_PARAM			8
+# define E_LAB				9
+
+# define ERR_LEXICAL		"lexical error on `%s` at line [%d]\n"
+# define ERR_SYNTAX			"syntax error on `%s` at line [%d]\n"	
+# define ERR_PARAM			"parameters error on `%s` at line [%d]\n"
+# define ERR_LAB			"label not found `%s` at line [%d]\n"
+
 
 # define ERR_STR_FILE		"filename too short"
 # define ERR_STR_EXTENSION	"file extension is not correct"
@@ -69,6 +76,7 @@ typedef struct		s_token
 	int					arg_n;
 	int					val;
 	char				*lab;
+	char				*err;
 	struct s_token		*next;
 }					t_token;
 
@@ -78,6 +86,7 @@ typedef struct		s_aolist
 	int					line;
 	size_t				size;
 	size_t				mem_addr;
+	int					arg[3];
 	t_token				*tok;
 	struct s_aolist		*lab;
 	char				*comment;
@@ -119,6 +128,7 @@ int			asm_syntax_header(t_env *e, t_aolist *head);
 int			asm_syntax_op(t_env *e, t_aolist *head, t_token *curr);
 int			asm_syntax_arg(t_env *e, t_aolist *head, t_token *curr);
 int			asm_lexical_label(char *lab);
-int			syntax_error(t_env *e, int error, t_token *tok, int line);
+int			asm_syntax_labelled(t_env *e, t_aolist *head);
+int			syntax_error(t_env *e, int error, char *str, int line);
 
 #endif

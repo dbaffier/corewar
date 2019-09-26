@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:00:21 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/23 18:45:41 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/25 23:07:14 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int		create_token(t_token **head, char *line, size_t st, size_t *i)
 {
 	if (grep_opcode(head, line, st, i) > 0)
 		return (ERR_MALLOC);
-	if (grep_arg(*head, line, i) > 0)
-		return (ERR_MALLOC);
+	//if (grep_arg(*head, line, i) > 0)
+		//return (ERR_MALLOC);
 	return (0);
 }
 
