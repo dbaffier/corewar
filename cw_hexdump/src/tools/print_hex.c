@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 17:46:53 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/25 23:29:34 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/26 22:19:52 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,14 @@ static void		init_struct(t_data *data)
 		return ;
 }
 
-void			check_zero(t_data *data, unsigned char buff)
+static void		init_newline(t_data *data, unsigned char buff)
 {
-	if (buff == 0x0)
-		data->zero = data->zero + 1;
-	if (buff != 0x0)
-	{
-		data->check = 0;
-		data->zero = 0;
-	}
+	data->zero = 0;
+	data->y = data->y + 1;
+	data->x = 1;
+	data->buffer[data->i] = buff;
+	data->i = data->i + 1;
+	check_zero(data, buff);
 }
 
 void			print_hex(t_data *data)
@@ -85,14 +84,7 @@ void			print_hex(t_data *data)
 	{
 		starting_color(data);
 		if (fill_buffer(data, buff) == 1)
-		{
-			data->zero = 0;
-			data->y = data->y + 1;
-			data->x = 1;
-			data->buffer[data->i] = buff;
-			data->i = data->i + 1;
-			check_zero(data, buff);
-		}
+			init_newline(data, buff);
 		else
 		{
 			data->buffer[data->i] = buff;

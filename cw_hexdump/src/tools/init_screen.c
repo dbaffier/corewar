@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 00:28:15 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/26 00:56:45 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/26 21:55:06 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,16 @@ void		*thread_quit(void *thread)
 			break ;
 		}
 	}
-	return(NULL);
+	return (NULL);
 }
 
 int			print_first(t_data *data)
 {
 	pthread_t	thread;
-	void		*thread_ret;
 	t_thread	arg;
 	int			i;
 
 	i = 0;
-	thread_ret = NULL;
 	ft_memset(&arg, 0, sizeof(t_thread));
 	arg.main_win = data->main_win;
 	arg.stop = 1;

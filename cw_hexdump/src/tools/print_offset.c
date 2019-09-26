@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 20:18:50 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/26 20:41:59 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/26 21:53:46 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ void	print_offset(t_data *data)
 
 void	print_fsize(t_data *data)
 {
-	ft_printf("Compilation done   %C \t\t-rwx------   %s   %d\t%k\n", L'✓', data->file_name, data->pc + 1, time(NULL) - 12600);
+	ft_printf("Compilation done   %C \t\t-rwx------   %s   %d\t%k\n", L'✓',
+			data->file_name, data->pc + 1, time(NULL) - 12600);
 }

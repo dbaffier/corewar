@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 21:17:34 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/26 21:24:25 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/26 21:50:26 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void		print_usage(int error)
 
 int			set_msk(t_data *data, char c)
 {
-	t_flags	tab[4] = {DASH_N, DASH_O, DASH_P, DASH_GP};
-	int		i;
+	static t_flags	tab[4] = {DASH_N, DASH_O, DASH_P, DASH_GP};
+	int				i;
 
 	i = 0;
 	while (i < sizeof(tab) / sizeof(tab[i]))

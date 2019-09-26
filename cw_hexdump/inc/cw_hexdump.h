@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/26 21:20:25 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/26 22:29:21 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@
 # define COR_EXT	".cor"
 # define MSG		"With this visu you will be able to see a bit more about how corewar works"
 # define ZERO_LINE	"00 00 00 00 00 00 00 00   00 00 00 00 00 00 00 00"
+# define BOX		"+---------------------------------------------+"
+# define BOX_MIDDLE	"|=============================================|"
 
 # define LIVE		{1, "live"}//, &w_live}
 # define LD			{2, "ld"}//, &w_ld}
@@ -155,5 +157,8 @@ void		print_legend(t_data *data, int x, int y);
 void		print_offset(t_data *data);
 void		print_fsize(t_data *data);
 void		print_path(t_data *data);
+void		print_zero(t_data *data);
+void		print_zero_line(t_data *data);
+void		check_zero(t_data *data, unsigned char buff);
 
 #endif 
