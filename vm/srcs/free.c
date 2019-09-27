@@ -1,39 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/25 16:17:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/28 00:32:19 by gbourgeo         ###   ########.fr       */
+/*   Created: 2019/09/28 00:34:57 by gbourgeo          #+#    #+#             */
+/*   Updated: 2019/09/28 00:35:35 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "vm.h"
 
-void				corewar_end(int sig)
+static void		free_proc(t_process **proc)
 {
-	(void)sig;
-	ncurses_end(&g_env);
-	free_env(&g_env);
-	exit(1);
+	if (proc)
+		if (*proc)
+		{
+			free_proc(&(*proc)->next);
+			if ((*proc)->file)
+				free((*proc)->file);
+			free(*proc);
+			*proc = NULL;
+		}
 }
 
-void				ncurses_resizeWindow(int sig)
+void			free_env(t_env *e)
 {
-	if (sig != SIGWINCH)
-		return ;
-	endwin();
-	refresh();
-	clear();
-	if (COLS < ARENA_LINE_LEN || LINES < ARENA_COL_LEN)
-		ncurses_termTooSmall(&g_env);
-	else
-	{
-		createArenaBox(&g_env);
-		createInfoBox(&g_env);
-		createInfoLine(&g_env);
-	}
+	free_proc(&e->proc);
+	if (e->arena)
+		free(e->arena);
 }

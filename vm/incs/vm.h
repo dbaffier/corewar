@@ -18,13 +18,13 @@
 # include "vm_ncurse.h"
 
 # if REG_SIZE == 1
-#  define REG_CAST char
+#  define REG_CAST unsigned char
 # elif REG_SIZE == 2
-#  define REG_CAST short
+#  define REG_CAST unsigned short
 # elif REG_SIZE == 4
-#  define REG_CAST int
+#  define REG_CAST unsigned int
 # else
-#  define REG_CAST long
+#  define REG_CAST unsigned long
 # endif
 
 /*
@@ -76,19 +76,13 @@ typedef struct			s_process
 	char				pc[REG_SIZE];
 	char				carry;
 	size_t				instruction_wait;
-	int					instruction;
+	unsigned char		instruction;
 	int					is_alive; /* must be 0 or 1 */
 	t_live				*live;
 	short				color[2];
 	struct s_process	*next;
 	struct s_process	*prev;
 }						t_process;
-
-typedef struct			s_param
-{
-	int					value;
-	char				size;
-}						t_param;
 
 typedef struct			s_env
 {
@@ -99,12 +93,19 @@ typedef struct			s_env
 	int					nb_players;
 	t_process			*proc;
 	void				*arena;
+	short				*colors;
 	int					cycle_to_die;
 	int					checks;
 	t_live				live;
 }						t_env;
 
 struct s_env			g_env;
+
+typedef struct			s_param
+{
+	int					value;
+	char				size;
+}						t_param;
 
 /*
 ** Signals Handlers
@@ -136,6 +137,8 @@ int						createArenaBox(t_env *e);
 int						createInfoBox(t_env *e);
 int						createInfoLine(t_env *e);
 void					ncurses_affArena(t_env *e);
+void					ncurses_affChampion(t_env *e);
+void					ncurses_affVMInfo(t_env *e, size_t cycle);
 void					ncurses_affInfo(t_env *e);
 
 /*
@@ -143,6 +146,7 @@ void					ncurses_affInfo(t_env *e);
 */
 void					launch_game(t_env *e);
 void					dump_map(unsigned char *arena, size_t size);
+void					move_process_pc(t_process *proc, int len, t_env *e);
 
 /*
 ** Instructions Functions
@@ -168,7 +172,7 @@ void					get_params_len(t_param *params, int nbparam, \
 		char types, char opcode);
 void					get_params_data(t_param *params, int nbparam, \
 		unsigned char *data, int pc);
-t_process				*new_proc(t_process *proc, int value);
+t_process				*new_proc(t_process *proc, int value, int flag);
 void					get_types(char types, t_param *params_type);
 int						get_value(unsigned char *data, int index, \
 		int size);

@@ -47,7 +47,8 @@ void	op_live(t_process *proc, t_env *e)
 	e->live.total++;
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;
-	*((REG_CAST *)proc->pc) += len + 2;
+	move_process_pc(proc, len + 2, e);
+	// *((REG_CAST *)proc->pc) += len + 2;
 	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
@@ -70,7 +71,8 @@ void	op_ld(t_process *proc, t_env *e)
 	proc->carry = (params[1].value == 0) ? 1 : 0;
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;
-	*((REG_CAST *)proc->pc) += len + 2;
+	move_process_pc(proc, len + 2, e);
+	// *((REG_CAST *)proc->pc) += len + 2;
 	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
@@ -97,7 +99,8 @@ void	op_st(t_process *proc, t_env *e)
 	proc->carry = params[1].value == 0 ? 1 : 0;
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;
-	*((REG_CAST *)proc->pc) += len + 2;
+	move_process_pc(proc, len + 2, e);
+	// *((REG_CAST *)proc->pc) += len + 2;
 	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
@@ -122,7 +125,8 @@ void	op_add(t_process *proc, t_env *e)
 	proc->carry = params[0].value + params[1].value == 0 ? 1 : 0;
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;
-	*((REG_CAST *)proc->pc) += len + 2;
+	move_process_pc(proc, len + 2, e);
+	// *((REG_CAST *)proc->pc) += len + 2;
 	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
@@ -145,6 +149,7 @@ void	op_sub(t_process *proc, t_env *e)
 	proc->carry = params[0].value - params[1].value == 0 ? 1 : 0;
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;
-	*((REG_CAST *)proc->pc) += len + 2;
+	move_process_pc(proc, len + 2, e);
+	// *((REG_CAST *)proc->pc) += len + 2;
 	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }

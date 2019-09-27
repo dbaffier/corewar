@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:20:26 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/26 20:11:55 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/27 22:48:52 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int				ncurses_termTooSmall(t_env *e)
 {
-	wbkgd(e->ncu.mainWin, COLOR_PAIR(8));
+	wbkgd(e->ncu.mainWin, COLOR_PAIR(1));
 	wattron(e->ncu.mainWin, A_BOLD);
 	mvwaddstr(e->ncu.mainWin, (LINES * 0.5) - 1, (COLS * 0.5) - 3, "TERMINAL");
 	mvwaddstr(e->ncu.mainWin, (LINES * 0.5), (COLS * 0.5) - 4, "TOO SMALL!");
@@ -47,7 +47,6 @@ int				createArenaBox(t_env *e)
 	wrefresh(e->ncu.arenaWinBox);
 	if (!(e->ncu.arenaWin = subwin(e->ncu.arenaWinBox, winy - 2, winx - 2, 1, 1)))
 		return (ERR_NCURSE_ARENAWIN);
-	// scrollok(e->ncu.arenaWin, TRUE);
 	ncurses_affArena(e);
 	return (IS_OK);
 }
@@ -68,9 +67,17 @@ int				createInfoBox(t_env *e)
 	wattroff(e->ncu.infoWinBox, COLOR_PAIR(2));
 	mvwaddch(e->ncu.infoWinBox, 0, (winx * 0.5) + 3, ACS_LTEE);
 	wrefresh(e->ncu.infoWinBox);
-	if (!(e->ncu.infoWin = subwin(e->ncu.infoWinBox, winy - 2, winx - 2, 1, COLS - winx + 1)))
+	if (!(e->ncu.champWin = subwin(e->ncu.infoWinBox, (winy - 2) / 3, winx - 2, 1, COLS - winx + 1)))
 		return (ERR_NCURSE_INFOWIN);
-	// ncurses_affInfo(e);
+	if (!(e->ncu.vmWin = subwin(e->ncu.infoWinBox, (winy - 2) / 3, winx - 2, (winy - 2) / 3 + 1, COLS - winx + 1)))
+		return (ERR_NCURSE_INFOWIN);
+	if (!(e->ncu.infoWin = subwin(e->ncu.infoWinBox, (winy - 2) / 3, winx - 2, ((winy - 2) / 3) * 2 + 1, COLS - winx + 1)))
+		return (ERR_NCURSE_INFOWIN);
+	wbkgd(e->ncu.champWin, COLOR_PAIR(3));
+	scrollok(e->ncu.infoWin, TRUE);
+	ncurses_affChampion(e);
+	ncurses_affVMInfo(e, 0);
+	ncurses_affInfo(e);
 	return (IS_OK);
 }
 

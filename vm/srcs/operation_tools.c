@@ -12,14 +12,18 @@
 
 #include "vm.h"
 #include "libft.h"
+#include "ft_printf.h"
 
-t_process	*new_proc(t_process *proc, int value)
+t_process	*new_proc(t_process *proc, int value, int flag)
 {
 	t_process *new;
 
 	new = ft_memalloc(sizeof(t_process));
 	ft_memcpy(new, proc, sizeof(t_process));
-	*(REG_CAST *)new->pc = (*(REG_CAST *)proc->pc + value) % IDX_MOD;
+	if (!flag)
+		*(REG_CAST *)new->pc = (*(REG_CAST *)proc->pc + value) % IDX_MOD;
+	else
+		*(REG_CAST *)new->pc = (*(REG_CAST *)proc->pc + value);
 	new->prev = proc;
 	if ((new->next = proc->next) != NULL)
 		new->next->prev = new;
@@ -42,7 +46,6 @@ void	get_types(char types, t_param *params_type)
 		params_type[i].size = param_len;
 		types = types >> 2;
 		j -= 2;
-		printf("params = [%d]\n", params_type[i].size);
 		i++;
 	}
 }

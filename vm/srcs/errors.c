@@ -13,26 +13,6 @@
 #include "vm.h"
 #include "ft_printf.h"
 
-static void		free_proc(t_process **proc)
-{
-	if (proc)
-		if (*proc)
-		{
-			free_proc(&(*proc)->next);
-			if ((*proc)->file)
-				free((*proc)->file);
-			free(*proc);
-			*proc = NULL;
-		}
-}
-
-void			free_env(t_env *e)
-{
-	free_proc(&e->proc);
-	if (e->arena)
-		free(e->arena);
-}
-
 int				corewar_errors(int errnb, char *arg, t_env *e)
 {
 	static char	*error[] = {

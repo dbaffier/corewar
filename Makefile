@@ -18,9 +18,11 @@ VM_INC_D	= $(VM_DIR)incs/
 VM_SRC		+=	main.c				\
 				dump_map.c			\
 				errors.c			\
+				free.c				\
 				get_args.c			\
 				get_player.c		\
 				get_arena.c			\
+				move_pc.c			\
 				ncurses_init_end.c	\
 				ncurses_create.c	\
 				ncurses_aff.c		\
