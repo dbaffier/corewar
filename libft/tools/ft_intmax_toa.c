@@ -37,7 +37,7 @@ char				*ft_intmax_toa(intmax_t n)
 	if (n == 0)
 		return (ft_strdup("0"));
 	nb = count_dec(&nb_len, n);
-	if (!(res = (char *)malloc(sizeof(char) * nb_len)))
+	if (!(res = (char *)malloc(sizeof(char) * (nb_len + 1))))
 		return (NULL);
 	res[nb_len] = '\0';
 	while (nb_len--)

@@ -37,6 +37,7 @@ void	op_sti(t_process *proc, t_env *e)
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;
 	*((REG_CAST *)proc->pc) += len + 2;
+	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 
@@ -63,6 +64,7 @@ void	op_fork(t_process *proc, t_env *e)
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;
 	*((REG_CAST *)proc->pc) += len + 2;
+	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -85,6 +87,7 @@ void	op_lld(t_process *proc, t_env *e)
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;
 	*((REG_CAST *)proc->pc) += len + 2;
+	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -109,6 +112,7 @@ void	op_lldi(t_process *proc, t_env *e)
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;
 	*((REG_CAST *)proc->pc) += len + 2;
+	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -131,4 +135,5 @@ void	op_lfork(t_process *proc, t_env *e)
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;
 	*((REG_CAST *)proc->pc) += len + 2;
+	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }

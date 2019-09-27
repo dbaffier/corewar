@@ -57,12 +57,11 @@ static int			check_players_alive(t_process **head, t_env *e)
 static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 {
 	static void	(*instruction_function[])(t_process *, t_env *) = {
-		op_live, op_live, op_ld, op_st, op_add, op_sub, op_and, op_or, op_xor,
-		op_zjmp, op_ldi, op_sti, op_fork, op_lld, op_ldi, op_lfork, op_aff,
-		NULL,
+		op_live, op_ld, op_st, op_add, op_sub, op_and, op_or, op_xor,
+		op_zjmp, op_ldi, op_sti, op_fork, op_lld, op_lldi, op_lfork, op_aff,
 	};
 
-	if (proc->instruction_wait > nb_cycles)
+	if (proc->instruction_wait != nb_cycles)
 		return (1);
 	if (proc->instruction_wait == nb_cycles)
 	{
@@ -95,7 +94,7 @@ void			launch_game(t_env *e)
 	ch = 0;
 	while (1)
 	{
-		if (ch != ' ')
+		if (e->ncu.infoWin && ch != ' ')
 		{
 			ch = wgetch(e->ncu.infoWin);
 			wprintw(e->ncu.infoWin, "Char: %d\n", ch);

@@ -65,12 +65,12 @@ lib:
 	@make -C $(LFT_DIR)
 
 $(NAME): $(OBJS_VM)
-	$(CC) -o $@ $^ $(LIBS)
+	@$(CC) -o $@ $^ $(LIBS)
 	@echo "RELEASE THE $(RED) C O R E W A R $(RESET)"
 
 $(OBJS_DIR)%.o: $(VM_SRC_D)%.c
 $(OBJS_DIR)%.o: $(VM_SRC_D)%.c $(DEP_DIR)%.d
-	$(CC) -MT $@ -MMD -MP -MF $(DEP_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
+	@$(CC) -MT $@ -MMD -MP -MF $(DEP_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
 	@mv -f $(DEP_DIR)$*.Td $(DEP_DIR)$*.d && touch $@
 
 $(DEP_DIR)%.d: ;

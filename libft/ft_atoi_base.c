@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 20:11:33 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/25 20:22:31 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/27 17:28:46 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,15 @@ int		ft_atoi_base(char *str, int base)
 	int result;
 	int sign;
 
+	if (!str || base <= 0)
+		return (0);
 	result = 0;
-	while (*str <= 32)
+	while (*str && *str <= 32)
 		str++;
 	sign = (*str == '-') ? -1 : 1;
-	(*str == '-' || *str == '+') ? ++str : 0;
-	while (char_valid(*str, base))
+	if ((*str == '-' || *str == '+'))
+		str++;
+	while (*str && char_valid(*str, base))
 		result = result * base + value_of(*str++);
 	return (result * sign);
 }
