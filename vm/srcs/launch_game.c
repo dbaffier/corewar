@@ -66,20 +66,21 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 		return (1);
 	if (proc->instruction_wait == nb_cycles)
 	{
+		proc->instruction = 3;
 		if (proc->instruction == 0)
 		{
 			proc->instruction = *((unsigned char *)e->arena + *(REG_CAST *)proc->pc);
-			if (proc->instruction > 0
-				&& (proc->instruction > (int)(sizeof(op_tab) / sizeof(op_tab[0]))))
+			if (proc->instruction > 0 && (proc->instruction < (int)(sizeof(op_tab) / sizeof(op_tab[0]))))
 				proc->instruction_wait += op_tab[proc->instruction - 1].cycle;
 			else
 			{
-				proc->instruction = 0;
-				*(int *)proc->pc %= MEM_SIZE;
+				(*(int *)proc->pc) = ((*(int *)proc->pc + 1) % MEM_SIZE);
+				//proc->instruction = 0;
 			}
 		}
 		else
 			instruction_function[proc->instruction](proc, e);
+		ft_printf("op code [%d]\n", proc->instruction);
 	}
 	return (1);
 }
@@ -94,10 +95,10 @@ void			launch_game(t_env *e)
 	while (1)
 	{
 		ch = wgetch(e->ncu.mainWin);
-		/*if (ch == ERR)
+		if (ch == ERR)
 			break ;
 		else if (ch != 's')
-			continue ;*/
+			continue ;
 		proc = e->proc;
 		if (e->dump_cycle > -1 && (size_t)e->dump_cycle == nb_cycles)
 		{
