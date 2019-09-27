@@ -62,7 +62,7 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 		NULL,
 	};
 
-	if (proc->instruction_wait > nb_cycles)
+	if (proc->instruction_wait != nb_cycles)
 		return (1);
 	if (proc->instruction_wait == nb_cycles)
 	{
