@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:19:41 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/27 23:24:09 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/28 01:16:51 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct		s_aolist
 
 typedef struct		s_env
 {
+	int			flag;
 	int			fd;
 	int			line;
 	size_t		size;
@@ -107,7 +108,7 @@ typedef struct		s_env
 extern t_op			g_op_tab[17];
 
 int			asm_file_open(t_env *e, char *file);
-int			asm_file(int ac, char **av);
+int			asm_file(int ac, char **av, int i);
 
 int			asm_comment(t_aolist *head, char **line);
 char		*str_s_e(char *line, int s, int e);
@@ -133,5 +134,6 @@ int			asm_lexical_label(char *lab);
 int			asm_syntax_labelled(t_env *e, t_aolist *head);
 int			syntax_error(t_env *e, int error, char *str, int line);
 
-int			dump_to_file(t_env *e, char **av);
+int			dump_to_file(t_env *e);
+int			parse_flag(t_env *e, char **av);
 #endif

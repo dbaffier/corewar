@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/28 00:30:58 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/28 01:22:42 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@
 # include <sys/types.h>
 # include <signal.h>
 # include <limits.h>
-
-# define ERR_FLAG	6
 
 # define FLAG_N		(1 << 0)
 # define FLAG_O		(1 << 1)
@@ -73,7 +71,6 @@ typedef struct		s_data
 	int				pc;
 	int				x;
 	int				y;
-	int				flag;
 	int				i;
 	int				zero;
 	int				check;
@@ -102,13 +99,12 @@ typedef struct		s_thread
 	int				stop;
 }					t_thread;
 
-int			parse_flag(t_data *data, char **av);
 void		print_usage(int error);
 //////////// main hexdump
 int			way_to_corewar(t_data *data, t_aolist *ao);
 
 //////////// generate .cor
-int			create_corfile(char *file);
+int			create_corfile(t_data *data, char *file);
 
 //////////// flush memory
 void		dump(char *file, void * addr, int len);

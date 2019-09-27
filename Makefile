@@ -6,7 +6,7 @@
 #    By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/26 23:23:36 by dbaffier          #+#    #+#              #
-#    Updated: 2019/09/28 00:16:13 by mmonier          ###   ########.fr        #
+#    Updated: 2019/09/28 01:18:47 by mmonier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ DEPS = $(addprefix $(DEPS_DIR), $(SRCS:.c=.d))
 
 RM = /bin/rm -rf
 
-SRCS_DIR = asm/
+SRCS_DIR = asm_dir/
 
 CONV_DIR = conversion/
 SRCS +=	binary.c				\
@@ -94,7 +94,7 @@ $(LIBFT_LIB):
 	@make -C $(LIBFT_PATH)
 
 $(NAME): $(OBJS)
-	$(CC) $^ -o $@ $(LIBFT_LINK)
+	$(CC) -fsanitize=address $^ -o $@ $(LIBFT_LINK)
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)$(CONV_DIR)%.c
 $(OBJS_DIR)%.o: $(SRCS_DIR)$(CONV_DIR)%.c $(DEPS_DIR)%.d
@@ -131,10 +131,3 @@ clean:
 fclean: clean
 	@make -C $(LIBFT_PATH) fclean
 	@$(RM) $(NAME)
-
-
-
-
-
-
-
