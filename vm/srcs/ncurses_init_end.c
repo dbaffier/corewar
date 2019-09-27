@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:28:36 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/26 04:22:55 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/26 18:05:32 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,24 @@ static void		colors(t_env *e)
 	short			i;
 	t_process		*proc;
 
-	i = 2;
+	i = 3;
 	proc = e->proc;
 	start_color();
 	use_default_colors();
 	init_pair(1, -1, -1); // Default
+	init_pair(2, COLOR_YELLOW, -1); // Titles
 	while (proc)
 	{
 		proc->color[0] = i;
-		init_pair(i, color_combo[i - 2], -1); // Player color
+		init_pair(i, color_combo[i - 3], -1); // Player color
 		i++;
 		proc->color[1] = i;
-		init_pair(i, -1, color_combo[i - 3]); // Player color PC
+		init_pair(i, -1, color_combo[i - 4]); // Player color PC
 		i++;
 		proc = proc->next;
 	}
 
 	// init_pair(2, COLOR_CYAN, -1);
-	// init_pair(3, COLOR_YELLOW, -1);
 	// init_pair(4, COLOR_RED, -1);
 	// init_pair(5, COLOR_BLUE, -1);
 	// init_pair(6, COLOR_MAGENTA, -1);

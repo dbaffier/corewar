@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:20:26 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/26 03:56:20 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/26 20:11:55 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ int				createArenaBox(t_env *e)
 		return (ERR_NCURSE_ARENABOX);
 	box(e->ncu.arenaWinBox, 0, 0);
 	mvwaddch(e->ncu.arenaWinBox, 0, (winx * 0.5) - 8, ACS_RTEE);
-	wattron(e->ncu.arenaWinBox, COLOR_PAIR(3));
+	wattron(e->ncu.arenaWinBox, COLOR_PAIR(2));
 	mvwaddstr(e->ncu.arenaWinBox, 0, (winx * 0.5) - 7, " C O R E W A R ");
-	wattroff(e->ncu.arenaWinBox, COLOR_PAIR(3));
+	wattroff(e->ncu.arenaWinBox, COLOR_PAIR(2));
 	mvwaddch(e->ncu.arenaWinBox, 0, (winx * 0.5) + 8, ACS_LTEE);
 	wrefresh(e->ncu.arenaWinBox);
 	if (!(e->ncu.arenaWin = subwin(e->ncu.arenaWinBox, winy - 2, winx - 2, 1, 1)))
@@ -63,14 +63,14 @@ int				createInfoBox(t_env *e)
 		return (ERR_NCURSE_INFOBOX);
 	box(e->ncu.infoWinBox, 0, 0);
 	mvwaddch(e->ncu.infoWinBox, 0, (winx * 0.5) - 4, ACS_RTEE);
-	wattron(e->ncu.infoWinBox, COLOR_PAIR(3));
+	wattron(e->ncu.infoWinBox, COLOR_PAIR(2));
 	mvwaddstr(e->ncu.infoWinBox, 0, (winx * 0.5) - 3, " Info ");
-	wattroff(e->ncu.infoWinBox, COLOR_PAIR(3));
+	wattroff(e->ncu.infoWinBox, COLOR_PAIR(2));
 	mvwaddch(e->ncu.infoWinBox, 0, (winx * 0.5) + 3, ACS_LTEE);
 	wrefresh(e->ncu.infoWinBox);
 	if (!(e->ncu.infoWin = subwin(e->ncu.infoWinBox, winy - 2, winx - 2, 1, COLS - winx + 1)))
 		return (ERR_NCURSE_INFOWIN);
-	ncurses_affInfo(e);
+	// ncurses_affInfo(e);
 	return (IS_OK);
 }
 

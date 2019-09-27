@@ -92,13 +92,18 @@ void			launch_game(t_env *e)
 	int			ch;
 
 	nb_cycles = 0;
+	ch = 0;
 	while (1)
 	{
-		ch = wgetch(e->ncu.mainWin);
-		if (ch == ERR)
-			break ;
-		else if (ch != 's')
-			continue ;
+		if (ch != ' ')
+		{
+			ch = wgetch(e->ncu.infoWin);
+			wprintw(e->ncu.infoWin, "Char: %d\n", ch);
+			if (ch == ERR)
+				break ;
+			else if (ch != 's' || ch != ' ')
+				continue ;
+		}
 		proc = e->proc;
 		if (e->dump_cycle > -1 && (size_t)e->dump_cycle == nb_cycles)
 		{
