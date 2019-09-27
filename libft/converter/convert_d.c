@@ -97,7 +97,7 @@ void			convert_d(t_format *data)
 	apply_specifier(data, &nb);
 	get_data_ptr(data, &c, nb);
 	c_nb = ft_intmax_toa(nb);
-	tab[0] = ft_strlen(c_nb);
+	tab[0] = (c_nb) ? ft_strlen(c_nb) : 0;
 	apply_half_flag(data, c, tab[0]);
 	write_d(data, tab[0], c_nb, nb);
 	if (data->flag.opts & OPT_MINUS)

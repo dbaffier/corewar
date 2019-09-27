@@ -28,16 +28,21 @@ t_process	*new_proc(t_process *proc, int value)
 
 void	get_types(char types, t_param *params_type)
 {
-	char	param_len;
-	int		i;
+	unsigned char	param_len;
+	int				i;
+	int				j;
 
 	i = 0;
+	j = 6;
 	while (i < 3)
 	{	
 		param_len = types;
+		param_len = param_len << j;
 		param_len = param_len >> 6;
 		params_type[i].size = param_len;
-		types = types << 2;
+		types = types >> 2;
+		j -= 2;
+		printf("params = [%d]\n", params_type[i].size);
 		i++;
 	}
 }
@@ -74,7 +79,6 @@ int		get_value(unsigned char *data, int index, int size)
 	i = 0;
 	while(i < size)
 	{
-		printf("i = [%d], size = [%d]\n", i, size);
 		tab[i] = data[index + i];
 		i++;
 	}
