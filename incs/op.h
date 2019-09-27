@@ -6,9 +6,12 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/09/17 18:23:27 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/28 00:28:28 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef OP_H
+# define OP_H
 
 /*
 ** Toutes les tailles sont en octets.
@@ -74,3 +77,17 @@ typedef struct		header_s
   unsigned int		prog_size;
   char				comment[COMMENT_LENGTH + 1];
 }					header_t;
+
+typedef struct					s_op
+{
+	char						*reg_name;
+	unsigned short				reg_nb;
+	int							types[3];
+	unsigned char				opcode;
+	unsigned int				cycle;
+	char						*complete_name;
+	int							encoding_byte;
+	int							direct_size;
+}								t_op;
+
+#endif

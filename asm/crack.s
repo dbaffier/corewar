@@ -1,4 +1,4 @@
-.name "crack"
+.name "cralllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll"
 .comment "del pablo"
 
-ldi 3, %4, r4
+l:	ldi r15, r1, r1
