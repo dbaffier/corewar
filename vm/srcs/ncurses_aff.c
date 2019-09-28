@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:47:32 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/29 00:03:43 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/29 00:12:58 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void			ncurses_affChampion(t_env *e)
 	t_header	*play;
 	int			y;
 
-	if (!(proc = e->proc))
+	if (!(proc = e->proc) || !e->ncu.champWin)
 		return ;
 	y = 0;
 	while (proc->next)

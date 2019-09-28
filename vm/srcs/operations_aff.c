@@ -29,7 +29,7 @@ void	op_aff(t_process *proc, t_env *e)
 
 	i = 0;
 	get_params_len(params, 1, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 1);
-	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
+	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 	if (e->ncu.infoWin)
 		wprintw(e->ncu.infoWin, "corewar : [%s] : \"%c\"\n", ((t_header *)proc->file)->prog_name, params[0].value);
 	else

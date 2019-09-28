@@ -10,23 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   launch_game.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/23 21:22:14 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/27 00:34:48 by bmellon          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "vm.h"
 #include "libft.h"
 #include "ft_printf.h"
 
-static void		and_the_winner_is(WINDOW *infoWin, t_live *live)
+static void		and_the_winner_is(WINDOW *infoWin, t_live *live) // MC HAMMER
 {
 	if (infoWin)
 	{

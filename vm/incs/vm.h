@@ -175,7 +175,7 @@ void					op_aff(t_process *proc, t_env *e);
 void					get_params_len(t_param *params, int nbparam, \
 		char types, char opcode);
 void					get_params_data(t_param *params, int nbparam, \
-		unsigned char *data, int pc);
+		unsigned char *data);
 t_process				*new_proc(t_process *proc, int value, int flag);
 void					get_types(char types, t_param *params_type);
 int						get_value(unsigned char *data, int index, \

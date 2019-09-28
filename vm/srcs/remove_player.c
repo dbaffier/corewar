@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:45:03 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/29 00:06:46 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/29 00:15:35 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ t_process			*remove_player(t_process *proc, t_process **head)
 		proc->next->prev = proc->prev;
 	if (proc->file)
 		free(proc->file);
-	free(proc);
 	ft_bzero(proc, sizeof(*proc));
-	system("afplay ~/Desktop/roblox-death-sound-effect.mp3 2>&-");
+	free(proc);
+	// system("afplay ~/Desktop/roblox-death-sound-effect.mp3 2>&-");
 	return (next);
 }
