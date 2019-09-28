@@ -6,12 +6,22 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:47:32 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/28 21:46:27 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/29 00:03:43 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
+
+/*
+** size_t i[2] :
+** i[0] : arena iteration counter
+** i[1] : arena color offset
+**
+** char flag[2] :
+** flag[0] : Did we changed the color ?
+** flag[1] : Did we changed process ?
+*/
 
 static void		arena_get_color(size_t i[2], char flag[2], t_process **proc,
 t_env *e)
@@ -20,8 +30,9 @@ t_env *e)
 	{
 		if (flag[0] == 0)
 		{
+			wprintw(e->ncu.infoWin, "id:%d color: %hd\n", (*proc)->id, e->colors[*(REG_CAST *)(*proc)->pc]);
 			wattron(e->ncu.arenaWin, (*(REG_CAST *)(*proc)->pc == i[0]) ?
-				COLOR_PAIR((*proc)->color[1]) : COLOR_PAIR((*proc)->color[0]));
+				COLOR_PAIR((*proc)->color[1]) : COLOR_PAIR(e->colors[*(REG_CAST *)(*proc)->pc]));
 			if (*(REG_CAST *)(*proc)->pc != i[0])
 				flag[0] = 1;
 		}
@@ -41,16 +52,6 @@ t_env *e)
 		flag[1] = 0;
 	}
 }
-
-/*
-** size_t i[2] :
-** i[0] : arena iteration counter
-** i[1] : arena color offset
-**
-** char flag[2] :
-** flag[0] : Did we changed the color ?
-** flag[1] : Did we changed process ?
-*/
 
 void			ncurses_affArena(t_env *e)
 {
@@ -96,7 +97,6 @@ void			ncurses_affChampion(t_env *e)
 		play = (t_header *)proc->file;
 		wattron(e->ncu.champWin, COLOR_PAIR(proc->color[1]));
 		wprintw(e->ncu.champWin, "Player %d\n", proc->id);
-		// mvwprintw(e->ncu.champWin, y, 20, "Player %d\n", proc->id);
 		wattroff(e->ncu.champWin, COLOR_PAIR(proc->color[1]));
 		wprintw(e->ncu.champWin, "%s (%s)\n\n\n", play->prog_name, play->comment);
 		y += 3;

@@ -148,6 +148,7 @@ void					update_affVMInfo(t_env *e, size_t cycle);
 ** Game Functions
 */
 void					launch_game(t_env *e);
+int						play_game(size_t nb_cycles, t_env *e);
 void					dump_map(unsigned char *arena, size_t size);
 void					move_process_pc(t_process *proc, int len, t_env *e);
 

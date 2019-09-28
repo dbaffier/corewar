@@ -29,6 +29,7 @@ VM_SRC		+=	main.c					\
 				ncurses_init_end.c		\
 				ncurses_wgetch.c		\
 				launch_game.c			\
+				play_game.c				\
 				op.c					\
 				remove_player.c			\
 				signals.c				\
