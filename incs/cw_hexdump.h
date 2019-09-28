@@ -6,13 +6,14 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/27 00:05:46 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/28 01:22:42 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CW_HEXDUMP_H
 # define CW_HEXDUMP_H
 
+# include "asm.h"
 # include "libft.h"
 # include "ft_printf.h"
 # include <stdio.h>
@@ -25,10 +26,6 @@
 # include <sys/types.h>
 # include <signal.h>
 # include <limits.h>
-
-# define ERR_OPEN	-1
-# define ERR_MALLOC 5
-# define ERR_FLAG	6
 
 # define FLAG_N		(1 << 0)
 # define FLAG_O		(1 << 1)
@@ -50,49 +47,38 @@
 # define BOX		"+---------------------------------------------+"
 # define BOX_MIDDLE	"|=============================================|"
 
-# define LIVE		{1, "live"}//, &w_live}
-# define LD			{2, "ld"}//, &w_ld}
-# define ST			{3, "st"}//, &w_st}
-# define ADD		{4, "add"}//, &w_add}
-# define SUB		{5, "sub"}//, &w_sub}
-# define AND		{6, "and"}//, &w_and}
-# define OR			{7, "or"}//, &w_or}
-# define XOR		{8, "xor"}//, &w_xor}
-# define ZJMP		{9, "zjmp"}//, &w_zjmp}
-# define LDI		{10, "ldi"}//, &w_ldi}
-# define STI		{11, "sti"}//, &w_sti}
-# define FORK		{12, "fork"}//, &w_fork}
-# define LLD		{13, "lld"}//, &w_lld}
-# define LLDI		{14, "lldi"}//, &w_lldi}
-# define LFORK		{15, "lfork"}//, &w_lfork}
-# define AFF		{16, "aff"}//, &w_aff}
-
-# define DIRECT		1
-# define INDIRECT	2
-# define REGISTER	3
+# define LIVE		{1, "live"}
+# define LD			{2, "ld"}
+# define ST			{3, "st"}
+# define ADD		{4, "add"}
+# define SUB		{5, "sub"}
+# define AND		{6, "and"}
+# define OR			{7, "or"}
+# define XOR		{8, "xor"}
+# define ZJMP		{9, "zjmp"}
+# define LDI		{10, "ldi"}
+# define STI		{11, "sti"}
+# define FORK		{12, "fork"}
+# define LLD		{13, "lld"}
+# define LLDI		{14, "lldi"}
+# define LFORK		{15, "lfork"}
+# define AFF		{16, "aff"}
 
 typedef struct		s_data
 {
-	short			t_bin;
+	int				fd;
 	int				pos;
 	int				pc;
 	int				x;
 	int				y;
-	int				fd;
-	int				flag;
-	int				type[3];
-	int				size;
 	int				i;
 	int				zero;
 	int				check;
 	WINDOW			*main_win;
-	char			*name;
-	char			*comment;
 	char			*file_name;
 	unsigned char	*buffer;
 	t_env			*e;
 	t_aolist		*ao;
-//	void			(*func)(struct s_data *data);
 }					t_data;
 
 typedef struct		s_flags
@@ -105,7 +91,6 @@ typedef struct		s_opc
 {
 	int				code;
 	char			*opcode;
-//	void			(*func)(t_data *data);
 }					t_opc;
 
 typedef struct		s_thread
@@ -114,22 +99,22 @@ typedef struct		s_thread
 	int				stop;
 }					t_thread;
 
-int			parse_flag(t_data *data, char **av);
 void		print_usage(int error);
 //////////// main hexdump
-int			cw_hexdump(t_data *data, char *file);
-int			way_to_corewar(t_data *data);
+int			way_to_corewar(t_data *data, t_aolist *ao);
 
 //////////// generate .cor
-int			create_corfile(char *file);
+int			create_corfile(t_data *data, char *file);
 
 //////////// flush memory
 void		dump(char *file, void * addr, int len);
 
 //////////// write func
-void		write_type(t_data *data);
-void		write_opc(t_data *data, char *opc);
-void		write_param(t_data *data, char *param, int size);
+void		write_name(t_data *data, char *str);
+void		write_comment(t_data *data, char *str);
+void		write_opc(t_data *data, int opc);
+void		write_type(t_data *data, int *tab);
+void		write_param(t_data *data, t_token *tok, int *tab);
 
 /*
 ** Header functions

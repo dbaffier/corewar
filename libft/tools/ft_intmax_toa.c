@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/09 20:57:48 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/06/11 03:20:33 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/28 20:40:47 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char				*ft_intmax_toa(intmax_t n)
 	if (n == 0)
 		return (ft_strdup("0"));
 	nb = count_dec(&nb_len, n);
-	if (!(res = (char *)malloc(sizeof(char) * nb_len)))
+	if (!(res = (char *)malloc(sizeof(char) * nb_len + 1)))
 		return (NULL);
 	res[nb_len] = '\0';
 	while (nb_len--)

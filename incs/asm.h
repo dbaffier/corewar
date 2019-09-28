@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:19:41 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/27 00:03:14 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/28 20:45:36 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,10 @@ enum {
 	PARAM,
 	DOT,
 	DOT_ARG,
+	REGISTER,
 	DIRECT,
 	UNDIRECT,
-	REGISTER,
+	LAB,
 };
 
 typedef struct		s_token
@@ -75,6 +76,7 @@ typedef struct		s_token
 	int					type;
 	int					arg_n;
 	int					val;
+	int					arg_size;
 	char				*lab;
 	char				*err;
 	struct s_token		*next;
@@ -87,6 +89,7 @@ typedef struct		s_aolist
 	size_t				size;
 	size_t				mem_addr;
 	int					arg[3];
+	int					arg_size[3];
 	t_token				*tok;
 	struct s_aolist		*lab;
 	char				*comment;
@@ -95,6 +98,7 @@ typedef struct		s_aolist
 
 typedef struct		s_env
 {
+	int			flag;
 	int			fd;
 	int			line;
 	size_t		size;
@@ -105,7 +109,7 @@ typedef struct		s_env
 extern t_op			g_op_tab[17];
 
 int			asm_file_open(t_env *e, char *file);
-int			asm_file(int ac, char **av);
+int			asm_file(int ac, char **av, int i);
 
 int			asm_comment(t_aolist *head, char **line);
 char		*str_s_e(char *line, int s, int e);
@@ -130,5 +134,9 @@ int			asm_syntax_arg(t_env *e, t_aolist *head, t_token *curr);
 int			asm_lexical_label(char *lab);
 int			asm_syntax_labelled(t_env *e, t_aolist *head);
 int			syntax_error(t_env *e, int error, char *str, int line);
+
+int			dump_to_file(t_env *e);
+int			parse_flag(t_env *e, char **av);
+void		free_aolist(t_aolist *aolist);
 
 #endif

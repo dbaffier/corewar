@@ -6,7 +6,7 @@
 #    By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/26 23:23:36 by dbaffier          #+#    #+#              #
-#    Updated: 2019/09/27 00:08:23 by dbaffier         ###   ########.fr        #
+#    Updated: 2019/09/28 19:48:13 by dbaffier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIBFT_PATH = libft
 LIBFT_LIB = $(LIBFT_PATH)/libft.a
 LIBFT_LINK = -L$(LIBFT_PATH) -lft -lncurses
 
-INC_DIR = incs
+INC_DIR = incs/
 INCS = -I$(LIBFT_PATH)/inc -I$(INC_DIR)
 
 OBJS_DIR = objs/
@@ -31,7 +31,7 @@ DEPS = $(addprefix $(DEPS_DIR), $(SRCS:.c=.d))
 
 RM = /bin/rm -rf
 
-SRCS_DIR = asm/
+SRCS_DIR = asm_dir/
 
 CONV_DIR = conversion/
 SRCS +=	binary.c				\
@@ -62,6 +62,7 @@ SRCS += asm_aolist.c			\
 		syntax_analysis.c		\
 		tok_create.c			\
 		tools.c					\
+		asm_free.c				\
 
 PRINT_DIR = print/
 SRCS += buffer_functions.c		\
@@ -94,26 +95,26 @@ $(LIBFT_LIB):
 	@make -C $(LIBFT_PATH)
 
 $(NAME): $(OBJS)
-	@$(CC) $^ -o $@ $(LIBFT_LINK)
+	$(CC) $^ -o $@ $(LIBFT_LINK)
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)$(CONV_DIR)%.c
 $(OBJS_DIR)%.o: $(SRCS_DIR)$(CONV_DIR)%.c $(DEPS_DIR)%.d
-	@$(CC) -MT $@ -MMD -MP -MF $(DEPS_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
+	$(CC) -MT $@ -MMD -MP -MF $(DEPS_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
 	@mv -f $(DEPS_DIR)$*.Td $(DEPS_DIR)$*.d && touch $@
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)$(PARSE_DIR)%.c
 $(OBJS_DIR)%.o: $(SRCS_DIR)$(PARSE_DIR)%.c $(DEPS_DIR)%.d
-	@$(CC) -MT $@ -MMD -MP -MF $(DEPS_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
+	$(CC) -MT $@ -MMD -MP -MF $(DEPS_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
 	@mv -f $(DEPS_DIR)$*.Td $(DEPS_DIR)$*.d && touch $@
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)$(PRINT_DIR)%.c
 $(OBJS_DIR)%.o: $(SRCS_DIR)$(PRINT_DIR)%.c $(DEPS_DIR)%.d
-	@$(CC) -MT $@ -MMD -MP -MF $(DEPS_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
+	$(CC) -MT $@ -MMD -MP -MF $(DEPS_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
 	@mv -f $(DEPS_DIR)$*.Td $(DEPS_DIR)$*.d && touch $@
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)$(WRITING_DIR)%.c
 $(OBJS_DIR)%.o: $(SRCS_DIR)$(WRITING_DIR)%.c $(DEPS_DIR)%.d
-	@$(CC) -MT $@ -MMD -MP -MF $(DEPS_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
+	$(CC) -MT $@ -MMD -MP -MF $(DEPS_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
 	@mv -f $(DEPS_DIR)$*.Td $(DEPS_DIR)$*.d && touch $@
 
 $(DEPS_DIR)%.d: ;
@@ -121,14 +122,13 @@ $(DEPS_DIR)%.d: ;
 
 -include $(DEPS)
 
+re: fclean all
 
+clean:
+	@make -C $(LIBFT_PATH) clean
+	@$(RM) $(DEPS_DIR)
+	@$(RM) $(OBJS_DIR)
 
-
-
-
-
-
-
-
-
-
+fclean: clean
+	@make -C $(LIBFT_PATH) fclean
+	@$(RM) $(NAME)
