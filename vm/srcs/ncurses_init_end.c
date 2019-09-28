@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:28:36 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/26 18:05:32 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/27 22:48:43 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,28 @@ static void		colors(t_env *e)
 		COLOR_GREEN, COLOR_YELLOW, COLOR_BLUE, COLOR_RED,
 	};
 	short			i;
+	int				color_nb;
 	t_process		*proc;
 
-	i = 3;
-	proc = e->proc;
 	start_color();
 	use_default_colors();
-	init_pair(1, -1, -1); // Default
+	init_pair(1, COLOR_BLACK, -1); // Default
 	init_pair(2, COLOR_YELLOW, -1); // Titles
+	init_pair(3, COLOR_WHITE, COLOR_GREEN); // Titles
+	i = 4;
+	color_nb = 0;
+	proc = e->proc;
 	while (proc)
 	{
 		proc->color[0] = i;
-		init_pair(i, color_combo[i - 3], -1); // Player color
+		init_pair(i, color_combo[color_nb], -1); // Player color
 		i++;
 		proc->color[1] = i;
-		init_pair(i, -1, color_combo[i - 4]); // Player color PC
+		init_pair(i, COLOR_BLACK, color_combo[color_nb]); // Player color PC
 		i++;
+		color_nb++;
 		proc = proc->next;
 	}
-
-	// init_pair(2, COLOR_CYAN, -1);
-	// init_pair(4, COLOR_RED, -1);
-	// init_pair(5, COLOR_BLUE, -1);
-	// init_pair(6, COLOR_MAGENTA, -1);
-	// init_pair(8, COLOR_WHITE, COLOR_RED);
 }
 
 int				ncurses_init(t_env *e)
@@ -68,6 +66,7 @@ int				ncurses_init(t_env *e)
 	noecho();
 	cbreak();
 	keypad(e->ncu.mainWin, TRUE);
+	curs_set(0);
 	colors(e);
 	if (COLS < ARENA_LINE_LEN || LINES < ARENA_COL_LEN)
 		return (ncurses_termTooSmall(e));
@@ -91,6 +90,10 @@ void			ncurses_end(t_env *e)
 		delwin(e->ncu.arenaWin);
 	if (e->ncu.arenaWinBox)
 		delwin(e->ncu.arenaWinBox);
+	if (e->ncu.champWin)
+		delwin(e->ncu.champWin);
+	if (e->ncu.vmWin)
+		delwin(e->ncu.vmWin);
 	if (e->ncu.infoWin)
 		delwin(e->ncu.infoWin);
 	if (e->ncu.infoWinBox)

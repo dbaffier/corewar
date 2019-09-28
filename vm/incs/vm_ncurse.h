@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:40:54 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/26 00:43:37 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/27 21:22:02 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct		s_ncurse
 	WINDOW			*arenaWinBox;
 	WINDOW			*arenaWin;
 	WINDOW			*infoWinBox;
+	WINDOW			*champWin;
+	WINDOW			*vmWin;
 	WINDOW			*infoWin;
 	WINDOW			*infoLine;
 }					t_ncurse;

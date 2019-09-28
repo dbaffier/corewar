@@ -34,18 +34,18 @@ static void			check_max_checks(int *checks, int *cycle_to_die)
 	}
 }
 
-static int			check_players_alive(t_process **head, t_env *e)
+static int			check_players_alive(t_env *e)
 {
 	t_process	*proc;
 	int			alive;
 
 	alive = 0;
-	proc = *head;
+	proc = e->proc;
 	while (proc)
 	{
 		alive += proc->is_alive;
 		if (!proc->is_alive)
-			proc = remove_player(proc, head);
+			proc = remove_player(proc, &e->proc);
 		else
 			proc = proc->next;
 	}
@@ -57,29 +57,38 @@ static int			check_players_alive(t_process **head, t_env *e)
 static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 {
 	static void	(*instruction_function[])(t_process *, t_env *) = {
-		op_live, op_ld, op_st, op_add, op_sub, op_and, op_or, op_xor,
+		NULL, op_live, op_ld, op_st, op_add, op_sub, op_and, op_or, op_xor,
 		op_zjmp, op_ldi, op_sti, op_fork, op_lld, op_lldi, op_lfork, op_aff,
 	};
 
+	// if (e->ncu.infoWin)
+	// 	wprintw(e->ncu.infoWin, "cycle: %ld (%d)\twait: %ld instruction: 0x%02X\n", nb_cycles, proc->id, proc->instruction_wait, proc->instruction);
 	if (proc->instruction_wait != nb_cycles)
-		return (1);
+		return (0);
 	if (proc->instruction_wait == nb_cycles)
 	{
-		proc->instruction = 3;
+		// proc->instruction = 16;
 		if (proc->instruction == 0)
 		{
 			proc->instruction = *((unsigned char *)e->arena + *(REG_CAST *)proc->pc);
-			if (proc->instruction > 0 && (proc->instruction < (int)(sizeof(op_tab) / sizeof(op_tab[0]))))
+			if (proc->instruction > 0 && (proc->instruction < (unsigned char)(sizeof(op_tab) / sizeof(op_tab[0]))))
+			{
+				if (e->ncu.infoWin)
+					wprintw(e->ncu.infoWin, "Player %d waiting %d cycle\n", proc->id, op_tab[proc->instruction - 1].cycle);
 				proc->instruction_wait += op_tab[proc->instruction - 1].cycle;
+			}
 			else
 			{
-				(*(int *)proc->pc) = ((*(int *)proc->pc + 1) % MEM_SIZE);
-				//proc->instruction = 0;
+				move_process_pc(proc, 1, e);
+				proc->instruction = 0;
 			}
 		}
 		else
+		{
 			instruction_function[proc->instruction](proc, e);
-		ft_printf("op code [%d]\n", proc->instruction);
+			proc->instruction = 0;
+		}
+		// ft_printf("op code [%d]\n", proc->instruction);
 	}
 	return (1);
 }
@@ -94,30 +103,30 @@ void			launch_game(t_env *e)
 	ch = 0;
 	while (1)
 	{
-		if (e->ncu.infoWin && ch != ' ')
+		if (e->ncu.infoWin)
 		{
 			ch = wgetch(e->ncu.infoWin);
-			wprintw(e->ncu.infoWin, "Char: %d\n", ch);
 			if (ch == ERR)
-				break ;
-			else if (ch != 's' || ch != ' ')
+				return ;
+			else if (ch != 's' && ch != ' ')
 				continue ;
 		}
-		proc = e->proc;
 		if (e->dump_cycle > -1 && (size_t)e->dump_cycle == nb_cycles)
 		{
 			dump_map(e->arena, MEM_SIZE);
 			return ;
 		}
 		if ((nb_cycles + 1) % e->cycle_to_die == 0)
-			if (!check_players_alive(&e->proc, e))
+			if (!check_players_alive(e))
 				break ;
+		proc = e->proc;
 		while (proc)
 		{
 			proc->instruction_wait += player_instruction(proc, e, nb_cycles);
 			proc = proc->next;
 		}
 		nb_cycles++;
+		ncurses_affVMInfo(e, nb_cycles);
 	}
 	if (e->live.last_id)
 		ft_printf("le joueur %d(%s) a gagne\n", e->live.last_id, e->live.last_name);

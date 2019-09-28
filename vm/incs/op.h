@@ -33,6 +33,7 @@
 /*
 ** IDX_MOD = 512
 */
+
 # define IDX_MOD				(MEM_SIZE / 8)
 # define CHAMP_MAX_SIZE			(MEM_SIZE / 6)
 

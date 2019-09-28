@@ -22,9 +22,15 @@
 void	op_aff(t_process *proc, t_env *e)
 {
 	t_param		params[3];
+	int			len;
+	int 		i;
 
+	i = 0;
 	get_params_len(params, 1, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 1);
 	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
-	ft_printf("corewar : [%s] : \"%c\"\n", proc->file_name, params[0].value);
+	ft_printf("corewar : [%s] : \"%c\"\n", ((t_header *)proc->file)->prog_name, params[0].value);
 	proc->carry = params[0].value == 0 ? 1 : 0;
+	while (i < 3 && params[i].size != 0)
+		len = params[i++].size;
+	move_process_pc(proc, len + 2, e);
 }

@@ -80,7 +80,9 @@ static int		check_id(t_process *proc, int *id)
 				return (ERR_NUMBER);
 			proc = proc->next;
 		}
-	else if ((*id = 1))
+	else
+	{
+		*id = 1;
 		while (tmp)
 		{
 			if (tmp->id == *id)
@@ -88,8 +90,10 @@ static int		check_id(t_process *proc, int *id)
 				(*id)++;
 				tmp = proc;
 			}
-			tmp = tmp->next;
+			else
+				tmp = tmp->next;
 		}
+	}
 	return (IS_OK);
 }
 

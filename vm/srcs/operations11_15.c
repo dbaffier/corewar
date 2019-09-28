@@ -36,7 +36,9 @@ void	op_sti(t_process *proc, t_env *e)
 	proc->carry = addr == 0 ? 1 : 0;
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;
-	*((REG_CAST *)proc->pc) += len + 2;
+	move_process_pc(proc, len + 2, e);
+	// *((REG_CAST *)proc->pc) += len + 2;
+	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 
@@ -44,7 +46,7 @@ void	op_sti(t_process *proc, t_env *e)
 **FORK 0x0C
 ** Cree un nouveau processus
 ** fork un nouveau processus a l'adresse du premier parametre
-** si l'adresse = 0 bah jsp <- lol mdrrrr
+** si l'adresse = 0 bah ca boucle du coup
 */
 
 void	op_fork(t_process *proc, t_env *e)
@@ -57,12 +59,11 @@ void	op_fork(t_process *proc, t_env *e)
 	get_params_len(params, 1, *(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1, 12);
 	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
 	if (params[0].value != 0)
-	{
-		proc->next = new_proc(proc, params[0].value);
-	}
+		proc->next = new_proc(proc, params[0].value, 0);
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;
-	*((REG_CAST *)proc->pc) += len + 2;
+	move_process_pc(proc, len + 2, e);
+	// *((REG_CAST *)proc->pc) += len + 2;
 	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
@@ -85,7 +86,9 @@ void	op_lld(t_process *proc, t_env *e)
 	proc->carry = params[1].value == 0 ? 1 : 0;
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;
-	*((REG_CAST *)proc->pc) += len + 2;
+	move_process_pc(proc, len + 2, e);
+	// *((REG_CAST *)proc->pc) += len + 2;
+	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -109,13 +112,15 @@ void	op_lldi(t_process *proc, t_env *e)
 	proc->carry = addr == 0 ? 1 : 0;
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;
-	*((REG_CAST *)proc->pc) += len + 2;
+	move_process_pc(proc, len + 2, e);
+	// *((REG_CAST *)proc->pc) += len + 2;
+	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
 ** LFORK 0x0F
 ** fork un nouveau processus a l'adresse du premier parametre
-** si l'adresse = 0 bah jsp
+** si l'adresse = 0 bah ca boucle aussi
 */
 
 void	op_lfork(t_process *proc, t_env *e)
@@ -127,9 +132,11 @@ void	op_lfork(t_process *proc, t_env *e)
 	i = 0;
 	get_params_len(params, 1, *(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1, 15);
 	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
-	ft_memcpy(proc->next, proc, sizeof(t_process));
-	*(REG_CAST *)proc->next->pc = *(REG_CAST *)proc->pc + params[0].value;
+	if (params[0].value != 0)
+		proc->next = new_proc(proc, params[0].value, 1);
 	while (i < 3 && params[i].size != 0)
 		len = params[i++].size;
-	*((REG_CAST *)proc->pc) += len + 2;
+	move_process_pc(proc, len + 2, e);
+	// *((REG_CAST *)proc->pc) += len + 2;
+	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
