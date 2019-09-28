@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/28 01:22:42 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/28 23:01:25 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct		s_data
 	int				fd;
 	int				pos;
 	int				pc;
+	int				encoding_byte;
 	int				x;
 	int				y;
 	int				i;
