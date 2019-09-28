@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:47:32 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/28 19:51:44 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/28 21:46:27 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,38 +87,58 @@ void			ncurses_affChampion(t_env *e)
 
 	if (!(proc = e->proc))
 		return ;
-	y = 1;
+	y = 0;
 	while (proc->next)
 		proc = proc->next;
 	wclear(e->ncu.champWin);
 	while (proc)
 	{
 		play = (t_header *)proc->file;
-		wattron(e->ncu.champWin, A_BOLD);
+		wattron(e->ncu.champWin, COLOR_PAIR(proc->color[1]));
 		wprintw(e->ncu.champWin, "Player %d\n", proc->id);
-		// mvwprintw(e->ncu.champWin, y, COLS - 20, "Player %d\n", proc->id);
-		wattroff(e->ncu.champWin, A_BOLD);
-		wprintw(e->ncu.champWin, "%s (%s)\n\n", play->prog_name, play->comment);
+		// mvwprintw(e->ncu.champWin, y, 20, "Player %d\n", proc->id);
+		wattroff(e->ncu.champWin, COLOR_PAIR(proc->color[1]));
+		wprintw(e->ncu.champWin, "%s (%s)\n\n\n", play->prog_name, play->comment);
 		y += 3;
 		proc = proc->prev;
 	}
 	wrefresh(e->ncu.champWin);
 }
 
-void			ncurses_affVMInfo(t_env *e, size_t cycle)
+void			ncurses_affVMInfo(t_env *e)
 {
-	if (!e->ncu.vmWin)
-		return ;
-	wclear(e->ncu.vmWin);
-	wattron(e->ncu.champWin, COLOR_PAIR(4));
-	wprintw(e->ncu.vmWin, "** %s **\n\n", (e->pause) ? "PAUSED" : "RUNNING");
-	wprintw(e->ncu.vmWin, "Cycle to Die: %d\tChecks: %d\n\n", e->cycle_to_die, e->checks);
-	wprintw(e->ncu.vmWin, "Cycle: %ld\n", cycle);
-	wattroff(e->ncu.champWin, COLOR_PAIR(4));
+	wattron(e->ncu.vmWin, A_BOLD);
+	wattron(e->ncu.vmWin, COLOR_PAIR(4));
+	ncurses_affVMStatus(e);
+	wprintw(e->ncu.vmWin, "Cycle: 0\n\n");
+	wprintw(e->ncu.vmWin, "CYCLE_TO_DIE: %d\n\n", e->cycle_to_die);
+	wprintw(e->ncu.vmWin, "CYCLE_DELTA: %d\n\n", CYCLE_DELTA);
+	wprintw(e->ncu.vmWin, "NBR_LIVE: %d\n\n", NBR_LIVE);
+	wprintw(e->ncu.vmWin, "MAX_CHECKS: %d", MAX_CHECKS);
+	wattroff(e->ncu.vmWin, COLOR_PAIR(4));
+	wattroff(e->ncu.vmWin, A_BOLD);
 	wrefresh(e->ncu.vmWin);
 }
 
-void			ncurses_affInfo(t_env *e)
+void			ncurses_affVMStatus(t_env *e)
 {
-	(void)e;
+	char		*status[2];
+
+	status[0] = "RUNNING";
+	status[1] = "PAUSED";
+	if (e->ncu.winx > 6)
+	{
+		mvwprintw(e->ncu.vmWin, 0, e->ncu.winx / 2 - 6, "** %s **\n",
+		status[e->pause]);
+		wclrtoeol(e->ncu.vmWin);
+		mvwprintw(e->ncu.vmWin, 1, e->ncu.winx / 2 - 7, "speed: %d/%d\n\n",
+		VM_SPEED_LIMIT - e->speed, VM_SPEED_LIMIT);
+	}
+	else
+	{
+		wprintw(e->ncu.vmWin, "** %s **\n", status[e->pause]);
+		wclrtoeol(e->ncu.vmWin);
+		wprintw(e->ncu.vmWin, "speed: %d/%d\n\n",
+		VM_SPEED_LIMIT - e->speed, VM_SPEED_LIMIT);
+	}
 }

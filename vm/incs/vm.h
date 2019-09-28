@@ -54,8 +54,9 @@ enum
 	ERR_NCURSE_ARENABOX,
 	ERR_NCURSE_ARENAWIN,
 	ERR_NCURSE_INFOBOX,
+	ERR_NCURSE_CHAMPWIN,
+	ERR_NCURSE_VMWIN,
 	ERR_NCURSE_INFOWIN,
-	ERR_NCURSE_INFOLINE,
 };
 
 typedef struct			s_live
@@ -95,6 +96,7 @@ typedef struct			s_env
 	void				*arena;
 	short				*colors;
 	int					pause;
+	int					speed;
 	int					cycle_to_die;
 	int					checks;
 	t_live				live;
@@ -136,11 +138,11 @@ void					ncurses_end(t_env *e);
 int						ncurses_termTooSmall(t_env *e);
 int						createArenaBox(t_env *e);
 int						createInfoBox(t_env *e);
-int						createInfoLine(t_env *e);
 void					ncurses_affArena(t_env *e);
 void					ncurses_affChampion(t_env *e);
-void					ncurses_affVMInfo(t_env *e, size_t cycle);
-void					ncurses_affInfo(t_env *e);
+void					ncurses_affVMInfo(t_env *e);
+void					ncurses_affVMStatus(t_env *e);
+void					update_affVMInfo(t_env *e, size_t cycle);
 
 /*
 ** Game Functions

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_player.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:45:03 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/28 00:52:26 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/28 23:08:35 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ t_process			*remove_player(t_process *proc, t_process **head)
 	if (proc->file)
 		free(proc->file);
 	free(proc);
-	system("afplay ~/Desktop/roblox-death-sound-effect.mp3 2>&-");
+	//system("afplay ~/Desktop/roblox-death-sound-effect.mp3 2>&-");
 	return (next);
 }

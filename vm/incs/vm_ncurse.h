@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:40:54 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/28 19:51:44 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/28 21:16:55 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 # include <ncurses.h>
 # include "op.h"
+
+# define VM_SPEED_INIT			20
+# define VM_SPEED_RATIO			5
+# define VM_SPEED_LIMIT			500
 
 # define ARENA_VALUE_PER_LINE	64
 # define ARENA_LINE_LEN			(ARENA_VALUE_PER_LINE * 3)
@@ -29,9 +33,10 @@ typedef struct			s_ncurse
 	WINDOW				*champWin;
 	WINDOW				*vmWin;
 	WINDOW				*infoWin;
-	WINDOW				*infoLine;
+	int					winx;
+	int					winy;
 }						t_ncurse;
 
-int						ncurses_wgetch(int *pause, WINDOW *infoWin);
+int						ncurses_wgetch(int *speed, int *pause, WINDOW *infoWin);
 
 #endif

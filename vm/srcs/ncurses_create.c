@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:20:26 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/27 22:48:52 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/28 21:48:23 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ int				ncurses_termTooSmall(t_env *e)
 {
 	wbkgd(e->ncu.mainWin, COLOR_PAIR(1));
 	wattron(e->ncu.mainWin, A_BOLD);
+	wattron(e->ncu.mainWin, COLOR_PAIR(4));
 	mvwaddstr(e->ncu.mainWin, (LINES * 0.5) - 1, (COLS * 0.5) - 3, "TERMINAL");
 	mvwaddstr(e->ncu.mainWin, (LINES * 0.5), (COLS * 0.5) - 4, "TOO SMALL!");
+	wattroff(e->ncu.mainWin, COLOR_PAIR(4));
 	wattroff(e->ncu.mainWin, A_BOLD);
 	wrefresh(e->ncu.mainWin);
-	wbkgd(e->ncu.mainWin, COLOR_PAIR(1));
 	return (IS_OK);
 }
 
@@ -51,6 +52,25 @@ int				createArenaBox(t_env *e)
 	return (IS_OK);
 }
 
+static int		createInfoWin(t_env *e, int winx, int winy)
+{
+	winy = (winy - 2) / 3;
+	e->ncu.winx = winx - 2;
+	e->ncu.winy = winy;
+	if (!(e->ncu.champWin = subwin(e->ncu.infoWinBox,
+	winy, winx - 2, 1, COLS - winx + 1)))
+		return (ERR_NCURSE_CHAMPWIN);
+	if (!(e->ncu.vmWin = subwin(e->ncu.infoWinBox,
+	winy, winx - 2, winy + 1, COLS - winx + 1)))
+		return (ERR_NCURSE_VMWIN);
+	if (!(e->ncu.infoWin = subwin(e->ncu.infoWinBox,
+	winy, winx - 2, winy * 2 + 1, COLS - winx + 1)))
+		return (ERR_NCURSE_INFOWIN);
+	wbkgd(e->ncu.champWin, COLOR_PAIR(3));
+	scrollok(e->ncu.infoWin, TRUE);
+	return (IS_OK);
+}
+
 int				createInfoBox(t_env *e)
 {
 	int			winx;
@@ -63,28 +83,12 @@ int				createInfoBox(t_env *e)
 	box(e->ncu.infoWinBox, 0, 0);
 	mvwaddch(e->ncu.infoWinBox, 0, (winx * 0.5) - 4, ACS_RTEE);
 	wattron(e->ncu.infoWinBox, COLOR_PAIR(2));
-	mvwaddstr(e->ncu.infoWinBox, 0, (winx * 0.5) - 3, " Info ");
+	mvwaddstr(e->ncu.infoWinBox, 0, (winx * 0.5) - 3, " I N F O ");
 	wattroff(e->ncu.infoWinBox, COLOR_PAIR(2));
-	mvwaddch(e->ncu.infoWinBox, 0, (winx * 0.5) + 3, ACS_LTEE);
+	mvwaddch(e->ncu.infoWinBox, 0, (winx * 0.5) + 6, ACS_LTEE);
 	wrefresh(e->ncu.infoWinBox);
-	if (!(e->ncu.champWin = subwin(e->ncu.infoWinBox, (winy - 2) / 3, winx - 2, 1, COLS - winx + 1)))
-		return (ERR_NCURSE_INFOWIN);
-	if (!(e->ncu.vmWin = subwin(e->ncu.infoWinBox, (winy - 2) / 3, winx - 2, (winy - 2) / 3 + 1, COLS - winx + 1)))
-		return (ERR_NCURSE_INFOWIN);
-	if (!(e->ncu.infoWin = subwin(e->ncu.infoWinBox, (winy - 2) / 3, winx - 2, ((winy - 2) / 3) * 2 + 1, COLS - winx + 1)))
-		return (ERR_NCURSE_INFOWIN);
-	wbkgd(e->ncu.champWin, COLOR_PAIR(3));
-	scrollok(e->ncu.infoWin, TRUE);
+	createInfoWin(e, winx, winy);
 	ncurses_affChampion(e);
-	ncurses_affVMInfo(e, 0);
-	ncurses_affInfo(e);
-	return (IS_OK);
-}
-
-int				createInfoLine(t_env *e)
-{
-	e->ncu.infoLine = subwin(e->ncu.mainWin, 1, COLS, ARENA_COL_LEN + 1, 0);
-	if (!e->ncu.infoLine)
-		return (ERR_NCURSE_INFOLINE);
+	ncurses_affVMInfo(e);
 	return (IS_OK);
 }

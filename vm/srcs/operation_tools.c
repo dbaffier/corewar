@@ -34,18 +34,14 @@ void	get_types(char types, t_param *params_type)
 {
 	unsigned char	param_len;
 	int				i;
-	int				j;
 
 	i = 0;
-	j = 6;
 	while (i < 3)
 	{	
 		param_len = types;
-		param_len = param_len << j;
 		param_len = param_len >> 6;
 		params_type[i].size = param_len;
-		types = types >> 2;
-		j -= 2;
+		types = types << 2;
 		i++;
 	}
 }
@@ -82,9 +78,10 @@ int		get_value(unsigned char *data, int index, int size)
 	char	tab[size];
 
 	i = 0;
-	while(i < size)
+	(void)index;
+	while (i < size)
 	{
-		tab[i] = data[index + i];
+		tab[i] = data[1 + i];
 		i++;
 	}
 	tab[i] = '\0';
@@ -98,10 +95,15 @@ void	get_params_data(t_param *params, int nbparam, unsigned char *data, int pc)
 
 	i = 0;
 	size = 0;
+	(void)pc;
 	while (i < nbparam)
 	{
-		params[i].value = get_value(data, pc + 1 + size, params[i].size);
+		if (*data == 9 || *data == 1 || *data == 12 || *data == 15)
+			params[i].value = get_value(data, 1, params[i].size);
+		else
+			params[i].value = get_value(data, size + 2, params[i].size);
 		size += params[i].size;
+		ft_printf("value [%d] = [%d]\n", i + 1, params[i].value);
 		i++;
 	}
 }
