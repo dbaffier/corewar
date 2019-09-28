@@ -41,7 +41,7 @@ int				get_arena(t_env *e)
 		ft_memcpy(proc->reg[0], &proc->id, REG_SIZE);
 		ft_memcpy((char *)e->arena + pc,
 			(char *)proc->file + sizeof(t_header), proc->data_size);
-		fill_colors(e->colors, proc->id, proc->data_size);
+		fill_colors(e->colors + pc, proc->id, proc->data_size);
 		proc->live = &e->live;
 		proc = proc->next;
 		i--;
