@@ -15,27 +15,28 @@ NAME		= corewar
 VM_DIR		= vm/
 VM_SRC_D	= $(VM_DIR)srcs/
 VM_INC_D	= $(VM_DIR)incs/
-VM_SRC		+=	main.c				\
-				dump_map.c			\
-				errors.c			\
-				free.c				\
-				get_args.c			\
-				get_player.c		\
-				get_arena.c			\
-				move_pc.c			\
-				ncurses_aff.c		\
-				ncurses_create.c	\
-				ncurses_init_end.c	\
-				ncurses_wgetch.c	\
-				launch_game.c		\
-				op.c				\
-				remove_player.c		\
-				signals.c			\
-				operation_tools.c	\
-				operations1_5.c		\
-				operations6_10.c	\
-				operations11_15.c	\
-				operations_aff.c	\
+VM_SRC		+=	main.c					\
+				dump_map.c				\
+				errors.c				\
+				free.c					\
+				get_args.c				\
+				get_player.c			\
+				get_arena.c				\
+				move_pc.c				\
+				ncurses_aff.c			\
+				ncurses_aff_update.c	\
+				ncurses_create.c		\
+				ncurses_init_end.c		\
+				ncurses_wgetch.c		\
+				launch_game.c			\
+				op.c					\
+				remove_player.c			\
+				signals.c				\
+				operation_tools.c		\
+				operations1_5.c			\
+				operations6_10.c		\
+				operations11_15.c		\
+				operations_aff.c		\
 
 CC			= gcc
 CFLAGS		= -Wall -Werror -Wextra

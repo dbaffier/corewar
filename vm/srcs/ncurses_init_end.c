@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:28:36 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/28 19:51:44 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/28 20:44:59 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ static void		colors(t_env *e)
 
 	start_color();
 	use_default_colors();
-	init_pair(1, COLOR_BLACK, -1); // Default
-	init_pair(2, COLOR_YELLOW, -1); // Titles
-	init_pair(3, COLOR_WHITE, COLOR_GREEN); // Champ
-	init_pair(4, COLOR_WHITE, -1); // Text
+	init_pair(1, COLOR_BLACK, -1); // Default color
+	init_pair(2, COLOR_YELLOW, -1); // Titles color
+	init_pair(3, COLOR_WHITE, COLOR_CYAN); // Champ Box text/background color
+	init_pair(4, COLOR_WHITE, -1); // Text color
 	i = 5;
 	color_nb = 0;
 	proc = e->proc;
@@ -72,8 +72,7 @@ int				ncurses_init(t_env *e)
 	if (COLS < ARENA_LINE_LEN || LINES < ARENA_COL_LEN)
 		return (ncurses_termTooSmall(e));
 	if ((err = createArenaBox(e)) == IS_OK)
-		if ((err = createInfoBox(e)) == IS_OK)
-			err = createInfoLine(e);
+		err = createInfoBox(e);
 	return (err);
 }
 
@@ -99,8 +98,6 @@ void			ncurses_end(t_env *e)
 		delwin(e->ncu.infoWin);
 	if (e->ncu.infoWinBox)
 		delwin(e->ncu.infoWinBox);
-	if (e->ncu.infoLine)
-		delwin(e->ncu.infoLine);
 	endwin();
 	ft_memset(&e->ncu, 0, sizeof(e->ncu));
 }

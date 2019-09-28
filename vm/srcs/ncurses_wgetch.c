@@ -6,13 +6,13 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 17:34:46 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/28 19:52:44 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/28 21:45:17 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm_ncurse.h"
 
-int				ncurses_wgetch(int *pause, WINDOW *infoWin)
+int				ncurses_wgetch(int *speed, int *pause, WINDOW *infoWin)
 {
 	int			ch;
 
@@ -22,14 +22,28 @@ int				ncurses_wgetch(int *pause, WINDOW *infoWin)
 	if (ch == ' ')
 	{
 		if (!(*pause = !*pause))
-			wtimeout(infoWin, 20);
-			// nodelay(infoWin, TRUE);
+			wtimeout(infoWin, *speed);
 		else
 			wtimeout(infoWin, -1);
-			// nodelay(infoWin, FALSE);
 		return (1);
 	}
 	if (ch == 's')
 		return (1);
+	if (ch == '+')
+	{
+		if ((*speed -= VM_SPEED_RATIO) < 0)
+			*speed = 0;
+		if (!*pause)
+			wtimeout(infoWin, *speed);
+		return (!pause);
+	}
+	if (ch == '-')
+	{
+		if ((*speed += VM_SPEED_RATIO) > VM_SPEED_LIMIT)
+			*speed = VM_SPEED_LIMIT;
+		if (!*pause)
+			wtimeout(infoWin, *speed);
+		return (!pause);
+	}
 	return (0);
 }

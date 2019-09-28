@@ -37,8 +37,9 @@ int				corewar_errors(int errnb, char *arg, t_env *e)
 		"ncurses: Failed to init arena Window Box.\t",
 		"ncurses: Failed to init arena Window.\t",
 		"Failed to init info Window Box.\t",
+		"Failed to init champ Window.\t",
+		"Failed to init VM Window.\t",
 		"Failed to init info Window.\t",
-		"Failed to init infoLine Window.\t",
 	};
 
 	ft_dprintf(2, "%s: %s", e->progname, error[errnb]);

@@ -45,7 +45,11 @@ static int			check_players_alive(t_env *e)
 	{
 		alive += proc->is_alive;
 		if (!proc->is_alive)
+		{
 			proc = remove_player(proc, &e->proc);
+			ncurses_affChampion(e);
+			e->nb_players--;
+		}
 		else
 			proc = proc->next;
 	}
@@ -61,8 +65,6 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 		op_zjmp, op_ldi, op_sti, op_fork, op_lld, op_lldi, op_lfork, op_aff,
 	};
 
-	// if (e->ncu.infoWin)
-	// 	wprintw(e->ncu.infoWin, "cycle: %ld (%d)\twait: %ld instruction: 0x%02X\n", nb_cycles, proc->id, proc->instruction_wait, proc->instruction);
 	if (proc->instruction_wait != nb_cycles)
 		return (0);
 	if (proc->instruction_wait == nb_cycles)
@@ -75,18 +77,14 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 				if (e->ncu.infoWin)
 					wprintw(e->ncu.infoWin, "Player %d waiting %d cycle\n", proc->id, op_tab[proc->instruction - 1].cycle);
 				proc->instruction_wait += op_tab[proc->instruction - 1].cycle;
+				return (1);
 			}
 			else
-			{
 				move_process_pc(proc, 1, e);
-				proc->instruction = 0;
-			}
 		}
 		else
-		{
 			instruction_function[proc->instruction](proc, e);
-			proc->instruction = 0;
-		}
+		proc->instruction = 0;
 	}
 	return (1);
 }
@@ -117,7 +115,8 @@ static void		and_the_winner_is(WINDOW *infoWin, t_live *live)
 	if (infoWin)
 	{
 		if (live->last_id)
-			wprintw(infoWin, "Le joueur %d(%s) a gagne\n", live->last_id, live->last_name);
+			wprintw(infoWin, "Le joueur %d(%s) a gagne\n",
+			live->last_id, live->last_name);
 		else
 			wprintw(infoWin, "Aucun champion n'a gagne... Vraiment !?\n");
 		nodelay(infoWin, FALSE);
@@ -126,9 +125,9 @@ static void		and_the_winner_is(WINDOW *infoWin, t_live *live)
 		return ;
 	}
 	if (live->last_id)
-		ft_printf("Le joueur %d(%s) a gagne\n", live->last_id, live->last_name);
+		ft_printf("Le joueur %d(%s) gagne\n", live->last_id, live->last_name);
 	else
-		ft_printf("Aucun champion n'a gagne... Vraiment !?\n");
+		ft_printf("Aucun champion ne gagne... Vraiment !?\n");
 }
 
 void			launch_game(t_env *e)
@@ -139,12 +138,13 @@ void			launch_game(t_env *e)
 	nb_cycles = 0;
 	ch = 0;
 	e->pause = 1;
+	e->speed = VM_SPEED_INIT;
 	while (1)
 	{
 		if (e->ncu.infoWin)
 		{
-			ncurses_affVMInfo(e, nb_cycles);
-			if ((ch = ncurses_wgetch(&e->pause, e->ncu.infoWin)) == ERR)
+			update_affVMInfo(e, nb_cycles);
+			if ((ch = ncurses_wgetch(&e->speed, &e->pause, e->ncu.infoWin)) == ERR)
 				return ;
 			else if (ch == 0)
 				continue ;
