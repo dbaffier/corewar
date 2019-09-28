@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:28:36 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/27 22:48:43 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/28 19:51:44 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ static void		colors(t_env *e)
 	use_default_colors();
 	init_pair(1, COLOR_BLACK, -1); // Default
 	init_pair(2, COLOR_YELLOW, -1); // Titles
-	init_pair(3, COLOR_WHITE, COLOR_GREEN); // Titles
-	i = 4;
+	init_pair(3, COLOR_WHITE, COLOR_GREEN); // Champ
+	init_pair(4, COLOR_WHITE, -1); // Text
+	i = 5;
 	color_nb = 0;
 	proc = e->proc;
 	while (proc)

@@ -14,6 +14,8 @@
 #include "libft.h"
 #include "ft_printf.h"
 
+extern t_op op_tab[17];
+
 /*
 ** STI 0x0B
 ** additione les deux derniers param et va changer la valeur a l'adresse de
@@ -34,10 +36,8 @@ void	op_sti(t_process *proc, t_env *e)
 	addr = (params[1].value + params[2].value) % IDX_MOD;
 	((unsigned char *)e->arena)[*(REG_CAST *)proc->pc + addr] = *(REG_CAST *)proc->reg[params[0].value];
 	proc->carry = addr == 0 ? 1 : 0;
-	while (i < 3 && params[i].size != 0)
-		len = params[i++].size;
+	len = full_len_size(op_tab[10].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
-	// *((REG_CAST *)proc->pc) += len + 2;
 }
 
 /*
@@ -58,10 +58,8 @@ void	op_fork(t_process *proc, t_env *e)
 	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
 	if (params[0].value != 0)
 		proc->next = new_proc(proc, params[0].value, 0);
-	while (i < 3 && params[i].size != 0)
-		len = params[i++].size;
+	len = full_len_size(op_tab[11].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
-	// *((REG_CAST *)proc->pc) += len + 2;
 }
 
 /*
@@ -81,10 +79,8 @@ void	op_lld(t_process *proc, t_env *e)
 	get_params_data(params, 2, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
 	*(REG_CAST *)proc->reg[params[1].value] = *(REG_CAST *)proc->pc + params[0].value;
 	proc->carry = params[1].value == 0 ? 1 : 0;
-	while (i < 3 && params[i].size != 0)
-		len = params[i++].size;
+	len = full_len_size(op_tab[12].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
-	// *((REG_CAST *)proc->pc) += len + 2;
 }
 
 /*
@@ -106,10 +102,8 @@ void	op_lldi(t_process *proc, t_env *e)
 	addr = (params[0].value + params[1].value);
 	*(REG_CAST *)proc->reg[params[2].value] = ((unsigned char *)e->arena)[*(REG_CAST *)proc->pc + addr];
 	proc->carry = addr == 0 ? 1 : 0;
-	while (i < 3 && params[i].size != 0)
-		len = params[i++].size;
+	len = full_len_size(op_tab[13].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
-	// *((REG_CAST *)proc->pc) += len + 2;
 }
 
 /*
@@ -129,8 +123,6 @@ void	op_lfork(t_process *proc, t_env *e)
 	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
 	if (params[0].value != 0)
 		proc->next = new_proc(proc, params[0].value, 1);
-	while (i < 3 && params[i].size != 0)
-		len = params[i++].size;
+	len = full_len_size(op_tab[14].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
-	// *((REG_CAST *)proc->pc) += len + 2;
 }

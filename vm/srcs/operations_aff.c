@@ -14,6 +14,8 @@
 #include "libft.h"
 #include "ft_printf.h"
 
+extern t_op op_tab[17];
+
 /*
 ** AFF 0x10
 ** Affiche le char qui est donne en 1er param si il est nul carry = 1
@@ -28,9 +30,11 @@ void	op_aff(t_process *proc, t_env *e)
 	i = 0;
 	get_params_len(params, 1, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 1);
 	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
-	ft_printf("corewar : [%s] : \"%c\"\n", ((t_header *)proc->file)->prog_name, params[0].value);
+	if (e->ncu.infoWin)
+		wprintw(e->ncu.infoWin, "corewar : [%s] : \"%c\"\n", ((t_header *)proc->file)->prog_name, params[0].value);
+	else
+		ft_printf("corewar : [%s] : \"%c\"\n", ((t_header *)proc->file)->prog_name, params[0].value);
 	proc->carry = params[0].value == 0 ? 1 : 0;
-	while (i < 3 && params[i].size != 0)
-		len = params[i++].size;
+	len = full_len_size(op_tab[15].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
 }

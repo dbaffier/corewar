@@ -14,6 +14,8 @@
 #include "libft.h"
 #include "ft_printf.h"
 
+extern t_op op_tab[17];
+
 /*
 ** LIVE 0x01
 ** renvoie un live pour le processus qui l'appelle
@@ -45,10 +47,8 @@ void	op_live(t_process *proc, t_env *e)
 	ft_printf("%s: un processus dit que le joueur %d(%s) est en vie\n",
 		e->progname, params[0].value, (tail) ? e->live.last_name : "?");
 	e->live.total++;
-	while (i < 3 && params[i].size != 0)
-		len += params[i++].size;
+	len = full_len_size(op_tab[0].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
-	// *((REG_CAST *)proc->pc) += len + 2;
 }
 
 /*
@@ -68,10 +68,8 @@ void	op_ld(t_process *proc, t_env *e)
 	get_params_data(params, 2, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
 	*(REG_CAST *)proc->reg[params[1].value - 1] = *(REG_CAST *)proc->pc + (params[0].value % IDX_MOD);
 	proc->carry = (params[1].value == 0) ? 1 : 0;
-	while (i < 3 && params[i].size != 0)
-		len += params[i++].size;
+	len = full_len_size(op_tab[1].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
-	// *((REG_CAST *)proc->pc) += len + 2;
 }
 
 /*
@@ -89,16 +87,13 @@ void	op_st(t_process *proc, t_env *e)
 	i = 0;
 	get_params_len(params, 2, *(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1, 3);
 	get_params_data(params, 2, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
-
 	if (params[1].size == 2)
 		params[1].value = *(REG_CAST *)proc->pc + (*(REG_CAST *)proc->reg[params[0].value - 1] % IDX_MOD);
 	else if (params[1].size == 1)
 		params[1].value = *(REG_CAST *)proc->pc + (*(REG_CAST *)proc->reg[params[0].value - 1] % IDX_MOD);
 	proc->carry = params[1].value == 0 ? 1 : 0;
-	while (i < 3 && params[i].size != 0)
-		len += params[i++].size;
+	len = full_len_size(op_tab[2].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
-	// *((REG_CAST *)proc->pc) += len + 2;
 }
 
 /*
@@ -119,10 +114,8 @@ void	op_add(t_process *proc, t_env *e)
 	*(REG_CAST *)proc->reg[params[2].value] = params[0].value +
 	params[1].value;
 	proc->carry = params[0].value + params[1].value == 0 ? 1 : 0;
-	while (i < 3 && params[i].size != 0)
-		len += params[i++].size;
+	len = full_len_size(op_tab[3].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
-	// *((REG_CAST *)proc->pc) += len + 2;
 }
 
 /*
@@ -142,8 +135,6 @@ void	op_sub(t_process *proc, t_env *e)
 	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
 	*(REG_CAST *)proc->reg[params[2].value] = params[0].value - params[1].value;
 	proc->carry = params[0].value - params[1].value == 0 ? 1 : 0;
-	while (i < 3 && params[i].size != 0)
-		len += params[i++].size;
+	len = full_len_size(op_tab[4].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
-	// *((REG_CAST *)proc->pc) += len + 2;
 }

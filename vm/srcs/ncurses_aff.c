@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:47:32 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/27 23:35:01 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/28 19:51:44 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,11 @@ void			ncurses_affVMInfo(t_env *e, size_t cycle)
 	if (!e->ncu.vmWin)
 		return ;
 	wclear(e->ncu.vmWin);
+	wattron(e->ncu.champWin, COLOR_PAIR(4));
+	wprintw(e->ncu.vmWin, "** %s **\n\n", (e->pause) ? "PAUSED" : "RUNNING");
 	wprintw(e->ncu.vmWin, "Cycle to Die: %d\tChecks: %d\n\n", e->cycle_to_die, e->checks);
 	wprintw(e->ncu.vmWin, "Cycle: %ld\n", cycle);
+	wattroff(e->ncu.champWin, COLOR_PAIR(4));
 	wrefresh(e->ncu.vmWin);
 }
 

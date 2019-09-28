@@ -98,11 +98,11 @@ static int		check_options(size_t nb_cycles, t_env *e)
 	if (e->dump_cycle > -1 && (size_t)e->dump_cycle == nb_cycles)
 	{
 		dump_map(e->arena, MEM_SIZE);
-		return (1);
+		return (-1);
 	}
 	if ((nb_cycles + 1) % e->cycle_to_die == 0)
 		if (!check_players_alive(e))
-			return (2) ;
+			return (-2) ;
 	proc = e->proc;
 	while (proc)
 	{
@@ -122,7 +122,7 @@ static void		and_the_winner_is(WINDOW *infoWin, t_live *live)
 			wprintw(infoWin, "Aucun champion n'a gagne... Vraiment !?\n");
 		nodelay(infoWin, FALSE);
 		while (wgetch(infoWin) != 'q')
-			;
+			wprintw(infoWin, "Press 'q' to quit...\n");
 		return ;
 	}
 	if (live->last_id)
@@ -138,12 +138,13 @@ void			launch_game(t_env *e)
 
 	nb_cycles = 0;
 	ch = 0;
+	e->pause = 1;
 	while (1)
 	{
 		if (e->ncu.infoWin)
 		{
 			ncurses_affVMInfo(e, nb_cycles);
-			if ((ch = ncurses_wgetch(e->ncu.infoWin)) == ERR)
+			if ((ch = ncurses_wgetch(&e->pause, e->ncu.infoWin)) == ERR)
 				return ;
 			else if (ch == 0)
 				continue ;
@@ -152,6 +153,6 @@ void			launch_game(t_env *e)
 			break ;
 		nb_cycles++;
 	}
-	if (ch == 0)
+	if (ch == -2)
 		and_the_winner_is(e->ncu.infoWin, &e->live);
 }

@@ -94,6 +94,7 @@ typedef struct			s_env
 	t_process			*proc;
 	void				*arena;
 	short				*colors;
+	int					pause;
 	int					cycle_to_die;
 	int					checks;
 	t_live				live;
@@ -176,5 +177,7 @@ t_process				*new_proc(t_process *proc, int value, int flag);
 void					get_types(char types, t_param *params_type);
 int						get_value(unsigned char *data, int index, \
 		int size);
+int						full_len_size(unsigned short reg_nb, \
+		t_param *params);
 
 #endif

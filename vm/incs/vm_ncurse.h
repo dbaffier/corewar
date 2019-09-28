@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:40:54 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/28 17:48:16 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/28 19:51:44 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ typedef struct			s_ncurse
 	WINDOW				*infoLine;
 }						t_ncurse;
 
-int						ncurses_wgetch(WINDOW *infoWin);
+int						ncurses_wgetch(int *pause, WINDOW *infoWin);
 
 #endif
