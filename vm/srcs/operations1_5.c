@@ -49,7 +49,6 @@ void	op_live(t_process *proc, t_env *e)
 		len = params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -73,7 +72,6 @@ void	op_ld(t_process *proc, t_env *e)
 		len = params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -101,7 +99,6 @@ void	op_st(t_process *proc, t_env *e)
 		len = params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -109,7 +106,6 @@ void	op_st(t_process *proc, t_env *e)
 ** ajoute le 1er param et le 2nd et stocke le resultat dans le 3eme
 ** meme fonctionnement pour le carry
 */
-
 
 void	op_add(t_process *proc, t_env *e)
 {
@@ -127,7 +123,6 @@ void	op_add(t_process *proc, t_env *e)
 		len = params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -151,5 +146,4 @@ void	op_sub(t_process *proc, t_env *e)
 		len = params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }

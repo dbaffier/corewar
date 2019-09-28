@@ -35,7 +35,6 @@ void	op_and(t_process *proc, t_env *e)
 		len = params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -59,7 +58,6 @@ void	op_or(t_process *proc, t_env *e)
 		len = params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -83,7 +81,6 @@ void	op_xor(t_process *proc, t_env *e)
 		len = params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -108,7 +105,6 @@ void	op_zjmp(t_process *proc, t_env *e)
 		len = params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -135,5 +131,4 @@ void	op_ldi(t_process *proc, t_env *e)
 		len = params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
