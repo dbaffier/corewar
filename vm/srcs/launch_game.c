@@ -93,9 +93,45 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 	return (1);
 }
 
-void			launch_game(t_env *e)
+static int		check_options(size_t nb_cycles, t_env *e)
 {
 	t_process	*proc;
+
+	if (e->dump_cycle > -1 && (size_t)e->dump_cycle == nb_cycles)
+	{
+		dump_map(e->arena, MEM_SIZE);
+		return (1);
+	}
+	if ((nb_cycles + 1) % e->cycle_to_die == 0)
+		if (!check_players_alive(e))
+			return (2) ;
+	proc = e->proc;
+	while (proc)
+	{
+		proc->instruction_wait += player_instruction(proc, e, nb_cycles);
+		proc = proc->next;
+	}
+	return (0);
+}
+
+static void		and_the_winner_is(WINDOW *infoWin, t_live *live)
+{
+	if (infoWin)
+	{
+		if (live->last_id)
+			wprintw(infoWin, "Le joueur %d(%s) a gagne\n", live->last_id, live->last_name);
+		else
+			wprintw(infoWin, "Aucun champion n'a gagne... Vraiment !?\n");
+		return ;
+	}
+	if (live->last_id)
+		ft_printf("Le joueur %d(%s) a gagne\n", live->last_id, live->last_name);
+	else
+		ft_printf("Aucun champion n'a gagne... Vraiment !?\n");
+}
+
+void			launch_game(t_env *e)
+{
 	size_t		nb_cycles;
 	int			ch;
 
@@ -105,31 +141,16 @@ void			launch_game(t_env *e)
 	{
 		if (e->ncu.infoWin)
 		{
-			ch = wgetch(e->ncu.infoWin);
-			if (ch == ERR)
+			ncurses_affVMInfo(e, nb_cycles);
+			if ((ch = ncurses_wgetch(e->ncu.infoWin)) == ERR)
 				return ;
-			else if (ch != 's' && ch != ' ')
+			else if (ch == 0)
 				continue ;
 		}
-		if (e->dump_cycle > -1 && (size_t)e->dump_cycle == nb_cycles)
-		{
-			dump_map(e->arena, MEM_SIZE);
-			return ;
-		}
-		if ((nb_cycles + 1) % e->cycle_to_die == 0)
-			if (!check_players_alive(e))
-				break ;
-		proc = e->proc;
-		while (proc)
-		{
-			proc->instruction_wait += player_instruction(proc, e, nb_cycles);
-			proc = proc->next;
-		}
+		if ((ch = check_options(nb_cycles, e)) != 0)
+			break ;
 		nb_cycles++;
-		ncurses_affVMInfo(e, nb_cycles);
 	}
-	if (e->live.last_id)
-		ft_printf("le joueur %d(%s) a gagne\n", e->live.last_id, e->live.last_name);
-	else
-		ft_printf("Aucun champion n'a gagne... Vraiment !?\n");
+	if (ch == 0)
+		and_the_winner_is(&e->live);
 }

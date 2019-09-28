@@ -176,4 +176,5 @@ t_process				*new_proc(t_process *proc, int value, int flag);
 void					get_types(char types, t_param *params_type);
 int						get_value(unsigned char *data, int index, \
 		int size);
+
 #endif
