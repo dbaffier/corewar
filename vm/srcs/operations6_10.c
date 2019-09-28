@@ -122,7 +122,7 @@ void	op_ldi(t_process *proc, t_env *e)
 	get_params_len(params, 3, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 10);
 	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 	addr = (params[0].value + params[1].value) % IDX_MOD;
-	*(REG_CAST *)proc->reg[params[2].value] = (*(unsigned char *)e->arena)[proc->pc + addr];
+	*(REG_CAST *)proc->reg[params[2].value] = ((unsigned char *)e->arena)[*(REG_CAST *)proc->pc + addr];
 	proc->carry = addr == 0 ? 1 : 0;
 	len = full_len_size(op_tab[9].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
