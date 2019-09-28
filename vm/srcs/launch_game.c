@@ -112,7 +112,7 @@ static int		check_options(size_t nb_cycles, t_env *e)
 	return (0);
 }
 
-static void		and_the_winner_is(WINDOW *infoWin, t_live *live)
+static void		and_the_winner_is(WINDOW *infoWin, t_live *live) // MC HAMMER
 {
 	if (infoWin)
 	{
