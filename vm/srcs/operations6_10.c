@@ -30,7 +30,7 @@ void	op_and(t_process *proc, t_env *e)
 
 	i = 0;
 	get_params_len(params, 3, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 6);
-	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
+	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 	*(REG_CAST *)proc->reg[params[2].value] = (params[0].value & params[1].value) % IDX_MOD;
 	proc->carry = (params[0].value & params[1].value) == 0 ? 1 : 0;
 	len = full_len_size(op_tab[5].reg_nb, params);
@@ -51,7 +51,7 @@ void	op_or(t_process *proc, t_env *e)
 
 	i = 0;
 	get_params_len(params, 3, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 7);
-	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
+	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 	*(REG_CAST *)proc->reg[params[2].value] = (params[0].value | params[1].value) % IDX_MOD;
 	proc->carry = (params[0].value | params[1].value) == 0 ? 1 : 0;
 	len = full_len_size(op_tab[6].reg_nb, params);
@@ -72,7 +72,7 @@ void	op_xor(t_process *proc, t_env *e)
 
 	i = 0;
 	get_params_len(params, 3, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 8);
-	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
+	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 	*(REG_CAST *)proc->reg[params[2].value] = (params[0].value ^ params[1].value) % IDX_MOD;
 	proc->carry = (params[0].value ^ params[1].value) == 0 ? 1 : 0;
 	len = full_len_size(op_tab[7].reg_nb, params);
@@ -94,7 +94,7 @@ void	op_zjmp(t_process *proc, t_env *e)
 	if (proc->carry == 1)
 	{
 		get_params_len(params, 1, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 9);
-		get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
+		get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 		if (e->ncu.infoWin)
 			wprintw(e->ncu.infoWin, "pc = [%d]\n",(int)(((unsigned char *)e->arena) + *(REG_CAST *)proc->pc)[0]);
 		move_process_pc(proc, params[0].value, e);
@@ -120,7 +120,7 @@ void	op_ldi(t_process *proc, t_env *e)
 
 	i = 0;
 	get_params_len(params, 3, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 10);
-	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
+	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 	addr = (params[0].value + params[1].value) % IDX_MOD;
 	*(REG_CAST *)proc->reg[params[2].value] = (*(unsigned char *)e->arena)[proc->pc + addr];
 	proc->carry = addr == 0 ? 1 : 0;

@@ -50,16 +50,21 @@ void	get_params_len(t_param *params, int nbparam, char types, char opcode)
 {
 	int		i;
 
-	get_types(types, params);
+	
 	i = 0;
+	if (opcode == 1 || opcode == 9 || opcode == 12 || opcode == 15)
+	{
+		params[i].size = opcode == 1 ? 4 : 2;
+		return ;
+	}
+	get_types(types, params);
 	while (i < nbparam)
 	{
 		if (params[i].size == 1)
 			params[i].size = 1;
 		else if (params[i].size == 2)
 		{
-			if (opcode == 9 || opcode == 10 || opcode == 11 || opcode == 12 ||
-					opcode == 14 || opcode == 15)
+			if (opcode == 10 || opcode == 11 || opcode == 14)
 				params[i].size = 2;
 			else
 				params[i].size = 4;
@@ -75,27 +80,23 @@ void	get_params_len(t_param *params, int nbparam, char types, char opcode)
 int		get_value(unsigned char *data, int index, int size)
 {
 	int		i;
-	char	tab[size];
+	char	tab[5];
 
 	i = 0;
-	(void)index;
-	while (i < size)
-	{
-		tab[i] = data[1 + i];
-		i++;
-	}
+	ft_bzero(tab, 5);
+	while (size--)
+		tab[size] = data[index + i++];
 	tab[i] = '\0';
-	return (ft_atoi_base(tab, 16));
+	return (*(int *)tab);
 }
 
-void	get_params_data(t_param *params, int nbparam, unsigned char *data, int pc)
+void	get_params_data(t_param *params, int nbparam, unsigned char *data)
 {
 	int		i;
 	int		size;
 
 	i = 0;
 	size = 0;
-	(void)pc;
 	while (i < nbparam)
 	{
 		if (*data == 9 || *data == 1 || *data == 12 || *data == 15)
@@ -103,7 +104,6 @@ void	get_params_data(t_param *params, int nbparam, unsigned char *data, int pc)
 		else
 			params[i].value = get_value(data, size + 2, params[i].size);
 		size += params[i].size;
-		ft_printf("value [%d] = [%d]\n", i + 1, params[i].value);
 		i++;
 	}
 }

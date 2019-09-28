@@ -32,7 +32,7 @@ void	op_sti(t_process *proc, t_env *e)
 
 	i = 0;
 	get_params_len(params, 3, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 11);
-	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
+	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 	addr = (params[1].value + params[2].value) % IDX_MOD;
 	((unsigned char *)e->arena)[*(REG_CAST *)proc->pc + addr] = *(REG_CAST *)proc->reg[params[0].value];
 	proc->carry = addr == 0 ? 1 : 0;
@@ -55,7 +55,7 @@ void	op_fork(t_process *proc, t_env *e)
 
 	i = 0;
 	get_params_len(params, 1, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 12);
-	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
+	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 	if (params[0].value != 0)
 		proc->next = new_proc(proc, params[0].value, 0);
 	len = full_len_size(op_tab[11].reg_nb, params);
@@ -98,7 +98,7 @@ void	op_lldi(t_process *proc, t_env *e)
 
 	i = 0;
 	get_params_len(params, 3, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 14);
-	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
+	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 	addr = (params[0].value + params[1].value);
 	*(REG_CAST *)proc->reg[params[2].value] = ((unsigned char *)e->arena)[*(REG_CAST *)proc->pc + addr];
 	proc->carry = addr == 0 ? 1 : 0;
@@ -120,7 +120,7 @@ void	op_lfork(t_process *proc, t_env *e)
 
 	i = 0;
 	get_params_len(params, 1, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 15);
-	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc, *(REG_CAST *)proc->pc);
+	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 	if (params[0].value != 0)
 		proc->next = new_proc(proc, params[0].value, 1);
 	len = full_len_size(op_tab[14].reg_nb, params);
