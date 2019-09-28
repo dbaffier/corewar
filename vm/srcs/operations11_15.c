@@ -38,9 +38,7 @@ void	op_sti(t_process *proc, t_env *e)
 		len = params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
-
 
 /*
 **FORK 0x0C
@@ -64,7 +62,6 @@ void	op_fork(t_process *proc, t_env *e)
 		len = params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -88,7 +85,6 @@ void	op_lld(t_process *proc, t_env *e)
 		len = params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -114,7 +110,6 @@ void	op_lldi(t_process *proc, t_env *e)
 		len = params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -138,5 +133,4 @@ void	op_lfork(t_process *proc, t_env *e)
 		len = params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }

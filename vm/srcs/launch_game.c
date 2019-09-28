@@ -67,7 +67,6 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 		return (0);
 	if (proc->instruction_wait == nb_cycles)
 	{
-		// proc->instruction = 16;
 		if (proc->instruction == 0)
 		{
 			proc->instruction = *((unsigned char *)e->arena + *(REG_CAST *)proc->pc);
@@ -88,7 +87,6 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 			instruction_function[proc->instruction](proc, e);
 			proc->instruction = 0;
 		}
-		// ft_printf("op code [%d]\n", proc->instruction);
 	}
 	return (1);
 }
@@ -122,6 +120,9 @@ static void		and_the_winner_is(WINDOW *infoWin, t_live *live)
 			wprintw(infoWin, "Le joueur %d(%s) a gagne\n", live->last_id, live->last_name);
 		else
 			wprintw(infoWin, "Aucun champion n'a gagne... Vraiment !?\n");
+		nodelay(infoWin, FALSE);
+		while (wgetch(infoWin) != 'q')
+			;
 		return ;
 	}
 	if (live->last_id)
@@ -152,5 +153,5 @@ void			launch_game(t_env *e)
 		nb_cycles++;
 	}
 	if (ch == 0)
-		and_the_winner_is(&e->live);
+		and_the_winner_is(e->ncu.infoWin, &e->live);
 }

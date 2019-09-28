@@ -61,5 +61,4 @@ int				main(int ac, char **av)
 	launch_game(e);
 	ncurses_end(e);
 	free_env(e);
-	if (win)
 }

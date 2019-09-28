@@ -70,6 +70,8 @@ void	get_params_len(t_param *params, int nbparam, char types, char opcode)
 		}
 		else if (params[i].size == 3)
 			params[i].size = 2;
+		else
+			params[i].size = 0;
 		i++;
 	}
 }

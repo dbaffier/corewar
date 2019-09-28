@@ -46,10 +46,9 @@ void	op_live(t_process *proc, t_env *e)
 		e->progname, params[0].value, (tail) ? e->live.last_name : "?");
 	e->live.total++;
 	while (i < 3 && params[i].size != 0)
-		len = params[i++].size;
+		len += params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -70,10 +69,9 @@ void	op_ld(t_process *proc, t_env *e)
 	*(REG_CAST *)proc->reg[params[1].value - 1] = *(REG_CAST *)proc->pc + (params[0].value % IDX_MOD);
 	proc->carry = (params[1].value == 0) ? 1 : 0;
 	while (i < 3 && params[i].size != 0)
-		len = params[i++].size;
+		len += params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -98,10 +96,9 @@ void	op_st(t_process *proc, t_env *e)
 		params[1].value = *(REG_CAST *)proc->pc + (*(REG_CAST *)proc->reg[params[0].value - 1] % IDX_MOD);
 	proc->carry = params[1].value == 0 ? 1 : 0;
 	while (i < 3 && params[i].size != 0)
-		len = params[i++].size;
+		len += params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -109,7 +106,6 @@ void	op_st(t_process *proc, t_env *e)
 ** ajoute le 1er param et le 2nd et stocke le resultat dans le 3eme
 ** meme fonctionnement pour le carry
 */
-
 
 void	op_add(t_process *proc, t_env *e)
 {
@@ -124,10 +120,9 @@ void	op_add(t_process *proc, t_env *e)
 	params[1].value;
 	proc->carry = params[0].value + params[1].value == 0 ? 1 : 0;
 	while (i < 3 && params[i].size != 0)
-		len = params[i++].size;
+		len += params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
 
 /*
@@ -148,8 +143,7 @@ void	op_sub(t_process *proc, t_env *e)
 	*(REG_CAST *)proc->reg[params[2].value] = params[0].value - params[1].value;
 	proc->carry = params[0].value - params[1].value == 0 ? 1 : 0;
 	while (i < 3 && params[i].size != 0)
-		len = params[i++].size;
+		len += params[i++].size;
 	move_process_pc(proc, len + 2, e);
 	// *((REG_CAST *)proc->pc) += len + 2;
-	ft_printf("proc->pc [%d]\n", *((REG_CAST *)proc->pc));
 }
