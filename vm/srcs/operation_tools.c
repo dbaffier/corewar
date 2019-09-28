@@ -42,7 +42,6 @@ void	get_types(char types, t_param *params_type)
 		params_type[i].size = param_len;
 		types = types >> 2;
 		j -= 2;
-		printf("params = [%d]\n", params_type[i].size);
 		i++;
 	}
 }
