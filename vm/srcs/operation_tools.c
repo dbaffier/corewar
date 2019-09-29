@@ -87,7 +87,10 @@ int		get_value(unsigned char *data, int index, int size)
 	while (size--)
 		tab[size] = data[index + i++];
 	tab[i] = '\0';
-	return (*(int *)tab);
+	if (*data == 9 || *data == 12 || *data == 15)
+		return (*(short *)tab);
+	else
+		return (*(int *)tab);
 }
 
 void	get_params_data(t_param *params, int nbparam, unsigned char *data)

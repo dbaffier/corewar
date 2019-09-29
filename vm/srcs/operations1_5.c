@@ -45,7 +45,7 @@ void	op_live(t_process *proc, t_env *e)
 		tail = tail->next;
 	}
 	ft_printf("%s: un processus dit que le joueur %d(%s) est en vie\n",
-		e->progname, params[0].value, (tail) ? e->live.last_name : "?");
+		e->progname, params[0].value, (tail) ? ((t_header *)tail->file)->prog_name : "?");
 	e->live.total++;
 	len = full_len_size(op_tab[0].reg_nb, params);
 	move_process_pc(proc, 5, e);
@@ -111,9 +111,8 @@ void	op_add(t_process *proc, t_env *e)
 
 	i = 0;
 	get_params_len(params, 3, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 4);
-	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
-	*(REG_CAST *)proc->reg[params[2].value] = params[0].value +
-	params[1].value;
+	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc); 
+	*(REG_CAST *)proc->reg[params[2].value] = params[0].value + params[1].value;
 	proc->carry = params[0].value + params[1].value == 0 ? 1 : 0;
 	len = full_len_size(op_tab[3].reg_nb, params);
 	move_process_pc(proc, len + 2, e);

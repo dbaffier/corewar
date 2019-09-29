@@ -95,9 +95,8 @@ void	op_zjmp(t_process *proc, t_env *e)
 	{
 		get_params_len(params, 1, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 9);
 		get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
-		if (e->ncu.infoWin)
-			wprintw(e->ncu.infoWin, "pc = [%d]\n",(int)(((unsigned char *)e->arena) + *(REG_CAST *)proc->pc)[0]);
-		move_process_pc(proc, params[0].value, e);
+		params[0].value += *(REG_CAST *)proc->pc;
+		move_process_pc(proc, params[0].value , e);
 		return ;
 	}
 	len = full_len_size(op_tab[8].reg_nb, params);
