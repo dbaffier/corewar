@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:28:36 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/29 00:18:06 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/29 21:17:41 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 ** 	COLOR_WHITE
 */
 
-static void		colors(t_env *e)
+static void		init_colors(t_env *e)
 {
 	static short	color_combo[] = {
 		COLOR_GREEN, COLOR_YELLOW, COLOR_BLUE, COLOR_RED,
@@ -37,21 +37,19 @@ static void		colors(t_env *e)
 
 	start_color();
 	use_default_colors();
-	init_pair(1, COLOR_BLACK, -1); // Default color
-	init_pair(2, COLOR_YELLOW, -1); // Titles color
-	init_pair(3, COLOR_WHITE, COLOR_CYAN); // Champ Box text/background color
-	init_pair(4, COLOR_WHITE, -1); // Text color
-	i = 5;
+	init_pair(COREWAR_DFLT_COLOR, COLOR_BLACK, -1);
+	init_pair(COREWAR_TITLE_COLOR, COLOR_YELLOW, -1);
+	init_pair(COREWAR_CHAMPBOX_COLOR, COLOR_WHITE, COLOR_CYAN);
+	init_pair(COREWAR_TEXT_COLOR, COLOR_WHITE, -1);
+	i = COREWAR_COLOR_END;
 	color_nb = 0;
 	proc = e->proc;
 	while (proc)
 	{
 		proc->color[0] = i;
-		init_pair(i, color_combo[color_nb], -1); // Player color
-		i++;
+		init_pair(i++, color_combo[color_nb], -1); // Player color
 		proc->color[1] = i;
-		init_pair(i, COLOR_BLACK, color_combo[color_nb]); // Player color PC
-		i++;
+		init_pair(i++, COLOR_BLACK, color_combo[color_nb]); // Player color PC
 		color_nb++;
 		proc = proc->next;
 	}
@@ -68,7 +66,7 @@ int				ncurses_init(t_env *e)
 	cbreak();
 	keypad(e->ncu.mainWin, TRUE);
 	curs_set(0);
-	colors(e);
+	init_colors(e);
 	if (COLS < ARENA_LINE_LEN || LINES < ARENA_COL_LEN)
 		return (ncurses_termTooSmall(e));
 	if ((err = createArenaBox(e)) == IS_OK)

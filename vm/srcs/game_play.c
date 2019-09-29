@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   play_game.c                                        :+:      :+:    :+:   */
+/*   game_play.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 23:05:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/28 23:13:12 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/29 21:50:57 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ int				play_game(size_t nb_cycles, t_env *e)
 
 	if (e->dump_cycle > -1 && (size_t)e->dump_cycle == nb_cycles)
 	{
-		dump_map(e->arena, MEM_SIZE);
+		if (!e->ncu.mainWin)
+			dump_map(e->arena, MEM_SIZE);
 		return (-1);
 	}
 	if (nb_cycles && nb_cycles % e->cycle_to_die == 0)

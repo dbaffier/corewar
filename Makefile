@@ -19,17 +19,18 @@ VM_SRC		+=	main.c					\
 				dump_map.c				\
 				errors.c				\
 				free.c					\
-				get_args.c				\
-				get_player.c			\
+				game_launch.c			\
+				game_play.c				\
 				get_arena.c				\
-				move_pc.c				\
+				get_args.c				\
+				get_colors.c			\
+				get_player.c			\
+				move_process_pc.c		\
 				ncurses_aff.c			\
 				ncurses_aff_update.c	\
 				ncurses_create.c		\
 				ncurses_init_end.c		\
 				ncurses_wgetch.c		\
-				launch_game.c			\
-				play_game.c				\
 				op.c					\
 				remove_player.c			\
 				signals.c				\
