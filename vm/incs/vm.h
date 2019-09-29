@@ -142,8 +142,8 @@ int						createInfoBox(t_env *e);
 void					ncurses_affArena(t_env *e);
 void					ncurses_affChampion(t_env *e);
 void					ncurses_affVMInfo(t_env *e);
-void					ncurses_affVMStatus(t_env *e);
 void					update_affVMInfo(t_env *e, size_t cycle);
+void					update_affVMStatus(t_env *e);
 
 /*
 ** Game Functions

@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:40:54 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/29 21:15:59 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/29 23:16:42 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ enum
 {
 	COREWAR_DFLT_COLOR = 1,
 	COREWAR_TITLE_COLOR,
-	COREWAR_CHAMPBOX_COLOR,
+	COREWAR_CHAMPWIN_COLOR,
 	COREWAR_TEXT_COLOR,
+	COREWAR_WINNER_COLOR,
 	COREWAR_COLOR_END,
 };
 

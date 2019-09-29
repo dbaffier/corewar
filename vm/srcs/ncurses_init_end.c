@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:28:36 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/29 21:17:41 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/29 23:17:44 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ static void		init_colors(t_env *e)
 	use_default_colors();
 	init_pair(COREWAR_DFLT_COLOR, COLOR_BLACK, -1);
 	init_pair(COREWAR_TITLE_COLOR, COLOR_YELLOW, -1);
-	init_pair(COREWAR_CHAMPBOX_COLOR, COLOR_WHITE, COLOR_CYAN);
+	init_pair(COREWAR_CHAMPWIN_COLOR, COLOR_WHITE, COLOR_CYAN);
 	init_pair(COREWAR_TEXT_COLOR, COLOR_WHITE, -1);
+	init_pair(COREWAR_WINNER_COLOR, COLOR_YELLOW, COLOR_RED);
 	i = COREWAR_COLOR_END;
 	color_nb = 0;
 	proc = e->proc;

@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:47:32 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/29 23:06:37 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 00:03:27 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void			ncurses_affArena(t_env *e)
 				proc = proc->next;
 			}
 		wprintw(e->ncu.arenaWin, "%02X", *((unsigned char *)e->arena + i));
-		// wprintw(e->ncu.arenaWin, "%02hd", *(e->colors + i));
 		wattron(e->ncu.arenaWin, COLOR_PAIR(COREWAR_DFLT_COLOR));
 		if (++i % ARENA_VALUE_PER_LINE != 0)
 			wprintw(e->ncu.arenaWin, " ");
@@ -56,11 +55,12 @@ void			ncurses_affChampion(t_env *e)
 	t_header	*play;
 	int			y;
 
-	if (!(proc = e->proc) || !e->ncu.champWin)
+	if (!e->ncu.champWin)
 		return ;
 	y = 0;
-	while (proc->next)
-		proc = proc->next;
+	if ((proc = e->proc))
+		while (proc->next)
+			proc = proc->next;
 	wclear(e->ncu.champWin);
 	while (proc)
 	{
@@ -79,7 +79,7 @@ void			ncurses_affVMInfo(t_env *e)
 {
 	wattron(e->ncu.vmWin, A_BOLD);
 	wattron(e->ncu.vmWin, COLOR_PAIR(4));
-	ncurses_affVMStatus(e);
+	update_affVMStatus(e);
 	wprintw(e->ncu.vmWin, "Cycle: 0\n\n");
 	wprintw(e->ncu.vmWin, "CYCLE_TO_DIE: %d\n\n", e->cycle_to_die);
 	wprintw(e->ncu.vmWin, "CYCLE_DELTA: %d\n\n", CYCLE_DELTA);
@@ -88,27 +88,4 @@ void			ncurses_affVMInfo(t_env *e)
 	wattroff(e->ncu.vmWin, COLOR_PAIR(4));
 	wattroff(e->ncu.vmWin, A_BOLD);
 	wrefresh(e->ncu.vmWin);
-}
-
-void			ncurses_affVMStatus(t_env *e)
-{
-	char		*status[2];
-
-	status[0] = "RUNNING";
-	status[1] = "PAUSED";
-	if (e->ncu.winx > 6)
-	{
-		mvwprintw(e->ncu.vmWin, 0, e->ncu.winx / 2 - 6, "** %s **\n",
-		status[e->pause]);
-		wclrtoeol(e->ncu.vmWin);
-		mvwprintw(e->ncu.vmWin, 1, e->ncu.winx / 2 - 7, "speed: %d/%d\n\n",
-		VM_SPEED_LIMIT - e->speed, VM_SPEED_LIMIT);
-	}
-	else
-	{
-		wprintw(e->ncu.vmWin, "** %s **\n", status[e->pause]);
-		wclrtoeol(e->ncu.vmWin);
-		wprintw(e->ncu.vmWin, "speed: %d/%d\n\n",
-		VM_SPEED_LIMIT - e->speed, VM_SPEED_LIMIT);
-	}
 }

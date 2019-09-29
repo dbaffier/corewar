@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:20:26 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/29 21:22:02 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/29 23:08:06 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,13 @@ static int		createInfoWin(t_env *e, int winx, int winy)
 	if (!(e->ncu.champWin = subwin(e->ncu.infoWinBox,
 	winy, winx - 2, 1, COLS - winx + 1)))
 		return (ERR_NCURSE_CHAMPWIN);
+	wbkgd(e->ncu.champWin, COLOR_PAIR(3));
 	if (!(e->ncu.vmWin = subwin(e->ncu.infoWinBox,
 	winy, winx - 2, winy + 1, COLS - winx + 1)))
 		return (ERR_NCURSE_VMWIN);
 	if (!(e->ncu.infoWin = subwin(e->ncu.infoWinBox,
 	winy, winx - 2, winy * 2 + 1, COLS - winx + 1)))
 		return (ERR_NCURSE_INFOWIN);
-	wbkgd(e->ncu.champWin, COLOR_PAIR(3));
 	scrollok(e->ncu.infoWin, TRUE);
 	return (IS_OK);
 }
