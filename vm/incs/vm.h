@@ -128,6 +128,7 @@ void					free_env(t_env *e);
 int						get_args(char **av, t_env *e);
 int						get_player(t_env *e, char *av);
 int						get_arena(t_env *e);
+int						get_colors(t_env *e);
 t_process				*remove_player(t_process *proc, t_process **head);
 
 /*

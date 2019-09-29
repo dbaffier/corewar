@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:47:32 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/29 00:12:58 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/29 22:50:20 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,58 +23,28 @@
 ** flag[1] : Did we changed process ?
 */
 
-static void		arena_get_color(size_t i[2], char flag[2], t_process **proc,
-t_env *e)
-{
-	if (i[0] >= i[1] && i[0] < i[1] + (*proc)->data_size)
-	{
-		if (flag[0] == 0)
-		{
-			wprintw(e->ncu.infoWin, "id:%d color: %hd\n", (*proc)->id, e->colors[*(REG_CAST *)(*proc)->pc]);
-			wattron(e->ncu.arenaWin, (*(REG_CAST *)(*proc)->pc == i[0]) ?
-				COLOR_PAIR((*proc)->color[1]) : COLOR_PAIR(e->colors[*(REG_CAST *)(*proc)->pc]));
-			if (*(REG_CAST *)(*proc)->pc != i[0])
-				flag[0] = 1;
-		}
-		if (flag[1] == 0)
-			flag[1] = 1;
-		return ;
-	}
-	if (flag[0] == 1)
-	{
-		wattron(e->ncu.arenaWin, COLOR_PAIR(1));
-		flag[0] = 0;
-	}
-	if (flag[1] == 1)
-	{
-		*proc = (*proc)->prev;
-		i[1] += (MEM_SIZE / e->nb_players);
-		flag[1] = 0;
-	}
-}
-
 void			ncurses_affArena(t_env *e)
 {
+	size_t		i;
 	t_process	*proc;
-	size_t		i[2];
-	char		flag[2];
 
-	ft_bzero(i, sizeof(i));
-	flag[0] = 0;
-	flag[1] = 1;
-	proc = e->proc;
-	if (!e->arena)
+	i = 0;
+	if (!e->ncu.arenaWin || !e->arena || !e->colors)
 		return ;
-	while (proc->next)
-		proc = proc->next;
-	while (i[0] < MEM_SIZE)
+	while (i < MEM_SIZE)
 	{
-		arena_get_color(i, flag, &proc, e);
-		wprintw(e->ncu.arenaWin, "%02X", *((unsigned char *)e->arena + i[0]));
-		if (proc && *(REG_CAST *)proc->pc == i[0])
-			wattron(e->ncu.arenaWin, COLOR_PAIR(1));
-		i[0]++;
-		if (i[0] % ARENA_VALUE_PER_LINE != 0)
+		wattron(e->ncu.arenaWin, COLOR_PAIR(e->colors[i]));
+		if ((proc = e->proc))
+			while (proc)
+			{
+				if (*(REG_CAST *)proc->pc == i)
+					wattron(e->ncu.arenaWin, COLOR_PAIR(proc->color[1]));
+				proc = proc->next;
+			}
+		// wprintw(e->ncu.arenaWin, "%02X", *((unsigned char *)e->arena + i));
+		wprintw(e->ncu.arenaWin, "%02hd", *(e->colors + i));
+		wattron(e->ncu.arenaWin, COLOR_PAIR(COREWAR_DFLT_COLOR));
+		if (++i % ARENA_VALUE_PER_LINE != 0)
 			wprintw(e->ncu.arenaWin, " ");
 	}
 	wrefresh(e->ncu.arenaWin);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   launch_game.c                                      :+:      :+:    :+:   */
+/*   game_launch.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/28 23:12:20 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/28 23:12:20 by gbourgeo         ###   ########.fr       */
+/*   Created: 2019/09/29 21:48:51 by gbourgeo          #+#    #+#             */
+/*   Updated: 2019/09/29 21:48:51 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void			launch_game(t_env *e)
 	ch = 0;
 	e->pause = 1;
 	e->speed = VM_SPEED_INIT;
+	e->cycle_to_die = CYCLE_TO_DIE;
+	ncurses_affArena(e);
 	while (1)
 	{
 		if (e->ncu.infoWin)
