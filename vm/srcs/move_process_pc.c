@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 22:54:42 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/29 22:51:40 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/29 23:06:13 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void			move_process_pc(t_process *proc, int len, t_env *e)
 
 	if (e->ncu.arenaWin)
 	{
-		wprintw(e->ncu.infoWin, "Player %d moving %d bits forward\n", proc->id, len);
+		// wprintw(e->ncu.infoWin, "Player %d moving %d bits forward\n", proc->id, len);
 		y = (*(REG_CAST *)proc->pc * 3) / ARENA_LINE_LEN;
 		x = (*(REG_CAST *)proc->pc * 3) % ARENA_LINE_LEN;
 		wattron(e->ncu.arenaWin, COLOR_PAIR(e->colors[*(REG_CAST *)proc->pc]));

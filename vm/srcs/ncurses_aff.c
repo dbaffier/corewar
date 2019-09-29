@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:47:32 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/29 22:50:20 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/29 23:06:37 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ void			ncurses_affArena(t_env *e)
 					wattron(e->ncu.arenaWin, COLOR_PAIR(proc->color[1]));
 				proc = proc->next;
 			}
-		// wprintw(e->ncu.arenaWin, "%02X", *((unsigned char *)e->arena + i));
-		wprintw(e->ncu.arenaWin, "%02hd", *(e->colors + i));
+		wprintw(e->ncu.arenaWin, "%02X", *((unsigned char *)e->arena + i));
+		// wprintw(e->ncu.arenaWin, "%02hd", *(e->colors + i));
 		wattron(e->ncu.arenaWin, COLOR_PAIR(COREWAR_DFLT_COLOR));
 		if (++i % ARENA_VALUE_PER_LINE != 0)
 			wprintw(e->ncu.arenaWin, " ");
