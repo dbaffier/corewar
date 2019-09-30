@@ -19,17 +19,13 @@ extern t_op op_tab[17];
 /*
 ** LIVE 0x01
 ** renvoie un live pour le processus qui l'appelle
-** si le 1st param = 0 le carry passe a 1
 */
 
 void	op_live(t_process *proc, t_env *e)
 {
 	t_param		params[3];
 	t_process	*tail;
-	int			len;
-	int			i;
 
-	i = 0;
 	get_params_len(params, 1, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 1);
 	get_params_data(params, 1, (unsigned char *)e->arena + *(REG_CAST *)proc->pc);
 	tail = e->proc;
@@ -51,7 +47,6 @@ void	op_live(t_process *proc, t_env *e)
 		ft_printf("%s: un processus dit que le joueur %d(%s) est en vie\n",
 			e->progname, params[0].value, (tail) ? ((t_header *)tail->file)->prog_name : "?");
 	e->live.total++;
-	len = full_len_size(op_tab[0].reg_nb, params);
 	move_process_pc(proc, 5, e);
 }
 
