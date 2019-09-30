@@ -6,7 +6,7 @@
 #    By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/26 23:23:36 by dbaffier          #+#    #+#              #
-#    Updated: 2019/09/29 01:29:04 by dbaffier         ###   ########.fr        #
+#    Updated: 2019/09/30 23:42:25 by dbaffier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,6 +83,11 @@ SRCS += write_header.c			\
 		write_param.c			\
 		write_type.c			\
 
+DEASM_DIR = deasm/
+SRCS += deasm.c					\
+		deasm_file.c			\
+		dswrite_instructions.c	\
+
 all: $(OBJS_DIR) $(DEPS_DIR) $(LIBFT_LIB) $(NAME)
 
 $(OBJS_DIR):
@@ -114,6 +119,11 @@ $(OBJS_DIR)%.o: $(SRCS_DIR)$(PRINT_DIR)%.c $(DEPS_DIR)%.d
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)$(WRITING_DIR)%.c
 $(OBJS_DIR)%.o: $(SRCS_DIR)$(WRITING_DIR)%.c $(DEPS_DIR)%.d
+	$(CC) -MT $@ -MMD -MP -MF $(DEPS_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
+	@mv -f $(DEPS_DIR)$*.Td $(DEPS_DIR)$*.d && touch $@
+
+$(OBJS_DIR)%.o: $(SRCS_DIR)$(DEASM_DIR)%.c
+$(OBJS_DIR)%.o: $(SRCS_DIR)$(DEASM_DIR)%.c $(DEPS_DIR)%.d
 	$(CC) -MT $@ -MMD -MP -MF $(DEPS_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
 	@mv -f $(DEPS_DIR)$*.Td $(DEPS_DIR)$*.d && touch $@
 

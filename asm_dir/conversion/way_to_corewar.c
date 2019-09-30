@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 22:36:59 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/30 03:03:21 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/30 23:43:21 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int		way_to_corewar(t_data *data, t_aolist *ao)
 		if (tok)
 		{
 			write_opc(data, tok->val);
-			write_type(data, ao->arg);
+			if (data->encoding_byte)
+				write_type(data, ao->arg);
 			write_param(data, tok->next, ao->arg_size);
 		}
 		ao = ao->next;

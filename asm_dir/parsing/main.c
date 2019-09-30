@@ -6,13 +6,14 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:15:33 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/30 01:47:19 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/30 23:43:43 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "ft_printf.h"
 #include "asm.h"
+#include "cw_hexdump.h"
 
 static int	err_file(int err)
 {
@@ -33,6 +34,8 @@ int main(int ac, char **av)
 	ret = 0;
 	ft_memset(&e, 0, sizeof(e));
 	i = parse_flag(&e, av);
+	if (e.flag & FLAG_D)
+		return (deasm(av, i));
 	if ((ret = asm_file(ac, av, i)) > 0)
 		return (err_file(ret));
 	if ((ret = parser(&e, av[i])) > 0)

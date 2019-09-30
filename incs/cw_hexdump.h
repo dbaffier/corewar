@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/28 01:22:42 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/30 02:24:49 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@
 # define FLAG_O		(1 << 1)
 # define FLAG_P		(1 << 2)
 # define FLAG_GP	(1 << 3)
+# define FLAG_D		(1 << 4)
 
 # define DASH_N		{FLAG_N, 'n'}
 # define DASH_O		{FLAG_O, 'o'}
 # define DASH_P		{FLAG_P, 'p'}
 # define DASH_GP	{FLAG_GP, 'P'}
+# define DASH_D		{FLAG_D, 'd'}
 
 # define NAME		1
 # define COMMENT	2
@@ -69,6 +71,7 @@ typedef struct		s_data
 	int				fd;
 	int				pos;
 	int				pc;
+	int				encoding_byte;
 	int				x;
 	int				y;
 	int				i;

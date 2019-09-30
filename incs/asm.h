@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:19:41 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/30 04:06:00 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/30 23:45:58 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,5 +141,6 @@ int			syntax_error(t_env *e, int error, char *str, int line);
 int			dump_to_file(t_env *e);
 int			parse_flag(t_env *e, char **av);
 void		free_aolist(t_aolist *aolist);
+int			deasm(char **av, int i);
 
 #endif
