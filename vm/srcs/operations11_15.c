@@ -6,7 +6,7 @@
 /*   By: bmellon <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:12:05 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/25 13:24:21 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/30 21:42:29 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ void	op_sti(t_process *proc, t_env *e)
 	int			i;
 
 	i = 0;
-	get_params_len(params, 3, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 11);
-	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
+	get_params_len(params, 3,
+			*((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 11);
+	get_params_data(params, 3,
+			((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 	addr = (params[1].value + params[2].value) % IDX_MOD;
-	((unsigned char *)e->arena)[*(REG_CAST *)proc->pc + addr] = *(REG_CAST *)proc->reg[params[0].value];
+	((unsigned char *)e->arena)[*(REG_CAST *)proc->pc + addr] =
+		*(REG_CAST *)proc->reg[params[0].value];
 	proc->carry = addr == 0 ? 1 : 0;
 	len = full_len_size(op_tab[10].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
@@ -54,8 +57,10 @@ void	op_fork(t_process *proc, t_env *e)
 	int			i;
 
 	i = 0;
-	get_params_len(params, 1, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 12);
-	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
+	get_params_len(params, 1,
+			*((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 12);
+	get_params_data(params, 1,
+			((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 	if (params[0].value != 0)
 		proc->next = new_proc(proc, params[0].value, 0, e);
 	len = full_len_size(op_tab[11].reg_nb, params);
@@ -75,9 +80,12 @@ void	op_lld(t_process *proc, t_env *e)
 	int			i;
 
 	i = 0;
-	get_params_len(params, 2, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 13);
-	get_params_data(params, 2, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
-	*(REG_CAST *)proc->reg[params[1].value] = *(REG_CAST *)proc->pc + (params[0].value % MEM_SIZE);
+	get_params_len(params, 2,
+			*((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 13);
+	get_params_data(params, 2,
+			((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
+	*(REG_CAST *)proc->reg[params[1].value] =
+		*(REG_CAST *)proc->pc + (params[0].value % MEM_SIZE);
 	proc->carry = params[1].value == 0 ? 1 : 0;
 	len = full_len_size(op_tab[12].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
@@ -97,10 +105,13 @@ void	op_lldi(t_process *proc, t_env *e)
 	int			i;
 
 	i = 0;
-	get_params_len(params, 3, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 14);
-	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
+	get_params_len(params, 3,
+			*((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 14);
+	get_params_data(params, 3,
+			((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 	addr = (params[0].value + params[1].value) % MEM_SIZE;
-	*(REG_CAST *)proc->reg[params[2].value] = ((unsigned char *)e->arena)[*(REG_CAST *)proc->pc + addr];
+	*(REG_CAST *)proc->reg[params[2].value] =
+		((unsigned char *)e->arena)[*(REG_CAST *)proc->pc + addr];
 	proc->carry = addr == 0 ? 1 : 0;
 	len = full_len_size(op_tab[13].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
@@ -119,8 +130,10 @@ void	op_lfork(t_process *proc, t_env *e)
 	int			i;
 
 	i = 0;
-	get_params_len(params, 1, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 15);
-	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
+	get_params_len(params, 1,
+			*((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 15);
+	get_params_data(params, 1,
+			((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 	if (params[0].value != 0)
 		proc->next = new_proc(proc, params[0].value, 1, e);
 	len = full_len_size(op_tab[14].reg_nb, params);

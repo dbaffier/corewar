@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/25 13:25:14 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/30 21:55:15 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,5 +184,6 @@ int						get_value(unsigned char *data, int index, \
 	int size);
 int						full_len_size(unsigned short reg_nb, \
 	t_param *params);
+void					print_live(t_env *e, t_param *params, t_process *tail);
 
 #endif

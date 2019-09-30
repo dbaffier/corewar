@@ -28,13 +28,32 @@ void	op_aff(t_process *proc, t_env *e)
 	int 		i;
 
 	i = 0;
-	get_params_len(params, 1, (*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 1);
-	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
-	if (e->ncu.infoWin)
-		wprintw(e->ncu.infoWin, "corewar : [%s] : \"%c\"\n", ((t_header *)proc->file)->prog_name, params[0].value);
+	get_params_len(params, 1,
+		(*(unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 1);
+	get_params_data(params, 1,
+		((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
+	if (e->ncu.info_win)
+		wprintw(e->ncu.info_win, "corewar : [%s] : \"%c\"\n",
+			((t_header *)proc->file)->prog_name, params[0].value);
 	else
-		ft_printf("corewar : [%s] : \"%c\"\n", ((t_header *)proc->file)->prog_name, params[0].value);
+		ft_printf("corewar : [%s] : \"%c\"\n", 
+			((t_header *)proc->file)->prog_name, params[0].value);
 	proc->carry = params[0].value == 0 ? 1 : 0;
 	len = full_len_size(op_tab[15].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
+}
+
+void	print_live(t_env *e, t_param *params, t_process *tail)
+{
+	char	*proc;
+
+	proc = "un processus dit que le joueur";
+	if (e->ncu.info_win)
+		wprintw(e->ncu.info_win, "%s: %s %d(%s) est en vie\n",
+			e->progname, proc, params[0].value, (tail) ?
+				((t_header *)tail->file)->prog_name : "?");
+	else
+		ft_printf("%s: un processus dit que le joueur %d(%s) est en vie\n",
+			e->progname, params[0].value, (tail) ?
+				((t_header *)tail->file)->prog_name : "?");
 }
