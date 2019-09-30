@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 23:35:11 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 23:48:20 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct			s_env
 	int					cycle_to_die;
 	int					checks;
 	t_live				live;
+	int					term_too_small;
 }						t_env;
 
 struct s_env			g_env;

@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:28:36 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 23:22:41 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 23:55:08 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int				ncurses_init(t_env *e)
 {
 	int			err;
 
+	err = IS_OK;
 	if (e->ncu.active == FALSE)
 		return (IS_OK);
 	signal(SIGWINCH, ncurses_resizewindow);
@@ -74,8 +75,8 @@ int				ncurses_init(t_env *e)
 	curs_set(0);
 	init_colors(e);
 	if (COLS < ARENA_LINE_LEN || LINES < ARENA_COL_LEN)
-		return (ncurses_termtoosmall(e));
-	if ((err = create_arenabox(e)) == IS_OK)
+		e->term_too_small = ncurses_termtoosmall(e);
+	else if ((err = create_arenabox(e)) == IS_OK)
 		err = create_infobox(e);
 	return (err);
 }

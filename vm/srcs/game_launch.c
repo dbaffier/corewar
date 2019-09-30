@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 21:48:51 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 23:39:39 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 23:59:16 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static void		set_game_parameters(t_env *e)
 	e->pause = 1;
 	e->speed = VM_SPEED_INIT;
 	e->cycle_to_die = CYCLE_TO_DIE;
+	ncurses_aff_all(e);
 }
 
 void			launch_game(t_env *e)
@@ -70,9 +71,10 @@ void			launch_game(t_env *e)
 	nb_cycles = 0;
 	ch = 0;
 	set_game_parameters(e);
-	ncurses_aff_all(e);
 	while (1)
 	{
+		if (e->term_too_small)
+			continue ;
 		if (e->ncu.info_win)
 		{
 			update_aff_vminfo(e, nb_cycles);

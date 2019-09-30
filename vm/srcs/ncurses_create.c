@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:20:26 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 23:22:01 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 23:51:00 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int				ncurses_termtoosmall(t_env *e)
 	wattroff(e->ncu.main_win, COLOR_PAIR(COREWAR_TEXT_COLOR));
 	wattroff(e->ncu.main_win, A_BOLD);
 	wrefresh(e->ncu.main_win);
-	return (IS_OK);
+	return (1);
 }
 
 /*
