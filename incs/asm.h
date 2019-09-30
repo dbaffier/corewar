@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:19:41 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/28 01:16:51 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/30 02:59:44 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,4 +136,6 @@ int			syntax_error(t_env *e, int error, char *str, int line);
 
 int			dump_to_file(t_env *e);
 int			parse_flag(t_env *e, char **av);
+int			deasm(char **av, int i);
+
 #endif
