@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:19:41 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/30 23:45:58 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/01 00:34:50 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 # define ERR_OVERFLOW		4
 # define ERR_OPEN			5
 # define ERR_MALLOC			6
-
 
 # define ERR_NAME_H			1
 # define ERR_NAME_LEN		2

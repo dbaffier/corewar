@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 19:57:32 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/30 03:29:44 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/01 00:35:52 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ static t_aolist	*brother_link(t_aolist *head, t_token *curr)
 
 static int	lab_val(t_aolist *curr, t_aolist *next)
 {
-	return (curr->mem_addr - next->mem_addr);
+	//printf("%d -- %d \n", curr->mem_addr, next->mem_addr);
+	//return (curr->mem_addr - next->mem_addr);
+	return (next->mem_addr - curr->mem_addr);
 }
 
 int			asm_lexical_label(char *lab)
