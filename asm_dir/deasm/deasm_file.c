@@ -20,73 +20,70 @@ static void		dswrite_instructions(t_info *inf, char buff)
 	cast = (unsigned int)buff;
 	if (inf->cursor == 2191)
 	{
-		write(inf->ds_fd, "\n\n", 2);
+		ft_dprintf(inf->ds_fd, "\n\n");
 		inf->decode = OPC;
 	}
 	else if (inf->decode == OPC)
 	{
+		printf("starting opc : %d\n", (int)buff);
 		dswrite_opc(inf, buff);
-		if (buff != 1 || buff != 9 || buff != 12 || buff != 15)
-			inf->decode = E_BYTE;
-		else
+		if (buff == 1 || buff == 9 || buff == 12 || buff == 15)
+		{
 			inf->decode = PARAM; 
+			inf->type[0] = TYPE_DIR;
+			inf->size[0] = inf->dir_size; 
+			inf->n_param = 1;
+		}
+		else
+			inf->decode = E_BYTE;
 	}
 	else if (inf->decode == E_BYTE)
 	{
-		decode_types(inf, (cast>> 2));
+		decode_types(inf, (cast));
 		inf->decode = PARAM; 
 	}
 	else if (inf->decode == PARAM)
 		dswrite_param(inf, buff);
-	else 
-		inf->decode = END;
 }
 
 static void		dswrite(t_info *inf, char buff)
 {
 	if (inf->cursor == 4)
-		write(inf->ds_fd, ".name : \"", 9);
+		ft_dprintf(inf->ds_fd, ".name : \"");
 	if (inf->cursor == 136)
-		write(inf->ds_fd, "\"\ncomment : \"", 13);
-	write(inf->ds_fd, &buff, 1);
+		ft_dprintf(inf->ds_fd, "\"\n.comment : \"");
+	if (buff != 0x0)
+		ft_dprintf(inf->ds_fd, "%c", buff);
+	inf->decode = END;
 }
 
 int				deasm_file(t_info *inf)
 {
-	char	buff;
-	int		i;
+	unsigned char	buff;
+	int				ds;
+	int				i;
+	int				wait;
 
-	if ((inf->ds_fd = open(inf->ds_name, O_CREAT | O_TRUNC | O_RDWR, 0700)) == -1)
+	if ((ds = open(inf->ds_name, O_CREAT | O_TRUNC | O_RDWR, 0700)) == -1)
 		return (DS_ERR_OPEN);
+	inf->ds_fd = ds;
 	lseek(inf->fd, 4, SEEK_SET);
 	inf->cursor = 4;
 	i = 0;
+	wait = 0;
 	while (read(inf->fd, &buff, 1) > 0)
 	{
+		printf("buff int loop = %x\n", buff);
 		if (inf->cursor < 2191)
 			dswrite(inf, buff);
 		if (inf->cursor >= 2191)
 		{
-			if (inf->decode == OPC)
-				i = 0;
-			if (inf->decode == PARAM)
+			if (inf->decode == END)
 			{
-				if (inf->type[i] == TYPE_DIR)
-				{
-					if (inf->dir_size == 4)
-						inf->cursor = inf->cursor + 3;
-					else
-						inf->cursor = inf->cursor + 1;
-					lseek(inf->fd, inf->cursor, SEEK_SET);
-				}
-				if (inf->type[i] == TYPE_IND)
-				{
-					inf->cursor = inf->cursor + 1;
-					lseek(inf->fd, inf->cursor + 1, SEEK_SET);
-				}
-				dswrite_instructions(inf, buff);
-				i++;
+				ft_dprintf(inf->ds_fd, "\"");
+				inf->decode = OPC;
 			}
+			dswrite_instructions(inf, buff);
 		}
 		inf->cursor = inf->cursor + 1;
 	}

@@ -46,10 +46,11 @@ int		set_id(t_token *head)
 	if (head && head->type != OP_CODE)
 		return (-1);
 	if (head)
-		return (head->val - 1);
+		return (head->val);
 	/*while (g_op_tab[i].reg_name != 0)
 	{
-		if (!ft_strcmp(head->val, g_op_tab[i].reg_name))
+		if (!ft_strcmp(head->lab, g_op_tab[i].reg_name))
+			printf("Returning [%d]\n", i);
 			return (i);
 		i++;
 	}*/

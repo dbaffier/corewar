@@ -21,28 +21,34 @@ void		dswrite_opc(t_info *inf, char buff)
 	unsigned int	i;
 	
 	i = (unsigned int)buff;
-	write(inf->ds_fd, tab[i], ft_strlen(tab[i]));
-	if ((i >= 1 && i <= 8) || i == 13 || i == 16)
-		inf->dir_size = 4;
-	else
-		inf->dir_size = 2;
+	if (i >= 1 && i <= 16)
+	{
+		ft_dprintf(inf->ds_fd, "%s\t", tab[i]);
+		if ((i >= 1 && i <= 8) || i == 13 || i == 16)
+			inf->dir_size = 4;
+		else
+			inf->dir_size = 2;
+	}
 }
 
 static void	check_type(t_info *inf, int j)
 {
-	if (inf->curr[0] == 0 && inf->curr[1] == 1)
+	if (inf->curr[0] == 1 && inf->curr[1] == 0)
 	{
 		inf->type[j] = TYPE_REG;
+		inf->size[j] = 1;
 		inf->n_param = inf->n_param + 1;
 	}
-	else if (inf->curr[0] == 1 && inf->curr[1] == 0)
+	else if (inf->curr[0] == 0 && inf->curr[1] == 1)
 	{
 		inf->type[j] = TYPE_DIR;
+		inf->size[j] = inf->dir_size;
 		inf->n_param = inf->n_param + 1;
 	}
-	else if (inf->curr[0] == 1 && inf->curr[1] == 0)
+	else if (inf->curr[0] == 1 && inf->curr[1] == 1)
 	{
 		inf->type[j] = TYPE_IND;
+		inf->size[j] = 2;
 		inf->n_param = inf->n_param + 1;
 	}
 }
@@ -51,18 +57,23 @@ void		decode_types(t_info *inf, unsigned int buff)
 {
 	int i;
 	int j;
+	int stop;
 
 	i = 0;
-	j = 0;
-	while (buff > 0)
+	j = 2;
+	stop = 7;
+	buff >>= 2;
+	while (buff > 0 && stop-- > 0)
 	{
-		if (i == 2)
+		if (i > 1)
 		{
 			check_type(inf, j);
 			inf->curr[0] = 0;
 			inf->curr[1] = 0;
 			i = 0;
-			j++;
+			j--;
+			if (j < 0)
+				j = 2;
 		}
 		inf->curr[i] = 1 & buff;
 		i++;
@@ -70,29 +81,62 @@ void		decode_types(t_info *inf, unsigned int buff)
 	}
 }
 
-void		dswrite_param(t_info *inf, char buff)
+static void		reset_tab(t_info *inf)
 {
-	static int i = -1;
+	inf->type[0] = 0;
+	inf->type[1] = 0;
+	inf->type[2] = 0;
+	inf->size[0] = 0;
+	inf->size[1] = 0;
+	inf->size[2] = 0;
+	inf->n_param = 0;
+	inf->i = 0;
+	inf->wait = 0;
+	inf->bin = 0;
+}
 
-	i++;
-	if (inf->type[i] == TYPE_REG)
+void		dswrite_param(t_info *inf, unsigned char buff)
+{
+	if (inf->size[inf->i] > 1)
 	{
-		write(inf->ds_fd, "r", 1);
-		write(inf->ds_fd, &buff, 1);
+		if (inf->bin == 0x0)
+		{
+			inf->bin = (int)buff;
+			printf("first bin = %x\n", inf->bin);
+			printf("first buff = %x\n", buff);
+		}
+		else
+		{
+			inf->bin <<= 8;
+			inf->bin |= (int)buff;
+		}
+		if (inf->wait == inf->size[inf->i])
+		{
+			printf("bin = %x\n", inf->bin);
+			printf("buff = %x\n", buff);
+			printf("inf->wait == %d -- size = %d\n", inf->wait, inf->size[inf->i]);
+			sleep(3);
+			if (inf->type[inf->i] == TYPE_DIR)
+				ft_dprintf(inf->ds_fd, "%%%d", inf->bin);
+			if (inf->type[inf->i] == TYPE_IND)
+				ft_dprintf(inf->ds_fd, "%d", inf->bin);
+			if (inf->i < inf->n_param - 1)
+				ft_dprintf(inf->ds_fd, ", ");
+			inf->i = inf->i + 1;
+			inf->wait = 0;
+			inf->bin = 0;
+		}
+		inf->wait = inf->wait + 1;
 	}
-	if (inf->type[i] == TYPE_DIR)
-	{
-		write(inf->ds_fd, "%", 1);
-		write(inf->ds_fd, &buff, 1);
-	}
-	if (inf->type[i] == TYPE_IND)
-		write(inf->ds_fd, &buff, 1);
-	if (i < inf->n_param)
-		write(inf->ds_fd, ", ", 2);
 	else
 	{
-		write(inf->ds_fd, "\n", 1);
+		ft_dprintf(inf->ds_fd, "r%d", buff); 
+		inf->i = inf->i + 1;
+	}
+	if (inf->i == inf->n_param)
+	{
+		ft_dprintf(inf->ds_fd, "\n");
+		reset_tab(inf);
 		inf->decode = OPC;
-		i = -1;
-	}	
+	}
 }

@@ -29,6 +29,7 @@
 # define OPC				1
 # define E_BYTE				2
 # define PARAM				3
+# define WAIT				4
 
 # define TYPE_REG			1
 # define TYPE_DIR			2
@@ -42,7 +43,12 @@ typedef struct		s_info
 	int				decode;
 	int				n_param;
 	int				dir_size;
+	int				i;
+	int				wait;
+	int				bin;
 	int				type[3];
+	int				param[3];
+	int				size[3];
 	int				curr[2];
 	char			*ds_name;
 }					t_info;			
@@ -53,7 +59,7 @@ int			deasm_file(t_info *inf);
 ** dswrite_instructions.c
 */
 void		dswrite_opc(t_info *inf, char buff);
-void		dswrite_param(t_info *inf, char buff);
+void		dswrite_param(t_info *inf, unsigned char buff);
 void		decode_types(t_info *inf, unsigned int buff);
 
 #endif
