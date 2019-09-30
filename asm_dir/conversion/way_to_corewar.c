@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 22:36:59 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/28 01:13:08 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/30 03:03:21 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,14 @@ int		way_to_corewar(t_data *data, t_aolist *ao)
 	while (ao)
 	{
 		tok = ao->tok;
-		if (tok->type == LABEL)
+		if (tok && tok->type & LABEL)
 			tok = tok->next;
-		write_opc(data, tok->val);
-		write_type(data, ao->arg);
-		write_param(data, tok->next, ao->arg_size);
+		if (tok)
+		{
+			write_opc(data, tok->val);
+			write_type(data, ao->arg);
+			write_param(data, tok->next, ao->arg_size);
+		}
 		ao = ao->next;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:00:21 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/28 20:40:10 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/30 01:47:40 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static int		tokenize(t_token **head, char *line, size_t *i)
 	size_t	len;
 
 	len = 0;
+	
 	if (line[*i] == '.')
 		return (create_dot(head, line, i));
 	if (is_label(line, *i))
@@ -44,8 +45,10 @@ int		tok_create(t_aolist *head, char **line)
 	while (*line[i] == ' ' || *line[i] == '\t')
 		i++;
 	if (ft_strchr(*line, COMMENT_CHAR))
+	{
 		if (asm_comment(head, line) > 0)
 			return (ERR_MALLOC);
+	}
 	dup = *line;
 	while (dup[i])
 	{

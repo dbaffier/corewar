@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 19:57:32 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/26 23:46:58 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/30 03:29:44 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static t_aolist	*brother_link(t_aolist *head, t_token *curr)
 	while (head)
 	{
 		ptr = head->tok;
-		if (ptr->type == LABEL)
+		if (ptr && ptr->type & LABEL)
 		{
 			if (!ft_strcmp(curr->lab, ptr->lab))
 				return (head);
@@ -33,7 +33,7 @@ static t_aolist	*brother_link(t_aolist *head, t_token *curr)
 
 static int	lab_val(t_aolist *curr, t_aolist *next)
 {
-	return (next->mem_addr - curr->mem_addr);
+	return (curr->mem_addr - next->mem_addr);
 }
 
 int			asm_lexical_label(char *lab)
@@ -64,7 +64,7 @@ int			asm_syntax_labelled(t_env *e, t_aolist *head)
 {
 	while (head)
 	{
-		if (head->tok->type == LABEL)
+		if (head->tok && head->tok->type & LABEL)
 		{
 			if (head->tok->lab && !head->tok->lab[0])
 				return (syntax_error(e, E_LEXICAL, head->tok->lab, head->line));

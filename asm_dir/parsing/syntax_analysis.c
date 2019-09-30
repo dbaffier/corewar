@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 19:46:48 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/28 20:30:29 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/30 03:13:28 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,16 @@ static size_t	size_full(t_aolist *aolist)
 	size = 0;
 	while (aolist)
 	{
-		if (aolist->tok->type == DOT)
-			aolist = aolist->next;
+		if ((aolist->tok && aolist->tok->type & DOT)
+				|| (aolist->tok && aolist->tok->type & LABEL 
+				&& aolist->tok->next == NULL))
+			;
 		else
 		{
 			aolist->mem_addr = size;
 			size += aolist->size;
-			aolist = aolist->next;
 		}
+		aolist = aolist->next;
 	}
 	return (size);
 }
@@ -39,15 +41,19 @@ int		syntax_analysis(t_env *e, t_aolist *aolist)
 	int			ret;
 
 	ret = 0;
+	while (aolist && aolist->tok == NULL)
+		aolist = aolist->next;
 	e->size = size_full(aolist);
 	if ((ret = asm_syntax_header(e, aolist)) > 0)
 		return (ret);
 	aolist = aolist->next->next;
 	head = aolist;
+	if (aolist == NULL)
+		return (syntax_error(e, E_OPC, NULL, 0));
 	while (aolist)
 	{
 		curr = aolist->tok;
-		if (curr->type == LABEL)
+		if (curr && curr->type & LABEL)
 		{
 			curr = curr->next;
 			asm_syntax_labelled(e, head);

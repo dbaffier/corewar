@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:28:27 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/28 01:26:08 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/09/28 20:45:33 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char		*add_extention(char *basename, int pos)
 	int			i;
 
 	i = 0;
-	while (i <= 3)
+	while (i < 4)
 	{
 		basename[pos] = COR_EXT[i];
 		i++;
@@ -49,11 +49,11 @@ static char		*basename(char *file)
 	int			i;
 	char		*b_name;
 
-	len = basename_len(file);
+	len = basename_len(file) + 1;
 	i = 0;
-	if (!(b_name = (char *)malloc(sizeof(char) * len + 4 + 1)))
+	if (!(b_name = (char *)ft_memalloc(sizeof(char) * len + 4 + 1)))
 		return (NULL);
-	while (file && i < len + 1)
+	while (file && i < len)
 	{
 		b_name[i] = file[i];
 		i++;
@@ -61,18 +61,34 @@ static char		*basename(char *file)
 	return (add_extention(b_name, i));
 }
 
+static char		*get_fname(char *file)
+{
+	int occ;
+
+	if ((occ = ft_count_occ(file, '/')) > 0)
+	{
+		while (occ)
+		{
+			if (*file == '/')
+				occ--;
+			file++;
+		}
+		return (file);
+	}
+	return (file);
+}
+
 int				create_corfile(t_data *data, char *file)
 {
 	char		*b_name;
 	int			fd;
 
-	while (*file && *file != '/')
-		file = file + 1;
-	file = file + 1;
+	file = get_fname(file);
 	if ((b_name = basename(file)) == NULL)
 		return (ERR_MALLOC);
 	data->file_name = b_name;
 	if ((fd = open(b_name, O_CREAT | O_TRUNC | O_RDWR, 0700)) < 0)
 		return (ERR_OPEN);
+	free(b_name);
 	return (fd);
 }

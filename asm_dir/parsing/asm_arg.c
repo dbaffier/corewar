@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 21:40:14 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/28 21:01:14 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/30 01:56:18 by dbaffier         ###   ########.fr       */
 /*                                                                            */ /* ************************************************************************** */
 
 #include "libft.h"
@@ -15,34 +15,34 @@
 
 static void		parse_splited(t_token *ptr, char *str)
 {
-	ptr->err = str;
+	ptr->err = ft_strdup(str);
 	if (str[0] == 'r')
 	{
 		ptr->lab = ft_strdup(str + 1);
-		ptr->type = REGISTER;
+		ptr->type |= REGISTER;
 	}
 	else if (str[0] == DIRECT_CHAR)
 	{
 		if (str[1] == LABEL_CHAR)
 		{
 			ptr->lab = ft_strdup(str + 2);
-			ptr->type = DIRECT | LAB;
+			ptr->type |= DIRECT | LAB;
 		}
 		else
 		{
 			ptr->lab = ft_strdup(str + 1);
-			ptr->type = DIRECT;
+			ptr->type |= DIRECT;
 		}
 	}
 	else if (str[0] == LABEL_CHAR)
 	{
 		ptr->lab = ft_strdup(str + 1);
-		ptr->type = UNDIRECT | LAB;
+		ptr->type |= UNDIRECT | LAB;
 	}
 	else
 	{
 		ptr->lab = ft_strdup(str);
-		ptr->type = UNDIRECT;
+		ptr->type |= UNDIRECT;
 	}
 }
 
@@ -76,6 +76,8 @@ static int		evaluate_sc(char *line, size_t i)
 			return (1);
 		i++;
 	}
+	if (line[i - 1] == ',')
+		return (1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 19:43:41 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/28 20:18:15 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/28 23:22:49 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static void		free_token(t_token *tok)
 	{
 		if (tok->lab)
 			free(tok->lab);
+		if (tok->err)
+			free(tok->err);
 		free_token(tok->next);
 		free(tok);
 	}

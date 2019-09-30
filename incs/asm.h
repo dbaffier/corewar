@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:19:41 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/28 20:45:36 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/30 04:06:00 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,15 @@
 
 # define ERR_NAME_H			1
 # define ERR_NAME_LEN		2
-# define ERR_COMMENT_H		3
-# define ERR_COMMENT_LEN	4
-# define E_LEXICAL			6
-# define E_SYNTAX			7
-# define E_PARAM			8
-# define E_LAB				9
+# define ERR_NAMENOTF		3
+# define ERR_COMMENT_H		4
+# define ERR_COMMENT_LEN	5
+# define ERR_COMNOTF		6
+# define E_LEXICAL			7
+# define E_SYNTAX			8
+# define E_PARAM			9
+# define E_LAB				10
+# define E_OPC				11
 
 # define ERR_LEXICAL		"lexical error on `%s` at line [%d]\n"
 # define ERR_SYNTAX			"syntax error on `%s` at line [%d]\n"	
@@ -55,20 +58,20 @@
 
 # define ERR_STR_NAME		"lexical error on name ->`.name`"
 # define ERR_STR_NAME_LEN	"name too long ( < 128 )"
+# define ERR_STR_NAMENOTF	"invalid string in name box"
+# define ERR_STR_COMNOTF	"invalid string in comment box"
 # define ERR_STR_COMMENT	"lexical error on comment -> `.comment`"
 # define ERR_STR_COMMENT_LEN "comment too long ( < 2048 )"
 
-enum {
-	LABEL = 1,
-	OP_CODE,
-	PARAM,
-	DOT,
-	DOT_ARG,
-	REGISTER,
-	DIRECT,
-	UNDIRECT,
-	LAB,
-};
+# define LABEL (1 << 0)
+# define OP_CODE (1 << 1)
+# define PARAM (1 << 2)
+# define DOT (1 << 3)
+# define DOT_ARG (1 << 4)
+# define REGISTER (1 << 5)
+# define DIRECT (1 << 6)
+# define UNDIRECT (1 << 7)
+# define LAB (1 << 8)
 
 typedef struct		s_token
 {
@@ -87,7 +90,7 @@ typedef struct		s_aolist
 	int					id;
 	int					line;
 	size_t				size;
-	size_t				mem_addr;
+	int					mem_addr;
 	int					arg[3];
 	int					arg_size[3];
 	t_token				*tok;

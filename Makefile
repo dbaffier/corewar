@@ -6,7 +6,7 @@
 #    By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/26 23:23:36 by dbaffier          #+#    #+#              #
-#    Updated: 2019/09/28 19:48:13 by dbaffier         ###   ########.fr        #
+#    Updated: 2019/09/29 01:29:04 by dbaffier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,7 +95,7 @@ $(LIBFT_LIB):
 	@make -C $(LIBFT_PATH)
 
 $(NAME): $(OBJS)
-	$(CC) $^ -o $@ $(LIBFT_LINK)
+	$(CC) -fsanitize=address $^ -o $@ $(LIBFT_LINK)
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)$(CONV_DIR)%.c
 $(OBJS_DIR)%.o: $(SRCS_DIR)$(CONV_DIR)%.c $(DEPS_DIR)%.d

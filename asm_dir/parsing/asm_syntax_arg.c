@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 18:36:48 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/28 20:09:04 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/30 03:29:43 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	direct_check(t_env *e, t_aolist *head, t_token *curr, int pos)
 		return (syntax_error(e, E_PARAM, curr->err, head->line));
 	if (!(g_op_tab[head->id].types[pos] & T_DIR))
 		return (syntax_error(e, E_PARAM, curr->err, head->line));
-	if (curr->type & T_LAB)
+	if (curr->type & LAB)
 		asm_syntax_label(e, head, curr);
 	else
 	{
@@ -70,7 +70,7 @@ static int	indirect_check(t_env *e, t_aolist *head, t_token *curr, int pos)
 		return (syntax_error(e, E_PARAM, curr->err, head->line));
 	if (!(g_op_tab[head->id].types[pos] & T_IND))
 		return (syntax_error(e, E_PARAM, curr->err, head->line));
-	if (curr->type & T_LAB)
+	if (curr->type & LAB)
 		asm_syntax_label(e, head, curr);
 	else
 	{

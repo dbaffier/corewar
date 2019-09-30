@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 17:49:43 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/28 20:50:03 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/29 23:31:25 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ size_t		chunk_size(t_token *tok, int id)
 	size = 1;
 	if (!tok || !tok->next)
 		return (1);
-	if (tok->type == LABEL)
+	if (tok->type & LABEL)
 		tok = tok->next;
 	tok = tok->next;
 	if (g_op_tab[id].encoding_byte)

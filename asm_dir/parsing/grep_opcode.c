@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 23:25:39 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/28 20:56:56 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/28 23:44:11 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		grep_opcode(t_token **head, char *line, size_t *i)
 	if (!(new->lab = dup_opcode(line, i)))
 		return (ERR_MALLOC);
 	new->val = set_opcode(new->lab);
-	new->type = OP_CODE;
+	new->type |= OP_CODE;
 	if (!(new->next = ft_memalloc(sizeof(t_token))))
 		return (ERR_MALLOC);
 	if (grep_arg(new->next, line, i) > 0)
