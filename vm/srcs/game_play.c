@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 23:05:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 02:25:51 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 02:31:35 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 			proc->instruction = *((unsigned char *)e->arena + *(REG_CAST *)proc->pc);
 			if (proc->instruction > 0 && (proc->instruction < (unsigned char)(sizeof(op_tab) / sizeof(op_tab[0]))))
 			{
-				if (e->ncu.infoWin)
-					wprintw(e->ncu.infoWin, "Player %d waiting %d cycle\n", proc->id, op_tab[proc->instruction - 1].cycle);
+				// if (e->ncu.infoWin)
+				// 	wprintw(e->ncu.infoWin, "Player %d waiting %d cycle\n", proc->id, op_tab[proc->instruction - 1].cycle);
 				return (op_tab[proc->instruction - 1].cycle - 1);
 			}
 			else

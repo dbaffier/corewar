@@ -77,7 +77,7 @@ void	op_lld(t_process *proc, t_env *e)
 	i = 0;
 	get_params_len(params, 2, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 13);
 	get_params_data(params, 2, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
-	*(REG_CAST *)proc->reg[params[1].value] = *(REG_CAST *)proc->pc + params[0].value;
+	*(REG_CAST *)proc->reg[params[1].value] = *(REG_CAST *)proc->pc + (params[0].value % MEM_SIZE);
 	proc->carry = params[1].value == 0 ? 1 : 0;
 	len = full_len_size(op_tab[12].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
@@ -99,7 +99,7 @@ void	op_lldi(t_process *proc, t_env *e)
 	i = 0;
 	get_params_len(params, 3, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 14);
 	get_params_data(params, 3, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
-	addr = (params[0].value + params[1].value);
+	addr = (params[0].value + params[1].value) % MEM_SIZE;
 	*(REG_CAST *)proc->reg[params[2].value] = ((unsigned char *)e->arena)[*(REG_CAST *)proc->pc + addr];
 	proc->carry = addr == 0 ? 1 : 0;
 	len = full_len_size(op_tab[13].reg_nb, params);
