@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_play.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 23:05:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 23:41:00 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/30 23:43:02 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static size_t		check_players_alive(t_env *e)
 		if (!proc->is_alive)
 		{
 			proc = remove_player(proc, &e->proc);
-			update_affChampion(e, proc);
+			update_aff_champion(e, proc);
 			continue ;
 		}
 		alive += proc->is_alive;

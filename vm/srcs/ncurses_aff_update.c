@@ -6,13 +6,13 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 21:30:31 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 21:44:01 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 23:19:51 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-void			update_affVMStatus(t_env *e)
+void			update_aff_vmstatus(t_env *e)
 {
 	char		*status[2];
 
@@ -35,12 +35,12 @@ void			update_affVMStatus(t_env *e)
 	}
 }
 
-void			update_affVMInfo(t_env *e, size_t cycle)
+void			update_aff_vminfo(t_env *e, size_t cycle)
 {
 	wattron(e->ncu.vm_win, A_BOLD);
 	wattron(e->ncu.vm_win, COLOR_PAIR(COREWAR_TEXT_COLOR));
 	wclrtoeol(e->ncu.vm_win);
-	update_affVMStatus(e);
+	update_aff_vmstatus(e);
 	wclrtoeol(e->ncu.vm_win);
 	wprintw(e->ncu.vm_win, "Cycle: %d\n\n", cycle);
 	wclrtoeol(e->ncu.vm_win);
@@ -50,7 +50,7 @@ void			update_affVMInfo(t_env *e, size_t cycle)
 	wrefresh(e->ncu.vm_win);
 }
 
-void			update_affChampion(t_env *e, t_process *proc)
+void			update_aff_champion(t_env *e, t_process *proc)
 {
 	(void)proc;
 	(void)e;

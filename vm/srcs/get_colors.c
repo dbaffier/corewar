@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 21:10:29 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 21:41:57 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 23:33:30 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int				get_colors(t_env *e)
 	while (proc)
 	{
 		fill_colors(e->colors + *(REG_CAST *)proc->pc, proc->color[0],
-			proc->data_size);
+		proc->data_size);
 		proc = proc->next;
 	}
 	return (IS_OK);
