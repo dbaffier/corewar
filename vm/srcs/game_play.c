@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 23:05:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 00:03:56 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 02:25:51 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,10 @@ static int			check_players_alive(t_env *e)
 			proc = remove_player(proc, &e->proc);
 			ncurses_affChampion(e);
 			e->nb_players--;
+			continue ;
 		}
-		else
-			proc = proc->next;
+		proc->is_alive = 0;
+		proc = proc->next;
 	}
 	check_live_total(&e->live, &e->cycle_to_die);
 	check_max_checks(&e->checks, &e->cycle_to_die);
@@ -74,8 +75,7 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 			{
 				if (e->ncu.infoWin)
 					wprintw(e->ncu.infoWin, "Player %d waiting %d cycle\n", proc->id, op_tab[proc->instruction - 1].cycle);
-				proc->instruction_wait += op_tab[proc->instruction - 1].cycle;
-				return (1);
+				return (op_tab[proc->instruction - 1].cycle - 1);
 			}
 			else
 				move_process_pc(proc, 1, e);

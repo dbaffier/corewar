@@ -68,6 +68,7 @@ typedef struct			s_live
 
 typedef struct			s_process
 {
+	int					pos;
 	int					id;
 	char				*file_name;
 	off_t				file_size;

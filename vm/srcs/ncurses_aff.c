@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:47:32 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 00:03:27 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 02:27:18 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,14 @@ void			ncurses_affChampion(t_env *e)
 	wclear(e->ncu.champWin);
 	while (proc)
 	{
-		play = (t_header *)proc->file;
-		wattron(e->ncu.champWin, COLOR_PAIR(proc->color[1]));
-		wprintw(e->ncu.champWin, "Player %d\n", proc->id);
-		wattroff(e->ncu.champWin, COLOR_PAIR(proc->color[1]));
-		wprintw(e->ncu.champWin, "%s (%s)\n\n\n", play->prog_name, play->comment);
-		y += 3;
+		if ((play = (t_header *)proc->file))
+		{
+			wattron(e->ncu.champWin, COLOR_PAIR(proc->color[1]));
+			wprintw(e->ncu.champWin, "Player %d\n", proc->id);
+			wattroff(e->ncu.champWin, COLOR_PAIR(proc->color[1]));
+			wprintw(e->ncu.champWin, "%s (%s)\n\n\n", play->prog_name, play->comment);
+			y += 3;
+		}
 		proc = proc->prev;
 	}
 	wrefresh(e->ncu.champWin);

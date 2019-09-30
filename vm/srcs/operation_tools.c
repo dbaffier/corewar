@@ -20,10 +20,11 @@ t_process	*new_proc(t_process *proc, int value, int flag)
 
 	new = ft_memalloc(sizeof(t_process));
 	ft_memcpy(new, proc, sizeof(t_process));
+	new->file = NULL;
 	if (!flag)
 		*(REG_CAST *)new->pc = (*(REG_CAST *)proc->pc + value) % IDX_MOD;
 	else
-		*(REG_CAST *)new->pc = (*(REG_CAST *)proc->pc + value);
+		*(REG_CAST *)new->pc = (*(REG_CAST *)proc->pc + value) % MEM_SIZE;
 	new->prev = proc;
 	if ((new->next = proc->next) != NULL)
 		new->next->prev = new;
