@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 21:48:51 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/29 21:48:51 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 21:41:13 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,20 @@ static void		print_win_str(t_ncurse *ncu, t_live *live)
 	if (live->last_id)
 		len += ft_strlen(live->last_name);
 	x = (len > ncu->winx) ? 0 : ncu->winx / 2 - len / 2;
-	wattron(ncu->infoWin, COLOR_PAIR(COREWAR_WINNER_COLOR));
-	mvwprintw(ncu->infoWin, ncu->winy - 2, x, str, live->last_id, live->last_name);
-	wattroff(ncu->infoWin, COLOR_PAIR(COREWAR_WINNER_COLOR));
-	mvwprintw(ncu->infoWin, ncu->winy - 1, 0, quit);
+	wattron(ncu->info_win, COLOR_PAIR(COREWAR_WINNER_COLOR));
+	mvwprintw(ncu->info_win, ncu->winy - 2, x, str, live->last_id, live->last_name);
+	wattroff(ncu->info_win, COLOR_PAIR(COREWAR_WINNER_COLOR));
+	mvwprintw(ncu->info_win, ncu->winy - 1, 0, quit);
 }
 
 static void		and_the_winner_is(t_ncurse *ncu, t_live *live) // MC HAMMER
 {
-	if (ncu->infoWin)
+	if (ncu->info_win)
 	{
 		print_win_str(ncu, live);
-		wrefresh(ncu->infoWin);
-		nodelay(ncu->infoWin, FALSE);
-		while (wgetch(ncu->infoWin) != 'q')
+		wrefresh(ncu->info_win);
+		nodelay(ncu->info_win, FALSE);
+		while (wgetch(ncu->info_win) != 'q')
 			print_win_str(ncu, live);
 		return ;
 	}
@@ -63,10 +63,10 @@ void			launch_game(t_env *e)
 	ncurses_affAll(e);
 	while (1)
 	{
-		if (e->ncu.infoWin)
+		if (e->ncu.info_win)
 		{
 			update_affVMInfo(e, nb_cycles);
-			if ((ch = ncurses_wgetch(&e->speed, &e->pause, e->ncu.infoWin)) == ERR)
+			if ((ch = ncurses_wgetch(&e->speed, &e->pause, e->ncu.info_win)) == ERR)
 				return ;
 			else if (ch == 0)
 				continue ;

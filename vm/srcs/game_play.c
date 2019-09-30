@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 23:05:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 03:31:12 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 21:41:46 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 			proc->instruction = *((unsigned char *)e->arena + *(REG_CAST *)proc->pc);
 			if (proc->instruction > 0 && (proc->instruction < (unsigned char)(sizeof(op_tab) / sizeof(op_tab[0]))))
 			{
-				if (e->ncu.infoWin)
-					wprintw(e->ncu.infoWin, "Player %d waiting %d cycle\n", proc->id, op_tab[proc->instruction - 1].cycle);
+				if (e->ncu.info_win)
+					wprintw(e->ncu.info_win, "Player %d waiting %d cycle\n", proc->id, op_tab[proc->instruction - 1].cycle);
 				return (op_tab[proc->instruction - 1].cycle - 1);
 			}
 			else
@@ -91,7 +91,7 @@ int				play_game(size_t nb_cycles, t_env *e)
 
 	if (e->dump_cycle > -1 && (size_t)e->dump_cycle == nb_cycles)
 	{
-		if (!e->ncu.mainWin)
+		if (!e->ncu.main_win)
 			dump_map(e->arena, MEM_SIZE);
 		return (-1);
 	}

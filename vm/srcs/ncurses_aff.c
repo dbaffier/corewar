@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:47:32 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 20:01:53 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 21:43:38 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,24 @@ static void		ncurses_affArena(t_env *e)
 	t_process	*proc;
 
 	i = 0;
-	if (!e->ncu.arenaWin || !e->arena || !e->colors)
+	if (!e->ncu.arena_win || !e->arena || !e->colors)
 		return ;
 	while (i < MEM_SIZE)
 	{
-		wattron(e->ncu.arenaWin, COLOR_PAIR(e->colors[i]));
+		wattron(e->ncu.arena_win, COLOR_PAIR(e->colors[i]));
 		if ((proc = e->proc))
 			while (proc)
 			{
 				if (*(REG_CAST *)proc->pc == i)
-					wattron(e->ncu.arenaWin, COLOR_PAIR(proc->color[1]));
+					wattron(e->ncu.arena_win, COLOR_PAIR(proc->color[1]));
 				proc = proc->next;
 			}
-		wprintw(e->ncu.arenaWin, "%02x", *((unsigned char *)e->arena + i));
-		wattron(e->ncu.arenaWin, COLOR_PAIR(COREWAR_DFLT_COLOR));
+		wprintw(e->ncu.arena_win, "%02x", *((unsigned char *)e->arena + i));
+		wattron(e->ncu.arena_win, COLOR_PAIR(COREWAR_DFLT_COLOR));
 		if (++i % ARENA_VALUE_PER_LINE != 0)
-			wprintw(e->ncu.arenaWin, " ");
+			wprintw(e->ncu.arena_win, " ");
 	}
-	wrefresh(e->ncu.arenaWin);
+	wrefresh(e->ncu.arena_win);
 }
 
 /*
@@ -62,40 +62,40 @@ static void		ncurses_affChampion(t_env *e)
 	t_header	*play;
 	int			y;
 
-	if (!e->ncu.champWin)
+	if (!e->ncu.champ_win)
 		return ;
-	wclear(e->ncu.champWin);
+	wclear(e->ncu.champ_win);
 	proc = e->proc;
 	y = (e->ncu.winy / 2) + (((e->nb_players * 3)) / 2) - 2;
 	while (proc)
 	{
 		if ((play = (t_header *)proc->file))
 		{
-			wattron(e->ncu.champWin, COLOR_PAIR(proc->color[1]));
-			mvwprintw(e->ncu.champWin, y, 0, "Player %d", proc->id);
-			wattroff(e->ncu.champWin, COLOR_PAIR(proc->color[1]));
-			mvwprintw(e->ncu.champWin, y + 1, 0, "%s (%s)",
+			wattron(e->ncu.champ_win, COLOR_PAIR(proc->color[1]));
+			mvwprintw(e->ncu.champ_win, y, 0, "Player %d", proc->id);
+			wattroff(e->ncu.champ_win, COLOR_PAIR(proc->color[1]));
+			mvwprintw(e->ncu.champ_win, y + 1, 0, "%s (%s)",
 				play->prog_name, play->comment);
 			y -= 3;
 		}
 		proc = proc->next;
 	}
-	wrefresh(e->ncu.champWin);
+	wrefresh(e->ncu.champ_win);
 }
 
 static void		ncurses_affVMInfo(t_env *e)
 {
-	wattron(e->ncu.vmWin, A_BOLD);
-	wattron(e->ncu.vmWin, COLOR_PAIR(COREWAR_TEXT_COLOR));
+	wattron(e->ncu.vm_win, A_BOLD);
+	wattron(e->ncu.vm_win, COLOR_PAIR(COREWAR_TEXT_COLOR));
 	update_affVMStatus(e);
-	wprintw(e->ncu.vmWin, "Cycle: 0\n\n");
-	wprintw(e->ncu.vmWin, "CYCLE_TO_DIE: %d\n\n", e->cycle_to_die);
-	wprintw(e->ncu.vmWin, "CYCLE_DELTA: %d\n\n", CYCLE_DELTA);
-	wprintw(e->ncu.vmWin, "NBR_LIVE: %d\n\n", NBR_LIVE);
-	wprintw(e->ncu.vmWin, "MAX_CHECKS: %d", MAX_CHECKS);
-	wattroff(e->ncu.vmWin, COLOR_PAIR(COREWAR_TEXT_COLOR));
-	wattroff(e->ncu.vmWin, A_BOLD);
-	wrefresh(e->ncu.vmWin);
+	wprintw(e->ncu.vm_win, "Cycle: 0\n\n");
+	wprintw(e->ncu.vm_win, "CYCLE_TO_DIE: %d\n\n", e->cycle_to_die);
+	wprintw(e->ncu.vm_win, "CYCLE_DELTA: %d\n\n", CYCLE_DELTA);
+	wprintw(e->ncu.vm_win, "NBR_LIVE: %d\n\n", NBR_LIVE);
+	wprintw(e->ncu.vm_win, "MAX_CHECKS: %d", MAX_CHECKS);
+	wattroff(e->ncu.vm_win, COLOR_PAIR(COREWAR_TEXT_COLOR));
+	wattroff(e->ncu.vm_win, A_BOLD);
+	wrefresh(e->ncu.vm_win);
 }
 
 void			ncurses_affAll(t_env *e)

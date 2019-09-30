@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   op.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/09/23 21:12:05 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/30 21:39:19 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct					s_op
 {
 	char						*reg_name;
 	unsigned short				reg_nb;
-	char 						types[3];
+	char						types[3];
 	unsigned char				opcode;
 	unsigned int				cycle;
 	char						*complete_name;

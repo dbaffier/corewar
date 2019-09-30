@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:28:36 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 20:07:35 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 21:47:19 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ int				ncurses_init(t_env *e)
 	if (e->ncu.active == FALSE)
 		return (IS_OK);
 	signal(SIGWINCH, ncurses_resizeWindow);
-	if ((e->ncu.mainWin = initscr()) == NULL)
+	if ((e->ncu.main_win = initscr()) == NULL)
 		return (ERR_NCURSE_MAINWIN);
 	noecho();
 	cbreak();
-	keypad(e->ncu.mainWin, TRUE);
+	keypad(e->ncu.main_win, TRUE);
 	curs_set(0);
 	init_colors(e);
 	if (COLS < ARENA_LINE_LEN || LINES < ARENA_COL_LEN)
@@ -90,18 +90,18 @@ int				ncurses_init(t_env *e)
 
 void			ncurses_end(t_env *e)
 {
-	if (e->ncu.arenaWin)
-		delwin(e->ncu.arenaWin);
-	if (e->ncu.arenaWinBox)
-		delwin(e->ncu.arenaWinBox);
-	if (e->ncu.champWin)
-		delwin(e->ncu.champWin);
-	if (e->ncu.vmWin)
-		delwin(e->ncu.vmWin);
-	if (e->ncu.infoWin)
-		delwin(e->ncu.infoWin);
-	if (e->ncu.infoWinBox)
-		delwin(e->ncu.infoWinBox);
+	if (e->ncu.arena_win)
+		delwin(e->ncu.arena_win);
+	if (e->ncu.arena_winbox)
+		delwin(e->ncu.arena_winbox);
+	if (e->ncu.champ_win)
+		delwin(e->ncu.champ_win);
+	if (e->ncu.vm_win)
+		delwin(e->ncu.vm_win);
+	if (e->ncu.info_win)
+		delwin(e->ncu.info_win);
+	if (e->ncu.info_winbox)
+		delwin(e->ncu.info_winbox);
 	endwin();
 	ft_memset(&e->ncu, 0, sizeof(e->ncu));
 }

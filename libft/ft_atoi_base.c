@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 20:11:33 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/27 17:28:46 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/30 21:37:55 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int		char_valid(char c, int base)
 {
-	char min[17] = "0123456789abcdef";
-	char maj[17] = "0123456789ABCDEF";
+	char *min;
+	char *maj;
 
+	min = "0123456789abcdef";
+	maj = "0123456789ABCDEF";
 	while (base--)
 		if (min[base] == c || maj[base] == c)
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:40:54 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 19:58:29 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 21:42:40 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ enum
 typedef struct			s_ncurse
 {
 	bool				active;
-	WINDOW				*mainWin;
-	WINDOW				*arenaWinBox;
-	WINDOW				*arenaWin;
-	WINDOW				*infoWinBox;
-	WINDOW				*champWin;
-	WINDOW				*vmWin;
-	WINDOW				*infoWin;
+	WINDOW				*main_win;
+	WINDOW				*arena_winbox;
+	WINDOW				*arena_win;
+	WINDOW				*info_winbox;
+	WINDOW				*champ_win;
+	WINDOW				*vm_win;
+	WINDOW				*info_win;
 	int					winx;
 	int					winy;
 }						t_ncurse;

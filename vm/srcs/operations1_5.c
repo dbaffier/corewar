@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operations.c                                       :+:      :+:    :+:   */
+/*   operations1_5.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/27 00:34:48 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/30 21:50:56 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	op_live(t_process *proc, t_env *e)
 {
 	t_param		params[3];
 	t_process	*tail;
-	int			len;
+	int			len; // <- utile ?
 	int			i;
 
 	i = 0;
@@ -45,14 +45,14 @@ void	op_live(t_process *proc, t_env *e)
 		}
 		tail = tail->next;
 	}
-	if (e->ncu.infoWin)
-		wprintw(e->ncu.infoWin, "%s: un processus dit que le joueur %d(%s) est en vie\n",
-			e->progname, params[0].value, (tail) ? ((t_header *)tail->file)->prog_name : "?");
+	if (e->ncu.info_win)
+		wprintw(e->ncu.info_win, "%s: un processus dit que le joueur %d(%s) est en vie\n",
+			e->progname, params[0].value, (tail) ? ((t_header *)tail->file)->prog_name : "");
 	else
 		ft_printf("%s: un processus dit que le joueur %d(%s) est en vie\n",
 			e->progname, params[0].value, (tail) ? ((t_header *)tail->file)->prog_name : "");
 	proc->is_alive++;
-	len = full_len_size(op_tab[0].reg_nb, params);
+	len = full_len_size(op_tab[0].reg_nb, params); // <- utile ?
 	move_process_pc(proc, 5, e);
 }
 
