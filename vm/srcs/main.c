@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:05:10 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/23 02:11:01 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/30 23:37:11 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int				main(int ac, char **av)
 	if (ac < 2 || get_args(av, e) || get_arena(e))
 		return (usage(av[0]));
 	if (ncurses_init(e) || get_colors(e))
-			return (1);
+		return (1);
 	if (e->ncu.active == FALSE)
 		introduce_champ(e->proc);
 	launch_game(e);

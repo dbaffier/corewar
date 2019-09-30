@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   game_play.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 23:05:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 21:41:46 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 23:41:00 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-extern t_op op_tab[17];
+extern struct s_op op_tab[17];
 
 static void			check_live_total(size_t nb_live, int *cycle_to_die)
 {
@@ -55,7 +55,8 @@ static size_t		check_players_alive(t_env *e)
 	return (alive);
 }
 
-static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
+static size_t		player_instruction(t_process *proc, t_env *e,
+	size_t nb_cycles)
 {
 	static void	(*instruction_function[])(t_process *, t_env *) = {
 		NULL, op_live, op_ld, op_st, op_add, op_sub, op_and, op_or, op_xor,
@@ -68,13 +69,11 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 	{
 		if (proc->instruction == 0)
 		{
-			proc->instruction = *((unsigned char *)e->arena + *(REG_CAST *)proc->pc);
-			if (proc->instruction > 0 && (proc->instruction < (unsigned char)(sizeof(op_tab) / sizeof(op_tab[0]))))
-			{
-				if (e->ncu.info_win)
-					wprintw(e->ncu.info_win, "Player %d waiting %d cycle\n", proc->id, op_tab[proc->instruction - 1].cycle);
+			proc->instruction = *((unsigned char *)e->arena +
+				*(REG_CAST *)proc->pc);
+			if (proc->instruction > 0 && (proc->instruction <
+				(unsigned char)(sizeof(op_tab) / sizeof(op_tab[0]))))
 				return (op_tab[proc->instruction - 1].cycle - 1);
-			}
 			else
 				move_process_pc(proc, 1, e);
 		}
@@ -85,7 +84,7 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 	return (1);
 }
 
-int				play_game(size_t nb_cycles, t_env *e)
+int					play_game(size_t nb_cycles, t_env *e)
 {
 	t_process	*proc;
 
@@ -97,7 +96,7 @@ int				play_game(size_t nb_cycles, t_env *e)
 	}
 	if (nb_cycles && nb_cycles % e->cycle_to_die == 0)
 		if (!check_players_alive(e))
-			return (-2) ;
+			return (-2);
 	proc = e->proc;
 	while (proc)
 	{
