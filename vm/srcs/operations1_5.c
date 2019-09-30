@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operations.c                                       :+:      :+:    :+:   */
+/*   operations1_5.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/30 21:44:23 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/30 23:15:02 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-extern t_op op_tab[17];
+extern struct s_op	op_tab[17];
 
 /*
 ** LIVE 0x01
@@ -116,7 +116,7 @@ void	op_add(t_process *proc, t_env *e)
 	get_params_len(params, 3, *((unsigned char *)e->arena +
 		*(REG_CAST *)proc->pc + 1), 4);
 	get_params_data(params, 3, ((unsigned char *)e->arena) +
-		*(REG_CAST *)proc->pc); 
+		*(REG_CAST *)proc->pc);
 	*(REG_CAST *)proc->reg[params[2].value] = params[0].value +
 		params[1].value;
 	proc->carry = params[0].value + params[1].value == 0 ? 1 : 0;

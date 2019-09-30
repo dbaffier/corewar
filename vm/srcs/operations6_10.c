@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations6_10.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmellon <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/30 21:41:23 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/30 23:15:32 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-extern t_op op_tab[17];
+extern struct s_op	op_tab[17];
 
 /*
 ** AND 0x06

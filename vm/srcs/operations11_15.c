@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations11_15.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmellon <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:12:05 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/30 21:42:29 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/30 23:15:18 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-extern t_op op_tab[17];
+extern struct s_op	op_tab[17];
 
 /*
 ** STI 0x0B
