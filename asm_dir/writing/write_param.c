@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 00:59:16 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/29 22:47:51 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/01 00:47:11 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ void		write_param(t_data *data, t_token *tok, int *tab)
 	i = 0;
 	while (tok)
 	{
-		param = tok->val;
+		if (tok->type & LAB)
+			param = tok->bin;
+		else
+			param = tok->val;
 		if (tab[i] != 1)
 		{
 			len = tab[i] == 4 ? 24 : 8;

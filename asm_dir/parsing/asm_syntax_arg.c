@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 18:36:48 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/30 03:29:43 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/01 00:52:26 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	direct_check(t_env *e, t_aolist *head, t_token *curr, int pos)
 			return (syntax_error(e, E_PARAM, curr->err, head->line));
 		curr->val = ft_atoi(curr->lab);
 	}
-	head->arg[pos]  = T_DIR;
+	head->arg[pos] = T_DIR;
 	head->arg_size[pos] = g_op_tab[head->id].direct_size ? 2 : 4;
 	return (0);
 } 
@@ -79,7 +79,7 @@ static int	indirect_check(t_env *e, t_aolist *head, t_token *curr, int pos)
 		curr->val = ft_atoi(curr->lab);
 	}
 	head->arg[pos] = T_IND;
-	head->arg_size[pos] = 4;
+	head->arg_size[pos] = 2;
 	return (0);
 }
 
