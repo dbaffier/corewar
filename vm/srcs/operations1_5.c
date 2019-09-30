@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/30 23:15:02 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/30 23:57:11 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	op_live(t_process *proc, t_env *e)
 	}
 	print_live(e, params, tail);
 	proc->is_alive++;
-	move_process_pc(proc, 6, e);
+	move_process_pc(proc, 5, e);
 }
 
 /*

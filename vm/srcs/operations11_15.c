@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:12:05 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/30 23:15:18 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/10/01 00:04:46 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ extern struct s_op	op_tab[17];
 void	op_sti(t_process *proc, t_env *e)
 {
 	t_param		params[3];
+	unsigned char	*arena;
 	int			addr;
 	int			len;
 	int			i;
@@ -36,8 +37,9 @@ void	op_sti(t_process *proc, t_env *e)
 	get_params_data(params, 3,
 			((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 	addr = (params[1].value + params[2].value) % IDX_MOD;
-	((unsigned char *)e->arena)[*(REG_CAST *)proc->pc + addr] =
-		*(REG_CAST *)proc->reg[params[0].value];
+	arena = &((unsigned char *)e->arena)[(*(REG_CAST *)proc->pc + addr) % MEM_SIZE];
+	*(REG_CAST *)arena = *(REG_CAST *)proc->reg[params[0].value];
+	ncurses_aff_all(e);
 	proc->carry = addr == 0 ? 1 : 0;
 	len = full_len_size(op_tab[10].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
