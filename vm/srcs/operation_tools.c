@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/27 00:34:50 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/30 23:32:23 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_process	*new_proc(t_process *proc, int value, int flag, t_env *e)
 	return (new);
 }
 
-void	get_types(char types, t_param *params_type)
+void		get_types(char types, t_param *params_type)
 {
 	unsigned char	param_len;
 	int				i;
@@ -49,11 +49,11 @@ void	get_types(char types, t_param *params_type)
 	}
 }
 
-void	get_params_len(t_param *params, int nbparam, char types, char opcode)
+void		get_params_len(t_param *params, int nbparam, char types,
+	char opcode)
 {
 	int		i;
 
-	
 	i = 0;
 	if (opcode == 1 || opcode == 9 || opcode == 12 || opcode == 15)
 	{
@@ -66,12 +66,8 @@ void	get_params_len(t_param *params, int nbparam, char types, char opcode)
 		if (params[i].size == 1)
 			params[i].size = 1;
 		else if (params[i].size == 2)
-		{
-			if (opcode == 10 || opcode == 11 || opcode == 14)
-				params[i].size = 2;
-			else
-				params[i].size = 4;
-		}
+			params[i].size = opcode == 10 || opcode == 11 || opcode == 14 ?
+				2 : 4;
 		else if (params[i].size == 3)
 			params[i].size = 2;
 		else
@@ -80,7 +76,7 @@ void	get_params_len(t_param *params, int nbparam, char types, char opcode)
 	}
 }
 
-int		get_value(unsigned char *data, int index, int size)
+int			get_value(unsigned char *data, int index, int size)
 {
 	int		i;
 	char	tab[5];
@@ -93,7 +89,7 @@ int		get_value(unsigned char *data, int index, int size)
 	return (*(int *)tab);
 }
 
-void	get_params_data(t_param *params, int nbparam, unsigned char *data)
+void		get_params_data(t_param *params, int nbparam, unsigned char *data)
 {
 	int		i;
 	int		size;
