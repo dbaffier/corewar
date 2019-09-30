@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 00:23:29 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/30 23:45:57 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/01 00:04:34 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int				deasm_file(t_info *inf)
 	wait = 0;
 	while (read(inf->fd, &buff, 1) > 0)
 	{
-		printf("buff int loop = %x\n", buff);
 		if (inf->cursor < 2191)
 			dswrite(inf, buff);
 		if (inf->cursor >= 2191)
