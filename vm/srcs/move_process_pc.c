@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_process_pc.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 22:54:42 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 01:17:35 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/30 03:58:09 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void			move_process_pc(t_process *proc, int len, t_env *e)
 		y = ((*(REG_CAST *)proc->pc * 3) / ARENA_LINE_LEN) % MEM_SIZE;
 		x = ((*(REG_CAST *)proc->pc * 3) % ARENA_LINE_LEN) % MEM_SIZE;
 		wattron(e->ncu.arenaWin, COLOR_PAIR(e->colors[*(REG_CAST *)proc->pc]));
-		mvwprintw(e->ncu.arenaWin, y, x, "%02X",
+		mvwprintw(e->ncu.arenaWin, y, x, "%02x",
 		*((unsigned char *)e->arena + *(REG_CAST *)proc->pc));
 		wattroff(e->ncu.arenaWin, COLOR_PAIR(e->colors[*(REG_CAST *)proc->pc]));
 	}
@@ -50,7 +50,7 @@ void			move_process_pc(t_process *proc, int len, t_env *e)
 		y = ((*(REG_CAST *)proc->pc * 3) / ARENA_LINE_LEN) % MEM_SIZE;
 		x = ((*(REG_CAST *)proc->pc * 3) % ARENA_LINE_LEN) % MEM_SIZE;
 		wattron(e->ncu.arenaWin, COLOR_PAIR(proc->color[1]));
-		mvwprintw(e->ncu.arenaWin, y, x, "%02X",
+		mvwprintw(e->ncu.arenaWin, y, x, "%02x",
 			*((unsigned char *)e->arena + *(REG_CAST *)proc->pc));
 		wattroff(e->ncu.arenaWin, COLOR_PAIR(proc->color[1]));
 		wrefresh(e->ncu.arenaWin);

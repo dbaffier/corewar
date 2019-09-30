@@ -63,11 +63,12 @@ typedef struct			s_live
 {
 	int					last_id;
 	char				last_name[PROG_NAME_LENGTH + 1];
-	size_t				total;
+	// size_t				total;
 }						t_live;
 
 typedef struct			s_process
 {
+	int					pos;
 	int					id;
 	char				*file_name;
 	off_t				file_size;
@@ -78,8 +79,8 @@ typedef struct			s_process
 	char				carry;
 	size_t				instruction_wait;
 	unsigned char		instruction;
-	int					is_alive; /* must be 0 or 1 */
-	t_live				*live;
+	size_t				is_alive; /* must be 0 or 1 */
+	// t_process			*live;
 	short				color[2];
 	struct s_process	*next;
 	struct s_process	*prev;
@@ -139,11 +140,10 @@ void					ncurses_end(t_env *e);
 int						ncurses_termTooSmall(t_env *e);
 int						createArenaBox(t_env *e);
 int						createInfoBox(t_env *e);
-void					ncurses_affArena(t_env *e);
-void					ncurses_affChampion(t_env *e);
-void					ncurses_affVMInfo(t_env *e);
+void					ncurses_affAll(t_env *e);
 void					update_affVMInfo(t_env *e, size_t cycle);
 void					update_affVMStatus(t_env *e);
+void					update_affChampion(t_env *e, t_process *proc);
 
 /*
 ** Game Functions
@@ -174,14 +174,16 @@ void					op_lfork(t_process *proc, t_env *e);
 void					op_aff(t_process *proc, t_env *e);
 
 void					get_params_len(t_param *params, int nbparam, \
-		char types, char opcode);
+	char types, char opcode);
 void					get_params_data(t_param *params, int nbparam, \
-		unsigned char *data);
-t_process				*new_proc(t_process *proc, int value, int flag);
+	unsigned char *data);
+t_process				*new_proc(t_process *proc, int value, int flag, \
+	t_env *e);
 void					get_types(char types, t_param *params_type);
 int						get_value(unsigned char *data, int index, \
-		int size);
+	int size);
 int						full_len_size(unsigned short reg_nb, \
-		t_param *params);
+	t_param *params);
+void	print_live(t_env *e, t_param *params, t_process *tail);
 
 #endif

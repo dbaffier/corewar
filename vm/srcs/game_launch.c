@@ -20,7 +20,6 @@ static void		print_win_str(t_ncurse *ncu, t_live *live)
 	char		*quit;
 	int			len;
 	int			x;
-	int			y;
 
 	str = (live->last_id) ? "Le joueur %d(%s) a gagné !" : "Aucun champion n'a gagné.";
 	quit = "Press 'q' to quit...";
@@ -28,24 +27,16 @@ static void		print_win_str(t_ncurse *ncu, t_live *live)
 	if (live->last_id)
 		len += ft_strlen(live->last_name);
 	x = (len > ncu->winx) ? 0 : ncu->winx / 2 - len / 2;
-	y = (3 > ncu->winy) ? 0 : ncu->winy / 2 - 1;
-	mvwprintw(ncu->infoWin, y, x, str, live->last_id, live->last_name);
-	len = ft_strlen(quit);
-	x = (len > ncu->winx) ? 0 : ncu->winx / 2 - len / 2;
-	if (ncu->winy <= 1)
-		y = -1;
-	else
-		y = (ncu->winy == 2) ? 0 : ncu->winy / 2 + 1;
-	mvwprintw(ncu->infoWin, y, x, quit);
+	wattron(ncu->infoWin, COLOR_PAIR(COREWAR_WINNER_COLOR));
+	mvwprintw(ncu->infoWin, ncu->winy - 2, x, str, live->last_id, live->last_name);
+	wattroff(ncu->infoWin, COLOR_PAIR(COREWAR_WINNER_COLOR));
+	mvwprintw(ncu->infoWin, ncu->winy - 1, 0, quit);
 }
 
 static void		and_the_winner_is(t_ncurse *ncu, t_live *live) // MC HAMMER
 {
 	if (ncu->infoWin)
 	{
-		wclear(ncu->infoWin);
-		wattron(ncu->infoWin, A_BOLD);
-		wbkgd(ncu->infoWin, COLOR_PAIR(COREWAR_WINNER_COLOR));
 		print_win_str(ncu, live);
 		wrefresh(ncu->infoWin);
 		nodelay(ncu->infoWin, FALSE);
@@ -69,7 +60,7 @@ void			launch_game(t_env *e)
 	e->pause = 1;
 	e->speed = VM_SPEED_INIT;
 	e->cycle_to_die = CYCLE_TO_DIE;
-	ncurses_affArena(e);
+	ncurses_affAll(e);
 	while (1)
 	{
 		if (e->ncu.infoWin)

@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 21:30:31 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/29 23:11:20 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 03:06:06 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,10 @@ void			update_affVMInfo(t_env *e, size_t cycle)
 	wattroff(e->ncu.vmWin, COLOR_PAIR(COREWAR_TEXT_COLOR));
 	wattroff(e->ncu.vmWin, A_BOLD);
 	wrefresh(e->ncu.vmWin);
+}
+
+void			update_affChampion(t_env *e, t_process *proc)
+{
+	(void)proc;
+	(void)e;
 }

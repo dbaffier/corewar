@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_play.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 23:05:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 01:39:29 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/30 03:31:12 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,11 @@
 
 extern t_op op_tab[17];
 
-static void			check_live_total(t_live *live, int *cycle_to_die)
+static void			check_live_total(size_t nb_live, int *cycle_to_die)
 {
-	if (live->total == NBR_LIVE)
+	if (nb_live == NBR_LIVE)
 		if ((*cycle_to_die = *cycle_to_die - CYCLE_DELTA) < 0)
 			*cycle_to_die = 0;
-	live->total = 0;
 }
 
 static void			check_max_checks(int *checks, int *cycle_to_die)
@@ -32,26 +31,26 @@ static void			check_max_checks(int *checks, int *cycle_to_die)
 	}
 }
 
-static int			check_players_alive(t_env *e)
+static size_t		check_players_alive(t_env *e)
 {
 	t_process	*proc;
-	int			alive;
+	size_t		alive;
 
 	alive = 0;
 	proc = e->proc;
 	while (proc)
 	{
-		alive += proc->is_alive;
 		if (!proc->is_alive)
 		{
 			proc = remove_player(proc, &e->proc);
-			ncurses_affChampion(e);
-			e->nb_players--;
+			update_affChampion(e, proc);
+			continue ;
 		}
-		else
-			proc = proc->next;
+		alive += proc->is_alive;
+		proc->is_alive = 0;
+		proc = proc->next;
 	}
-	check_live_total(&e->live, &e->cycle_to_die);
+	check_live_total(alive, &e->cycle_to_die);
 	check_max_checks(&e->checks, &e->cycle_to_die);
 	return (alive);
 }
@@ -63,7 +62,7 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 		op_zjmp, op_ldi, op_sti, op_fork, op_lld, op_lldi, op_lfork, op_aff,
 	};
 
-	if (proc->instruction_wait != nb_cycles)
+	if (proc->instruction_wait > nb_cycles)
 		return (0);
 	if (proc->instruction_wait == nb_cycles)
 	{
@@ -74,8 +73,7 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 			{
 				if (e->ncu.infoWin)
 					wprintw(e->ncu.infoWin, "Player %d waiting %d cycle\n", proc->id, op_tab[proc->instruction - 1].cycle);
-				proc->instruction_wait += op_tab[proc->instruction - 1].cycle;
-				return (1);
+				return (op_tab[proc->instruction - 1].cycle - 1);
 			}
 			else
 				move_process_pc(proc, 1, e);
@@ -86,7 +84,7 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 	}
 	return (1);
 }
-#include"ft_printf.h"
+
 int				play_game(size_t nb_cycles, t_env *e)
 {
 	t_process	*proc;
@@ -104,7 +102,6 @@ int				play_game(size_t nb_cycles, t_env *e)
 	while (proc)
 	{
 		proc->instruction_wait += player_instruction(proc, e, nb_cycles);
-// ft_printf("playing %d ptr:%p prev:%p next:%p\n", proc->id, proc, proc->prev, proc->next);
 		proc = proc->next;
 	}
 	return (0);

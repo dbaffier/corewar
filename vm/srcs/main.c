@@ -52,9 +52,11 @@ int				main(int ac, char **av)
 	e->progname = (e->progname) ? e->progname + 1 : av[0];
 	e->dump_cycle = -1;
 	signal(SIGINT, corewar_end);
-	if (ac < 2 || get_args(av, e) || get_arena(e) || get_colors(e))
+	if (ac < 2 || get_args(av, e) || get_arena(e))
 		return (usage(av[0]));
-	if (!e->ncu.mainWin)
+	if (ncurses_init(e) || get_colors(e))
+			return (1);
+	if (e->ncu.active == FALSE)
 		introduce_champ(e->proc);
 	launch_game(e);
 	ncurses_end(e);
