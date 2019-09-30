@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 01:48:11 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/30 03:03:22 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/09/30 23:57:06 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int		parser(t_env *e, char *file)
 		return (ret);
 	if ((ret = token_lst(e)) > 0)
 		return (ERR_MALLOC);
-	for (t_aolist *o = e->aolist; o; o = o->next)
+/*	for (t_aolist *o = e->aolist; o; o = o->next)
 	{
 		printf("-------aolist------\n");
 		printf("\t size : [%zu]\n", o->size);
@@ -87,7 +87,7 @@ int		parser(t_env *e, char *file)
 			printf("\t val : [%d]\n", t->val);
 			printf("\n");
 		}
-	}
+	}*/
 	if ((ret = syntax_analysis(e, e->aolist)) > 0)
 		return (ERR_MALLOC);
 	return (0);

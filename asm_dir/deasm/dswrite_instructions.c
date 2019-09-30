@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 01:14:48 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/30 03:57:27 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/01 00:53:55 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void		decode_types(t_info *inf, unsigned int buff)
 	j = 2;
 	stop = 7;
 	buff >>= 2;
-	while (buff > 0 && stop-- > 0)
+	while (stop-- > 0)
 	{
 		if (i > 1)
 		{
@@ -99,12 +99,9 @@ void		dswrite_param(t_info *inf, unsigned char buff)
 {
 	if (inf->size[inf->i] > 1)
 	{
+		printf("enter : buff = %x\n", buff);
 		if (inf->bin == 0x0)
-		{
 			inf->bin = (int)buff;
-			printf("first bin = %x\n", inf->bin);
-			printf("first buff = %x\n", buff);
-		}
 		else
 		{
 			inf->bin <<= 8;
@@ -112,10 +109,11 @@ void		dswrite_param(t_info *inf, unsigned char buff)
 		}
 		if (inf->wait == inf->size[inf->i])
 		{
+			printf("ENTERING IF TO WRITE---------------\n");
 			printf("bin = %x\n", inf->bin);
 			printf("buff = %x\n", buff);
 			printf("inf->wait == %d -- size = %d\n", inf->wait, inf->size[inf->i]);
-			sleep(3);
+			getchar();
 			if (inf->type[inf->i] == TYPE_DIR)
 				ft_dprintf(inf->ds_fd, "%%%d", inf->bin);
 			if (inf->type[inf->i] == TYPE_IND)
@@ -130,6 +128,7 @@ void		dswrite_param(t_info *inf, unsigned char buff)
 	}
 	else
 	{
+		printf("buff = %x\n", buff);
 		ft_dprintf(inf->ds_fd, "r%d", buff); 
 		inf->i = inf->i + 1;
 	}
