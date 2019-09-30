@@ -91,12 +91,12 @@ void	op_zjmp(t_process *proc, t_env *e)
 	int			i;
 
 	i = 0;
+	ft_bzero(params, sizeof(params));
 	if (proc->carry == 1)
 	{
 		get_params_len(params, 1, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 9);
 		get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
-		params[0].value += *(REG_CAST *)proc->pc;
-		move_process_pc(proc, params[0].value , e);
+		move_process_pc(proc, params[0].value, e);
 		return ;
 	}
 	len = full_len_size(op_tab[8].reg_nb, params);

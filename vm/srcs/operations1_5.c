@@ -44,8 +44,12 @@ void	op_live(t_process *proc, t_env *e)
 		}
 		tail = tail->next;
 	}
-	ft_printf("%s: un processus dit que le joueur %d(%s) est en vie\n",
-		e->progname, params[0].value, (tail) ? ((t_header *)tail->file)->prog_name : "?");
+	if (e->ncu.infoWin)
+		wprintw(e->ncu.infoWin, "%s: un processus dit que le joueur %d(%s) est en vie\n",
+			e->progname, params[0].value, (tail) ? ((t_header *)tail->file)->prog_name : "?");
+	else
+		ft_printf("%s: un processus dit que le joueur %d(%s) est en vie\n",
+			e->progname, params[0].value, (tail) ? ((t_header *)tail->file)->prog_name : "?");
 	e->live.total++;
 	len = full_len_size(op_tab[0].reg_nb, params);
 	move_process_pc(proc, 5, e);

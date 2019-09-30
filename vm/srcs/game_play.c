@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_play.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 23:05:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 00:03:56 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 01:39:29 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static size_t	player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 	}
 	return (1);
 }
-
+#include"ft_printf.h"
 int				play_game(size_t nb_cycles, t_env *e)
 {
 	t_process	*proc;
@@ -104,6 +104,7 @@ int				play_game(size_t nb_cycles, t_env *e)
 	while (proc)
 	{
 		proc->instruction_wait += player_instruction(proc, e, nb_cycles);
+// ft_printf("playing %d ptr:%p prev:%p next:%p\n", proc->id, proc, proc->prev, proc->next);
 		proc = proc->next;
 	}
 	return (0);

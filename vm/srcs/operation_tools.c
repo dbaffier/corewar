@@ -18,12 +18,13 @@ t_process	*new_proc(t_process *proc, int value, int flag)
 {
 	t_process *new;
 
-	new = ft_memalloc(sizeof(t_process));
-	ft_memcpy(new, proc, sizeof(t_process));
+	new = ft_memalloc(sizeof(*new));
+	ft_memcpy(new, proc, sizeof(*new));
+	new->file = NULL;
 	if (!flag)
-		*(REG_CAST *)new->pc = (*(REG_CAST *)proc->pc + value) % IDX_MOD;
+		*(REG_CAST *)new->pc += (*(REG_CAST *)proc->pc + value) % IDX_MOD;
 	else
-		*(REG_CAST *)new->pc = (*(REG_CAST *)proc->pc + value);
+		*(REG_CAST *)new->pc += (*(REG_CAST *)proc->pc + value) % MEM_SIZE;
 	new->prev = proc;
 	if ((new->next = proc->next) != NULL)
 		new->next->prev = new;
@@ -85,12 +86,9 @@ int		get_value(unsigned char *data, int index, int size)
 	i = 0;
 	ft_bzero(tab, 5);
 	while (size--)
-		tab[size] = data[index + i++];
+		tab[size] = data[(index + i++) % MEM_SIZE];
 	tab[i] = '\0';
-	if (*data == 9 || *data == 12 || *data == 15)
-		return (*(short *)tab);
-	else
-		return (*(int *)tab);
+	return (*(int *)tab);
 }
 
 void	get_params_data(t_param *params, int nbparam, unsigned char *data)
