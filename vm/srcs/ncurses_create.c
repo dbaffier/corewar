@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:20:26 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 04:00:09 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 20:05:50 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 int				ncurses_termTooSmall(t_env *e)
 {
-	wbkgd(e->ncu.mainWin, COLOR_PAIR(1));
+	wbkgd(e->ncu.mainWin, COLOR_PAIR(COREWAR_DFLT_COLOR));
 	wattron(e->ncu.mainWin, A_BOLD);
-	wattron(e->ncu.mainWin, COLOR_PAIR(4));
+	wattron(e->ncu.mainWin, COLOR_PAIR(COREWAR_TEXT_COLOR));
 	mvwaddstr(e->ncu.mainWin, (LINES * 0.5) - 1, (COLS * 0.5) - 3, "TERMINAL");
 	mvwaddstr(e->ncu.mainWin, (LINES * 0.5), (COLS * 0.5) - 4, "TOO SMALL!");
-	wattroff(e->ncu.mainWin, COLOR_PAIR(4));
+	wattroff(e->ncu.mainWin, COLOR_PAIR(COREWAR_TEXT_COLOR));
 	wattroff(e->ncu.mainWin, A_BOLD);
 	wrefresh(e->ncu.mainWin);
 	return (IS_OK);
@@ -59,13 +59,14 @@ static int		createInfoWin(t_env *e, int winx, int winy)
 	if (!(e->ncu.champWin = subwin(e->ncu.infoWinBox,
 	winy, winx - 2, 1, COLS - winx + 1)))
 		return (ERR_NCURSE_CHAMPWIN);
-	wbkgd(e->ncu.champWin, COLOR_PAIR(3));
+	wbkgd(e->ncu.champWin, COLOR_PAIR(COREWAR_CHAMPWIN_COLOR));
 	if (!(e->ncu.vmWin = subwin(e->ncu.infoWinBox,
 	winy, winx - 2, winy + 1, COLS - winx + 1)))
 		return (ERR_NCURSE_VMWIN);
 	if (!(e->ncu.infoWin = subwin(e->ncu.infoWinBox,
 	winy, winx - 2, winy * 2 + 1, COLS - winx + 1)))
 		return (ERR_NCURSE_INFOWIN);
+	wbkgd(e->ncu.infoWin, COLOR_PAIR(COREWAR_INFOWIN_COLOR));
 	scrollok(e->ncu.infoWin, TRUE);
 	return (IS_OK);
 }

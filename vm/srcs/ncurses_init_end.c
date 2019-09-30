@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:28:36 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/29 23:17:44 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 20:07:35 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 
 /*
 ** Available colors:
-** 	COLOR_BLACK
-** 	COLOR_RED
-** 	COLOR_GREEN
-** 	COLOR_YELLOW
-** 	COLOR_BLUE
-** 	COLOR_MAGENTA
-** 	COLOR_CYAN
-** 	COLOR_WHITE
+** 	COLOR_BLACK		0
+** 	COLOR_RED		1
+** 	COLOR_GREEN		2
+** 	COLOR_YELLOW	3
+** 	COLOR_BLUE		4
+** 	COLOR_MAGENTA	5
+** 	COLOR_CYAN		6
+** 	COLOR_WHITE		7
 */
 
 static void		init_colors(t_env *e)
@@ -39,9 +39,12 @@ static void		init_colors(t_env *e)
 	use_default_colors();
 	init_pair(COREWAR_DFLT_COLOR, COLOR_BLACK, -1);
 	init_pair(COREWAR_TITLE_COLOR, COLOR_YELLOW, -1);
-	init_pair(COREWAR_CHAMPWIN_COLOR, COLOR_WHITE, COLOR_CYAN);
+	init_color(8, 100, 0, 200);
+	init_pair(COREWAR_CHAMPWIN_COLOR, COLOR_WHITE, 8);
+	init_color(9, 75, 0, 125);
+	init_pair(COREWAR_INFOWIN_COLOR, COLOR_WHITE, 9);
 	init_pair(COREWAR_TEXT_COLOR, COLOR_WHITE, -1);
-	init_pair(COREWAR_WINNER_COLOR, COLOR_YELLOW, COLOR_RED);
+	init_pair(COREWAR_WINNER_COLOR, COLOR_BLACK, COLOR_BLUE);
 	i = COREWAR_COLOR_END;
 	color_nb = 0;
 	proc = e->proc;
@@ -60,6 +63,8 @@ int				ncurses_init(t_env *e)
 {
 	int			err;
 
+	if (e->ncu.active == FALSE)
+		return (IS_OK);
 	signal(SIGWINCH, ncurses_resizeWindow);
 	if ((e->ncu.mainWin = initscr()) == NULL)
 		return (ERR_NCURSE_MAINWIN);
