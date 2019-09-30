@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:17:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/29 00:11:53 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 04:04:39 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ void				ncurses_resizeWindow(int sig)
 	{
 		createArenaBox(&g_env);
 		createInfoBox(&g_env);
+		ncurses_affAll(&g_env);
 	}
 }

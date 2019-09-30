@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:20:26 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/29 23:08:06 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 04:00:09 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int				createArenaBox(t_env *e)
 	wrefresh(e->ncu.arenaWinBox);
 	if (!(e->ncu.arenaWin = subwin(e->ncu.arenaWinBox, winy - 2, winx - 2, 1, 1)))
 		return (ERR_NCURSE_ARENAWIN);
-	ncurses_affArena(e);
 	return (IS_OK);
 }
 
@@ -88,7 +87,5 @@ int				createInfoBox(t_env *e)
 	mvwaddch(e->ncu.infoWinBox, 0, (winx * 0.5) + 6, ACS_LTEE);
 	wrefresh(e->ncu.infoWinBox);
 	createInfoWin(e, winx, winy);
-	ncurses_affChampion(e);
-	ncurses_affVMInfo(e);
 	return (IS_OK);
 }

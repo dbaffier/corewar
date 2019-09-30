@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 21:10:29 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/29 21:58:34 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 03:58:00 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,5 @@ int				get_colors(t_env *e)
 			proc->data_size);
 		proc = proc->next;
 	}
-
-// for (int i=0;i< MEM_SIZE;i++){
-// 	if (i % 64 == 0)
-// 		ft_printf("\n");
-// 	else
-// 		ft_printf(" ");
-// 	ft_printf("%02X", ((unsigned char *)e->arena)[i]);
-// }
-// ft_printf("\n");
-// for (int i=0;i< MEM_SIZE&&e->colors;i++){
-// 	if (i % 64 == 0)
-// 		ft_printf("\n");
-// 	else
-// 		ft_printf(" ");
-// 	ft_printf("%hd", e->colors[i]);
-// }
-// ft_printf("\n");
-// exit(1);
-
 	return (IS_OK);
 }

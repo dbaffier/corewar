@@ -107,7 +107,7 @@ int				get_player(t_env *e, char *av)
 		return (ERR_NUMBER);
 	if ((proc = ft_memalloc(sizeof(*proc))) == NULL)
 		return (ERR_MALLOC);
-	proc->pos = e->nb_players + 1;
+	proc->pos = e->nb_players;
 	proc->id = e->id;
 	proc->file_name = av;
 	proc->next = e->proc;

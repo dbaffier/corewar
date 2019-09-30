@@ -57,7 +57,7 @@ void	op_fork(t_process *proc, t_env *e)
 	get_params_len(params, 1, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 12);
 	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 	if (params[0].value != 0)
-		proc->next = new_proc(proc, params[0].value, 0);
+		proc->next = new_proc(proc, params[0].value, 0, e);
 	len = full_len_size(op_tab[11].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
 }
@@ -122,7 +122,7 @@ void	op_lfork(t_process *proc, t_env *e)
 	get_params_len(params, 1, *((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 15);
 	get_params_data(params, 1, ((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
 	if (params[0].value != 0)
-		proc->next = new_proc(proc, params[0].value, 1);
+		proc->next = new_proc(proc, params[0].value, 1, e);
 	len = full_len_size(op_tab[14].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
 }

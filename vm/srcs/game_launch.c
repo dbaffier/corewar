@@ -69,7 +69,7 @@ void			launch_game(t_env *e)
 	e->pause = 1;
 	e->speed = VM_SPEED_INIT;
 	e->cycle_to_die = CYCLE_TO_DIE;
-	ncurses_affArena(e);
+	ncurses_affAll(e);
 	while (1)
 	{
 		if (e->ncu.infoWin)
