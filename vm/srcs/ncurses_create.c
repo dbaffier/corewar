@@ -6,14 +6,14 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:20:26 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 23:11:08 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 23:22:01 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
 
-int				ncurses_termTooSmall(t_env *e)
+int				ncurses_termtoosmall(t_env *e)
 {
 	wbkgd(e->ncu.main_win, COLOR_PAIR(COREWAR_DFLT_COLOR));
 	wattron(e->ncu.main_win, A_BOLD);
@@ -30,7 +30,7 @@ int				ncurses_termTooSmall(t_env *e)
 ** WINDOW *subwin(WINDOW *orig, int nlines, int ncols, int begin_y, int begin_x);
 */
 
-int				createArenaBox(t_env *e)
+int				create_arenabox(t_env *e)
 {
 	int			winx;
 	int			winy;
@@ -51,7 +51,7 @@ int				createArenaBox(t_env *e)
 	return (IS_OK);
 }
 
-static int		createInfoWin(t_env *e, int winx, int winy)
+static int		create_infowin(t_env *e, int winx, int winy)
 {
 	winy = (winy - 2) / 3;
 	e->ncu.winx = winx - 2;
@@ -71,7 +71,7 @@ static int		createInfoWin(t_env *e, int winx, int winy)
 	return (IS_OK);
 }
 
-int				createInfoBox(t_env *e)
+int				create_infobox(t_env *e)
 {
 	int			winx;
 	int			winy;
@@ -87,6 +87,6 @@ int				createInfoBox(t_env *e)
 	wattroff(e->ncu.info_winbox, COLOR_PAIR(2));
 	mvwaddch(e->ncu.info_winbox, 0, (winx * 0.5) + 6, ACS_LTEE);
 	wrefresh(e->ncu.info_winbox);
-	createInfoWin(e, winx, winy);
+	create_infowin(e, winx, winy);
 	return (IS_OK);
 }

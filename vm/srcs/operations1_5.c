@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   operations.c                                       :+:      :+:    :+:   */
+/*   operations1_5.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/30 21:44:23 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/09/30 23:36:02 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	op_live(t_process *proc, t_env *e)
 		{
 			tail->is_alive++;
 			e->live.last_id = params[0].value;
-			ft_strncpy(e->live.last_name, ((t_header *)tail->file)->prog_name,
+			ft_strncpy(e->live.name, ((t_header *)tail->file)->prog_name,
 							PROG_NAME_LENGTH + 1);
 			break ;
 		}

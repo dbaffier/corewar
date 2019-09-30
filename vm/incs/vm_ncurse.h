@@ -6,12 +6,12 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:40:54 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 21:42:40 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 23:16:42 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CW_NCURSE_H
-# define CW_NCURSE_H
+#ifndef VM_NCURSE_H
+# define VM_NCURSE_H
 
 # include <ncurses.h>
 # include "op.h"
@@ -35,20 +35,20 @@ enum
 	COREWAR_COLOR_END,
 };
 
-typedef struct			s_ncurse
+typedef struct		s_ncurse
 {
-	bool				active;
-	WINDOW				*main_win;
-	WINDOW				*arena_winbox;
-	WINDOW				*arena_win;
-	WINDOW				*info_winbox;
-	WINDOW				*champ_win;
-	WINDOW				*vm_win;
-	WINDOW				*info_win;
-	int					winx;
-	int					winy;
-}						t_ncurse;
+	bool			active;
+	WINDOW			*main_win;
+	WINDOW			*arena_winbox;
+	WINDOW			*arena_win;
+	WINDOW			*info_winbox;
+	WINDOW			*champ_win;
+	WINDOW			*vm_win;
+	WINDOW			*info_win;
+	int				winx;
+	int				winy;
+}					t_ncurse;
 
-int						ncurses_wgetch(int *speed, int *pause, WINDOW *infoWin);
+int					ncurses_wgetch(int *speed, int *pause, WINDOW *info_win);
 
 #endif

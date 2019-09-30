@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 21:55:15 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 23:35:11 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ enum
 typedef struct			s_live
 {
 	int					last_id;
-	char				last_name[PROG_NAME_LENGTH + 1];
-	// size_t				total;
+	char				name[PROG_NAME_LENGTH + 1];
 }						t_live;
 
 typedef struct			s_process
@@ -79,8 +78,7 @@ typedef struct			s_process
 	char				carry;
 	size_t				instruction_wait;
 	unsigned char		instruction;
-	size_t				is_alive; /* must be 0 or 1 */
-	// t_process			*live;
+	size_t				is_alive;
 	short				color[2];
 	struct s_process	*next;
 	struct s_process	*prev;
@@ -115,7 +113,7 @@ typedef struct			s_param
 ** Signals Handlers
 */
 void					corewar_end(int i);
-void					ncurses_resizeWindow(int sig);
+void					ncurses_resizewindow(int sig);
 
 /*
 ** Errors && Free Functions
@@ -137,13 +135,13 @@ t_process				*remove_player(t_process *proc, t_process **head);
 */
 int						ncurses_init(t_env *e);
 void					ncurses_end(t_env *e);
-int						ncurses_termTooSmall(t_env *e);
-int						createArenaBox(t_env *e);
-int						createInfoBox(t_env *e);
-void					ncurses_affAll(t_env *e);
-void					update_affVMInfo(t_env *e, size_t cycle);
-void					update_affVMStatus(t_env *e);
-void					update_affChampion(t_env *e, t_process *proc);
+int						ncurses_termtoosmall(t_env *e);
+int						create_arenabox(t_env *e);
+int						create_infobox(t_env *e);
+void					ncurses_aff_all(t_env *e);
+void					update_aff_vminfo(t_env *e, size_t cycle);
+void					update_aff_vmstatus(t_env *e);
+void					update_aff_champion(t_env *e, t_process *proc);
 
 /*
 ** Game Functions

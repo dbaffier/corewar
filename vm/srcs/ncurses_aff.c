@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:47:32 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 21:43:38 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/09/30 23:21:09 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 ** flag[1] : Did we changed process ?
 */
 
-static void		ncurses_affArena(t_env *e)
+static void		ncurses_aff_arena(t_env *e)
 {
 	size_t		i;
 	t_process	*proc;
@@ -56,7 +56,7 @@ static void		ncurses_affArena(t_env *e)
 ** players = 4, y1 = -6, y2 = -3, y3 = 0, y4 = 3
 */
 
-static void		ncurses_affChampion(t_env *e)
+static void		ncurses_aff_champion(t_env *e)
 {
 	t_process	*proc;
 	t_header	*play;
@@ -83,11 +83,11 @@ static void		ncurses_affChampion(t_env *e)
 	wrefresh(e->ncu.champ_win);
 }
 
-static void		ncurses_affVMInfo(t_env *e)
+static void		ncurses_aff_vminfo(t_env *e)
 {
 	wattron(e->ncu.vm_win, A_BOLD);
 	wattron(e->ncu.vm_win, COLOR_PAIR(COREWAR_TEXT_COLOR));
-	update_affVMStatus(e);
+	update_aff_vmstatus(e);
 	wprintw(e->ncu.vm_win, "Cycle: 0\n\n");
 	wprintw(e->ncu.vm_win, "CYCLE_TO_DIE: %d\n\n", e->cycle_to_die);
 	wprintw(e->ncu.vm_win, "CYCLE_DELTA: %d\n\n", CYCLE_DELTA);
@@ -98,9 +98,9 @@ static void		ncurses_affVMInfo(t_env *e)
 	wrefresh(e->ncu.vm_win);
 }
 
-void			ncurses_affAll(t_env *e)
+void			ncurses_aff_all(t_env *e)
 {
-	ncurses_affArena(e);
-	ncurses_affChampion(e);
-	ncurses_affVMInfo(e);
+	ncurses_aff_arena(e);
+	ncurses_aff_champion(e);
+	ncurses_aff_vminfo(e);
 }
