@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/01 01:16:18 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/02 01:14:52 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define FLAG_GP	(1 << 3)
 # define FLAG_D		(1 << 4)
 # define FLAG_S		(1 << 5)
+# define FLAG_F		(1 << 6)
 
 # define DASH_N		{FLAG_N, 'n'}
 # define DASH_O		{FLAG_O, 'o'}
@@ -42,6 +43,7 @@
 # define DASH_GP	{FLAG_GP, 'P'}
 # define DASH_D		{FLAG_D, 'd'}
 # define DASH_S		{FLAG_S, 's'}
+# define DASH_F		{FLAG_F, 'f'}
 
 # define NAME		1
 # define COMMENT	2
@@ -108,6 +110,7 @@ typedef struct		s_thread
 
 void		print_usage(int error);
 //////////// main hexdump
+char		*basename(char *file);
 int			way_to_corewar(t_data *data, t_aolist *ao);
 
 //////////// generate .cor
@@ -157,5 +160,6 @@ void		check_zero(t_data *data, unsigned char buff);
 void		reverse_write(t_data *data, unsigned int param, int count);
 
 int			user_file(t_data *data);
+int			len_path(char *file);
 
 #endif 

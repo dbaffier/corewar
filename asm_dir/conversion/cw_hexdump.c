@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:03:52 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/28 01:23:01 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/02 01:46:38 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,9 @@ static void		print_head(t_data *data)
 
 static int				cw_hexdump(t_data *data, char *file)
 {
-	if (!(data->e->flag & FLAG_S))
-	{
+	if (!(data->e->flag & FLAG_S) && !(data->e->flag & FLAG_F))
 		if ((data->fd = create_corfile(data, file)) < 0)
 			return (ERR_OPEN);
-	}
 	if (data->e->flag & FLAG_N)
 		print_head(data);
 	way_to_corewar(data, data->ao);
@@ -51,7 +49,7 @@ static int				init_data(t_data *data, t_env *e)
 
 	data->e = e;
 	data->ao = e->aolist;
-	if (data->e->flag & FLAG_S)
+	if (data->e->flag & FLAG_S || data->e->flag & FLAG_F)
 		if ((ret = user_file(data)) != 0)
 			return (ret);
 	return (0);

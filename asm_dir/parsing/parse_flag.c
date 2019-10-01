@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 21:17:34 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/30 02:26:57 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/02 01:15:11 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void		print_usage(int error)
 
 static int			set_msk(t_env *e, char c)
 {
-	static t_flags	tab[6] = {DASH_N, DASH_O, DASH_P, DASH_GP, DASH_D, DASH_S};
+	static t_flags	tab[7] = {DASH_N, DASH_O, DASH_P, DASH_GP, DASH_D, DASH_S,
+								DASH_F};
 	size_t			i;
 
 	i = 0;

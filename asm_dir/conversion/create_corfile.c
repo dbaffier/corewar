@@ -6,13 +6,13 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:28:27 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/28 20:45:33 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/02 00:53:02 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw_hexdump.h"
 
-static char		*basename(char *file)
+char			*basename(char *file)
 {
 	int			len;
 	int			i;
