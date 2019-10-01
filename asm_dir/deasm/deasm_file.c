@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 00:23:29 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/01 00:04:34 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/01 03:57:30 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void		dswrite_instructions(t_info *inf, char buff)
 	}
 	else if (inf->decode == OPC)
 	{
-		printf("starting opc : %d\n", (int)buff);
+//		printf("starting opc : %d\n", (int)buff);
 		dswrite_opc(inf, buff);
 		if (buff == 1 || buff == 9 || buff == 12 || buff == 15)
 		{
@@ -48,10 +48,12 @@ static void		dswrite_instructions(t_info *inf, char buff)
 
 static void		dswrite(t_info *inf, char buff)
 {
+	if (inf->cursor >= 132 && inf->cursor < 140)
+		return ;
 	if (inf->cursor == 4)
-		ft_dprintf(inf->ds_fd, ".name : \"");
-	if (inf->cursor == 136)
-		ft_dprintf(inf->ds_fd, "\"\n.comment : \"");
+		ft_dprintf(inf->ds_fd, ".name \"");
+	if (inf->cursor == 140)
+		ft_dprintf(inf->ds_fd, "\"\n.comment \"");
 	if (buff != 0x0)
 		ft_dprintf(inf->ds_fd, "%c", buff);
 	inf->decode = END;
@@ -73,6 +75,7 @@ int				deasm_file(t_info *inf)
 	wait = 0;
 	while (read(inf->fd, &buff, 1) > 0)
 	{
+	//	printf("%x\n", buff);
 		if (inf->cursor < 2191)
 			dswrite(inf, buff);
 		if (inf->cursor >= 2191)

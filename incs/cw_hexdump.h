@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/30 02:24:49 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/01 01:16:18 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,5 +150,7 @@ void		print_path(t_data *data);
 void		print_zero(t_data *data);
 void		print_zero_line(t_data *data);
 void		check_zero(t_data *data, unsigned char buff);
+void		reverse_write(t_data *data, unsigned int param, int count);
+
 
 #endif 
