@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include "ft_printf.h"
+# include "asm.h"
 # include <fcntl.h>
 # include <unistd.h>
 
@@ -51,9 +52,11 @@ typedef struct		s_info
 	int				size[3];
 	int				curr[2];
 	char			*ds_name;
+	t_env			*e;
 }					t_info;			
 
 int			deasm_file(t_info *inf);
+void		dswrite_warning(t_info *inf);
 
 /*
 ** dswrite_instructions.c
@@ -62,4 +65,7 @@ void		dswrite_opc(t_info *inf, char buff);
 void		dswrite_param(t_info *inf, unsigned char buff);
 void		decode_types(t_info *inf, unsigned int buff);
 
+void		dsflag_print(t_info *inf);
+
+void		dsprint_err(int error, char *file);
 #endif

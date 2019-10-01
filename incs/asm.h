@@ -105,6 +105,7 @@ typedef struct		s_env
 	int			line;
 	size_t		size;
 	char		*fd_name;
+	char		*fd_user;
 	t_aolist	*aolist;
 }					t_env;
 
@@ -139,7 +140,8 @@ int			syntax_error(t_env *e, int error, char *str, int line);
 
 int			dump_to_file(t_env *e);
 int			parse_flag(t_env *e, char **av);
+int			parse_dashs(t_env *e, char **av, int i);
 void		free_aolist(t_aolist *aolist);
-int			deasm(char **av, int i);
+int			deasm(t_env *e, char **av, int i);
 
 #endif

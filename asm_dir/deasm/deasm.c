@@ -81,22 +81,27 @@ static int		check_file(t_info *inf, char *file)
 	return (create_file(inf, file));
 }
 
-int				deasm(char **av, int i)
+int				deasm(t_env *e, char **av, int i)
 {
 	int		ret;
+	int		first;
 	t_info	inf;
 
 	ft_memset(&inf, 0, sizeof(inf));
+	inf.e = e;
+	first = i;
 	while (av[i])
 	{
 		if ((ret = check_file(&inf, av[i])) > 0)
-			return (ret);
+			dsprint_err(ret, av[i]);
 		if ((ret = deasm_file(&inf)) > 0)
 			return (ret);
+		dsflag_print(&inf);
 		close(inf.ds_fd);
 		close(inf.fd);
 		free(inf.ds_name);
 		i++;
 	}
+	ft_printf("%d warrior(s) created.\n", i - first);
 	return (0);
 }

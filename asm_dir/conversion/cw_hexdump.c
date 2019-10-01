@@ -34,28 +34,39 @@ static void		print_head(t_data *data)
 
 static int				cw_hexdump(t_data *data, char *file)
 {
-	if ((data->fd = create_corfile(data, file)) < 0)
-		return (ERR_OPEN);
+	if (!(data->e->flag & FLAG_S))
+	{
+		if ((data->fd = create_corfile(data, file)) < 0)
+			return (ERR_OPEN);
+	}
 	if (data->e->flag & FLAG_N)
 		print_head(data);
 	way_to_corewar(data, data->ao);
 	return (0);
 }
 
-static void		init_data(t_data *data, t_env *e)
+static int				init_data(t_data *data, t_env *e)
 {
+	int ret;
+
 	data->e = e;
 	data->ao = e->aolist;
+	if (data->e->flag & FLAG_S)
+		if ((ret = user_file(data)) != 0)
+			return (ret);
+	return (0);
 }
 
 int				dump_to_file(t_env *e)
 {
 	t_data	data;
+	int		ret;
 
 	ft_memset(&data, 0, sizeof(t_data));
 	if (e->flag & FLAG_N)
 		init_screen(&data);
-	init_data(&data, e);
+	if ((ret = init_data(&data, e)) != 0)
+		return (ret);
 	cw_hexdump(&data, e->fd_name);
 	if (e->flag & FLAG_N)
 	{

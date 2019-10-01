@@ -35,7 +35,8 @@ int main(int ac, char **av)
 	ft_memset(&e, 0, sizeof(e));
 	i = parse_flag(&e, av);
 	if (e.flag & FLAG_D)
-		return (deasm(av, i));
+		return (deasm(&e, av, i));
+	i = parse_dashs(&e, av, i);
 	if ((ret = asm_file(ac, av, i)) > 0)
 		return (err_file(ret));
 	if ((ret = parser(&e, av[i])) > 0)

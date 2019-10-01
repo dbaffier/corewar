@@ -38,6 +38,7 @@ SRCS +=	binary.c				\
 		create_corfile.c		\
 		cw_hexdump.c			\
 		way_to_corewar.c		\
+		user_file.c				\
 
 PARSE_DIR = parsing/
 SRCS += asm_aolist.c			\
@@ -87,6 +88,7 @@ DEASM_DIR = deasm/
 SRCS += deasm.c					\
 		deasm_file.c			\
 		dswrite_instructions.c	\
+		print.c					\
 
 all: $(OBJS_DIR) $(DEPS_DIR) $(LIBFT_LIB) $(NAME)
 

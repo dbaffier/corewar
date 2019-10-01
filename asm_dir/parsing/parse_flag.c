@@ -15,13 +15,13 @@
 void		print_usage(int error)
 {
 	(void)error;
-	ft_dprintf(2, "usage: ./asm [-Pnop] [file ...]\n");
+	ft_dprintf(2, "usage: ./asm [-Pdnop] [file ...]\n");
 	exit(0);
 }
 
 static int			set_msk(t_env *e, char c)
 {
-	static t_flags	tab[5] = {DASH_N, DASH_O, DASH_P, DASH_GP, DASH_D};
+	static t_flags	tab[6] = {DASH_N, DASH_O, DASH_P, DASH_GP, DASH_D, DASH_S};
 	size_t			i;
 
 	i = 0;
@@ -46,6 +46,8 @@ int			parse_flag(t_env *e, char **av)
 	while (av[i])
 	{
 		j = 0;
+		if (!av[i][j])
+			return (i);
 		while (av[i][j])
 		{
 			if (av[i][j] == '-' && av[i][j + 1] == '-')

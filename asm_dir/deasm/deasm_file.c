@@ -73,6 +73,7 @@ int				deasm_file(t_info *inf)
 	inf->cursor = 4;
 	i = 0;
 	wait = 0;
+	dswrite_warning(inf);
 	while (read(inf->fd, &buff, 1) > 0)
 	{
 	//	printf("%x\n", buff);
