@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 21:30:31 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/01 19:27:35 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/01 19:46:36 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,15 @@ void			update_aff_champion(t_env *e, t_process *proc)
 	(void)e;
 }
 
-static unsigned char	*calc_arena(unsigned char *arena, unsigned char *e_arena)
+static uint8_t	*calc_arena(unsigned char *arena, unsigned char *e_arena)
 {
 	if (arena >= e_arena + MEM_SIZE)
 		return (e_arena);
 	return (arena);
 }
 
-void			update_aff_arena_swap(char *arena, size_t size, short color, t_env *e)
+void			update_aff_arena_swap(char *arena, size_t size, short color,
+t_env *e)
 {
 	size_t		pos;
 	size_t		i;
@@ -82,5 +83,3 @@ void			update_aff_arena_swap(char *arena, size_t size, short color, t_env *e)
 		i++;
 	}
 }
-
-// void			update_aff_arena()
