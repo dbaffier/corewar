@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 21:30:31 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/01 18:15:27 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/01 19:27:35 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static unsigned char	*calc_arena(unsigned char *arena, unsigned char *e_arena)
 	return (arena);
 }
 
-void			update_aff_arena(char *arena, size_t size, short color, t_env *e)
+void			update_aff_arena_swap(char *arena, size_t size, short color, t_env *e)
 {
 	size_t		pos;
 	size_t		i;
@@ -77,9 +77,10 @@ void			update_aff_arena(char *arena, size_t size, short color, t_env *e)
 		y = ((pos * 3) / ARENA_LINE_LEN) % MEM_SIZE;
 		x = ((pos * 3) % ARENA_LINE_LEN) % MEM_SIZE;
 		e->colors[pos] = color;
-wprintw(e->ncu.info_win, "pos:%ld x:%d y:%d\n", pos, x, y);
 		mvwprintw(e->ncu.arena_win, y, x, "%02x",
 		*calc_arena((unsigned char *)arena + i, e->arena));
 		i++;
 	}
 }
+
+// void			update_aff_arena()

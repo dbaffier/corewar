@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/01 18:11:43 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/01 19:42:05 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ extern struct s_op	op_tab[17];
 
 void	op_live(t_process *proc, t_env *e)
 {
-	unsigned char	*arena;
+	uint8_t		*arena;
 	t_param		params[3];
 	t_process	*tail;
 
-	arena = (unsigned char *)e->arena;
+	arena = (uint8_t *)e->arena;
 	get_params_len(params, 1, *(arena + *(REG_CAST *)proc->pc + 1), 1);
 	get_params_data(params, 1, arena + *(REG_CAST *)proc->pc);
 	tail = e->proc;
@@ -56,24 +56,29 @@ void	op_live(t_process *proc, t_env *e)
 
 void	op_ld(t_process *proc, t_env *e)
 {
-	unsigned char	*arena;
+	uint8_t		*arena;
 	t_param		params[3];
 	int			len;
 
-	arena = (unsigned char *)e->arena;
+	arena = (uint8_t *)e->arena;
 	get_params_len(params, 2, *(arena + *(REG_CAST *)proc->pc + 1), 2);
 	get_params_data(params, 2, arena + *(REG_CAST *)proc->pc);
 	if (params[1].value > 0 && params[1].value < REG_NUMBER)
 	{
 		if (params[0].size == 2)
-			*(REG_CAST *)proc->reg[params[1].value - 1] = 
-			*((unsigned char *)e->arena + calc_mod(*(REG_CAST *)proc->pc + (params[0].value % IDX_MOD), MEM_SIZE));
+		{
+			*(REG_CAST *)proc->reg[params[1].value - 1]
+			= *(REG_CAST *)((int8_t *)e->arena + calc_mod(*(REG_CAST *)proc->pc
+			+ ((short)params[0].value % IDX_MOD), MEM_SIZE));
+			*(REG_CAST *)proc->reg[params[1].value - 1]
+			= byteswap_32(*(REG_CAST *)proc->reg[params[1].value - 1]);
+		}
 		else if (params[0].size == 4)
+		{
 			*(REG_CAST *)proc->reg[params[1].value - 1] = params[0].value;
-// wprintw(e->ncu.info_win, "value: %d\n", *(REG_CAST *)proc->reg[params[1].value - 1]);
-		// (*(REG_CAST *)proc->pc + (params[0].value % IDX_MOD)) % MEM_SIZE;
+		}
 	}
-	proc->carry = (params[1].value == 0) ? 1 : 0;
+	proc->carry = (params[0].value == 0) ? 1 : 0;
 	len = full_len_size(op_tab[1].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
 }
@@ -86,28 +91,15 @@ void	op_ld(t_process *proc, t_env *e)
 
 void	op_st(t_process *proc, t_env *e)
 {
-	unsigned char	*arena;
-	t_param			params[3];
-	int				len;
+	uint8_t		*arena;
+	t_param		params[3];
+	int			len;
 
-	arena = (unsigned char *)e->arena;
+	arena = (uint8_t *)e->arena;
 	get_params_len(params, 2, *(arena + *(REG_CAST *)proc->pc + 1), 3);
 	get_params_data(params, 2, arena + *(REG_CAST *)proc->pc);
 	if (params[0].value > 0 && params[0].value < REG_NUMBER)
-	{
-		if (params[1].size == 1)
-		{
-			if (params[1].value > 0 && params[1].value < REG_NUMBER)
-				*(REG_CAST *)proc->reg[params[1].value - 1] = *(REG_CAST *)proc->reg[params[0].value - 1];
-		}
-		else if (params[1].size == 2)
-		{
-			arena += calc_mod(*(REG_CAST *)proc->pc + params[1].value, MEM_SIZE);
-			ft_memcpy(arena, (REG_CAST *)proc->reg[params[0].value - 1], REG_SIZE);
-			update_aff_arena((char *)arena, REG_SIZE, proc->color[0], e);
-		}
-	}
-	proc->carry = params[1].value == 0 ? 1 : 0;
+		handle_st(params, proc, e);
 	len = full_len_size(op_tab[2].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
 }
@@ -123,9 +115,9 @@ void	op_add(t_process *proc, t_env *e)
 	t_param		params[3];
 	int			len;
 
-	get_params_len(params, 3, *((unsigned char *)e->arena +
+	get_params_len(params, 3, *((uint8_t *)e->arena +
 		*(REG_CAST *)proc->pc + 1), 4);
-	get_params_data(params, 3, ((unsigned char *)e->arena) +
+	get_params_data(params, 3, ((uint8_t *)e->arena) +
 		*(REG_CAST *)proc->pc);
 	*(REG_CAST *)proc->reg[params[2].value] = params[0].value +
 		params[1].value;
@@ -146,9 +138,9 @@ void	op_sub(t_process *proc, t_env *e)
 	int			len;
 
 	get_params_len(params, 3,
-			*((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 5);
+			*((uint8_t *)e->arena + *(REG_CAST *)proc->pc + 1), 5);
 	get_params_data(params, 3,
-			(unsigned char *)e->arena + *(REG_CAST *)proc->pc);
+			(uint8_t *)e->arena + *(REG_CAST *)proc->pc);
 	*(REG_CAST *)proc->reg[params[2].value] = params[0].value -
 		params[1].value;
 	proc->carry = params[0].value - params[1].value == 0 ? 1 : 0;
