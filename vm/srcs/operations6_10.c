@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations6_10.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/01 17:24:57 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/01 19:41:53 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,6 @@ void	op_zjmp(t_process *proc, t_env *e)
 				*((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 9);
 		get_params_data(params, 1,
 				((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
-		if (e->ncu.info_win)
-			wprintw(e->ncu.info_win, "jump to :[%hd]\n", params[0].value);
 		move_process_pc(proc, params[0].value, e);
 		return ;
 	}

@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/01 18:27:51 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/10/01 19:26:41 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	op_ld(t_process *proc, t_env *e)
 // wprintw(e->ncu.info_win, "value: %d\n", *(REG_CAST *)proc->reg[params[1].value - 1]);
 		// (*(REG_CAST *)proc->pc + (params[0].value % IDX_MOD)) % MEM_SIZE;
 	}
-	proc->carry = (params[1].value == 0) ? 1 : 0;
+	proc->carry = (params[0].value == 0) ? 1 : 0;
 	len = full_len_size(op_tab[1].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
 }
@@ -107,7 +107,6 @@ void	op_st(t_process *proc, t_env *e)
 			update_aff_arena((char *)arena, REG_SIZE, proc->color[0], e);
 		}
 	}
-	proc->carry = params[1].value == 0 ? 1 : 0;
 	len = full_len_size(op_tab[2].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
 }
