@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations_aff.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 19:23:33 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/30 23:29:52 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/10/01 19:27:13 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,26 @@ void	print_live(t_env *e, t_param *params, t_process *tail)
 		ft_printf("%s: %s %d(%s) est en vie\n",
 			e->progname, proc, params[0].value, (tail) ?
 				((t_header *)tail->file)->prog_name : "?");
+}
+
+void	handle_st(t_param *params, t_process *proc, t_env *e)
+{
+	unsigned char	*arena;
+	size_t			ret;
+
+	arena = (unsigned char *)e->arena;
+	if (params[1].size == 1)
+	{
+		if (params[1].value > 0 && params[1].value < REG_NUMBER)
+			*(REG_CAST *)proc->reg[params[1].value - 1]
+				= *(REG_CAST *)proc->reg[params[0].value - 1];
+	}
+	else if (params[1].size == 2)
+	{
+		ret = *(REG_CAST *)proc->pc + params[1].value % IDX_MOD;
+		arena += calc_mod(ret, MEM_SIZE);
+		arena_copy(arena, e->arena,
+			(REG_CAST *)proc->reg[params[0].value - 1], REG_SIZE);
+		update_aff_arena_swap((char *)arena, REG_SIZE, proc->color[0], e);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:12:05 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/01 17:25:18 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/01 19:28:13 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	op_sti(t_process *proc, t_env *e)
 	{
 		arena += calc_mod(*(REG_CAST *)proc->pc + addr, MEM_SIZE);
 		ft_memcpy(arena, (REG_CAST *)proc->reg[params[0].value - 1], REG_SIZE);
-		update_aff_arena((char *)arena, REG_SIZE, proc->color[0], e);
+		// update_aff_arena((char *)arena, REG_SIZE, proc->color[0], e);
 	}
 	proc->carry = addr == 0 ? 1 : 0;
 	len = full_len_size(op_tab[10].reg_nb, params);

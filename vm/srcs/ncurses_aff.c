@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:47:32 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 23:21:09 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/01 18:37:50 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ static void		ncurses_aff_vminfo(t_env *e)
 
 void			ncurses_aff_all(t_env *e)
 {
+	if (e->ncu.active == FALSE)
+		return ;
 	ncurses_aff_arena(e);
 	ncurses_aff_champion(e);
 	ncurses_aff_vminfo(e);

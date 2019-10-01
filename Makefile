@@ -16,6 +16,7 @@ VM_DIR		= vm/
 VM_SRC_D	= $(VM_DIR)srcs/
 VM_INC_D	= $(VM_DIR)incs/
 VM_SRC		+=	main.c					\
+				arena_copy.c			\
 				dump_map.c				\
 				errors.c				\
 				free.c					\
@@ -34,6 +35,7 @@ VM_SRC		+=	main.c					\
 				op.c					\
 				remove_player.c			\
 				signals.c				\
+				swap_bytes.c			\
 				operation_tools.c		\
 				operations1_5.c			\
 				operations6_10.c		\
@@ -42,10 +44,10 @@ VM_SRC		+=	main.c					\
 
 CC			= gcc
 CFLAGS		= -Wall -Werror -Wextra
-CFLAGS		+= -std=c11 -Wmissing-prototypes -pedantic -pedantic-errors
+CFLAGS		+= -std=c11 -Wmissing-prototypes -pedantic -pedantic-errors -fsanitize=address
 
 INCS		= -I$(LFT_DIR)inc -I$(VM_INC_D)
-LIBS		= -L$(LFT_DIR) -lft -lncurses
+LIBS		= -L$(LFT_DIR) -lft -lncurses -fsanitize=address
 
 OBJS_DIR	= $(VM_DIR)objs/
 OBJS_VM		+= $(addprefix $(OBJS_DIR), $(VM_SRC:.c=.o))
