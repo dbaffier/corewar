@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations6_10.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/01 19:43:41 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/10/01 20:00:19 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ void	op_and(t_process *proc, t_env *e)
 {
 	t_param		params[3];
 	int			len;
-	int			i;
 
-	i = 0;
 	get_params_len(params, 3,
 			*((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 6);
 	get_params_data(params, 3,
@@ -50,9 +48,7 @@ void	op_or(t_process *proc, t_env *e)
 {
 	t_param		params[3];
 	int			len;
-	int			i;
 
-	i = 0;
 	get_params_len(params, 3,
 			*((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 7);
 	get_params_data(params, 3,
@@ -74,9 +70,7 @@ void	op_xor(t_process *proc, t_env *e)
 {
 	t_param		params[3];
 	int			len;
-	int			i;
 
-	i = 0;
 	get_params_len(params, 3,
 			*((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 8);
 	get_params_data(params, 3,
@@ -97,9 +91,7 @@ void	op_zjmp(t_process *proc, t_env *e)
 {
 	t_param		params[3];
 	int			len;
-	int			i;
 
-	i = 0;
 	ft_bzero(params, sizeof(params));
 	if (proc->carry == 1)
 	{
@@ -107,6 +99,8 @@ void	op_zjmp(t_process *proc, t_env *e)
 				*((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 9);
 		get_params_data(params, 1,
 				((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
+		if (e->ncu.info_win)
+			wprintw(e->ncu.info_win, "jump to :[%hd]\n", params[0].value);
 		move_process_pc(proc, params[0].value, e);
 		return ;
 	}
@@ -126,9 +120,7 @@ void	op_ldi(t_process *proc, t_env *e)
 	t_param		params[3];
 	int			addr;
 	int			len;
-	int			i;
 
-	i = 0;
 	get_params_len(params, 3,
 			*((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 10);
 	get_params_data(params, 3,
