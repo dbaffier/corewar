@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 23:48:20 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/01 17:19:12 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ void					ncurses_aff_all(t_env *e);
 void					update_aff_vminfo(t_env *e, size_t cycle);
 void					update_aff_vmstatus(t_env *e);
 void					update_aff_champion(t_env *e, t_process *proc);
+void					update_aff_arena(char *arena, size_t size, short color, t_env *e);
 
 /*
 ** Game Functions
@@ -151,6 +152,7 @@ void					launch_game(t_env *e);
 int						play_game(size_t nb_cycles, t_env *e);
 void					dump_map(unsigned char *arena, size_t size);
 void					move_process_pc(t_process *proc, int len, t_env *e);
+REG_CAST				calc_mod(int len, size_t size);
 
 /*
 ** Instructions Functions
