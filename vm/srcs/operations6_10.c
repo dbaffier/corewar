@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/01 19:43:41 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/10/01 19:51:30 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,7 @@ void	op_zjmp(t_process *proc, t_env *e)
 {
 	t_param		params[3];
 	int			len;
-	int			i;
 
-	i = 0;
 	ft_bzero(params, sizeof(params));
 	if (proc->carry == 1)
 	{
