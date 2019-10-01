@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 21:30:31 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 23:19:51 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/01 18:15:27 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,32 @@ void			update_aff_champion(t_env *e, t_process *proc)
 {
 	(void)proc;
 	(void)e;
+}
+
+static unsigned char	*calc_arena(unsigned char *arena, unsigned char *e_arena)
+{
+	if (arena >= e_arena + MEM_SIZE)
+		return (e_arena);
+	return (arena);
+}
+
+void			update_aff_arena(char *arena, size_t size, short color, t_env *e)
+{
+	size_t		pos;
+	size_t		i;
+	int			x;
+	int			y;
+
+	i = 0;
+	while (size--)
+	{
+		pos = calc_mod(arena - (char *)e->arena + size, MEM_SIZE);
+		y = ((pos * 3) / ARENA_LINE_LEN) % MEM_SIZE;
+		x = ((pos * 3) % ARENA_LINE_LEN) % MEM_SIZE;
+		e->colors[pos] = color;
+wprintw(e->ncu.info_win, "pos:%ld x:%d y:%d\n", pos, x, y);
+		mvwprintw(e->ncu.arena_win, y, x, "%02x",
+		*calc_arena((unsigned char *)arena + i, e->arena));
+		i++;
+	}
 }
