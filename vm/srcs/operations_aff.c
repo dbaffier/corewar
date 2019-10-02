@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 19:23:33 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/01 22:48:40 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/02 17:42:39 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,16 @@ extern struct s_op	op_tab[17];
 
 void	op_aff(t_process *proc, t_env *e)
 {
+	uint8_t		*arena;
 	t_param		params[3];
 	int			len;
 	int			i;
 
 	i = 0;
+	arena = (uint8_t *)e->arena;
 	get_params_len(params, 1,
-		(*(uint8_t *)e->arena + *(REG_CAST *)proc->pc + 1), 1);
-	get_params_data(params, 1,
-		((uint8_t *)e->arena) + *(REG_CAST *)proc->pc);
+		*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 1);
+	get_params_data(params, 1, arena, *(REG_CAST *)proc->pc);
 	if (e->ncu.info_win)
 		wprintw(e->ncu.info_win, "corewar : [%s] : \"%c\"\n",
 			((t_header *)proc->file)->prog_name, params[0].value);

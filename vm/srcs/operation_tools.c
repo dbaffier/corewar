@@ -6,14 +6,14 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/02 17:33:38 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/02 18:02:38 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
-#include "ft_printf.h"
 
+#include "ft_printf.h"
 t_process	*new_proc(t_process *proc, int value, int flag, t_env *e)
 {
 	t_process *new;
@@ -80,14 +80,19 @@ int			get_value(uint8_t *data, int index, int size)
 {
 	int		i;
 	int		j;
-	char	tab[4];
+	char	tab[REG_SIZE];
 
+	ft_bzero(tab, REG_SIZE);
 	i = 0;
-	j = 4;
-	ft_bzero(tab, 5);
-	while (size--)
-		tab[j--] = data[(index + i++) % MEM_SIZE];
-	tab[i] = '\0';
+	j = REG_SIZE - 1;
+	if (size > (int)sizeof(REG_CAST))
+		return (0);
+	while (i < size)
+	{
+		tab[j--] = data[(index + i) % MEM_SIZE];
+		i++;
+	}
+ft_printf("RET: %d %d\n", *(int *)tab, byteswap_32(*(int *)tab));
 	return (*(int *)tab);
 }
 
