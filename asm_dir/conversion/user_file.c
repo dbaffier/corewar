@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 22:09:01 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/02 01:43:14 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/02 16:45:12 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ int		user_file(t_data *data)
 	{
 		if (data->file_name[0] == '.')
 			data->file_name = getcwd(NULL, 0);
-		data->file_name = ft_strjoinfree(data->file_name, "/", 1);
+		len = ft_strlen(data->file_name);
+		if (data->file_name[len] != '/')
+			data->file_name = ft_strjoinfree(data->file_name, "/", 1);
 		b_name = cut_path(basename(data->e->fd_name));
 		data->file_name = ft_strjoinfree(data->file_name, b_name, 3);
 	}
