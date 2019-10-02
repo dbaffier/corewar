@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations6_10.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/02 17:34:36 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/02 18:49:34 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	op_zjmp(t_process *proc, t_env *e)
 		return ;
 	}
 	len = full_len_size(op_tab[8].reg_nb, params);
-	move_process_pc(proc, len + 2, e);
+	move_process_pc(proc, len + 1, e);
 }
 
 /*
