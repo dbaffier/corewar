@@ -18,7 +18,7 @@
 static int	err_file(int err)
 {
 	static char *tab_err[] = { NULL, ERR_STR_FILE,
-		ERR_STR_EXTENSION, ERR_STR_NOFILE, ERR_STR_OVERFLOW , };
+		ERR_STR_EXTENSION, ERR_STR_NOFILE, ERR_STR_OVERFLOW , ERR_STR_OPEN};
 
 	ft_dprintf(2, "%s\n", tab_err[err]);
 	ft_dprintf(2, "Usage : ./asm file.s\n");
@@ -42,7 +42,7 @@ int main(int ac, char **av)
 	if ((ret = parser(&e, av[i])) > 0)
 		return (0);
 	if ((ret = dump_to_file(&e)) > 0)
-		return (0);
+		return (err_file(ret));
 	free_aolist(e.aolist);
 	return (0);
 }

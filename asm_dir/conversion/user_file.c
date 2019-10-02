@@ -127,7 +127,6 @@ int		user_file(t_data *data)
 			data->file_name = ft_strjoinfree(data->file_name, "/", 1);
 		b_name = cut_path(basename(data->e->fd_name));
 		data->file_name = ft_strjoinfree(data->file_name, b_name, 3);
-		printf("data->file_name bef open = %s\n", data->file_name);
 	}
 	else
 		data->file_name = ft_strjoinfree(data->file_name, ".cor", 1);

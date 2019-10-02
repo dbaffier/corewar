@@ -52,7 +52,7 @@ int			parse_flag(t_env *e, char **av)
 		while (av[i][j])
 		{
 			if (av[i][j] == '-' && av[i][j + 1] == '-')
-				return (i);
+				return (i + 1);
 			if (j == 0 && av[i][j] != '-')
 				return (i);
 			if (j != 0 && av[i][j] == '-')
