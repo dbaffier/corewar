@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:12:05 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/02 17:22:25 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/10/02 17:50:41 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ void	op_sti(t_process *proc, t_env *e)
 	% MEM_SIZE), 11);
 	get_params_data(params, 3, arena + *(REG_CAST *)proc->pc);
 	if (params[0].value > 0 && params[0].value < REG_NUMBER)
-		handle_st(params, proc, e);
-	// proc->carry = (addr == 0) ? 1 : 0; // addr ?
+		handle_sti(params, proc, e);
 	len = full_len_size(op_tab[10].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
 }
@@ -101,7 +100,7 @@ void	op_lldi(t_process *proc, t_env *e)
 
 	arena = (uint8_t *)e->arena;
 	get_params_len(params, 3, *(arena + (*(REG_CAST *)proc->pc + 1)
-	% MEM_SIZE), 14);
+		% MEM_SIZE), 14);
 	get_params_data(params, 3, arena + *(REG_CAST *)proc->pc);
 	addr = params[0].value + params[1].value;
 	*(REG_CAST *)proc->reg[params[2].value] = arena[*(REG_CAST *)proc->pc + addr];
