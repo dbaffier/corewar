@@ -1,6 +1,8 @@
 	.name ""
 	.comment ""
 
+	fork %50
 	live %1
-	fork %500
-	zjmp %-8
+	ld %0, r2
+	live %1
+	zjmp %-5

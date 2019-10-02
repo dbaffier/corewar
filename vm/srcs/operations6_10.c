@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/01 22:50:28 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/02 17:34:36 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ extern struct s_op	op_tab[17];
 
 void	op_and(t_process *proc, t_env *e)
 {
+	uint8_t		*arena;
 	t_param		params[3];
 	int			len;
 
+	arena = (uint8_t *)e->arena;
 	get_params_len(params, 3,
-			*((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 6);
-	get_params_data(params, 3,
-			((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
+			*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 6);
+	get_params_data(params, 3, arena, *(REG_CAST *)proc->pc);
 	*(REG_CAST *)proc->reg[params[2].value] =
 		(params[0].value & params[1].value) % IDX_MOD;
 	proc->carry = (params[0].value & params[1].value) == 0 ? 1 : 0;
@@ -46,13 +47,14 @@ void	op_and(t_process *proc, t_env *e)
 
 void	op_or(t_process *proc, t_env *e)
 {
+	uint8_t		*arena;
 	t_param		params[3];
 	int			len;
 
+	arena = (uint8_t *)e->arena;
 	get_params_len(params, 3,
-			*((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 7);
-	get_params_data(params, 3,
-			((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
+			*(arena + *(REG_CAST *)proc->pc + 1), 7);
+	get_params_data(params, 3, arena, *(REG_CAST *)proc->pc);
 	*(REG_CAST *)proc->reg[params[2].value] =
 		(params[0].value | params[1].value) % IDX_MOD;
 	proc->carry = (params[0].value | params[1].value) == 0 ? 1 : 0;
@@ -68,13 +70,14 @@ void	op_or(t_process *proc, t_env *e)
 
 void	op_xor(t_process *proc, t_env *e)
 {
+	uint8_t		*arena;
 	t_param		params[3];
 	int			len;
 
+	arena = (uint8_t *)e->arena;
 	get_params_len(params, 3,
-			*((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 8);
-	get_params_data(params, 3,
-			((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
+			*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 8);
+	get_params_data(params, 3, arena, *(REG_CAST *)proc->pc);
 	*(REG_CAST *)proc->reg[params[2].value] =
 		(params[0].value ^ params[1].value) % IDX_MOD;
 	proc->carry = (params[0].value ^ params[1].value) == 0 ? 1 : 0;
@@ -89,16 +92,17 @@ void	op_xor(t_process *proc, t_env *e)
 
 void	op_zjmp(t_process *proc, t_env *e)
 {
+	uint8_t		*arena;
 	t_param		params[3];
 	int			len;
 
+	arena = (uint8_t *)e->arena;
 	ft_bzero(params, sizeof(params));
 	if (proc->carry == 1)
 	{
 		get_params_len(params, 1,
-				*((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 9);
-		get_params_data(params, 1,
-				((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
+				*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 9);
+		get_params_data(params, 1, arena, *(REG_CAST *)proc->pc);
 		if (e->ncu.info_win)
 			wprintw(e->ncu.info_win, "jump to :[%hd]\n", params[0].value);
 		move_process_pc(proc, params[0].value, e);
@@ -117,14 +121,15 @@ void	op_zjmp(t_process *proc, t_env *e)
 
 void	op_ldi(t_process *proc, t_env *e)
 {
+	uint8_t		*arena;
 	t_param		params[3];
 	int			addr;
 	int			len;
 
+	arena = (uint8_t *)e->arena;
 	get_params_len(params, 3,
-			*((unsigned char *)e->arena + *(REG_CAST *)proc->pc + 1), 10);
-	get_params_data(params, 3,
-			((unsigned char *)e->arena) + *(REG_CAST *)proc->pc);
+			*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 10);
+	get_params_data(params, 3, arena, *(REG_CAST *)proc->pc);
 	addr = (params[0].value + params[1].value) % IDX_MOD;
 	*(REG_CAST *)proc->reg[params[2].value] =
 		((unsigned char *)e->arena)[*(REG_CAST *)proc->pc + addr];

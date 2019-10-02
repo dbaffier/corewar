@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operation_tools.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/09/30 23:32:23 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/10/02 17:33:38 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_process	*new_proc(t_process *proc, int value, int flag, t_env *e)
 
 void		get_types(char types, t_param *params_type)
 {
-	unsigned char	param_len;
+	uint8_t	param_len;
 	int				i;
 
 	i = 0;
@@ -76,32 +76,37 @@ void		get_params_len(t_param *params, int nbparam, char types,
 	}
 }
 
-int			get_value(unsigned char *data, int index, int size)
+int			get_value(uint8_t *data, int index, int size)
 {
 	int		i;
-	char	tab[5];
+	int		j;
+	char	tab[4];
 
 	i = 0;
+	j = 4;
 	ft_bzero(tab, 5);
 	while (size--)
-		tab[size] = data[(index + i++) % MEM_SIZE];
+		tab[j--] = data[(index + i++) % MEM_SIZE];
 	tab[i] = '\0';
 	return (*(int *)tab);
 }
 
-void		get_params_data(t_param *params, int nbparam, unsigned char *data)
+void		get_params_data(t_param *params, int nbparam, uint8_t *arena,
+REG_CAST pc)
 {
+	uint8_t	*data;
 	int		i;
 	int		size;
 
+	data = arena + pc;
 	i = 0;
 	size = 0;
 	while (i < nbparam)
 	{
 		if (*data == 9 || *data == 1 || *data == 12 || *data == 15)
-			params[i].value = get_value(data, 1, params[i].size);
+			params[i].value = get_value(arena, pc + 1, params[i].size);
 		else
-			params[i].value = get_value(data, size + 2, params[i].size);
+			params[i].value = get_value(arena, pc + size + 2, params[i].size);
 		size += params[i].size;
 		i++;
 	}
