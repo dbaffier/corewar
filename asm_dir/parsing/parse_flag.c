@@ -17,6 +17,7 @@ void		print_usage(char *err)
 { 
 	ft_dprintf(2, "asm : illegal option -- %s\n", err);
 	ft_dprintf(2, "usage: ./asm [-Pdfnops] [file, ...]\n");
+	ft_dprintf(2, "-h, --help to see options\n");
 	exit(1);
 }
 
