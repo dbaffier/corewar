@@ -34,6 +34,7 @@ int main(int ac, char **av)
 	ret = 0;
 	ft_memset(&e, 0, sizeof(e));
 	i = parse_flag(&e, av);
+	parse_narg(&e, ac, i);
 	if (e.flag & FLAG_D)
 		return (deasm(&e, av, i));
 	i = get_user_entry(&e, av, i);
