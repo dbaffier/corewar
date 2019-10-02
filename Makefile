@@ -6,7 +6,7 @@
 #    By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/26 23:23:36 by dbaffier          #+#    #+#              #
-#    Updated: 2019/10/01 21:57:40 by dbaffier         ###   ########.fr        #
+#    Updated: 2019/10/02 23:33:51 by mmonier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,7 @@ SRCS += buffer_functions.c		\
 		print_offset.c			\
 		print_path.c			\
 		print_tools.c			\
+		asm_helper.c			\
 
 WRITING_DIR = writing/
 SRCS += write_header.c			\

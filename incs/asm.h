@@ -143,5 +143,6 @@ int			parse_flag(t_env *e, char **av);
 int			get_user_entry(t_env *e, char **av, int i);
 void		free_aolist(t_aolist *aolist);
 int			deasm(t_env *e, char **av, int i);
+void		asm_helper(void);
 
 #endif
