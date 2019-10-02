@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/01 19:59:38 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/02 17:29:15 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "vm_ncurse.h"
 
 # if REG_SIZE == 1
-#  define REG_CAST unsigned char
+#  define REG_CAST uint8_t
 # elif REG_SIZE == 2
 #  define REG_CAST unsigned short
 # elif REG_SIZE == 4
@@ -78,7 +78,7 @@ typedef struct			s_process
 	char				pc[REG_SIZE];
 	char				carry;
 	size_t				instruction_wait;
-	unsigned char		instruction;
+	uint8_t		instruction;
 	size_t				is_alive;
 	short				color[2];
 	struct s_process	*next;
@@ -152,11 +152,12 @@ void					update_aff_arena_swap(char *arena, size_t size,
 */
 void					launch_game(t_env *e);
 int						play_game(size_t nb_cycles, t_env *e);
-void					dump_map(unsigned char *arena, size_t size);
+void					dump_map(uint8_t *arena, size_t size);
 void					move_process_pc(t_process *proc, int len, t_env *e);
 REG_CAST				calc_mod(int len, size_t size);
 void					arena_copy(void *dst, void *arena, REG_CAST *value,
 						size_t size);
+REG_CAST				arena_get(void *dst, void *arena, size_t size);
 uint32_t				byteswap_32(uint32_t x);
 
 /*
@@ -165,7 +166,6 @@ uint32_t				byteswap_32(uint32_t x);
 void					op_live(t_process *proc, t_env *e);
 void					op_ld(t_process *proc, t_env *e);
 void					op_st(t_process *proc, t_env *e);
-void					handle_st(t_param *params, t_process *proc, t_env *e);
 void					op_add(t_process *proc, t_env *e);
 void					op_sub(t_process *proc, t_env *e);
 void					op_and(t_process *proc, t_env *e);
@@ -180,14 +180,17 @@ void					op_lldi(t_process *proc, t_env *e);
 void					op_lfork(t_process *proc, t_env *e);
 void					op_aff(t_process *proc, t_env *e);
 
+void					handle_st(t_param *params, t_process *proc, t_env *e);
+void					handle_sti(t_param *params, t_process *proc, t_env *e);
+
 void					get_params_len(t_param *params, int nbparam,
 						char types, char opcode);
 void					get_params_data(t_param *params, int nbparam,
-						unsigned char *data);
+						uint8_t *arena, REG_CAST pc);
 t_process				*new_proc(t_process *proc, int value, int flag,
 						t_env *e);
 void					get_types(char types, t_param *params_type);
-int						get_value(unsigned char *data, int index,
+int						get_value(uint8_t *data, int index,
 						int size);
 int						full_len_size(unsigned short reg_nb,
 						t_param *params);

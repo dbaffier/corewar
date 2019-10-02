@@ -6,14 +6,14 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/02 18:02:38 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/10/02 18:04:08 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
-#include "ft_printf.h"
 
+#include "ft_printf.h"
 t_process	*new_proc(t_process *proc, int value, int flag, t_env *e)
 {
 	t_process *new;
@@ -35,7 +35,7 @@ t_process	*new_proc(t_process *proc, int value, int flag, t_env *e)
 
 void		get_types(char types, t_param *params_type)
 {
-	unsigned char	param_len;
+	uint8_t	param_len;
 	int				i;
 
 	i = 0;
@@ -76,32 +76,42 @@ void		get_params_len(t_param *params, int nbparam, char types,
 	}
 }
 
-int			get_value(unsigned char *data, int index, int size)
+int			get_value(uint8_t *data, int index, int size)
 {
 	int		i;
-	char	tab[5];
+	int		j;
+	char	tab[REG_SIZE];
 
+	ft_bzero(tab, REG_SIZE);
 	i = 0;
-	ft_bzero(tab, 5);
-	while (size--)
-		tab[size] = data[(index + i++) % MEM_SIZE];
-	tab[i] = '\0';
+	j = REG_SIZE - 1;
+	if (size > (int)sizeof(REG_CAST))
+		return (0);
+	while (i < size)
+	{
+		tab[j--] = data[(index + i) % MEM_SIZE];
+		i++;
+	}
+ft_printf("RET: %d %d\n", *(int *)tab, byteswap_32(*(int *)tab));
 	return (*(int *)tab);
 }
 
-void		get_params_data(t_param *params, int nbparam, unsigned char *data)
+void		get_params_data(t_param *params, int nbparam, uint8_t *arena,
+REG_CAST pc)
 {
+	uint8_t	*data;
 	int		i;
 	int		size;
 
+	data = arena + pc;
 	i = 0;
 	size = 0;
 	while (i < nbparam)
 	{
 		if (*data == 9 || *data == 1 || *data == 12 || *data == 15)
-			params[i].value = get_value(data, 1, params[i].size);
+			params[i].value = get_value(arena, pc + 1, params[i].size);
 		else
-			params[i].value = get_value(data, size + 2, params[i].size);
+			params[i].value = get_value(arena, pc + size + 2, params[i].size);
 		size += params[i].size;
 		i++;
 	}
