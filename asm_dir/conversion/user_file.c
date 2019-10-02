@@ -13,6 +13,78 @@
 #include "cw_hexdump.h"
 #include "asm.h"
 
+static int	count_moveup(char *file, char *dotdot)
+{
+	int i;
+	int j;
+	int count;
+
+	i = 0;
+	j = 0;
+	count = 0;
+	while (file[i])
+	{
+		if (file[i] == '.')
+		{
+			j = 0;
+			while (dotdot[j] == file[i])
+			{
+				j++;
+				i++;
+			}
+			if (j == 4)
+				count++;
+		}
+		i++;
+	}
+	return (count);
+}
+
+static void trunc_dir(t_data *data, int count_trunc)
+{
+	int			len;
+	int			i;
+	int			j;
+	static char buff[4096];
+	static char buff2[4096];
+
+	getcwd(buff, 4096);
+	len = ft_strlen(buff) - 1;
+	i = count_trunc * 3;
+	j = 0;
+	while (buff[len])
+	{
+		if (count_trunc == 0)
+			break;
+		else
+			buff[len] = '\0';
+		if (buff[len] == '/')
+			count_trunc--;
+		len--;
+	}
+	while (data->file_name[i])
+	{
+		buff2[j] = data->file_name[i];
+		j++;
+		i++;
+	}
+	if (buff2[0] != '\0')
+	{
+		free(data->file_name);
+		data->file_name = ft_strdup(buff2);
+	}
+	data->file_name = ft_strjoinfree(buff, data->file_name, 2);
+}
+
+static void	handle_dotdot(t_data *data)
+{
+	if (ft_strcmp(data->file_name, ".") == 0)
+		data->file_name = getcwd(NULL, 0);
+	if (ft_strcmp(data->file_name, "../") == 0 || ft_strcmp(data->file_name, "..") == 0
+			|| count_moveup(data->file_name, "../") > 0)
+		trunc_dir(data, count_moveup(data->file_name, "../"));
+}
+
 static char *cut_path(char *file)
 {
 	int		len;
@@ -49,13 +121,13 @@ int		user_file(t_data *data)
 	data->file_name = ft_strdup(data->e->fd_user);
 	if (data->e->flag & FLAG_F)
 	{
-		if (data->file_name[0] == '.')
-			data->file_name = getcwd(NULL, 0);
+		handle_dotdot(data);
 		len = ft_strlen(data->file_name);
-		if (data->file_name[len] != '/')
+		if (data->file_name[len - 1] != '/')
 			data->file_name = ft_strjoinfree(data->file_name, "/", 1);
 		b_name = cut_path(basename(data->e->fd_name));
 		data->file_name = ft_strjoinfree(data->file_name, b_name, 3);
+		printf("data->file_name bef open = %s\n", data->file_name);
 	}
 	else
 		data->file_name = ft_strjoinfree(data->file_name, ".cor", 1);
