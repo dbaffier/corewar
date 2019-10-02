@@ -35,6 +35,7 @@ static int			set_msk(t_env *e, char c)
 		if (c == tab[i].opt)
 		{
 			e->flag |= tab[i].msk;
+			e->flag |= ATLST_ONE;
 			return (1);
 		}
 		i++;
@@ -91,5 +92,5 @@ int			parse_flag(t_env *e, char **av)
 		}
 		i++;
 	}
-	return (0);
+	return (i);
 }

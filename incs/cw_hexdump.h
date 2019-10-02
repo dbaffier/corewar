@@ -36,6 +36,7 @@
 # define FLAG_D		(1 << 4)
 # define FLAG_S		(1 << 5)
 # define FLAG_F		(1 << 6)
+# define ATLST_ONE	(1 << 8)
 
 # define DASH_N		{FLAG_N, 'n'}
 # define DASH_O		{FLAG_O, 'o'}

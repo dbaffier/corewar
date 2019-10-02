@@ -19,6 +19,20 @@ static void	print_errarg(t_env *e, int narg)
 
 void		parse_narg(t_env *e, int ac, int i)
 {
+	int n_arg;
+
+	n_arg = ac - i;
+	if (e->flag & ATLST_ONE && n_arg < n_arg + 1)
+	{
+		ft_dprintf(2, "Error : Not enough argument\n");
+		ft_dprintf(2, "Usage : asm [-Pdfnops] [file, ...]\n");
+		exit(1);
+	}
+	if (e->flag & FLAG_S && e->flag & FLAG_F)
+	{
+		ft_dprintf(2, "Incompatible flags : -s, -f ; sees -h, --help\n");
+		exit(1);
+	}
 	if (e->flag & FLAG_S || e->flag & FLAG_F)
 	{
 		if ((ac - i) != 2)
