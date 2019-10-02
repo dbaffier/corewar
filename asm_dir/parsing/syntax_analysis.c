@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 19:46:48 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/01 22:46:39 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/02 18:50:33 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,15 @@ static size_t	size_full(t_aolist *aolist)
 			;
 		else
 		{
-			aolist->mem_addr = size;
-			size += aolist->size;
+			if (aolist->tok)
+			{
+				aolist->mem_addr = size;
+				size += aolist->size;
+			}
 		}
 		aolist = aolist->next;
 	}
+	printf("%zx\n", size);
 	return (size);
 }
 

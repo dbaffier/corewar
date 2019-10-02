@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:15:33 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/02 00:07:13 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/02 17:25:52 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int			main(int ac, char **av)
 	i = parse_flag(&e, av);
 	if (e.flag & FLAG_D)
 		return (deasm(&e, av, i));
-	i = parse_dashs(&e, av, i);
+	i = get_user_entry(&e, av, i);
 	if ((ret = asm_file(ac, av, i)) > 0)
 		return (err_file(ret));
 	if ((ret = parser(&e, av[i])) > 0)

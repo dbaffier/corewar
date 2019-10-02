@@ -36,14 +36,14 @@
 
 # AFF : affiche sur la sortie standard le char ASCII
 
-entry:
+entry:  
 	st		r1, 6
 	st		r1, r3
 	live	%42
 	fork	%:hanibalsmith
 	zjmp	%:move1
 
-hanibalsmith:
+hanibalsmith: 
 	live	%42
 	st		r15, -50
 	st		r15, -64

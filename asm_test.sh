@@ -31,7 +31,7 @@ done
 for entry in "unitest_asm/valid"/*.s
 do
 	count=$((count + 1))
-	err=$(echo $(./asm $entry >&/dev/null ; echo $?))
+	err=$(echo $(./asm -f . $entry >&/dev/null ; echo $?))
 	target=$(echo $entry | cut -f3 -d"/")
 	if [ "$err" -eq 0 ]
 	then
@@ -51,7 +51,7 @@ do
 				printf "%-40s\033[31m%40s\033[0m\n" $target "NO"
 			fi
 		else
-			printf "%-40s\033[31m%40s\033[0m\n" $target "Zaz doesnt not compile"
+			printf "%-40s\033[31m%40s\033[0m\n" $target "Zaz does not compile"
 		fi
 		rm file1
 		rm file2

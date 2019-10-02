@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 19:57:32 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/02 00:09:15 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/02 18:59:24 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,12 @@ static t_aolist		*brother_link(t_aolist *head, t_token *curr)
 		if (ptr && ptr->type & LABEL)
 		{
 			if (!ft_strcmp(curr->lab, ptr->lab))
-				return (head);
+			{
+				if (ptr->next == NULL)
+					return (head->next);
+				else
+					return (head);
+			}
 		}
 		head = head->next;
 	}
@@ -76,6 +81,7 @@ int					asm_syntax_label(t_env *e, t_aolist *head, t_token *curr)
 		return (syntax_error(e, E_LEXICAL, curr->err, head->line));
 	if (!(head->lab = brother_link(e->aolist, curr)))
 		return (syntax_error(e, E_LAB, curr->err, head->line));
+	//curr->bin = head->lab->mem_addr - head->mem_addr;
 	curr->bin = head->lab->mem_addr - head->mem_addr;
 	return (0);
 }
