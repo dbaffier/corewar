@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 21:30:31 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/01 19:59:38 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/02 18:55:50 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,22 @@ void			update_aff_vminfo(t_env *e, size_t cycle)
 	wrefresh(e->ncu.vm_win);
 }
 
-void			update_aff_champion(t_env *e, t_process *proc)
+void			update_aff_champion_dead(t_env *e, t_process *proc)
 {
-	(void)proc;
-	(void)e;
+	int			y;
+	int			x;
+
+	if (e->ncu.arena_win)
+	{
+		y = ((*(REG_CAST *)proc->pc * 3) / ARENA_LINE_LEN) % MEM_SIZE;
+		x = ((*(REG_CAST *)proc->pc * 3) % ARENA_LINE_LEN) % MEM_SIZE;
+		wattron(e->ncu.arena_win,
+			COLOR_PAIR(e->colors[*(REG_CAST *)proc->pc]));
+		mvwprintw(e->ncu.arena_win, y, x, "%02x",
+		*((unsigned char *)e->arena + *(REG_CAST *)proc->pc));
+		wattroff(e->ncu.arena_win,
+			COLOR_PAIR(e->colors[*(REG_CAST *)proc->pc]));
+	}
 }
 
 static uint8_t	*calc_arena(unsigned char *arena, unsigned char *e_arena)

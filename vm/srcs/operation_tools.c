@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/02 18:02:38 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/02 18:48:17 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,13 @@ int			get_value(uint8_t *data, int index, int size)
 	ft_bzero(tab, REG_SIZE);
 	i = 0;
 	j = REG_SIZE - 1;
-	if (size > (int)sizeof(REG_CAST))
+	if (size > REG_SIZE)
 		return (0);
-	while (i < size)
+	while (size--)
 	{
-		tab[j--] = data[(index + i) % MEM_SIZE];
+		tab[size] = data[(index + i) % MEM_SIZE];
 		i++;
 	}
-ft_printf("RET: %d %d\n", *(int *)tab, byteswap_32(*(int *)tab));
 	return (*(int *)tab);
 }
 

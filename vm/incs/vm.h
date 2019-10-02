@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/02 17:29:15 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/02 18:53:56 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int						create_infobox(t_env *e);
 void					ncurses_aff_all(t_env *e);
 void					update_aff_vminfo(t_env *e, size_t cycle);
 void					update_aff_vmstatus(t_env *e);
-void					update_aff_champion(t_env *e, t_process *proc);
+void					update_aff_champion_dead(t_env *e, t_process *proc);
 void					update_aff_arena_swap(char *arena, size_t size,
 						short color, t_env *e);
 
@@ -158,6 +158,7 @@ REG_CAST				calc_mod(int len, size_t size);
 void					arena_copy(void *dst, void *arena, REG_CAST *value,
 						size_t size);
 REG_CAST				arena_get(void *dst, void *arena, size_t size);
+uint16_t				byteswap_16(uint16_t x);
 uint32_t				byteswap_32(uint32_t x);
 
 /*

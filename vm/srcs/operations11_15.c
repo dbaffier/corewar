@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:12:05 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/02 17:40:36 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/02 18:48:46 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	op_fork(t_process *proc, t_env *e)
 	if (params[0].value != 0)
 		proc->next = new_proc(proc, params[0].value, 0, e);
 	len = full_len_size(op_tab[11].reg_nb, params);
-	move_process_pc(proc, len + 2, e);
+	move_process_pc(proc, len + 1, e);
 }
 
 /*
