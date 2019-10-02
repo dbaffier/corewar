@@ -3,24 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   remove_player.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:45:03 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 01:38:54 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/10/01 22:48:43 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "vm.h"
 #include "libft.h"
 
-#include"ft_printf.h"
 t_process			*remove_player(t_process *proc, t_process **head)
 {
 	t_process	*next;
 
 	next = proc->next;
-//ft_printf("freeing %d ptr:%p prev:%p next:%p\n", proc->id, proc, proc->prev, proc->next);
 	if (proc->prev)
 		proc->prev->next = proc->next;
 	else
@@ -31,6 +28,9 @@ t_process			*remove_player(t_process *proc, t_process **head)
 		free(proc->file);
 	ft_bzero(proc, sizeof(*proc));
 	free(proc);
-	// system("afplay ~/Desktop/roblox-death-sound-effect.mp3 2>&-");
 	return (next);
 }
+
+/*
+** system("afplay ~/Desktop/roblox-death-sound-effect.mp3 2>&-");
+*/

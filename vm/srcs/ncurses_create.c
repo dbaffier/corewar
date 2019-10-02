@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:20:26 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/01 18:32:00 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/01 22:48:42 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int				ncurses_termtoosmall(t_env *e)
 	wbkgd(e->ncu.main_win, COLOR_PAIR(COREWAR_DFLT_COLOR));
 	wattron(e->ncu.main_win, A_BOLD);
 	wattron(e->ncu.main_win, COLOR_PAIR(COREWAR_TEXT_COLOR));
-	mvwaddstr(e->ncu.main_win, (LINES * 0.5) - 1, (COLS * 0.5) - 3, "TERMINAL");
+	mvwaddstr(e->ncu.main_win, (LINES * 0.5) - 1, (COLS * 0.5) - 3, "TERM");
 	mvwaddstr(e->ncu.main_win, (LINES * 0.5), (COLS * 0.5) - 4, "TOO SMALL!");
 	wattroff(e->ncu.main_win, COLOR_PAIR(COREWAR_TEXT_COLOR));
 	wattroff(e->ncu.main_win, A_BOLD);
@@ -27,7 +27,7 @@ int				ncurses_termtoosmall(t_env *e)
 }
 
 /*
-** WINDOW *subwin(WINDOW *orig, int nlines, int ncols, int begin_y, int begin_x);
+** WINDOW *subwin(WINDOW *orig, int nlines, int ncols, int beg_y, int beg_x);
 */
 
 int				create_arenabox(t_env *e)
@@ -46,7 +46,8 @@ int				create_arenabox(t_env *e)
 	wattroff(e->ncu.arena_winbox, COLOR_PAIR(2));
 	mvwaddch(e->ncu.arena_winbox, 0, (winx * 0.5) + 8, ACS_LTEE);
 	wrefresh(e->ncu.arena_winbox);
-	if (!(e->ncu.arena_win = subwin(e->ncu.arena_winbox, winy - 2, winx - 2, 1, 1)))
+	e->ncu.arena_win = subwin(e->ncu.arena_winbox, winy - 2, winx - 2, 1, 1);
+	if (!e->ncu.arena_win)
 		return (ERR_NCURSE_ARENAWIN);
 	return (IS_OK);
 }
@@ -78,7 +79,8 @@ int				create_infobox(t_env *e)
 
 	winx = COLS - (ARENA_LINE_LEN + 1);
 	winy = ARENA_VALUE_PER_LINE + 1;
-	if (!(e->ncu.info_winbox = subwin(e->ncu.main_win, winy, winx, 0, COLS - winx)))
+	e->ncu.info_winbox = subwin(e->ncu.main_win, winy, winx, 0, COLS - winx);
+	if (!e->ncu.info_winbox)
 		return (ERR_NCURSE_INFOBOX);
 	box(e->ncu.info_winbox, 0, 0);
 	mvwaddch(e->ncu.info_winbox, 0, (winx * 0.5) - 4, ACS_RTEE);

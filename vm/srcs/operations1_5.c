@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/01 19:47:45 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/02 16:39:03 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,12 @@ void	op_ld(t_process *proc, t_env *e)
 	{
 		if (params[0].size == 2)
 		{
-			*(REG_CAST *)proc->reg[params[1].value - 1]
-			= *(REG_CAST *)((int8_t *)e->arena + calc_mod(*(REG_CAST *)proc->pc
+			*(REG_CAST *)proc->reg[params[1].value - 1] =
+			*(REG_CAST *)((int8_t *)e->arena + calc_mod(*(REG_CAST *)proc->pc
 			+ ((short)params[0].value % IDX_MOD), MEM_SIZE));
-			*(REG_CAST *)proc->reg[params[1].value - 1]
-			= byteswap_32(*(REG_CAST *)proc->reg[params[1].value - 1]);
+
+			*(REG_CAST *)proc->reg[params[1].value - 1] =
+			byteswap_32(*(REG_CAST *)proc->reg[params[1].value - 1]);
 		}
 		else if (params[0].size == 4)
 		{

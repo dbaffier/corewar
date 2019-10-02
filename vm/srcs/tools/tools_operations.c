@@ -42,5 +42,5 @@ int		get_param(void *data, int position, t_op *op, int pc)
 		off = offset_calc(op->reg_arg_type, 0);
 		&& (op->reg_arg_type.one & T_REG))
 	if (op->reg_arg_type.one & T_REG)
-
+		;
 }

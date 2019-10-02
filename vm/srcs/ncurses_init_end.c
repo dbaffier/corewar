@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:28:36 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/01 15:35:53 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/01 22:48:52 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,18 @@
 ** 	COLOR_WHITE		7
 */
 
+static void		init_pairs(void)
+{
+	init_pair(COREWAR_DFLT_COLOR, COLOR_BLACK, -1);
+	init_pair(COREWAR_TITLE_COLOR, COLOR_YELLOW, -1);
+	init_color(8, 100, 0, 200);
+	init_pair(COREWAR_CHAMPWIN_COLOR, COLOR_WHITE, 8);
+	init_color(9, 75, 0, 125);
+	init_pair(COREWAR_INFOWIN_COLOR, COLOR_WHITE, 9);
+	init_pair(COREWAR_TEXT_COLOR, COLOR_WHITE, -1);
+	init_pair(COREWAR_WINNER_COLOR, COLOR_BLACK, COLOR_BLUE);
+}
+
 static void		init_colors(t_env *e)
 {
 	static short	color_combo[] = {
@@ -37,23 +49,16 @@ static void		init_colors(t_env *e)
 
 	start_color();
 	use_default_colors();
-	init_pair(COREWAR_DFLT_COLOR, COLOR_BLACK, -1);
-	init_pair(COREWAR_TITLE_COLOR, COLOR_YELLOW, -1);
-	init_color(8, 100, 0, 200);
-	init_pair(COREWAR_CHAMPWIN_COLOR, COLOR_WHITE, 8);
-	init_color(9, 75, 0, 125);
-	init_pair(COREWAR_INFOWIN_COLOR, COLOR_WHITE, 9);
-	init_pair(COREWAR_TEXT_COLOR, COLOR_WHITE, -1);
-	init_pair(COREWAR_WINNER_COLOR, COLOR_BLACK, COLOR_BLUE);
+	init_pairs();
 	i = COREWAR_COLOR_END;
 	color_nb = 0;
 	proc = e->proc;
 	while (proc)
 	{
 		proc->color[0] = i;
-		init_pair(i++, color_combo[color_nb], -1); // Player color
+		init_pair(i++, color_combo[color_nb], -1);
 		proc->color[1] = i;
-		init_pair(i++, COLOR_BLACK, color_combo[color_nb]); // Player color PC
+		init_pair(i++, COLOR_BLACK, color_combo[color_nb]);
 		color_nb++;
 		proc = proc->next;
 	}
