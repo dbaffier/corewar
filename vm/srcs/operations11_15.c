@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations11_15.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:12:05 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/01 22:54:44 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/02 17:22:25 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	op_sti(t_process *proc, t_env *e)
 	int			len;
 
 	arena = (uint8_t *)e->arena;
-	get_params_len(params, 3, *(arena + *(REG_CAST *)proc->pc + 1), 11);
+	get_params_len(params, 3, *(arena + (*(REG_CAST *)proc->pc + 1)
+	% MEM_SIZE), 11);
 	get_params_data(params, 3, arena + *(REG_CAST *)proc->pc);
 	if (params[0].value > 0 && params[0].value < REG_NUMBER)
 		handle_st(params, proc, e);
@@ -53,7 +54,8 @@ void	op_fork(t_process *proc, t_env *e)
 	int			len;
 
 	arena = (uint8_t *)e->arena;
-	get_params_len(params, 1, *(arena + *(REG_CAST *)proc->pc + 1), 12);
+	get_params_len(params, 1, *(arena + (*(REG_CAST *)proc->pc + 1)
+		% MEM_SIZE), 12);
 	get_params_data(params, 1, arena + *(REG_CAST *)proc->pc);
 	if (params[0].value != 0)
 		proc->next = new_proc(proc, params[0].value, 0, e);
@@ -74,7 +76,8 @@ void	op_lld(t_process *proc, t_env *e)
 	int			len;
 
 	arena = (uint8_t *)e->arena;
-	get_params_len(params, 2, *(arena + *(REG_CAST *)proc->pc + 1), 13);
+	get_params_len(params, 2, *(arena + (*(REG_CAST *)proc->pc + 1)
+		% MEM_SIZE), 13);
 	get_params_data(params, 2, arena + *(REG_CAST *)proc->pc);
 	*(REG_CAST *)proc->reg[params[1].value] =
 		*(REG_CAST *)proc->pc + (params[0].value % MEM_SIZE);
@@ -97,7 +100,8 @@ void	op_lldi(t_process *proc, t_env *e)
 	int			len;
 
 	arena = (uint8_t *)e->arena;
-	get_params_len(params, 3, *(arena + *(REG_CAST *)proc->pc + 1), 14);
+	get_params_len(params, 3, *(arena + (*(REG_CAST *)proc->pc + 1)
+	% MEM_SIZE), 14);
 	get_params_data(params, 3, arena + *(REG_CAST *)proc->pc);
 	addr = params[0].value + params[1].value;
 	*(REG_CAST *)proc->reg[params[2].value] = arena[*(REG_CAST *)proc->pc + addr];
@@ -118,7 +122,8 @@ void	op_lfork(t_process *proc, t_env *e)
 	int			len;
 
 	get_params_len(params, 1,
-			*((uint8_t *)e->arena + *(REG_CAST *)proc->pc + 1), 15);
+			*((uint8_t *)e->arena + (*(REG_CAST *)proc->pc + 1)
+			% MEM_SIZE), 15);
 	get_params_data(params, 1,
 			((uint8_t *)e->arena) + *(REG_CAST *)proc->pc);
 	if (params[0].value != 0)
