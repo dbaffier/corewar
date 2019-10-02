@@ -6,22 +6,22 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 21:17:34 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/30 02:26:57 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/01 22:19:15 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw_hexdump.h"
 
-void		print_usage(int error)
+void				print_usage(int error)
 {
 	(void)error;
-	ft_dprintf(2, "usage: ./asm [-Pnop] [file ...]\n");
+	ft_dprintf(2, "usage: ./asm [-Pdnop] [file ...]\n");
 	exit(0);
 }
 
 static int			set_msk(t_env *e, char c)
 {
-	static t_flags	tab[5] = {DASH_N, DASH_O, DASH_P, DASH_GP, DASH_D};
+	static t_flags	tab[6] = {DASH_N, DASH_O, DASH_P, DASH_GP, DASH_D, DASH_S};
 	size_t			i;
 
 	i = 0;
@@ -37,7 +37,7 @@ static int			set_msk(t_env *e, char c)
 	return (0);
 }
 
-int			parse_flag(t_env *e, char **av)
+int					parse_flag(t_env *e, char **av)
 {
 	int i;
 	int j;
@@ -46,6 +46,8 @@ int			parse_flag(t_env *e, char **av)
 	while (av[i])
 	{
 		j = 0;
+		if (!av[i][j])
+			return (i);
 		while (av[i][j])
 		{
 			if (av[i][j] == '-' && av[i][j + 1] == '-')

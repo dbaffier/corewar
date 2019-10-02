@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 01:14:48 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/01 00:53:55 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/01 21:16:38 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,15 @@ static void		reset_tab(t_info *inf)
 
 void		dswrite_param(t_info *inf, unsigned char buff)
 {
+	/*printf("---------------------------------------\n");
+	printf("NPARAM = %d\n", inf->n_param);
+	printf("INF I = %d\n", inf->i);
+	printf("tab 0 : %d -- tab 1 : %d -- tab 2 : %d\n", inf->size[0], inf->size[1], inf->size[2]);
+	printf("WAIT = %d\n", inf->wait);
+	printf("---------------------------------------\n\n");
+	getchar();*/
 	if (inf->size[inf->i] > 1)
 	{
-		printf("enter : buff = %x\n", buff);
 		if (inf->bin == 0x0)
 			inf->bin = (int)buff;
 		else
@@ -107,13 +113,8 @@ void		dswrite_param(t_info *inf, unsigned char buff)
 			inf->bin <<= 8;
 			inf->bin |= (int)buff;
 		}
-		if (inf->wait == inf->size[inf->i])
+		if (inf->wait == inf->size[inf->i] - 1)
 		{
-			printf("ENTERING IF TO WRITE---------------\n");
-			printf("bin = %x\n", inf->bin);
-			printf("buff = %x\n", buff);
-			printf("inf->wait == %d -- size = %d\n", inf->wait, inf->size[inf->i]);
-			getchar();
 			if (inf->type[inf->i] == TYPE_DIR)
 				ft_dprintf(inf->ds_fd, "%%%d", inf->bin);
 			if (inf->type[inf->i] == TYPE_IND)
@@ -124,12 +125,14 @@ void		dswrite_param(t_info *inf, unsigned char buff)
 			inf->wait = 0;
 			inf->bin = 0;
 		}
-		inf->wait = inf->wait + 1;
+		else
+			inf->wait = inf->wait + 1;
 	}
 	else
 	{
-		printf("buff = %x\n", buff);
 		ft_dprintf(inf->ds_fd, "r%d", buff); 
+		if (inf->i < inf->n_param - 1)
+			ft_dprintf(inf->ds_fd, ", ");
 		inf->i = inf->i + 1;
 	}
 	if (inf->i == inf->n_param)

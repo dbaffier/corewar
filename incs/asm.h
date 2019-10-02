@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:19:41 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/01 00:34:50 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/01 22:02:39 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 # define ERR_STR_EXTENSION	"file extension is not correct"
 # define ERR_STR_NOFILE		"no given file"
 # define ERR_STR_OVERFLOW	"too much argument given"
-# define ERR_STR_OPEN		"open failed "
+# define ERR_STR_OPEN		"failed to open given file"
 # define ERR_STR_MALLOC		"malloc failed to allocate memory"
 
 # define ERR_STR_NAME		"lexical error on name ->`.name`"
@@ -105,6 +105,7 @@ typedef struct		s_env
 	int			line;
 	size_t		size;
 	char		*fd_name;
+	char		*fd_user;
 	t_aolist	*aolist;
 }					t_env;
 
@@ -139,7 +140,8 @@ int			syntax_error(t_env *e, int error, char *str, int line);
 
 int			dump_to_file(t_env *e);
 int			parse_flag(t_env *e, char **av);
+int			parse_dashs(t_env *e, char **av, int i);
 void		free_aolist(t_aolist *aolist);
-int			deasm(char **av, int i);
+int			deasm(t_env *e, char **av, int i);
 
 #endif

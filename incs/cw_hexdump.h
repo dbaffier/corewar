@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/30 02:24:49 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/01 01:16:18 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,21 @@
 # include <signal.h>
 # include <limits.h>
 
+# define ERR_SIZE	-1
+
 # define FLAG_N		(1 << 0)
 # define FLAG_O		(1 << 1)
 # define FLAG_P		(1 << 2)
 # define FLAG_GP	(1 << 3)
 # define FLAG_D		(1 << 4)
+# define FLAG_S		(1 << 5)
 
 # define DASH_N		{FLAG_N, 'n'}
 # define DASH_O		{FLAG_O, 'o'}
 # define DASH_P		{FLAG_P, 'p'}
 # define DASH_GP	{FLAG_GP, 'P'}
 # define DASH_D		{FLAG_D, 'd'}
+# define DASH_S		{FLAG_S, 's'}
 
 # define NAME		1
 # define COMMENT	2
@@ -150,5 +154,8 @@ void		print_path(t_data *data);
 void		print_zero(t_data *data);
 void		print_zero_line(t_data *data);
 void		check_zero(t_data *data, unsigned char buff);
+void		reverse_write(t_data *data, unsigned int param, int count);
+
+int			user_file(t_data *data);
 
 #endif 

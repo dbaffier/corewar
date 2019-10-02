@@ -6,13 +6,13 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 00:59:16 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/01 00:47:11 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/01 03:58:00 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw_hexdump.h"
 
-static void reverse_write(t_data *data, unsigned int param, int count)
+void		reverse_write(t_data *data, unsigned int param, int count)
 {
 	unsigned char	bin;
 	unsigned int	tmp;
