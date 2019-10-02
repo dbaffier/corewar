@@ -108,32 +108,21 @@ typedef struct		s_thread
 	int				stop;
 }					t_thread;
 
-void		print_usage(int error);
-//////////// main hexdump
+void		print_usage(char *error);
 char		*basename(char *file);
 int			way_to_corewar(t_data *data, t_aolist *ao);
 
-//////////// generate .cor
 int			create_corfile(t_data *data, char *file);
-
-//////////// flush memory
 void		dump(char *file, void * addr, int len);
 
-//////////// write func
 void		write_name(t_data *data, char *str);
 void		write_comment(t_data *data, char *str);
 void		write_opc(t_data *data, int opc);
 void		write_type(t_data *data, int *tab);
 void		write_param(t_data *data, t_token *tok, int *tab);
-
-/*
-** Header functions
-*/
-
 void		write_header(t_data *data, int type);
-////////// write magic number
 void		write_magic(t_data *data);
-////////// binary conversion
+void		reverse_write(t_data *data, unsigned int param, int count);
 short		binary(char dec);
 
 int			init_screen(t_data *data);
@@ -152,12 +141,12 @@ void		starting_color(t_data *data);
 void		reset_colors(t_data *data);
 void		print_legend(t_data *data, int x, int y);
 void		print_offset(t_data *data);
+
 void		print_fsize(t_data *data);
 void		print_path(t_data *data);
 void		print_zero(t_data *data);
 void		print_zero_line(t_data *data);
 void		check_zero(t_data *data, unsigned char buff);
-void		reverse_write(t_data *data, unsigned int param, int count);
 
 int			user_file(t_data *data);
 int			len_path(char *file);
