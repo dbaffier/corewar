@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 19:23:33 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/03 21:43:54 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/03 22:31:07 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,19 @@ void	handle_sti(t_param *params, t_process *proc, t_env *e)
 	size_t		ret;
 	int			addr;
 
-	addr = (params[1].value + params[2].value) % IDX_MOD;
 	arena = (uint8_t *)e->arena;
-	ret = *(REG_CAST *)proc->pc + addr % IDX_MOD;
+	if (params[1].size == 1)
+		addr = ;
+	else if (params[1].size == 2)
+		addr = ;
+	else
+		addr = ;
+	if (params[2].size == 2)
+		addr += ;
+	if (params[2].size == 4)
+		addr += ;
+	addr %= IDX_MOD;
+	ret = *(REG_CAST *)proc->pc + (addr % IDX_MOD);
 	ret = calc_mod(ret, MEM_SIZE);
 	arena_copy(e->arena, ret,
 	(REG_CAST *)proc->reg[params[0].value - 1], REG_SIZE);
