@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 21:40:14 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/03 16:58:15 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/03 17:01:31 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void		parse_splited(t_token *ptr, char *str)
 	ptr->lab = ft_strdup(str + count);
 }
 
-static t_token		*parse_arg(t_token *ptr, char **splited, size_t *size)
+static t_token	*parse_arg(t_token *ptr, char **splited, size_t *size)
 {
 	size_t		i;
 	t_token		*save;
@@ -71,14 +71,14 @@ static int		evaluate_sc(char *line, size_t i)
 	return (0);
 }
 
-static int	split_arg(t_token *ptr, char **arg, size_t *size)
+static int		split_arg(t_token *ptr, char **arg, size_t *size)
 {
 	int			j;
 	char		**splited;
 
 	j = 0;
 	while (arg[j])
-	{	
+	{
 		splited = ft_strsplitws(arg[j]);
 		if (!(ptr = parse_arg(ptr, splited, size)))
 			return (ERR_MALLOC);
@@ -95,7 +95,7 @@ static int	split_arg(t_token *ptr, char **arg, size_t *size)
 	return (0);
 }
 
-int		grep_arg(t_token *ptr, char *line, size_t *i)
+int				grep_arg(t_token *ptr, char *line, size_t *i)
 {
 	size_t		size;
 	t_token		*save;
@@ -119,4 +119,3 @@ int		grep_arg(t_token *ptr, char *line, size_t *i)
 		*i = *i + 1;
 	return (0);
 }
-

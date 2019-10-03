@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 18:51:48 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/02 18:10:22 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/03 17:04:44 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,5 @@ int		set_id(t_token *head)
 		return (-1);
 	if (head)
 		return (head->val - 1);
-	/*while (g_op_tab[i].reg_name != 0)
-	{
-		if (!ft_strcmp(head->lab, g_op_tab[i].reg_name))
-			printf("Returning [%d]\n", i);
-			return (i);
-		i++;
-	}*/
 	return (-1);
 }
