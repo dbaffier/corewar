@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 23:30:34 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/01 03:58:12 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/03 18:04:19 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static short		set_binary(short bin, int type)
 	return (bin);
 }
 
-void			write_type(t_data *data, int *tab)
+void				write_type(t_data *data, int *tab)
 {
 	int		i;
 	short	bin;

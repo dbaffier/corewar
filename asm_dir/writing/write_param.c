@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 00:59:16 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/01 03:58:00 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/03 18:05:12 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,13 @@ void		reverse_write(t_data *data, unsigned int param, int count)
 			write(data->fd, &rev, 1);
 		count -= 8;
 	}
-
 }
 
 void		write_param(t_data *data, t_token *tok, int *tab)
 {
-	int i;
-	int len;
-	unsigned int param;
+	int				i;
+	int				len;
+	unsigned int	param;
 
 	i = 0;
 	while (tok)
@@ -53,7 +52,7 @@ void		write_param(t_data *data, t_token *tok, int *tab)
 			reverse_write(data, param, len);
 		}
 		else
-			write(data->fd, &param, 1); 
+			write(data->fd, &param, 1);
 		data->pc = data->pc + tab[i];
 		tok = tok->next;
 		i++;

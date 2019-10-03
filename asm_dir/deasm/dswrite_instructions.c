@@ -6,30 +6,11 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/30 01:14:48 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/01 02:47:57 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/03 17:47:14 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "deasm.h"
-#include <stdio.h>
-
-void		dswrite_opc(t_info *inf, char buff)
-{
-	static char		*tab[17] = {NULL, "live", "ld", "st", "add", "sub", "and", "or",
-								"xor", "zjmp", "ldi", "sti", "fork", "lld", "lldi",
-								"lfork", "aff"};
-	unsigned int	i;
-	
-	i = (unsigned int)buff;
-	if (i >= 1 && i <= 16)
-	{
-		ft_dprintf(inf->ds_fd, "%s\t", tab[i]);
-		if ((i >= 1 && i <= 8) || i == 13 || i == 16)
-			inf->dir_size = 4;
-		else
-			inf->dir_size = 2;
-	}
-}
 
 static void	check_type(t_info *inf, int j)
 {
@@ -81,7 +62,7 @@ void		decode_types(t_info *inf, unsigned int buff)
 	}
 }
 
-static void		reset_tab(t_info *inf)
+static void	reset_tab(t_info *inf)
 {
 	inf->type[0] = 0;
 	inf->type[1] = 0;
@@ -95,42 +76,38 @@ static void		reset_tab(t_info *inf)
 	inf->bin = 0;
 }
 
-void		dswrite_param(t_info *inf, unsigned char buff)
+static void	dswrite_long_arg(t_info *inf, unsigned char buff)
 {
-	/*printf("---------------------------------------\n");
-	printf("NPARAM = %d\n", inf->n_param);
-	printf("INF I = %d\n", inf->i);
-	printf("tab 0 : %d -- tab 1 : %d -- tab 2 : %d\n", inf->size[0], inf->size[1], inf->size[2]);
-	printf("WAIT = %d\n", inf->wait);
-	printf("---------------------------------------\n\n");
-	getchar();*/
-	if (inf->size[inf->i] > 1)
-	{
-		if (inf->bin == 0x0)
-			inf->bin = (int)buff;
-		else
-		{
-			inf->bin <<= 8;
-			inf->bin |= (int)buff;
-		}
-		if (inf->wait == inf->size[inf->i] - 1)
-		{
-			if (inf->type[inf->i] == TYPE_DIR)
-				ft_dprintf(inf->ds_fd, "%%%d", inf->bin);
-			if (inf->type[inf->i] == TYPE_IND)
-				ft_dprintf(inf->ds_fd, "%d", inf->bin);
-			if (inf->i < inf->n_param - 1)
-				ft_dprintf(inf->ds_fd, ", ");
-			inf->i = inf->i + 1;
-			inf->wait = 0;
-			inf->bin = 0;
-		}
-		else
-			inf->wait = inf->wait + 1;
-	}
+	if (inf->bin == 0x0)
+		inf->bin = (int)buff;
 	else
 	{
-		ft_dprintf(inf->ds_fd, "r%d", buff); 
+		inf->bin <<= 8;
+		inf->bin |= (int)buff;
+	}
+	if (inf->wait == inf->size[inf->i] - 1)
+	{
+		if (inf->type[inf->i] == TYPE_DIR)
+			ft_dprintf(inf->ds_fd, "%%%d", inf->bin);
+		if (inf->type[inf->i] == TYPE_IND)
+			ft_dprintf(inf->ds_fd, "%d", inf->bin);
+		if (inf->i < inf->n_param - 1)
+			ft_dprintf(inf->ds_fd, ", ");
+		inf->i = inf->i + 1;
+		inf->wait = 0;
+		inf->bin = 0;
+	}
+	else
+		inf->wait = inf->wait + 1;
+}
+
+void		dswrite_param(t_info *inf, unsigned char buff)
+{
+	if (inf->size[inf->i] > 1)
+		dswrite_long_arg(inf, buff);
+	else
+	{
+		ft_dprintf(inf->ds_fd, "r%d", buff);
 		if (inf->i < inf->n_param - 1)
 			ft_dprintf(inf->ds_fd, ", ");
 		inf->i = inf->i + 1;

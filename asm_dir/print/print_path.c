@@ -6,17 +6,17 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 21:09:58 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/02 01:35:24 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/03 18:03:33 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw_hexdump.h"
 
-int			len_path(char *file)
+int				len_path(char *file)
 {
-	int i;
-	int len;
-	int occ;
+	int		i;
+	int		len;
+	int		occ;
 
 	occ = 0;
 	len = 0;
@@ -40,11 +40,11 @@ int			len_path(char *file)
 	return (len);
 }
 
-static char	*get_path(char *file)
+static char		*get_path(char *file)
 {
-	int i;
-	int len;
-	char *path;
+	int		i;
+	int		len;
+	char	*path;
 
 	len = len_path(file);
 	path = NULL;
@@ -63,7 +63,7 @@ static char	*get_path(char *file)
 	return (path);
 }
 
-void	print_path(t_data *data)
+void			print_path(t_data *data)
 {
 	char *path;
 

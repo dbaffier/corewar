@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:03:52 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/02 01:46:38 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/03 16:58:36 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void		print_head(t_data *data)
 	}
 }
 
-static int				cw_hexdump(t_data *data, char *file)
+static int		cw_hexdump(t_data *data, char *file)
 {
 	if (!(data->e->flag & FLAG_S) && !(data->e->flag & FLAG_F))
 		if ((data->fd = create_corfile(data, file)) < 0)
@@ -43,7 +43,7 @@ static int				cw_hexdump(t_data *data, char *file)
 	return (0);
 }
 
-static int				init_data(t_data *data, t_env *e)
+static int		init_data(t_data *data, t_env *e)
 {
 	int ret;
 

@@ -6,7 +6,7 @@
 #    By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/26 23:23:36 by dbaffier          #+#    #+#              #
-#    Updated: 2019/10/03 00:54:32 by mmonier          ###   ########.fr        #
+#    Updated: 2019/10/03 17:46:28 by mmonier          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRCS +=	binary.c				\
 		cw_hexdump.c			\
 		way_to_corewar.c		\
 		user_file.c				\
+		cut_path.c				\
 
 PARSE_DIR = parsing/
 SRCS += asm_aolist.c			\
@@ -90,6 +91,7 @@ DEASM_DIR = deasm/
 SRCS += deasm.c					\
 		deasm_file.c			\
 		dswrite_instructions.c	\
+		dswrite_opc.c			\
 		print.c					\
 
 all: $(OBJS_DIR) $(DEPS_DIR) $(LIBFT_LIB) $(NAME)

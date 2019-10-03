@@ -6,13 +6,13 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 00:28:15 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/26 23:53:15 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:01:21 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw_hexdump.h"
 
-static void	print_continue(t_data *data)
+static void		print_continue(t_data *data)
 {
 	wattron(data->main_win, A_BLINK);
 	mvwprintw(data->main_win, 12, 55, "Press enter to continue...", 123);
@@ -39,7 +39,7 @@ static void		*thread_quit(void *thread)
 	return (NULL);
 }
 
-static int			print_first(t_data *data)
+static int		print_first(t_data *data)
 {
 	pthread_t	thread;
 	t_thread	arg;
@@ -68,7 +68,7 @@ static int			print_first(t_data *data)
 	return (0);
 }
 
-int			init_screen(t_data *data)
+int				init_screen(t_data *data)
 {
 	initscr();
 	clear();

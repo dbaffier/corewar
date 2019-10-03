@@ -6,15 +6,15 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 21:17:34 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/02 01:15:11 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/03 18:11:00 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw_hexdump.h"
 #include "asm.h"
 
-void		print_usage(char *err)
-{ 
+void				print_usage(char *err)
+{
 	ft_dprintf(2, "asm : illegal option -- %s\n", err);
 	ft_dprintf(2, "usage: ./asm [-Pdfnops] [file, ...]\n");
 	ft_dprintf(2, "-h, --help to see options\n");
@@ -43,7 +43,7 @@ static int			set_msk(t_env *e, char c)
 	return (0);
 }
 
-static void check_err(char *str)
+static void			check_err(char *str)
 {
 	int i;
 	int len;
@@ -65,12 +65,10 @@ static void check_err(char *str)
 	}
 }
 
-int			parse_flag(t_env *e, char **av)
+int					parse_flag(t_env *e, char **av, int i)
 {
-	int i;
 	int j;
 
-	i = 1;
 	while (av[i])
 	{
 		j = 0;

@@ -6,14 +6,14 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 19:09:46 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/22 18:52:40 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:11:13 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "asm.h"
 
-char	*str_s_e(char *line, int s, int e)
+char		*str_s_e(char *line, int s, int e)
 {
 	size_t		i;
 	char		*new;

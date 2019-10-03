@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:54:39 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/02 01:14:52 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/03 17:11:35 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,5 +151,8 @@ void		check_zero(t_data *data, unsigned char buff);
 
 int			user_file(t_data *data);
 int			len_path(char *file);
+
+char		*cut_path(char *file);
+void		handle_dotdot(t_data *data);
 
 #endif 
