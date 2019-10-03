@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 21:17:34 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/03 18:34:20 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:35:12 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static int			set_msk(t_env *e, char c)
 	}
 	return (0);
 }
+
 static void			check_err(char *str)
 {
 	int i;
@@ -64,12 +65,10 @@ static void			check_err(char *str)
 	}
 }
 
-int					parse_flag(t_env *e, char **av)
+int					parse_flag(t_env *e, char **av, int i)
 {
-	int i;
 	int j;
 
-	i = 1;
 	while (av[i])
 	{
 		j = 0;

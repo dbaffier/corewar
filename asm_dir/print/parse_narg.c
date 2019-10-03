@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 16:56:53 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/03 16:56:55 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/03 18:02:30 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,35 @@ static void	print_errarg(t_env *e, int narg)
 	else
 		ft_dprintf(2, "Error : not enough argument\n");
 	if (e->flag & FLAG_S && e->flag & FLAG_F)
-		ft_dprintf(2, "Usage : asm -s [name] [file.s]\n\tasm -f [path] [file.s]\n");
+	{
+		ft_dprintf(2, "Usage : asm -s [name] [file.s]\n");
+		ft_dprintf(2, "\tasm -f [path] [file.s]\n");
+	}
 	else if (e->flag & FLAG_S)
 		ft_dprintf(2, "Usage : asm -s [name] [file.s]\n");
 	else if (e->flag & FLAG_F)
 		ft_dprintf(2, "Usage : asm -f [path] [file.s]\n");
 	exit(1);
+}
+
+static void	unset_sf(t_env *e, int n_arg)
+{
+	if (n_arg != 2)
+		print_errarg(e, n_arg);
+	if (e->flag & FLAG_P)
+		e->flag &= ~FLAG_P;
+	if (e->flag & FLAG_GP)
+		e->flag &= ~FLAG_GP;
+}
+
+static void	unset_d(t_env *e)
+{
+	if (e->flag & FLAG_N)
+		e->flag &= ~FLAG_N;
+	if (e->flag & FLAG_S)
+		e->flag &= ~FLAG_S;
+	if (e->flag & FLAG_F)
+		e->flag &= ~FLAG_F;
 }
 
 void		parse_narg(t_env *e, int ac, int i)
@@ -45,21 +68,7 @@ void		parse_narg(t_env *e, int ac, int i)
 		exit(1);
 	}
 	if (e->flag & FLAG_S || e->flag & FLAG_F)
-	{
-		if ((ac - i) != 2)
-			print_errarg(e, ac - i);
-		if (e->flag & FLAG_P)
-			e->flag &= ~FLAG_P;
-		if (e->flag & FLAG_GP)
-			e->flag &= ! FLAG_GP;
-	}
+		unset_sf(e, n_arg);
 	if (e->flag & FLAG_D)
-	{
-		if (e->flag & FLAG_N)
-			e->flag &= ~FLAG_N;
-		if (e->flag & FLAG_S)
-			e->flag &= ~FLAG_S;
-		if (e->flag & FLAG_F)
-			e->flag &= ~FLAG_F;
-	}
+		unset_d(e);
 }

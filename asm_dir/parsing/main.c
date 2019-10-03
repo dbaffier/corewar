@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:15:33 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/03 17:04:59 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:35:18 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int			main(int ac, char **av)
 	int			i;
 
 	ft_memset(&e, 0, sizeof(e));
-	i = parse_flag(&e, av);
+	i = parse_flag(&e, av, 1);
 	parse_narg(&e, ac, i);
 	if (e.flag & FLAG_D)
 		return (deasm(&e, av, i));

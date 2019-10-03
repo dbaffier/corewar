@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 20:28:27 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/02 00:53:02 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/03 16:58:04 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int				create_corfile(t_data *data, char *file)
 	int			fd;
 
 	if ((data->file_name = basename(file)) == NULL)
-		return (ERR_MALLOC); 
+		return (ERR_MALLOC);
 	if ((fd = open(data->file_name, O_CREAT | O_TRUNC | O_RDWR, 0700)) < 0)
 		return (ERR_OPEN);
 	return (fd);

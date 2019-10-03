@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:19:41 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/02 18:10:22 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:34:39 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int			asm_syntax_labelled(t_env *e, t_aolist *head);
 int			syntax_error(t_env *e, int error, char *str, int line);
 
 int			dump_to_file(t_env *e);
-int			parse_flag(t_env *e, char **av);
+int			parse_flag(t_env *e, char **av, int i);
 int			get_user_entry(t_env *e, char **av, int i);
 void		free_aolist(t_aolist *aolist);
 int			deasm(t_env *e, char **av, int i);
