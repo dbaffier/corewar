@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 19:23:33 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/02 17:42:39 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/02 20:58:02 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ void	handle_st(t_param *params, t_process *proc, t_env *e)
 	else if (params[1].size == 2)
 	{
 		ret = *(REG_CAST *)proc->pc + params[1].value % IDX_MOD;
-		arena += calc_mod(ret, MEM_SIZE);
-		arena_copy(arena, e->arena,
+		ret = calc_mod(ret, MEM_SIZE);
+		arena_copy(e->arena, ret,
 			(REG_CAST *)proc->reg[params[0].value - 1], REG_SIZE);
-		update_aff_arena_swap((char *)arena, REG_SIZE, proc->color[0], e);
+		update_aff_arena((char *)arena + ret, REG_SIZE, *proc->color, e);
 	}
 }
 
@@ -86,15 +86,12 @@ void	handle_sti(t_param *params, t_process *proc, t_env *e)
 	uint8_t		*arena;
 	size_t		ret;
 	int			addr;
-	int 		value;
 
 	addr = (params[1].value + params[2].value) % IDX_MOD;
 	arena = (uint8_t *)e->arena;
-	value = arena[*(REG_CAST *)proc->pc + addr];
-	
-	ret = *(REG_CAST *)proc->pc % IDX_MOD;
-	arena += calc_mod(ret, MEM_SIZE);
-	arena_copy(arena, e->arena,
+	ret = *(REG_CAST *)proc->pc + addr % IDX_MOD;
+	ret = calc_mod(ret, MEM_SIZE);
+	arena_copy(e->arena, ret,
 	(REG_CAST *)proc->reg[params[0].value - 1], REG_SIZE);
-	update_aff_arena_swap((char *)arena, REG_SIZE, proc->color[0], e);
+	update_aff_arena((char *)arena + ret, REG_SIZE, *proc->color, e);
 }

@@ -6,14 +6,13 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/02 18:48:17 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/02 19:17:30 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
 
-#include "ft_printf.h"
 t_process	*new_proc(t_process *proc, int value, int flag, t_env *e)
 {
 	t_process *new;

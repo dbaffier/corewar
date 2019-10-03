@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/02 17:34:36 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/02 19:16:21 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,18 +98,15 @@ void	op_zjmp(t_process *proc, t_env *e)
 
 	arena = (uint8_t *)e->arena;
 	ft_bzero(params, sizeof(params));
+	len = 3;
 	if (proc->carry == 1)
 	{
 		get_params_len(params, 1,
 				*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 9);
 		get_params_data(params, 1, arena, *(REG_CAST *)proc->pc);
-		if (e->ncu.info_win)
-			wprintw(e->ncu.info_win, "jump to :[%hd]\n", params[0].value);
-		move_process_pc(proc, params[0].value, e);
-		return ;
+		len = params[0].value;
 	}
-	len = full_len_size(op_tab[8].reg_nb, params);
-	move_process_pc(proc, len + 2, e);
+	move_process_pc(proc, len, e);
 }
 
 /*

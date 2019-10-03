@@ -6,52 +6,42 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:38:06 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/02 17:07:01 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/02 20:56:43 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+#include "libft.h"
 
-void			arena_copy(void *dst, void *arena, REG_CAST *value, size_t size)
+void			arena_copy(void *arena, REG_CAST pc, REG_CAST *value, size_t size)
 {
-	int8_t		*ptr;
+	uint8_t		*ptr;
 	size_t		i;
-	size_t		j;
 
-	ptr = (int8_t *)dst;
+	ptr = (uint8_t *)arena;
 	i = 0;
-	j = 0;
-	while (size--)
+	while (i < size)
 	{
-		if (ptr + i - (int8_t *)arena >= MEM_SIZE)
-		{
-			ptr = (int8_t *)arena;
-			i = 0;
-		}
-		*(ptr + i) = ((int8_t *)value)[j++];
+		ptr[(pc + i) % MEM_SIZE] = ((uint8_t *)value)[i];
 		i++;
 	}
 }
 
-REG_CAST		arena_get(void *dst, void *arena, size_t size)
+REG_CAST		arena_get(void *arena, REG_CAST pc, size_t size)
 {
-	int8_t		get[REG_SIZE];
-	int8_t		*ptr;
-	size_t		i;
-	size_t		j;
+	char		tab[REG_SIZE];
+	uint8_t		*data;
+	int			i;
 
-	ptr = (int8_t *)dst;
+	ft_bzero(tab, REG_SIZE);
+	data = (uint8_t *)arena;
 	i = 0;
-	j = 0;
+	if (size > REG_SIZE)
+		return (0);
 	while (size--)
 	{
-		if (ptr + i - (int8_t *)arena >= MEM_SIZE)
-		{
-			ptr = (int8_t *)arena;
-			i = 0;
-		}
-		*(ptr + i) = get[j++];
+		tab[size] = data[(pc + i) % MEM_SIZE];
 		i++;
 	}
-	return (*(REG_CAST *)get);
+	return (*(REG_CAST *)tab);
 }
