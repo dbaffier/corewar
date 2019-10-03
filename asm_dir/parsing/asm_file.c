@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:17:03 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/28 01:17:23 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/01 22:06:09 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ static int	eval_asm_file(char *file)
 {
 	size_t		len;
 
-	len = ft_strlen(file);
+	if (file)
+		len = ft_strlen(file);
+	else
+		return (ERR_FILE);
 	if (len < 3)
 		return (ERR_FILE);
 	if (file[len - 1] != 's' || file[len - 2] != '.')

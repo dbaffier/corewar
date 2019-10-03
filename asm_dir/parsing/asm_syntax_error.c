@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 01:20:28 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/30 23:48:18 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/02 00:18:15 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int		syntax_error(t_env *e, int error, char *str, int line)
 {
-	static char		*tab[] = { NULL,  ERR_STR_NAME, ERR_STR_NAME_LEN,
+	static char		*tab[] = { NULL, ERR_STR_NAME, ERR_STR_NAME_LEN,
 		ERR_STR_NAMENOTF, ERR_STR_COMMENT, ERR_STR_COMMENT_LEN,
 		ERR_STR_COMNOTF};
 

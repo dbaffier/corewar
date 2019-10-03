@@ -54,17 +54,16 @@ SRCS += asm_aolist.c			\
 		asm_syntax_header.c		\
 		asm_syntax_label.c		\
 		asm_syntax_op.c			\
-		grep_opcode.c			\
-		label_create.c			\
-		loop.c					\
-		main.c					\
-		op.c					\
-		parse_flag.c			\
-		split_wp.c				\
-		syntax_analysis.c		\
-		tok_create.c			\
-		tools.c					\
+		asm_grep_opc.c			\
+		asm_lab_create.c		\
+		asm_op.c				\
+		asm_splitws.c			\
+		asm_tok.c				\
+		asm_tools.c				\
 		asm_free.c				\
+		main.c					\
+		parse_flag.c			\
+		syntax_analysis.c		\
 
 PRINT_DIR = print/
 SRCS += buffer_functions.c		\
@@ -106,7 +105,7 @@ $(LIBFT_LIB):
 	@make -C $(LIBFT_PATH)
 
 $(NAME): $(OBJS)
-	$(CC) -fsanitize=address $^ -o $@ $(LIBFT_LINK)
+	$(CC) $^ -o $@ $(LIBFT_LINK)
 
 $(OBJS_DIR)%.o: $(SRCS_DIR)$(CONV_DIR)%.c
 $(OBJS_DIR)%.o: $(SRCS_DIR)$(CONV_DIR)%.c $(DEPS_DIR)%.d

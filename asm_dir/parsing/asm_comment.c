@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 18:49:40 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/28 21:41:21 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/03 17:04:16 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,7 @@ int	asm_comment(t_aolist *head, char **line)
 	str = malloc(sizeof(char) * len + 1);
 	i = 0;
 	tmp = *line;
-	while (i < len)
-	{
-		str[i] = tmp[i];
-		i++;
-	}
-	str[i] = '\0';
+	strncpy(str, tmp, len);
 	free(*line);
 	*line = str;
 	return (0);

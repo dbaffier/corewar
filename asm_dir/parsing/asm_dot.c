@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 00:02:04 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/28 23:43:50 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/03 16:52:04 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char		*dup_dot(char *line, size_t *i)
 	return (new);
 }
 
-static char	*dup_all(char *val, size_t *i)
+static char		*dup_all(char *val, size_t *i)
 {
 	char		*new;
 	size_t		s;
@@ -62,7 +62,7 @@ static char	*dup_all(char *val, size_t *i)
 static int		quoted(char *val, size_t *i)
 {
 	int		j;
-	
+
 	while (val[*i] && (val[*i] == ' ' || val[*i] == '\t'))
 		*i = *i + 1;
 	if (val[*i] == '\"')
@@ -83,13 +83,11 @@ static int		quoted(char *val, size_t *i)
 			}
 			j++;
 		}
-		return (0);
 	}
-	else
-		return (0);
+	return (0);
 }
 
-int		create_dot(t_token **head, char *val, size_t *i)
+int				create_dot(t_token **head, char *val, size_t *i)
 {
 	t_token		*ptr;
 	t_token		*new;

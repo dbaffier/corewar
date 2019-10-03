@@ -6,14 +6,14 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 21:40:56 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/26 23:50:07 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/02 00:17:52 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 #include "libft.h"
 
-static int			ft_count_words(const char *s)
+static int				ft_count_words(const char *s)
 {
 	int		word;
 	int		i;
@@ -24,7 +24,8 @@ static int			ft_count_words(const char *s)
 		return (0);
 	while (s[i])
 	{
-		if ((s[i] == ' ' || s[i] == '\t')  && s[i + 1] != ' ' && s[i + 1] != '\t')
+		if ((s[i] == ' ' || s[i] == '\t')
+				&& s[i + 1] != ' ' && s[i + 1] != '\t')
 			word++;
 		i++;
 	}
@@ -48,12 +49,12 @@ static char				*ft_mallocd2(const char *s, int *i)
 		(*i)++;
 	}
 	d[k] = '\0';
-	while ((s[*i] == '\t' || s[*i] == ' ')  && s[*i])
+	while ((s[*i] == '\t' || s[*i] == ' ') && s[*i])
 		(*i)++;
 	return (d);
 }
 
-char				**ft_strsplitws(const char *s)
+char					**ft_strsplitws(const char *s)
 {
 	int		i;
 	int		j;

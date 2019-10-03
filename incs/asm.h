@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:19:41 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/03 18:09:29 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/03 18:34:39 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 # define ERR_STR_EXTENSION	"file extension is not correct"
 # define ERR_STR_NOFILE		"no given file"
 # define ERR_STR_OVERFLOW	"too much argument given"
-# define ERR_STR_OPEN		"open failed "
+# define ERR_STR_OPEN		"failed to open given file"
 # define ERR_STR_MALLOC		"malloc failed to allocate memory"
 
 # define ERR_STR_NAME		"lexical error on name ->`.name`"

@@ -6,14 +6,13 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 17:49:43 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/30 23:48:42 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/03 16:53:08 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "ft_printf.h"
 #include "asm.h"
-
 
 size_t		chunk_size(t_token *tok, int id)
 {
@@ -32,13 +31,7 @@ size_t		chunk_size(t_token *tok, int id)
 		if (tok->type & UNDIRECT)
 			size += 2;
 		else if (tok->type & DIRECT)
-		{
-			// ternaire
-			if (g_op_tab[id].direct_size != 0)
-				size += 2;
-			else
-				size += 4;
-		}
+			size += g_op_tab[id].direct_size != 0 ? 2 : 4;
 		else
 			size += 1;
 		tok = tok->next;

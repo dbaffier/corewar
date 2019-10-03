@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 18:36:48 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/01 00:52:26 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/02 17:38:07 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int		str_is_number(char *str)
 	return (1);
 }
 
-static int register_check(t_env *e, t_aolist *head, t_token *curr, int pos)
+static int		register_check(t_env *e, t_aolist *head, t_token *curr, int pos)
 {
 	if (!(g_op_tab[head->id].types[pos] & T_REG))
 		return (syntax_error(e, E_PARAM, curr->err, head->line));
@@ -45,7 +45,7 @@ static int register_check(t_env *e, t_aolist *head, t_token *curr, int pos)
 	return (0);
 }
 
-static int	direct_check(t_env *e, t_aolist *head, t_token *curr, int pos)
+static int		direct_check(t_env *e, t_aolist *head, t_token *curr, int pos)
 {
 	if (curr->lab == NULL || curr->lab[0] == '\0')
 		return (syntax_error(e, E_PARAM, curr->err, head->line));
@@ -62,9 +62,9 @@ static int	direct_check(t_env *e, t_aolist *head, t_token *curr, int pos)
 	head->arg[pos] = T_DIR;
 	head->arg_size[pos] = g_op_tab[head->id].direct_size ? 2 : 4;
 	return (0);
-} 
+}
 
-static int	indirect_check(t_env *e, t_aolist *head, t_token *curr, int pos)
+static int		indirect_check(t_env *e, t_aolist *head, t_token *curr, int pos)
 {
 	if (curr->lab == NULL || curr->lab[0] == '\0')
 		return (syntax_error(e, E_PARAM, curr->err, head->line));
@@ -83,10 +83,12 @@ static int	indirect_check(t_env *e, t_aolist *head, t_token *curr, int pos)
 	return (0);
 }
 
-int		asm_syntax_arg(t_env *e, t_aolist *head, t_token *curr)
+int				asm_syntax_arg(t_env *e, t_aolist *head, t_token *curr)
 {
 	int		i;
 
+	if (!curr)
+		return (0);
 	if (curr->arg_n > 3 || curr->arg_n < 0)
 		return (syntax_error(e, E_PARAM, curr->err, head->line));
 	i = 0;

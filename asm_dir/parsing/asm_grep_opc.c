@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 23:25:39 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/28 23:44:11 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/03 17:02:16 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "ft_printf.h"
 #include "asm.h"
 
-static char	*dup_opcode(char *line, size_t *i)
-{	
+static char		*dup_opcode(char *line, size_t *i)
+{
 	char		*new;
 	size_t		s;
 	size_t		e;
@@ -36,7 +36,7 @@ static char	*dup_opcode(char *line, size_t *i)
 	return (new);
 }
 
-static int	set_opcode(char *str)
+static int		set_opcode(char *str)
 {
 	int		i;
 
@@ -50,7 +50,7 @@ static int	set_opcode(char *str)
 	return (0);
 }
 
-int		grep_opcode(t_token **head, char *line, size_t *i)
+int				grep_opcode(t_token **head, char *line, size_t *i)
 {
 	t_token		*new;
 

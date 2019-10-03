@@ -6,15 +6,14 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 19:57:32 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/01 00:35:52 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/03 16:52:53 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 #include "libft.h"
 
-
-static t_aolist	*brother_link(t_aolist *head, t_token *curr)
+static t_aolist		*brother_link(t_aolist *head, t_token *curr)
 {
 	t_token		*ptr;
 
@@ -24,26 +23,24 @@ static t_aolist	*brother_link(t_aolist *head, t_token *curr)
 		if (ptr && ptr->type & LABEL)
 		{
 			if (!ft_strcmp(curr->lab, ptr->lab))
-				return (head);
+			{
+				if (ptr->next == NULL)
+					return (head->next);
+				else
+					return (head);
+			}
 		}
 		head = head->next;
 	}
 	return (NULL);
 }
 
-static int	lab_val(t_aolist *curr, t_aolist *next)
-{
-	//printf("%d -- %d \n", curr->mem_addr, next->mem_addr);
-	//return (curr->mem_addr - next->mem_addr);
-	return (next->mem_addr - curr->mem_addr);
-}
-
-int			asm_lexical_label(char *lab)
+int					asm_lexical_label(char *lab)
 {
 	size_t	count;
 	int		i;
 	int		j;
-	
+
 	i = 0;
 	count = 0;
 	while (LABEL_CHARS[i])
@@ -62,7 +59,7 @@ int			asm_lexical_label(char *lab)
 	return (0);
 }
 
-int			asm_syntax_labelled(t_env *e, t_aolist *head)
+int					asm_syntax_labelled(t_env *e, t_aolist *head)
 {
 	while (head)
 	{
@@ -78,12 +75,12 @@ int			asm_syntax_labelled(t_env *e, t_aolist *head)
 	return (0);
 }
 
-int			asm_syntax_label(t_env *e, t_aolist *head, t_token *curr)
+int					asm_syntax_label(t_env *e, t_aolist *head, t_token *curr)
 {
 	if (asm_lexical_label(curr->lab))
 		return (syntax_error(e, E_LEXICAL, curr->err, head->line));
 	if (!(head->lab = brother_link(e->aolist, curr)))
 		return (syntax_error(e, E_LAB, curr->err, head->line));
-	curr->bin = lab_val(head, head->lab);
+	curr->bin = head->lab->mem_addr - head->mem_addr;
 	return (0);
 }
