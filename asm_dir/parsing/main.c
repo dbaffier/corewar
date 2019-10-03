@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:15:33 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/02 17:25:52 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/03 16:49:54 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 static int	err_file(int err)
 {
 	static char *tab_err[] = { NULL, ERR_STR_FILE,
-		ERR_STR_EXTENSION, ERR_STR_NOFILE, ERR_STR_OVERFLOW , ERR_STR_OPEN};
+		ERR_STR_EXTENSION, ERR_STR_NOFILE, ERR_STR_OVERFLOW, ERR_STR_OPEN};
 	ft_dprintf(2, "%s\n", tab_err[err]);
 	if (err != 6)
 		ft_dprintf(2, "Usage : ./asm file.s\n");
@@ -31,7 +31,6 @@ int			main(int ac, char **av)
 	int			ret;
 	int			i;
 
-	ret = 0;
 	ft_memset(&e, 0, sizeof(e));
 	i = parse_flag(&e, av);
 	parse_narg(&e, ac, i);

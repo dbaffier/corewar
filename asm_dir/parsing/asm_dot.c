@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 00:02:04 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/02 18:09:38 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/03 16:52:04 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static int		quoted(char *val, size_t *i)
 	return (0);
 }
 
-int		create_dot(t_token **head, char *val, size_t *i)
+int				create_dot(t_token **head, char *val, size_t *i)
 {
 	t_token		*ptr;
 	t_token		*new;

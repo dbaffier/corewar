@@ -138,16 +138,11 @@ int		user_file(t_data *data)
 
 int		get_user_entry(t_env *e, char **av, int i)
 {
-	if (e->flag & FLAG_S && e->flag & FLAG_F)
-	{
-		ft_printf("Incompatible flags : -s, -f\n");
-		exit(0);
-	}
 	if (e->flag & FLAG_S || e->flag & FLAG_F)
 	{
 		if (av[i][0] == '\0')
 		{
-			ft_printf("Ouch, you forgot your file name. We could have seg fault !\n");
+			ft_dprintf(2, "Ouch, you forgot your file name. We could have seg fault !\n");
 			exit(1);
 		}
 		e->fd_user = ft_strdup(av[i]);

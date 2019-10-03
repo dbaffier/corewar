@@ -6,15 +6,15 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 21:17:34 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/02 16:50:17 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/03 16:51:25 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cw_hexdump.h"
 #include "asm.h"
 
-void		print_usage(char *err)
-{ 
+void				print_usage(char *err)
+{
 	ft_dprintf(2, "asm : illegal option -- %s\n", err);
 	ft_dprintf(2, "usage: ./asm [-Pdfnops] [file, ...]\n");
 	ft_dprintf(2, "-h, --help to see options\n");
@@ -23,8 +23,8 @@ void		print_usage(char *err)
 
 static int			set_msk(t_env *e, char c)
 {
-	static t_flags	tab[8] = {DASH_N, DASH_O, DASH_P, DASH_GP, DASH_D, DASH_S,
-								DASH_F};
+	static t_flags	tab[8] = {DASH_N, DASH_O, DASH_P, DASH_GP,
+		DASH_D, DASH_S, DASH_F};
 	size_t			i;
 
 	i = 0;
@@ -35,13 +35,14 @@ static int			set_msk(t_env *e, char c)
 		if (c == tab[i].opt)
 		{
 			e->flag |= tab[i].msk;
+			e->flag |= ATLST_ONE;
 			return (1);
 		}
 		i++;
 	}
 	return (0);
 }
-static void check_err(char *str)
+static void			check_err(char *str)
 {
 	int i;
 	int len;
@@ -63,7 +64,7 @@ static void check_err(char *str)
 	}
 }
 
-int			parse_flag(t_env *e, char **av)
+int					parse_flag(t_env *e, char **av)
 {
 	int i;
 	int j;
@@ -90,5 +91,5 @@ int			parse_flag(t_env *e, char **av)
 		}
 		i++;
 	}
-	return (0);
+	return (i);
 }

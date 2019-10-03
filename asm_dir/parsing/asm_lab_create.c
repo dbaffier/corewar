@@ -6,14 +6,13 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 19:05:46 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/09/30 03:08:28 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/03 16:51:48 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "asm.h"
 #include "ft_printf.h"
-
 
 static char		*dup_label(char *line, size_t *i)
 {
@@ -37,7 +36,7 @@ static char		*dup_label(char *line, size_t *i)
 	return (new);
 }
 
-int		create_label(t_token **head, char *val, size_t *i)
+int				create_label(t_token **head, char *val, size_t *i)
 {
 	t_token		*ptr;
 	t_token		*new;
@@ -60,7 +59,7 @@ int		create_label(t_token **head, char *val, size_t *i)
 	return (0);
 }
 
-int		is_label(char *line, int start)
+int				is_label(char *line, int start)
 {
 	while (line[start])
 	{
