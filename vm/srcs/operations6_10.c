@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/02 18:49:34 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/10/03 18:09:30 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,20 @@ void	op_ldi(t_process *proc, t_env *e)
 			*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 10);
 	get_params_data(params, 3, arena, *(REG_CAST *)proc->pc);
 	addr = (params[0].value + params[1].value) % IDX_MOD;
-	*(REG_CAST *)proc->reg[params[2].value] =
-		((unsigned char *)e->arena)[*(REG_CAST *)proc->pc + addr];
+	if (params[1].value > 0 && params[1].value < REG_NUMBER)
+	{
+		if (params[0].size == 2)
+		{
+			arena = (uint8_t *)e->arena + calc_mod(*(REG_CAST *)proc->pc
+				+ addr, MEM_SIZE);
+			*(REG_CAST *)proc->reg[params[2].value - 1] = 
+				arena_get(arena, e->arena, 2);
+			*(REG_CAST *)proc->reg[params[2].value - 1] =
+				byteswap_32(*(REG_CAST *)proc->reg[params[2].value - 1]);
+		}
+		else if (params[0].size == 4)
+			*(REG_CAST *)proc->reg[params[2].value - 1] = params[0].value;
+	}
 	proc->carry = addr == 0 ? 1 : 0;
 	len = full_len_size(op_tab[9].reg_nb, params);
 	move_process_pc(proc, len + 2, e);

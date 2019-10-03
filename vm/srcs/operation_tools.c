@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/02 18:06:06 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/10/03 18:08:34 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,11 @@ int			get_value(uint8_t *data, int index, int size)
 	j = REG_SIZE - 1;
 	if (size > (int)sizeof(REG_CAST))
 		return (0);
-	while (--size)
+	while (size--)
 	{
 		tab[size] = data[(index + i) % MEM_SIZE];
 		i++;
 	}
-ft_printf("RET: tab = %d swap = %d\n", *(int *)tab, byteswap_32(*(int *)tab));
 	return (*(int *)tab);
 }
 
