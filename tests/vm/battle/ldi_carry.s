@@ -2,7 +2,7 @@
 .comment "test ldi"
 
 
-ldi %100, %100, r4
+ldi %1, %1, r4
 zjmp %0
 
 #this should save 0x0 into r4 and it should modify the carry,
