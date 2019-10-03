@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/03 18:15:29 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/03 21:47:02 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,8 @@ void	op_ldi(t_process *proc, t_env *e)
 		addr = calc_mod(*(REG_CAST *)proc->pc + addr, MEM_SIZE);
 		*(REG_CAST *)proc->reg[params[2].value - 1] = 
 			arena_get(e->arena, addr, REG_SIZE);
-		*(REG_CAST *)proc->reg[params[2].value - 1] =
-			byteswap_32(*(REG_CAST *)proc->reg[params[2].value - 1]);
+		// *(REG_CAST *)proc->reg[params[2].value - 1] =
+		// 	byteswap_32(*(REG_CAST *)proc->reg[params[2].value - 1]);
 	}
 	len = full_len_size(op_tab[9].reg_nb, params);
 	move_process_pc(proc, len + 2, e);

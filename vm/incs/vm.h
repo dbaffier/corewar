@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/02 20:56:51 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/03 18:50:00 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,8 @@ REG_CAST				calc_mod(int len, size_t size);
 void					arena_copy(void *arena, REG_CAST pc, REG_CAST *value,
 						size_t size);
 REG_CAST				arena_get(void *arena, REG_CAST pc, size_t size);
+void					color_copy(short *colors, REG_CAST pc, short color,
+						size_t size);
 uint16_t				byteswap_16(uint16_t x);
 uint32_t				byteswap_32(uint32_t x);
 

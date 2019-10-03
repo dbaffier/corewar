@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 19:51:14 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/23 19:51:14 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/03 19:40:16 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static int		get_number(char *av, int *value, int min_value)
 		*value = ft_atoi(av);
 		if (*value >= min_value)
 			return (IS_OK);
-		return (ERR_NEGATIVE);
+		return (IS_OK);
+		// return (ERR_NEGATIVE);
 	}
 	return (ERR_DIGIT);
 }
