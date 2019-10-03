@@ -6,28 +6,30 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:38:06 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/02 20:56:43 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/03 21:38:01 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
 
-void			arena_copy(void *arena, REG_CAST pc, REG_CAST *value, size_t size)
+void		arena_copy(void *arena, REG_CAST pc, REG_CAST *value, size_t size)
 {
 	uint8_t		*ptr;
 	size_t		i;
 
 	ptr = (uint8_t *)arena;
 	i = 0;
+	if (!arena || !value || size > REG_SIZE)
+		return ;
 	while (i < size)
 	{
-		ptr[(pc + i) % MEM_SIZE] = ((uint8_t *)value)[i];
+		ptr[(pc + i) % MEM_SIZE] = ((uint8_t *)value)[REG_SIZE - 1 - i];
 		i++;
 	}
 }
 
-REG_CAST		arena_get(void *arena, REG_CAST pc, size_t size)
+REG_CAST	arena_get(void *arena, REG_CAST pc, size_t size)
 {
 	char		tab[REG_SIZE];
 	uint8_t		*data;
@@ -44,4 +46,18 @@ REG_CAST		arena_get(void *arena, REG_CAST pc, size_t size)
 		i++;
 	}
 	return (*(REG_CAST *)tab);
+}
+
+void		color_copy(short *colors, REG_CAST pc, short color, size_t size)
+{
+	size_t		i;
+
+	i = 0;
+	if (!colors || size > REG_SIZE)
+		return ;
+	while (i < size)
+	{
+		colors[(pc + i) % MEM_SIZE] = color;
+		i++;
+	}
 }

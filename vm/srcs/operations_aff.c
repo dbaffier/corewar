@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 19:23:33 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/02 20:58:02 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/03 21:43:54 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,18 @@ void	handle_st(t_param *params, t_process *proc, t_env *e)
 		if (params[1].value > 0 && params[1].value < REG_NUMBER)
 			*(REG_CAST *)proc->reg[params[1].value - 1] =
 			*(REG_CAST *)proc->reg[params[0].value - 1];
+// wprintw(e->ncu.info_win, "storing r%d=%d into r%d(=%d)\n",
+// params[0].value, *(REG_CAST *)proc->reg[params[0].value - 1], params[1].value, *(REG_CAST *)proc->reg[params[1].value - 1]);
 	}
 	else if (params[1].size == 2)
 	{
 		ret = *(REG_CAST *)proc->pc + params[1].value % IDX_MOD;
 		ret = calc_mod(ret, MEM_SIZE);
+// wprintw(e->ncu.info_win, "storing r%d=%d into pc=%d\n",
+// params[0].value, *(REG_CAST *)proc->reg[params[0].value - 1], ret);
 		arena_copy(e->arena, ret,
 			(REG_CAST *)proc->reg[params[0].value - 1], REG_SIZE);
+		color_copy(e->colors, ret, proc->color[0], REG_SIZE);
 		update_aff_arena((char *)arena + ret, REG_SIZE, *proc->color, e);
 	}
 }
@@ -93,5 +98,6 @@ void	handle_sti(t_param *params, t_process *proc, t_env *e)
 	ret = calc_mod(ret, MEM_SIZE);
 	arena_copy(e->arena, ret,
 	(REG_CAST *)proc->reg[params[0].value - 1], REG_SIZE);
+	color_copy(e->colors, ret, proc->color[0], REG_SIZE);
 	update_aff_arena((char *)arena + ret, REG_SIZE, *proc->color, e);
 }
