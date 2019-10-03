@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_narg.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/10/03 16:56:53 by mmonier           #+#    #+#             */
+/*   Updated: 2019/10/03 16:56:55 by mmonier          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "asm.h"
 #include "cw_hexdump.h"
@@ -22,7 +33,7 @@ void		parse_narg(t_env *e, int ac, int i)
 	int n_arg;
 
 	n_arg = ac - i;
-	if (e->flag & ATLST_ONE && n_arg < n_arg + 1)
+	if (e->flag & ATLST_ONE && n_arg < 1)
 	{
 		ft_dprintf(2, "Error : Not enough argument\n");
 		ft_dprintf(2, "Usage : asm [-Pdfnops] [file, ...]\n");
