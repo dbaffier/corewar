@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations_aff.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 19:23:33 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/03 22:31:07 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/03 22:47:38 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,15 +94,13 @@ void	handle_sti(t_param *params, t_process *proc, t_env *e)
 
 	arena = (uint8_t *)e->arena;
 	if (params[1].size == 1)
-		addr = ;
+		addr = *(REG_CAST *)proc->reg[params[1].value - 1];
 	else if (params[1].size == 2)
-		addr = ;
+		addr = *(REG_CAST *)params[1].value;
+	if (params[2].size == 1)
+		addr += *(REG_CAST *)proc->reg[params[2].value - 1];
 	else
-		addr = ;
-	if (params[2].size == 2)
-		addr += ;
-	if (params[2].size == 4)
-		addr += ;
+		addr += *(REG_CAST *)params[2].value;
 	addr %= IDX_MOD;
 	ret = *(REG_CAST *)proc->pc + (addr % IDX_MOD);
 	ret = calc_mod(ret, MEM_SIZE);
