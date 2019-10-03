@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/03 21:47:02 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/03 21:58:43 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,21 @@ void	op_and(t_process *proc, t_env *e)
 	int			len;
 
 	arena = (uint8_t *)e->arena;
+	len = 0;
 	get_params_len(params, 3,
 			*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 6);
 	get_params_data(params, 3, arena, *(REG_CAST *)proc->pc);
-	*(REG_CAST *)proc->reg[params[2].value] =
-		(params[0].value & params[1].value) % IDX_MOD;
-	proc->carry = (params[0].value & params[1].value) == 0 ? 1 : 0;
+	if (params[0].value > 0 && params[0].value < REG_NUMBER)
+		if (params[1].value > 0 && params[1].value < REG_NUMBER)
+			if (params[2].value > 0 && params[2].value < REG_NUMBER)
+			{
+				len = *(REG_CAST *)proc->reg[params[0].value - 1] &
+				*(REG_CAST *)proc->reg[params[1].value - 1];
+				*(REG_CAST *)proc->reg[params[2].value - 1] = len;
+			}
+// wprintw(e->ncu.info_win, "anding: %d & %d = %d\n",*(REG_CAST *)proc->reg[params[0].value - 1],*(REG_CAST *)proc->reg[params[1].value - 1],*(REG_CAST *)proc->reg[params[2].value - 1]);
+	// *(REG_CAST *)proc->reg[params[2].value] = (params[0].value & params[1].value) % IDX_MOD;
+	proc->carry = (len == 0) ? 1 : 0;
 	len = full_len_size(op_tab[5].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
 }
@@ -52,12 +61,21 @@ void	op_or(t_process *proc, t_env *e)
 	int			len;
 
 	arena = (uint8_t *)e->arena;
+	len = 0;
 	get_params_len(params, 3,
 			*(arena + *(REG_CAST *)proc->pc + 1), 7);
 	get_params_data(params, 3, arena, *(REG_CAST *)proc->pc);
-	*(REG_CAST *)proc->reg[params[2].value] =
-		(params[0].value | params[1].value) % IDX_MOD;
-	proc->carry = (params[0].value | params[1].value) == 0 ? 1 : 0;
+	if (params[0].value > 0 && params[0].value < REG_NUMBER)
+		if (params[1].value > 0 && params[1].value < REG_NUMBER)
+			if (params[2].value > 0 && params[2].value < REG_NUMBER)
+			{
+				len = *(REG_CAST *)proc->reg[params[0].value - 1] |
+				*(REG_CAST *)proc->reg[params[1].value - 1];
+				*(REG_CAST *)proc->reg[params[2].value - 1] = len;
+			}
+// wprintw(e->ncu.info_win, "subing: %d - %d = %d\n",*(REG_CAST *)proc->reg[params[0].value - 1],*(REG_CAST *)proc->reg[params[1].value - 1],*(REG_CAST *)proc->reg[params[2].value - 1]);
+	// *(REG_CAST *)proc->reg[params[2].value] = (params[0].value | params[1].value) % IDX_MOD;
+	proc->carry = (len == 0) ? 1 : 0;
 	len = full_len_size(op_tab[6].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
 }
@@ -75,12 +93,21 @@ void	op_xor(t_process *proc, t_env *e)
 	int			len;
 
 	arena = (uint8_t *)e->arena;
+	len = 0;
 	get_params_len(params, 3,
 			*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 8);
 	get_params_data(params, 3, arena, *(REG_CAST *)proc->pc);
-	*(REG_CAST *)proc->reg[params[2].value] =
-		(params[0].value ^ params[1].value) % IDX_MOD;
-	proc->carry = (params[0].value ^ params[1].value) == 0 ? 1 : 0;
+	if (params[0].value > 0 && params[0].value < REG_NUMBER)
+		if (params[1].value > 0 && params[1].value < REG_NUMBER)
+			if (params[2].value > 0 && params[2].value < REG_NUMBER)
+			{
+				len = *(REG_CAST *)proc->reg[params[0].value - 1] ^
+				*(REG_CAST *)proc->reg[params[1].value - 1];
+				*(REG_CAST *)proc->reg[params[2].value - 1] = len;
+			}
+// wprintw(e->ncu.info_win, "subing: %d - %d = %d\n",*(REG_CAST *)proc->reg[params[0].value - 1],*(REG_CAST *)proc->reg[params[1].value - 1],*(REG_CAST *)proc->reg[params[2].value - 1]);
+	// *(REG_CAST *)proc->reg[params[2].value] = (params[0].value ^ params[1].value) % IDX_MOD;
+	proc->carry = (len == 0) ? 1 : 0;
 	len = full_len_size(op_tab[7].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
 }
