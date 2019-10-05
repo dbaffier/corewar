@@ -16,7 +16,7 @@ VM_DIR		= vm/
 VM_SRC_D	= $(VM_DIR)srcs/
 VM_INC_D	= $(VM_DIR)incs/
 VM_SRC		+=	main.c					\
-				arena_copy.c			\
+				arena_operations.c		\
 				dump_map.c				\
 				errors.c				\
 				free.c					\
@@ -26,6 +26,7 @@ VM_SRC		+=	main.c					\
 				get_args.c				\
 				get_colors.c			\
 				get_player.c			\
+				instructions_tool.c		\
 				move_process_pc.c		\
 				ncurses_aff_update.c	\
 				ncurses_aff.c			\

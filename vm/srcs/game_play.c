@@ -6,13 +6,11 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 23:05:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/02 18:53:09 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/05 17:36:16 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-extern struct s_op op_tab[17];
 
 static void			check_live_total(size_t nb_live, int *cycle_to_die)
 {
@@ -53,35 +51,6 @@ static size_t		check_players_alive(t_env *e)
 	check_live_total(alive, &e->cycle_to_die);
 	check_max_checks(&e->checks, &e->cycle_to_die);
 	return (alive);
-}
-
-static size_t		player_instruction(t_process *proc, t_env *e,
-	size_t nb_cycles)
-{
-	static void	(*instruction_function[])(t_process *, t_env *) = {
-		NULL, op_live, op_ld, op_st, op_add, op_sub, op_and, op_or, op_xor,
-		op_zjmp, op_ldi, op_sti, op_fork, op_lld, op_lldi, op_lfork, op_aff,
-	};
-
-	if (proc->instruction_wait > nb_cycles)
-		return (0);
-	if (proc->instruction_wait == nb_cycles)
-	{
-		if (proc->instruction == 0)
-		{
-			proc->instruction = *((unsigned char *)e->arena +
-				*(REG_CAST *)proc->pc);
-			if (proc->instruction > 0 && (proc->instruction <
-				(unsigned char)(sizeof(op_tab) / sizeof(op_tab[0]))))
-				return (op_tab[proc->instruction - 1].cycle - 1);
-			else
-				move_process_pc(proc, 1, e);
-		}
-		else
-			instruction_function[proc->instruction](proc, e);
-		proc->instruction = 0;
-	}
-	return (1);
 }
 
 int					play_game(size_t nb_cycles, t_env *e)

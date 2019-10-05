@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/03 21:55:16 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/05 18:08:41 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,9 @@ extern struct s_op	op_tab[17];
 ** renvoie un live pour le processus qui l'appelle
 */
 
-void	op_live(t_process *proc, t_env *e)
+void	op_live(t_param *params, t_process *proc, t_env *e)
 {
-	uint8_t		*arena;
-	t_param		params[3];
 	t_process	*tail;
-
-	arena = (uint8_t *)e->arena;
-	get_params_len(params, 1,
-		*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 1);
-	get_params_data(params, 1, arena, *(REG_CAST *)proc->pc);
 	tail = e->proc;
 	while (tail)
 	{
@@ -55,16 +48,9 @@ void	op_live(t_process *proc, t_env *e)
 ** si le 1st param = 0 le carry passe a 1
 */
 
-void	op_ld(t_process *proc, t_env *e)
+void	op_ld(t_param *params, t_process *proc, t_env *e)
 {
-	uint8_t		*arena;
-	t_param		params[3];
 	int			len;
-
-	arena = (uint8_t *)e->arena;
-	get_params_len(params, 2,
-		*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 2);
-	get_params_data(params, 2, arena, *(REG_CAST *)proc->pc);
 	if (params[1].value > 0 && params[1].value < REG_NUMBER)
 	{
 		if (params[0].size == 2)
@@ -72,7 +58,7 @@ void	op_ld(t_process *proc, t_env *e)
 			len = calc_mod(*(REG_CAST *)proc->pc
 			+ (short)params[0].value % IDX_MOD, MEM_SIZE);
 			*(REG_CAST *)proc->reg[params[1].value - 1] =
-			arena_get(arena, len, 4);
+			arena_get(e->arena, len, 4);
 		}
 		else if (params[0].size == 4)
 			*(REG_CAST *)proc->reg[params[1].value - 1] = params[0].value;
@@ -88,16 +74,9 @@ void	op_ld(t_process *proc, t_env *e)
 ** meme fonctionnement pour le carry
 */
 
-void	op_st(t_process *proc, t_env *e)
+void	op_st(t_param *params, t_process *proc, t_env *e)
 {
-	uint8_t		*arena;
-	t_param		params[3];
 	int			len;
-
-	arena = (uint8_t *)e->arena;
-	get_params_len(params, 2,
-		*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 3);
-	get_params_data(params, 2, arena, *(REG_CAST *)proc->pc);
 	if (params[0].value > 0 && params[0].value < REG_NUMBER)
 		handle_st(params, proc, e);
 	len = full_len_size(op_tab[2].reg_nb, params);
@@ -110,17 +89,11 @@ void	op_st(t_process *proc, t_env *e)
 ** meme fonctionnement pour le carry
 */
 
-void	op_add(t_process *proc, t_env *e)
+void	op_add(t_param *params, t_process *proc, t_env *e)
 {
-	uint8_t		*arena;
-	t_param		params[3];
 	int			len;
 
-	arena = (uint8_t *)e->arena;
 	len = 0;
-	get_params_len(params, 3,
-		*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 4);
-	get_params_data(params, 3, arena, *(REG_CAST *)proc->pc);
 	if (params[0].value > 0 && params[0].value < REG_NUMBER)
 		if (params[1].value > 0 && params[1].value < REG_NUMBER)
 			if (params[2].value > 0 && params[2].value < REG_NUMBER)
@@ -129,7 +102,6 @@ void	op_add(t_process *proc, t_env *e)
 				*(REG_CAST *)proc->reg[params[1].value - 1];
 				*(REG_CAST *)proc->reg[params[2].value - 1] = len;
 			}
-// wprintw(e->ncu.info_win, "adding: %d + %d = %d\n",*(REG_CAST *)proc->reg[params[0].value - 1],*(REG_CAST *)proc->reg[params[1].value - 1],*(REG_CAST *)proc->reg[params[2].value - 1]);
 	proc->carry = (len == 0) ? 1 : 0;
 	len = full_len_size(op_tab[3].reg_nb, params);
 	move_process_pc(proc, len + 2, e);
@@ -141,17 +113,11 @@ void	op_add(t_process *proc, t_env *e)
 ** meme fonctionnement pour le carry
 */
 
-void	op_sub(t_process *proc, t_env *e)
+void	op_sub(t_param *params, t_process *proc, t_env *e)
 {
-	uint8_t		*arena;
-	t_param		params[3];
 	int			len;
 
-	arena = (uint8_t *)e->arena;
 	len = 0;
-	get_params_len(params, 3,
-		*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 5);
-	get_params_data(params, 3, arena, *(REG_CAST *)proc->pc);
 	if (params[0].value > 0 && params[0].value < REG_NUMBER)
 		if (params[1].value > 0 && params[1].value < REG_NUMBER)
 			if (params[2].value > 0 && params[2].value < REG_NUMBER)
@@ -160,7 +126,6 @@ void	op_sub(t_process *proc, t_env *e)
 				*(REG_CAST *)proc->reg[params[1].value - 1];
 				*(REG_CAST *)proc->reg[params[2].value - 1] = len;
 			}
-// wprintw(e->ncu.info_win, "subing: %d - %d = %d\n",*(REG_CAST *)proc->reg[params[0].value - 1],*(REG_CAST *)proc->reg[params[1].value - 1],*(REG_CAST *)proc->reg[params[2].value - 1]);
 	proc->carry = (len == 0) ? 1 : 0;
 	len = full_len_size(op_tab[4].reg_nb, params);
 	move_process_pc(proc, len + 2, e);

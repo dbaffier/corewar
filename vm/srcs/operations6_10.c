@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations6_10.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/03 22:37:36 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/10/05 18:09:17 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,11 @@ extern struct s_op	op_tab[17];
 ** meme fonctionnement pour le carry
 */
 
-void	op_and(t_process *proc, t_env *e)
+void	op_and(t_param *params, t_process *proc, t_env *e)
 {
-	uint8_t		*arena;
-	t_param		params[3];
 	int			len;
 
-	arena = (uint8_t *)e->arena;
 	len = 0;
-	get_params_len(params, 3,
-			*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 6);
-	get_params_data(params, 3, arena, *(REG_CAST *)proc->pc);
 	if (params[0].value > 0 && params[0].value < REG_NUMBER)
 		if (params[1].value > 0 && params[1].value < REG_NUMBER)
 			if (params[2].value > 0 && params[2].value < REG_NUMBER)
@@ -52,17 +46,11 @@ void	op_and(t_process *proc, t_env *e)
 ** meme fonctionnement pour le carry
 */
 
-void	op_or(t_process *proc, t_env *e)
+void	op_or(t_param *params, t_process *proc, t_env *e)
 {
-	uint8_t		*arena;
-	t_param		params[3];
 	int			len;
 
-	arena = (uint8_t *)e->arena;
 	len = 0;
-	get_params_len(params, 3,
-			*(arena + *(REG_CAST *)proc->pc + 1), 7);
-	get_params_data(params, 3, arena, *(REG_CAST *)proc->pc);
 	if (params[0].value > 0 && params[0].value < REG_NUMBER)
 		if (params[1].value > 0 && params[1].value < REG_NUMBER)
 			if (params[2].value > 0 && params[2].value < REG_NUMBER)
@@ -82,17 +70,11 @@ void	op_or(t_process *proc, t_env *e)
 ** meme fonctionnement pour le carry
 */
 
-void	op_xor(t_process *proc, t_env *e)
+void	op_xor(t_param *params, t_process *proc, t_env *e)
 {
-	uint8_t		*arena;
-	t_param		params[3];
 	int			len;
 
-	arena = (uint8_t *)e->arena;
 	len = 0;
-	get_params_len(params, 3,
-			*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 8);
-	get_params_data(params, 3, arena, *(REG_CAST *)proc->pc);
 	if (params[0].value > 0 && params[0].value < REG_NUMBER)
 		if (params[1].value > 0 && params[1].value < REG_NUMBER)
 			if (params[2].value > 0 && params[2].value < REG_NUMBER)
@@ -111,22 +93,12 @@ void	op_xor(t_process *proc, t_env *e)
 ** jump a l'adresse donnee en parametre si le carry est a un, sinon fail
 */
 
-void	op_zjmp(t_process *proc, t_env *e)
+void	op_zjmp(t_param *params, t_process *proc, t_env *e)
 {
-	uint8_t		*arena;
-	t_param		params[3];
 	int			len;
-
-	arena = (uint8_t *)e->arena;
-	ft_bzero(params, sizeof(params));
 	len = 3;
 	if (proc->carry == 1)
-	{
-		get_params_len(params, 1,
-				*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 9);
-		get_params_data(params, 1, arena, *(REG_CAST *)proc->pc);
 		len = params[0].value;
-	}
 	move_process_pc(proc, len, e);
 }
 
@@ -137,17 +109,11 @@ void	op_zjmp(t_process *proc, t_env *e)
 ** si l'addition = 0 le carry passe a 1
 */
 
-void	op_ldi(t_process *proc, t_env *e)
+void	op_ldi(t_param *params, t_process *proc, t_env *e)
 {
-	uint8_t		*arena;
-	t_param		params[3];
 	int			addr;
 	int			len;
 
-	arena = (uint8_t *)e->arena;
-	get_params_len(params, 3,
-			*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE), 10);
-	get_params_data(params, 3, arena, *(REG_CAST *)proc->pc);
 	addr = (params[0].value + params[1].value) % IDX_MOD;
 	proc->carry = addr == 0 ? 1 : 0;
 	if (params[2].value > 0 && params[2].value < REG_NUMBER)

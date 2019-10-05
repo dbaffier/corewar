@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/03 18:10:24 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/05 19:34:37 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,50 +32,33 @@ t_process	*new_proc(t_process *proc, int value, int flag, t_env *e)
 	return (new);
 }
 
-void		get_types(char types, t_param *params_type)
+void		get_params_len(t_param *params, t_op *op, uint8_t types)
 {
-	uint8_t	param_len;
-	int				i;
+	int		i;
 
 	i = 0;
-	while (i < 3)
+	if (op->reg_nb == 1)
 	{
-		param_len = types;
-		param_len = param_len >> 6;
-		params_type[i].size = param_len;
+		params[0].type = op->types[0];
+		params[0].size = (op->opcode == 1) ? 4 : 2;
+		return ;
+	}
+	while (i < op->reg_nb)
+	{
+		params[i].type = types >> 6;
+		if (params[i].type == REG_CODE)
+			params[i].size = 1;
+		else if (params[i].type == DIR_CODE)
+			params[i].size =
+			(op->opcode == 10 || op->opcode == 11 || op->opcode == 14) ? 2 : 4;
+		else if (params[i].type == IND_CODE)
+			params[i].size = 2;
 		types = types << 2;
 		i++;
 	}
 }
 
-void		get_params_len(t_param *params, int nbparam, char types,
-	char opcode)
-{
-	int		i;
-
-	i = 0;
-	if (opcode == 1 || opcode == 9 || opcode == 12 || opcode == 15)
-	{
-		params[i].size = opcode == 1 ? 4 : 2;
-		return ;
-	}
-	get_types(types, params);
-	while (i < nbparam)
-	{
-		if (params[i].size == 1)
-			params[i].size = 1;
-		else if (params[i].size == 2)
-			params[i].size = opcode == 10 || opcode == 11 || opcode == 14 ?
-				2 : 4;
-		else if (params[i].size == 3)
-			params[i].size = 2;
-		else
-			params[i].size = 0;
-		i++;
-	}
-}
-
-int			get_value(uint8_t *data, int index, int size)
+static int	get_value(uint8_t *data, int index, int size)
 {
 	int		i;
 	int		j;
@@ -94,7 +77,7 @@ int			get_value(uint8_t *data, int index, int size)
 	return (*(int *)tab);
 }
 
-void		get_params_data(t_param *params, int nbparam, uint8_t *arena,
+void		get_params_data(t_param *params, t_op *op, uint8_t *arena,
 REG_CAST pc)
 {
 	uint8_t	*data;
@@ -104,9 +87,9 @@ REG_CAST pc)
 	data = arena + pc;
 	i = 0;
 	size = 0;
-	while (i < nbparam)
+	while (i < op->reg_nb)
 	{
-		if (*data == 9 || *data == 1 || *data == 12 || *data == 15)
+		if (op->reg_nb == 1)
 			params[i].value = get_value(arena, pc + 1, params[i].size);
 		else
 			params[i].value = get_value(arena, pc + size + 2, params[i].size);

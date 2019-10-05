@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/03 18:50:00 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/05 19:34:44 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ struct s_env			g_env;
 
 typedef struct			s_param
 {
+	int					type;
 	int					value;
 	char				size;
 }						t_param;
@@ -144,7 +145,7 @@ void					ncurses_aff_all(t_env *e);
 void					update_aff_vminfo(t_env *e, size_t cycle);
 void					update_aff_vmstatus(t_env *e);
 void					update_aff_champion_dead(t_env *e, t_process *proc);
-void					update_aff_arena(char *arena, size_t size,
+void					update_aff_arena(size_t addr, size_t size,
 						short color, t_env *e);
 
 /*
@@ -153,6 +154,8 @@ void					update_aff_arena(char *arena, size_t size,
 void					launch_game(t_env *e);
 int						play_game(size_t nb_cycles, t_env *e);
 void					dump_map(uint8_t *arena, size_t size);
+size_t					player_instruction(t_process *proc, t_env *e,
+						size_t nb_cycles);
 void					move_process_pc(t_process *proc, int len, t_env *e);
 REG_CAST				calc_mod(int len, size_t size);
 void					arena_copy(void *arena, REG_CAST pc, REG_CAST *value,
@@ -166,35 +169,35 @@ uint32_t				byteswap_32(uint32_t x);
 /*
 ** Instructions Functions
 */
-void					op_live(t_process *proc, t_env *e);
-void					op_ld(t_process *proc, t_env *e);
-void					op_st(t_process *proc, t_env *e);
-void					op_add(t_process *proc, t_env *e);
-void					op_sub(t_process *proc, t_env *e);
-void					op_and(t_process *proc, t_env *e);
-void					op_or(t_process *proc, t_env *e);
-void					op_xor(t_process *proc, t_env *e);
-void					op_zjmp(t_process *proc, t_env *e);
-void					op_ldi(t_process *proc, t_env *e);
-void					op_sti(t_process *proc, t_env *e);
-void					op_fork(t_process *proc, t_env *e);
-void					op_lld(t_process *proc, t_env *e);
-void					op_lldi(t_process *proc, t_env *e);
-void					op_lfork(t_process *proc, t_env *e);
-void					op_aff(t_process *proc, t_env *e);
+void					op_live(t_param *params, t_process *proc, t_env *e);
+void					op_ld(t_param *params, t_process *proc, t_env *e);
+void					op_st(t_param *params, t_process *proc, t_env *e);
+void					op_add(t_param *params, t_process *proc, t_env *e);
+void					op_sub(t_param *params, t_process *proc, t_env *e);
+void					op_and(t_param *params, t_process *proc, t_env *e);
+void					op_or(t_param *params, t_process *proc, t_env *e);
+void					op_xor(t_param *params, t_process *proc, t_env *e);
+void					op_zjmp(t_param *params, t_process *proc, t_env *e);
+void					op_ldi(t_param *params, t_process *proc, t_env *e);
+void					op_sti(t_param *params, t_process *proc, t_env *e);
+void					op_fork(t_param *params, t_process *proc, t_env *e);
+void					op_lld(t_param *params, t_process *proc, t_env *e);
+void					op_lldi(t_param *params, t_process *proc, t_env *e);
+void					op_lfork(t_param *params, t_process *proc, t_env *e);
+void					op_aff(t_param *params, t_process *proc, t_env *e);
 
 void					handle_st(t_param *params, t_process *proc, t_env *e);
-void					handle_sti(t_param *params, t_process *proc, t_env *e);
+int						handle_sti(t_param *params, t_process *proc, t_env *e);
 
-void					get_params_len(t_param *params, int nbparam,
-						char types, char opcode);
-void					get_params_data(t_param *params, int nbparam,
+void					get_params_len(t_param *params, t_op *op,
+						uint8_t types);
+void					get_params_data(t_param *params, t_op *op,
 						uint8_t *arena, REG_CAST pc);
 t_process				*new_proc(t_process *proc, int value, int flag,
 						t_env *e);
-void					get_types(char types, t_param *params_type);
-int						get_value(uint8_t *data, int index,
-						int size);
+// void					get_types(uint8_t types, t_param *params_type);
+// int						get_value(uint8_t *data, int index,
+// 						int size);
 int						full_len_size(unsigned short reg_nb,
 						t_param *params);
 void					print_live(t_env *e, t_param *params, t_process *tail);

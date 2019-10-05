@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:20:26 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/01 22:48:42 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/05 16:06:56 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int				create_arenabox(t_env *e)
 	int			winy;
 
 	winx = ARENA_LINE_LEN + 1;
-	winy = ARENA_VALUE_PER_LINE + 10;
+	winy = ARENA_VALUE_PER_LINE + 1;
 	if (!(e->ncu.arena_winbox = subwin(e->ncu.main_win, winy, winx, 0, 0)))
 		return (ERR_NCURSE_ARENABOX);
 	box(e->ncu.arena_winbox, 0, 0);
