@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/05 18:08:41 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/05 19:43:13 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ extern struct s_op	op_tab[17];
 void	op_live(t_param *params, t_process *proc, t_env *e)
 {
 	t_process	*tail;
+
 	tail = e->proc;
 	while (tail)
 	{
@@ -51,6 +52,7 @@ void	op_live(t_param *params, t_process *proc, t_env *e)
 void	op_ld(t_param *params, t_process *proc, t_env *e)
 {
 	int			len;
+
 	if (params[1].value > 0 && params[1].value < REG_NUMBER)
 	{
 		if (params[0].size == 2)
@@ -77,6 +79,7 @@ void	op_ld(t_param *params, t_process *proc, t_env *e)
 void	op_st(t_param *params, t_process *proc, t_env *e)
 {
 	int			len;
+
 	if (params[0].value > 0 && params[0].value < REG_NUMBER)
 		handle_st(params, proc, e);
 	len = full_len_size(op_tab[2].reg_nb, params);

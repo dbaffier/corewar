@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 17:35:43 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/05 18:32:57 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/05 19:46:10 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 #include "libft.h"
 
 extern struct s_op op_tab[17];
+
+/*
+** wprintw(e->ncu.info_win, "\"%s\":\n", op_tab[proc->instruction-1].reg_name);
+*/
 
 static void		launch_instruction(t_process *proc, t_env *e)
 {
@@ -30,7 +34,6 @@ static void		launch_instruction(t_process *proc, t_env *e)
 		*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE));
 	get_params_data(params, &op_tab[proc->instruction - 1], arena,
 		*(REG_CAST *)proc->pc);
-wprintw(e->ncu.info_win, "\"%s\":\n", op_tab[proc->instruction - 1].reg_name);
 	instruction_function[proc->instruction](params, proc, e);
 }
 

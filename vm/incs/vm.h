@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/05 19:34:44 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/05 19:48:44 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct			s_process
 	char				pc[REG_SIZE];
 	char				carry;
 	size_t				instruction_wait;
-	uint8_t		instruction;
+	uint8_t				instruction;
 	size_t				is_alive;
 	short				color[2];
 	struct s_process	*next;
@@ -195,9 +195,6 @@ void					get_params_data(t_param *params, t_op *op,
 						uint8_t *arena, REG_CAST pc);
 t_process				*new_proc(t_process *proc, int value, int flag,
 						t_env *e);
-// void					get_types(uint8_t types, t_param *params_type);
-// int						get_value(uint8_t *data, int index,
-// 						int size);
 int						full_len_size(unsigned short reg_nb,
 						t_param *params);
 void					print_live(t_env *e, t_param *params, t_process *tail);

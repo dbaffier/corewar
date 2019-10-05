@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/05 18:09:17 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/05 19:43:49 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	op_xor(t_param *params, t_process *proc, t_env *e)
 void	op_zjmp(t_param *params, t_process *proc, t_env *e)
 {
 	int			len;
+
 	len = 3;
 	if (proc->carry == 1)
 		len = params[0].value;
@@ -119,7 +120,7 @@ void	op_ldi(t_param *params, t_process *proc, t_env *e)
 	if (params[2].value > 0 && params[2].value < REG_NUMBER)
 	{
 		addr = calc_mod(*(REG_CAST *)proc->pc + addr, MEM_SIZE);
-		*(REG_CAST *)proc->reg[params[2].value - 1] = 
+		*(REG_CAST *)proc->reg[params[2].value - 1] =
 			arena_get(e->arena, addr, REG_SIZE);
 	}
 	len = full_len_size(op_tab[9].reg_nb, params);
