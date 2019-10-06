@@ -141,17 +141,17 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 %.o:%.c	
-	@$(CC) -o $@ $(CFLAGS) -I $(HEADER) -c $<
+	$(CC) -o $@ $(CFLAGS) -I $(HEADER) -c $<
 
 $(NAME): $(OBJS)
-	@ar rc $(NAME) $(OBJS)
-	@ranlib $(NAME)
+	ar rc $(NAME) $(OBJS)
+	ranlib $(NAME)
 
 clean:
-	@$(RM) $(OBJS)
+	$(RM) $(OBJS)
 
 fclean: clean
-	@$(RM) $(NAME)
+	$(RM) $(NAME)
 
 re: fclean all
 

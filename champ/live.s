@@ -1,5 +1,5 @@
-	.name ""
-	.comment ""
+	.name "mon cul"
+	.comment "mon zbi"
 
 	live %1
 	fork %15

@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/05 19:48:44 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 15:48:18 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ enum
 	IS_OK,
 	ERR_HELP,
 	ERR_DIGIT,
-	ERR_NEGATIVE,
+	ERR_ZERO,
 	ERR_PARAM,
 	ERR_FILENAME,
 	ERR_MAX_CHAMP,
@@ -69,10 +69,12 @@ typedef struct			s_live
 typedef struct			s_process
 {
 	int					pos;
+	int					pos_y;
 	int					id;
 	char				*file_name;
 	off_t				file_size;
 	void				*file;
+	size_t				*free_file;
 	int					data_size;
 	char				reg[REG_NUMBER][REG_SIZE];
 	char				pc[REG_SIZE];
@@ -89,10 +91,11 @@ typedef struct			s_env
 {
 	char				*progname;
 	t_ncurse			ncu;
-	int					dump_cycle;
+	ssize_t				dump_cycle;
 	int					id;
 	int					nb_players;
 	t_process			*proc;
+	size_t				free_file[MAX_PLAYERS];
 	void				*arena;
 	short				*colors;
 	int					pause;
@@ -144,6 +147,8 @@ int						create_infobox(t_env *e);
 void					ncurses_aff_all(t_env *e);
 void					update_aff_vminfo(t_env *e, size_t cycle);
 void					update_aff_vmstatus(t_env *e);
+void					update_aff_champion_info(t_op *op, t_param *params,
+						t_process *proc, t_env *e);
 void					update_aff_champion_dead(t_env *e, t_process *proc);
 void					update_aff_arena(size_t addr, size_t size,
 						short color, t_env *e);
@@ -152,7 +157,7 @@ void					update_aff_arena(size_t addr, size_t size,
 ** Game Functions
 */
 void					launch_game(t_env *e);
-int						play_game(size_t nb_cycles, t_env *e);
+int						play_game(ssize_t nb_cycles, t_env *e);
 void					dump_map(uint8_t *arena, size_t size);
 size_t					player_instruction(t_process *proc, t_env *e,
 						size_t nb_cycles);

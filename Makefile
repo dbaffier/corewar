@@ -45,10 +45,10 @@ VM_SRC		+=	main.c					\
 
 CC			= gcc
 CFLAGS		= -Wall -Werror -Wextra
-CFLAGS		+= -std=c11 -Wmissing-prototypes -pedantic -pedantic-errors -fsanitize=address
+CFLAGS		+= -std=c11 -Wmissing-prototypes -pedantic -pedantic-errors -g3 -fsanitize=address
 
 INCS		= -I$(LFT_DIR)inc -I$(VM_INC_D)
-LIBS		= -L$(LFT_DIR) -lft -lncurses -fsanitize=address
+LIBS		= -lncurses -fsanitize=address
 
 OBJS_DIR	= $(VM_DIR)objs/
 OBJS_VM		+= $(addprefix $(OBJS_DIR), $(VM_SRC:.c=.o))
@@ -62,7 +62,9 @@ RED			= \x1b[1;31m
 GREEN		= \x1b[1;32m
 RESET		= \x1b[0m
 
-all: $(DEP_DIR) $(OBJS_DIR) lib $(NAME)
+LIBFT = $(LFT_DIR)libft.a
+
+all: $(DEP_DIR) $(OBJS_DIR) $(NAME)
 
 $(DEP_DIR):
 	@mkdir -p $@
@@ -70,16 +72,15 @@ $(DEP_DIR):
 $(OBJS_DIR):
 	@mkdir -p $@
 
-lib:
-	@make -C $(LFT_DIR)
+$(LIBFT):
+	make -C $(LFT_DIR)
 
-$(NAME): $(OBJS_VM)
-	@$(CC) -o $@ $^ $(LIBS)
-	@echo "RELEASE THE $(RED) C O R E W A R $(RESET)"
+$(NAME): $(OBJS_VM) $(LIBFT)
+	$(CC) -o $@ $^ $(LIBS)
 
 $(OBJS_DIR)%.o: $(VM_SRC_D)%.c
 $(OBJS_DIR)%.o: $(VM_SRC_D)%.c $(DEP_DIR)%.d
-	@$(CC) -MT $@ -MMD -MP -MF $(DEP_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
+	$(CC) -MT $@ -MMD -MP -MF $(DEP_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
 	@mv -f $(DEP_DIR)$*.Td $(DEP_DIR)$*.d && touch $@
 
 $(DEP_DIR)%.d: ;
@@ -88,13 +89,13 @@ $(DEP_DIR)%.d: ;
 -include $(DEP)
 
 clean:
-	@$(RM) -rf $(OBJS_DIR)
-	@$(RM) -rf $(DEP_DIR)
-	@make -C $(LFT_DIR) clean
+	$(RM) -rf $(OBJS_DIR)
+	$(RM) -rf $(DEP_DIR)
+	make -C $(LFT_DIR) clean
 
 fclean: clean
-	@$(RM) $(NAME)
-	@make -C $(LFT_DIR) fclean
+	$(RM) $(NAME)
+	make -C $(LFT_DIR) fclean
 
 re: fclean all
 

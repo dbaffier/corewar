@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 17:35:43 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/05 19:46:10 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 16:05:56 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ extern struct s_op op_tab[17];
 static void		launch_instruction(t_process *proc, t_env *e)
 {
 	static void	(*instruction_function[])(t_param *, t_process *, t_env *) = {
-		NULL, op_live, op_ld, op_st, op_add, op_sub, op_and, op_or, op_xor,
+		op_live, op_ld, op_st, op_add, op_sub, op_and, op_or, op_xor,
 		op_zjmp, op_ldi, op_sti, op_fork, op_lld, op_lldi, op_lfork, op_aff,
 	};
 	t_param		params[MAX_ARGS_NUMBER];
@@ -34,7 +34,9 @@ static void		launch_instruction(t_process *proc, t_env *e)
 		*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE));
 	get_params_data(params, &op_tab[proc->instruction - 1], arena,
 		*(REG_CAST *)proc->pc);
-	instruction_function[proc->instruction](params, proc, e);
+	update_aff_champion_info(&op_tab[proc->instruction - 1],
+		params, proc, e);
+	instruction_function[proc->instruction - 1](params, proc, e);
 }
 
 size_t			player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
@@ -52,6 +54,7 @@ size_t			player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 				return (op_tab[proc->instruction - 1].cycle - 1);
 			else
 				move_process_pc(proc, 1, e);
+			update_aff_champion_info(NULL, NULL, proc, e);
 		}
 		else
 			launch_instruction(proc, e);

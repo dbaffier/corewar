@@ -6,11 +6,12 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 17:34:46 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/01 19:54:46 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 14:12:46 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm_ncurse.h"
+#include "libft.h"
 
 static int		ncurses_wgetch_next(int ch, int *speed, int *pause,
 WINDOW *info_win)
@@ -52,4 +53,16 @@ int				ncurses_wgetch(int *speed, int *pause, WINDOW *info_win)
 		return (!pause);
 	}
 	return (ncurses_wgetch_next(ch, speed, pause, info_win));
+}
+
+int				ncurses_player_calc_x(int id)
+{
+	char		*nb;
+	int			ret;
+
+	if (!(nb = ft_itoa(id)))
+		return (100);
+	ret = ft_strlen(nb);
+	free(nb);
+	return (ret);
 }

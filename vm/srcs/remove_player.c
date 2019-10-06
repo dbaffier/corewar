@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:45:03 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/02 18:50:57 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 16:14:35 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_process			*remove_player(t_process *proc, t_process **head)
 		*head = next;
 	if (proc->next)
 		proc->next->prev = proc->prev;
-	if (proc->file)
+	if (proc->file && --proc->free_file[proc->pos] == 0)
 		free(proc->file);
 	ft_bzero(proc, sizeof(*proc));
 	free(proc);

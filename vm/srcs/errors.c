@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 16:12:33 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 23:31:59 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 13:02:30 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int				corewar_errors(int errnb, char *arg, t_env *e)
 {
 	static const char	*error[] = {
 		"-- help\t", "value must contains only numbers",
-		"value must be strictly positive", "unknown parameter",
+		"value must be different of", "unknown parameter",
 		"invalid filename", "too many champions received",
 		"number already taken", "missing champion.\t",
 		"impossible to open file", "impossible to lseek file for",

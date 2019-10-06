@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/10/05 17:53:25 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 14:40:44 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct					s_op
 	unsigned char				opcode;
 	unsigned int				cycle;
 	char						*complete_name;
-	int							encoding_byte;
+	int							modif_carry;
 	int							direct_size;
 }								t_op;
 

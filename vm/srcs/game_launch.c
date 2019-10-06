@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 21:48:51 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 23:59:16 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 13:08:02 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static void		set_game_parameters(t_env *e)
 
 void			launch_game(t_env *e)
 {
-	size_t		nb_cycles;
+	ssize_t		nb_cycles;
 	int			ch;
 
 	nb_cycles = 0;
@@ -75,7 +75,7 @@ void			launch_game(t_env *e)
 	{
 		if (e->term_too_small)
 			continue ;
-		if (e->ncu.info_win)
+		if (e->ncu.active)
 		{
 			update_aff_vminfo(e, nb_cycles);
 			ch = ncurses_wgetch(&e->speed, &e->pause, e->ncu.info_win);

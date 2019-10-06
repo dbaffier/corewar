@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:28:36 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/01 22:48:52 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 13:59:14 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,14 @@ static void		init_pairs(void)
 {
 	init_pair(COREWAR_DFLT_COLOR, COLOR_BLACK, -1);
 	init_pair(COREWAR_TITLE_COLOR, COLOR_YELLOW, -1);
-	init_color(8, 100, 0, 200);
-	init_pair(COREWAR_CHAMPWIN_COLOR, COLOR_WHITE, 8);
-	init_color(9, 75, 0, 125);
-	init_pair(COREWAR_INFOWIN_COLOR, COLOR_WHITE, 9);
+	init_pair(COREWAR_CHAMPWIN_COLOR, COLOR_WHITE, COREWAR_CHAMP_BKGD);
+	init_pair(COREWAR_CHAMPALIVE_COLOR, COLOR_BLACK, COLOR_GREEN);
+	init_pair(COREWAR_CHAMPDEAD_COLOR, COLOR_BLACK, COLOR_RED);
+	init_pair(COREWAR_INFOWIN_COLOR, COLOR_WHITE, COREWAR_INFO_BKGD);
 	init_pair(COREWAR_TEXT_COLOR, COLOR_WHITE, -1);
 	init_pair(COREWAR_WINNER_COLOR, COLOR_BLACK, COLOR_BLUE);
+	init_color(COREWAR_CHAMP_BKGD, 100, 0, 200);
+	init_color(COREWAR_INFO_BKGD, 75, 0, 125);
 }
 
 static void		init_colors(t_env *e)

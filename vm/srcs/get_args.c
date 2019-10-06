@@ -6,18 +6,20 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 19:51:14 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/05 19:40:13 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 16:23:42 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
 
-static int		get_number(char *av, int *value, int min_value)
+static int		get_number(char *av, int *value)
 {
 	int			i;
 
 	i = 0;
+	if (!av)
+		return (ERR_DIGIT);
 	while (av[i] && ft_isspace(av[i]))
 		i++;
 	if (av[i] == '-')
@@ -26,7 +28,8 @@ static int		get_number(char *av, int *value, int min_value)
 		i++;
 	if (!av[i])
 	{
-		*value = ft_atoi(av);
+		if ((*value = ft_atoi(av)) == 0)
+			return (ERR_ZERO);
 		return (IS_OK);
 	}
 	return (ERR_DIGIT);
@@ -35,9 +38,9 @@ static int		get_number(char *av, int *value, int min_value)
 static int		get_option(int *i, char **av, t_env *e)
 {
 	if (ft_strequ(av[*i], "-dump"))
-		return (get_number(av[++(*i)], &e->dump_cycle, 0));
+		return (get_number(av[++(*i)], (int *)&e->dump_cycle));
 	if (ft_strequ(av[*i], "-n"))
-		return (get_number(av[++(*i)], &e->id, 1));
+		return (get_number(av[++(*i)], &e->id));
 	if (ft_strequ(av[*i], "-h"))
 		return (ERR_HELP);
 	if (ft_strequ(av[*i], "-v"))

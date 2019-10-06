@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/05 19:48:26 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 16:14:42 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_process	*new_proc(t_process *proc, int value, int flag, t_env *e)
 
 	new = ft_memalloc(sizeof(*new));
 	ft_memcpy(new, proc, sizeof(*new));
-	new->file = NULL;
+	new->free_file[proc->pos]++;
 	new->instruction_wait += 1;
 	new->instruction = 0;
 	if (!flag)
@@ -49,8 +49,7 @@ void		get_params_len(t_param *params, t_op *op, uint8_t types)
 		if (params[i].type == REG_CODE)
 			params[i].size = 1;
 		else if (params[i].type == DIR_CODE)
-			params[i].size =
-			(op->opcode == 10 || op->opcode == 11 || op->opcode == 14) ? 2 : 4;
+			params[i].size = (op->direct_size) ? 2 : 4;
 		else if (params[i].type == IND_CODE)
 			params[i].size = 2;
 		types = types << 2;
@@ -74,6 +73,8 @@ static int	get_value(uint8_t *data, int index, int size)
 		tab[size] = data[(index + i) % MEM_SIZE];
 		i++;
 	}
+	if (size == 2)
+		return (*(short *)tab);
 	return (*(int *)tab);
 }
 

@@ -6,11 +6,12 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 21:30:31 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/05 18:25:50 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 15:08:07 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+#include "libft.h"
 
 void			update_aff_vmstatus(t_env *e)
 {
@@ -50,6 +51,31 @@ void			update_aff_vminfo(t_env *e, size_t cycle)
 	wrefresh(e->ncu.vm_win);
 }
 
+void			update_aff_champion_info(t_op *op, t_param *params,
+t_process *proc, t_env *e)
+{
+	if (e->ncu.champ_win)
+	{
+		wattron(e->ncu.champ_win, COLOR_PAIR(COREWAR_CHAMPWIN_COLOR));
+		wmove(e->ncu.champ_win, proc->pos_y + 1, 0);
+		wclrtoeol(e->ncu.champ_win);
+		if (op)
+		{
+			wprintw(e->ncu.champ_win, "\"%s\"", op->reg_name);
+			wprintw(e->ncu.champ_win, " p[0]{%d, %d, %d}", params[0].size,
+			params[0].value, params[0].type);
+			if (op->reg_nb > 1)
+				wprintw(e->ncu.champ_win, ", p[1]{%d, %d, %d}", params[1].size,
+				params[1].value, params[1].type);
+			if (op->reg_nb > 2)
+				wprintw(e->ncu.champ_win, ", p[2]{%d, %d, %d}", params[2].size,
+				params[2].value, params[2].type);
+		}
+		wattroff(e->ncu.champ_win, COLOR_PAIR(COREWAR_TEXT_COLOR));
+		wrefresh(e->ncu.champ_win);
+	}
+}
+
 void			update_aff_champion_dead(t_env *e, t_process *proc)
 {
 	int			y;
@@ -66,13 +92,13 @@ void			update_aff_champion_dead(t_env *e, t_process *proc)
 		wattroff(e->ncu.arena_win,
 			COLOR_PAIR(e->colors[*(REG_CAST *)proc->pc]));
 	}
-}
-
-static uint8_t	*calc_arena(unsigned char *arena, unsigned char *e_arena)
-{
-	if (arena >= e_arena + MEM_SIZE)
-		return (e_arena);
-	return (arena);
+	if (e->ncu.champ_win)
+	{
+		x = ncurses_player_calc_x(proc->id) + 5;
+		wattron(e->ncu.champ_win, COLOR_PAIR(COREWAR_CHAMPDEAD_COLOR));
+		mvwprintw(e->ncu.champ_win, proc->pos_y, e->ncu.winx - 6, "DEAD");
+		wattroff(e->ncu.champ_win, COLOR_PAIR(COREWAR_CHAMPDEAD_COLOR));
+	}
 }
 
 void			update_aff_arena(size_t addr, size_t size, short color,
@@ -90,7 +116,7 @@ t_env *e)
 			x = ((pos * 3) % ARENA_LINE_LEN) % MEM_SIZE;
 			e->colors[pos] = color;
 			mvwprintw(e->ncu.arena_win, y, x, "%02x",
-			*calc_arena((uint8_t *)e->arena + pos, e->arena));
+				*((uint8_t *)e->arena + pos));
 			addr++;
 		}
 }

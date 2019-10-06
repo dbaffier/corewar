@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 23:05:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/05 17:36:16 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 14:05:56 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ static size_t		check_players_alive(t_env *e)
 	return (alive);
 }
 
-int					play_game(size_t nb_cycles, t_env *e)
+int					play_game(ssize_t nb_cycles, t_env *e)
 {
 	t_process	*proc;
 
-	if (e->dump_cycle > -1 && (size_t)e->dump_cycle == nb_cycles)
+	if (e->dump_cycle == nb_cycles)
 	{
 		if (!e->ncu.main_win)
 			dump_map(e->arena, MEM_SIZE);

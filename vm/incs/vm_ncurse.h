@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:40:54 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/30 23:16:42 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 14:13:18 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,13 @@ enum
 	COREWAR_DFLT_COLOR = 1,
 	COREWAR_TITLE_COLOR,
 	COREWAR_CHAMPWIN_COLOR,
+	COREWAR_CHAMPALIVE_COLOR,
+	COREWAR_CHAMPDEAD_COLOR,
 	COREWAR_INFOWIN_COLOR,
 	COREWAR_TEXT_COLOR,
 	COREWAR_WINNER_COLOR,
+	COREWAR_CHAMP_BKGD,
+	COREWAR_INFO_BKGD,
 	COREWAR_COLOR_END,
 };
 
@@ -50,5 +54,6 @@ typedef struct		s_ncurse
 }					t_ncurse;
 
 int					ncurses_wgetch(int *speed, int *pause, WINDOW *info_win);
+int					ncurses_player_calc_x(int id);
 
 #endif

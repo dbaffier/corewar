@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 19:51:09 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/01 19:59:38 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 15:51:49 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static int		get_data(int fd, t_process *proc)
 	if (off > CHAMP_MAX_SIZE)
 		return (ERR_SIZE_HIGH);
 	proc->data_size = off;
+	(*proc->free_file) = 1;
 	return (IS_OK);
 }
 
@@ -103,6 +104,7 @@ int				get_player(t_env *e, char *av)
 		return (ERR_MALLOC);
 	proc->pos = e->nb_players;
 	proc->id = e->id;
+	proc->free_file = &e->free_file[e->nb_players];
 	proc->file_name = av;
 	proc->next = e->proc;
 	if (proc->next)
