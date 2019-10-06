@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 17:35:43 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/06 19:34:43 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 20:26:31 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ static void		launch_instruction(t_process *proc, t_env *e)
 	ft_bzero(params, sizeof(params));
 	arena = (uint8_t *)e->arena;
 	op = op_tab + proc->instruction - 1;
-	// get_params_len(params, &op_tab[proc->instruction - 1],
-	// 	*(arena + (*(REG_CAST *)proc->pc + 1) % MEM_SIZE));
 	if (get_params_data(params, op, arena, *(REG_CAST *)proc->pc))
 	{
 		ret = instruction_function[proc->instruction - 1](params, proc, e);

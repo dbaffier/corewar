@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/06 19:31:19 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 20:27:07 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,6 @@ t_process	*new_proc(t_process *proc, int value, int flag, t_env *e)
 	if ((new->next = proc->next) != NULL)
 		new->next->prev = new;
 	return (new);
-}
-
-int			get_params_len(t_param *params, t_op *op, uint8_t types) // a jeter
-{
-	int		i;
-
-	i = 0;
-	while (i < op->reg_nb)
-	{
-		params[i].type = (op->reg_nb > 1) ? types >> 6 : op->types[0];
-		if (params[i].type == REG_CODE)
-			params[i].size = 1;
-		else if (params[i].type == DIR_CODE)
-			params[i].size = (op->direct_size) ? 2 : 4;
-		else if (params[i].type == IND_CODE)
-			params[i].size = 2;
-		else
-			return (0);
-		types = types << 2;
-		i++;
-	}
-	return (1);
 }
 
 static int	get_param_size(int i, t_param *params, t_op *op, uint8_t type)
@@ -106,6 +84,9 @@ REG_CAST pc)
 			params[i].value = get_param_value(arena, pc + 1, params[i].size);
 		else
 			params[i].value = get_param_value(arena, pc + 2, params[i].size);
+		if (params[i].type == REG_CODE
+		&& (params[i].value <= 0 || params[i].value >= REG_NUMBER))
+			return (0);
 		pc += params[i].size;
 		i++;
 	}

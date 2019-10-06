@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/06 19:52:36 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 20:48:10 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int		op_ld(t_param *params, t_process *proc, t_env *e)
 
 	if (params[1].value > 0 && params[1].value < REG_NUMBER)
 	{
-		if (params[0].type == IND_CODE)
+		if (params[0].type == REG_CODE)
 		{
 			len = calc_mod(*(REG_CAST *)proc->pc
 				+ params[0].value % IDX_MOD, MEM_SIZE);
@@ -64,6 +64,8 @@ int		op_ld(t_param *params, t_process *proc, t_env *e)
 		}
 		else if (params[0].type == DIR_CODE)
 			*(REG_CAST *)proc->reg[params[1].value - 1] = params[0].value;
+		else
+			return (0);
 		return (*(REG_CAST *)proc->reg[params[1].value - 1]);
 	}
 	return (1);
@@ -96,6 +98,8 @@ int		op_st(t_param *params, t_process *proc, t_env *e)
 		color_copy(e->colors, ret, proc->color[0], REG_SIZE);
 		update_aff_arena(ret, REG_SIZE, *proc->color, e);
 	}
+	else
+		return (0);
 	return (*(REG_CAST *)proc->reg[params[0].value - 1]);
 }
 
@@ -109,16 +113,15 @@ int		op_add(t_param *params, t_process *proc, t_env *e)
 {
 	int	add;
 
-	add = 0;
 	(void)e;
-	if (params[0].value > 0 && params[0].value < REG_NUMBER)
-		if (params[1].value > 0 && params[1].value < REG_NUMBER)
-			if (params[2].value > 0 && params[2].value < REG_NUMBER)
-			{
-				add = *(REG_CAST *)proc->reg[params[0].value - 1] +
-					*(REG_CAST *)proc->reg[params[1].value - 1];
-				*(REG_CAST *)proc->reg[params[2].value - 1] = add;
-			}
+	add = *(REG_CAST *)proc->reg[params[0].value - 1]
+		+ *(REG_CAST *)proc->reg[params[1].value - 1];
+	*(REG_CAST *)proc->reg[params[2].value - 1] = add;
+wprintw(e->ncu.info_win, "%d + %d = %d (%#x)\n",
+*(REG_CAST *)proc->reg[params[0].value - 1],
+*(REG_CAST *)proc->reg[params[1].value - 1],
+*(REG_CAST *)proc->reg[params[2].value - 1],
+*(REG_CAST *)proc->reg[params[2].value - 1]);
 	return (add);
 }
 
@@ -132,15 +135,14 @@ int		op_sub(t_param *params, t_process *proc, t_env *e)
 {
 	int	sub;
 
-	sub = 0;
 	(void)e;
-	if (params[0].value > 0 && params[0].value < REG_NUMBER)
-		if (params[1].value > 0 && params[1].value < REG_NUMBER)
-			if (params[2].value > 0 && params[2].value < REG_NUMBER)
-			{
-				sub = *(REG_CAST *)proc->reg[params[0].value - 1] -
-				*(REG_CAST *)proc->reg[params[1].value - 1];
-				*(REG_CAST *)proc->reg[params[2].value - 1] = sub;
-			}
+	sub = *(REG_CAST *)proc->reg[params[0].value - 1]
+		- *(REG_CAST *)proc->reg[params[1].value - 1];
+	*(REG_CAST *)proc->reg[params[2].value - 1] = sub;
+wprintw(e->ncu.info_win, "%d - %d = %d (%#x)\n",
+*(REG_CAST *)proc->reg[params[0].value - 1],
+*(REG_CAST *)proc->reg[params[1].value - 1],
+*(REG_CAST *)proc->reg[params[2].value - 1],
+*(REG_CAST *)proc->reg[params[2].value - 1]);
 	return (sub);
 }

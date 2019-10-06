@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/06 19:35:19 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 20:49:24 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,15 @@ int		op_and(t_param *params, t_process *proc, t_env *e)
 {
 	int	and;
 
-	and = 0;
 	(void)e;
-	if (params[0].value > 0 && params[0].value < REG_NUMBER)
-		if (params[1].value > 0 && params[1].value < REG_NUMBER)
-			if (params[2].value > 0 && params[2].value < REG_NUMBER)
-			{
-				and = *(REG_CAST *)proc->reg[params[0].value - 1] &
-				*(REG_CAST *)proc->reg[params[1].value - 1];
-				*(REG_CAST *)proc->reg[params[2].value - 1] = and;
-			}
+	and = *(REG_CAST *)proc->reg[params[0].value - 1]
+		& *(REG_CAST *)proc->reg[params[1].value - 1];
+	*(REG_CAST *)proc->reg[params[2].value - 1] = and;
+wprintw(e->ncu.info_win, "%d & %d = %d (%#x)\n",
+*(REG_CAST *)proc->reg[params[0].value - 1],
+*(REG_CAST *)proc->reg[params[1].value - 1],
+*(REG_CAST *)proc->reg[params[2].value - 1],
+*(REG_CAST *)proc->reg[params[2].value - 1]);
 	return (and);
 }
 
@@ -49,16 +48,15 @@ int		op_or(t_param *params, t_process *proc, t_env *e)
 {
 	int	or;
 
-	or = 0;
 	(void)e;
-	if (params[0].value > 0 && params[0].value < REG_NUMBER)
-		if (params[1].value > 0 && params[1].value < REG_NUMBER)
-			if (params[2].value > 0 && params[2].value < REG_NUMBER)
-			{
-				or = *(REG_CAST *)proc->reg[params[0].value - 1] |
-				*(REG_CAST *)proc->reg[params[1].value - 1];
-				*(REG_CAST *)proc->reg[params[2].value - 1] = or;
-			}
+	or = *(REG_CAST *)proc->reg[params[0].value - 1]
+		| *(REG_CAST *)proc->reg[params[1].value - 1];
+	*(REG_CAST *)proc->reg[params[2].value - 1] = or;
+wprintw(e->ncu.info_win, "%d | %d = %d (%#x)\n",
+*(REG_CAST *)proc->reg[params[0].value - 1],
+*(REG_CAST *)proc->reg[params[1].value - 1],
+*(REG_CAST *)proc->reg[params[2].value - 1],
+*(REG_CAST *)proc->reg[params[2].value - 1]);
 	return (or);
 }
 
@@ -72,16 +70,15 @@ int		op_xor(t_param *params, t_process *proc, t_env *e)
 {
 	int	xor;
 
-	xor = 0;
 	(void)e;
-	if (params[0].value > 0 && params[0].value < REG_NUMBER)
-		if (params[1].value > 0 && params[1].value < REG_NUMBER)
-			if (params[2].value > 0 && params[2].value < REG_NUMBER)
-			{
-				xor = *(REG_CAST *)proc->reg[params[0].value - 1] ^
-				*(REG_CAST *)proc->reg[params[1].value - 1];
-				*(REG_CAST *)proc->reg[params[2].value - 1] = xor;
-			}
+	xor = *(REG_CAST *)proc->reg[params[0].value - 1]
+		^ *(REG_CAST *)proc->reg[params[1].value - 1];
+	*(REG_CAST *)proc->reg[params[2].value - 1] = xor;
+wprintw(e->ncu.info_win, "%d ^ %d = %d (%#x)\n",
+*(REG_CAST *)proc->reg[params[0].value - 1],
+*(REG_CAST *)proc->reg[params[1].value - 1],
+*(REG_CAST *)proc->reg[params[2].value - 1],
+*(REG_CAST *)proc->reg[params[2].value - 1]);
 	return (xor);
 }
 
@@ -109,14 +106,9 @@ int		op_ldi(t_param *params, t_process *proc, t_env *e)
 {
 	int			addr;
 
-	addr = 0;
-	if (params[2].value > 0 && params[2].value < REG_NUMBER)
-	{
-		addr = (params[0].value + params[1].value) % IDX_MOD;
-		addr = calc_mod(*(REG_CAST *)proc->pc + addr, MEM_SIZE);
-		*(REG_CAST *)proc->reg[params[2].value - 1] =
-			arena_get(e->arena, addr, REG_SIZE);
-		addr = params[0].value + params[1].value;
-	}
-	return (addr);
+	addr = (params[0].value + params[1].value) % IDX_MOD;
+	addr = calc_mod(*(REG_CAST *)proc->pc + addr, MEM_SIZE);
+	*(REG_CAST *)proc->reg[params[2].value - 1] =
+		arena_get(e->arena, addr, REG_SIZE);
+	return (params[0].value + params[1].value);
 }

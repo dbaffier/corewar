@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 21:30:31 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/06 17:56:48 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 20:34:18 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,9 @@ t_process *proc, t_env *e)
 			if (op->reg_nb > 2)
 				wprintw(e->ncu.champ_win, ", p[2]{%d, %d, %d}", params[2].size,
 				params[2].value, params[2].type);
-			wprintw(e->ncu.champ_win, ", carry:%d", proc->carry);
 		}
+		mvwprintw(e->ncu.champ_win, proc->pos_y + 1, e->ncu.winx - 7,
+			"carry:%d", proc->carry);
 		wattroff(e->ncu.champ_win, COLOR_PAIR(COREWAR_TEXT_COLOR));
 		wrefresh(e->ncu.champ_win);
 	}
