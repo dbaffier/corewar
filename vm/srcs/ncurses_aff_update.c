@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 21:30:31 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/06 15:08:07 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 17:56:48 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ t_process *proc, t_env *e)
 			if (op->reg_nb > 2)
 				wprintw(e->ncu.champ_win, ", p[2]{%d, %d, %d}", params[2].size,
 				params[2].value, params[2].type);
+			wprintw(e->ncu.champ_win, ", carry:%d", proc->carry);
 		}
 		wattroff(e->ncu.champ_win, COLOR_PAIR(COREWAR_TEXT_COLOR));
 		wrefresh(e->ncu.champ_win);
@@ -92,11 +93,11 @@ void			update_aff_champion_dead(t_env *e, t_process *proc)
 		wattroff(e->ncu.arena_win,
 			COLOR_PAIR(e->colors[*(REG_CAST *)proc->pc]));
 	}
-	if (e->ncu.champ_win)
+	if (e->ncu.champ_win && proc->free_file[proc->pos] == 1)
 	{
 		x = ncurses_player_calc_x(proc->id) + 5;
 		wattron(e->ncu.champ_win, COLOR_PAIR(COREWAR_CHAMPDEAD_COLOR));
-		mvwprintw(e->ncu.champ_win, proc->pos_y, e->ncu.winx - 6, "DEAD");
+		mvwprintw(e->ncu.champ_win, proc->pos_y, e->ncu.winx - 6, "DEAD ");
 		wattroff(e->ncu.champ_win, COLOR_PAIR(COREWAR_CHAMPDEAD_COLOR));
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/05 19:43:13 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 19:52:36 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ extern struct s_op	op_tab[17];
 ** renvoie un live pour le processus qui l'appelle
 */
 
-void	op_live(t_param *params, t_process *proc, t_env *e)
+int		op_live(t_param *params, t_process *proc, t_env *e)
 {
 	t_process	*tail;
 
@@ -40,34 +40,33 @@ void	op_live(t_param *params, t_process *proc, t_env *e)
 	}
 	print_live(e, params, tail);
 	proc->is_alive++;
-	move_process_pc(proc, 5, e);
+	return (0);
 }
 
 /*
-** DIRECT_LOAD 0x02
+** DIRECT LOAD 0x02
 ** load le 1er parametre dans le registre passé en 2nd parametre
 ** si le 1st param = 0 le carry passe a 1
 */
 
-void	op_ld(t_param *params, t_process *proc, t_env *e)
+int		op_ld(t_param *params, t_process *proc, t_env *e)
 {
 	int			len;
 
 	if (params[1].value > 0 && params[1].value < REG_NUMBER)
 	{
-		if (params[0].size == 2)
+		if (params[0].type == IND_CODE)
 		{
 			len = calc_mod(*(REG_CAST *)proc->pc
-			+ (short)params[0].value % IDX_MOD, MEM_SIZE);
+				+ params[0].value % IDX_MOD, MEM_SIZE);
 			*(REG_CAST *)proc->reg[params[1].value - 1] =
-			arena_get(e->arena, len, 4);
+				arena_get(e->arena, len, 4);
 		}
-		else if (params[0].size == 4)
+		else if (params[0].type == DIR_CODE)
 			*(REG_CAST *)proc->reg[params[1].value - 1] = params[0].value;
+		return (*(REG_CAST *)proc->reg[params[1].value - 1]);
 	}
-	proc->carry = (params[0].value == 0) ? 1 : 0;
-	len = full_len_size(op_tab[1].reg_nb, params);
-	move_process_pc(proc, len + 2, e);
+	return (1);
 }
 
 /*
@@ -76,14 +75,28 @@ void	op_ld(t_param *params, t_process *proc, t_env *e)
 ** meme fonctionnement pour le carry
 */
 
-void	op_st(t_param *params, t_process *proc, t_env *e)
+int		op_st(t_param *params, t_process *proc, t_env *e)
 {
-	int			len;
+	int		ret;
 
-	if (params[0].value > 0 && params[0].value < REG_NUMBER)
-		handle_st(params, proc, e);
-	len = full_len_size(op_tab[2].reg_nb, params);
-	move_process_pc(proc, len + 2, e);
+	if (params[0].value <= 0 || params[0].value >= REG_NUMBER)
+		return (0);
+	if (params[1].type == REG_CODE)
+	{
+		if (params[1].value <= 0 || params[1].value >= REG_NUMBER)
+			return (0);
+		*(REG_CAST *)proc->reg[params[1].value - 1] =
+		*(REG_CAST *)proc->reg[params[0].value - 1];
+	}
+	else if (params[1].type == IND_CODE)
+	{
+		ret = *(REG_CAST *)proc->pc + (params[1].value % IDX_MOD);
+		arena_copy(e->arena, ret, (REG_CAST *)proc->reg[params[0].value - 1],
+			REG_SIZE);
+		color_copy(e->colors, ret, proc->color[0], REG_SIZE);
+		update_aff_arena(ret, REG_SIZE, *proc->color, e);
+	}
+	return (*(REG_CAST *)proc->reg[params[0].value - 1]);
 }
 
 /*
@@ -92,22 +105,21 @@ void	op_st(t_param *params, t_process *proc, t_env *e)
 ** meme fonctionnement pour le carry
 */
 
-void	op_add(t_param *params, t_process *proc, t_env *e)
+int		op_add(t_param *params, t_process *proc, t_env *e)
 {
-	int			len;
+	int	add;
 
-	len = 0;
+	add = 0;
+	(void)e;
 	if (params[0].value > 0 && params[0].value < REG_NUMBER)
 		if (params[1].value > 0 && params[1].value < REG_NUMBER)
 			if (params[2].value > 0 && params[2].value < REG_NUMBER)
 			{
-				len = *(REG_CAST *)proc->reg[params[0].value - 1] +
-				*(REG_CAST *)proc->reg[params[1].value - 1];
-				*(REG_CAST *)proc->reg[params[2].value - 1] = len;
+				add = *(REG_CAST *)proc->reg[params[0].value - 1] +
+					*(REG_CAST *)proc->reg[params[1].value - 1];
+				*(REG_CAST *)proc->reg[params[2].value - 1] = add;
 			}
-	proc->carry = (len == 0) ? 1 : 0;
-	len = full_len_size(op_tab[3].reg_nb, params);
-	move_process_pc(proc, len + 2, e);
+	return (add);
 }
 
 /*
@@ -116,20 +128,19 @@ void	op_add(t_param *params, t_process *proc, t_env *e)
 ** meme fonctionnement pour le carry
 */
 
-void	op_sub(t_param *params, t_process *proc, t_env *e)
+int		op_sub(t_param *params, t_process *proc, t_env *e)
 {
-	int			len;
+	int	sub;
 
-	len = 0;
+	sub = 0;
+	(void)e;
 	if (params[0].value > 0 && params[0].value < REG_NUMBER)
 		if (params[1].value > 0 && params[1].value < REG_NUMBER)
 			if (params[2].value > 0 && params[2].value < REG_NUMBER)
 			{
-				len = *(REG_CAST *)proc->reg[params[0].value - 1] -
+				sub = *(REG_CAST *)proc->reg[params[0].value - 1] -
 				*(REG_CAST *)proc->reg[params[1].value - 1];
-				*(REG_CAST *)proc->reg[params[2].value - 1] = len;
+				*(REG_CAST *)proc->reg[params[2].value - 1] = sub;
 			}
-	proc->carry = (len == 0) ? 1 : 0;
-	len = full_len_size(op_tab[4].reg_nb, params);
-	move_process_pc(proc, len + 2, e);
+	return (sub);
 }

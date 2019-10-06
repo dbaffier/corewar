@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/05 19:43:49 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 19:35:19 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,21 @@ extern struct s_op	op_tab[17];
 ** meme fonctionnement pour le carry
 */
 
-void	op_and(t_param *params, t_process *proc, t_env *e)
+int		op_and(t_param *params, t_process *proc, t_env *e)
 {
-	int			len;
+	int	and;
 
-	len = 0;
+	and = 0;
+	(void)e;
 	if (params[0].value > 0 && params[0].value < REG_NUMBER)
 		if (params[1].value > 0 && params[1].value < REG_NUMBER)
 			if (params[2].value > 0 && params[2].value < REG_NUMBER)
 			{
-				len = *(REG_CAST *)proc->reg[params[0].value - 1] &
+				and = *(REG_CAST *)proc->reg[params[0].value - 1] &
 				*(REG_CAST *)proc->reg[params[1].value - 1];
-				*(REG_CAST *)proc->reg[params[2].value - 1] = len;
+				*(REG_CAST *)proc->reg[params[2].value - 1] = and;
 			}
-	proc->carry = (len == 0) ? 1 : 0;
-	len = full_len_size(op_tab[5].reg_nb, params);
-	move_process_pc(proc, len + 2, e);
+	return (and);
 }
 
 /*
@@ -46,22 +45,21 @@ void	op_and(t_param *params, t_process *proc, t_env *e)
 ** meme fonctionnement pour le carry
 */
 
-void	op_or(t_param *params, t_process *proc, t_env *e)
+int		op_or(t_param *params, t_process *proc, t_env *e)
 {
-	int			len;
+	int	or;
 
-	len = 0;
+	or = 0;
+	(void)e;
 	if (params[0].value > 0 && params[0].value < REG_NUMBER)
 		if (params[1].value > 0 && params[1].value < REG_NUMBER)
 			if (params[2].value > 0 && params[2].value < REG_NUMBER)
 			{
-				len = *(REG_CAST *)proc->reg[params[0].value - 1] |
+				or = *(REG_CAST *)proc->reg[params[0].value - 1] |
 				*(REG_CAST *)proc->reg[params[1].value - 1];
-				*(REG_CAST *)proc->reg[params[2].value - 1] = len;
+				*(REG_CAST *)proc->reg[params[2].value - 1] = or;
 			}
-	proc->carry = (len == 0) ? 1 : 0;
-	len = full_len_size(op_tab[6].reg_nb, params);
-	move_process_pc(proc, len + 2, e);
+	return (or);
 }
 
 /*
@@ -70,22 +68,21 @@ void	op_or(t_param *params, t_process *proc, t_env *e)
 ** meme fonctionnement pour le carry
 */
 
-void	op_xor(t_param *params, t_process *proc, t_env *e)
+int		op_xor(t_param *params, t_process *proc, t_env *e)
 {
-	int			len;
+	int	xor;
 
-	len = 0;
+	xor = 0;
+	(void)e;
 	if (params[0].value > 0 && params[0].value < REG_NUMBER)
 		if (params[1].value > 0 && params[1].value < REG_NUMBER)
 			if (params[2].value > 0 && params[2].value < REG_NUMBER)
 			{
-				len = *(REG_CAST *)proc->reg[params[0].value - 1] ^
+				xor = *(REG_CAST *)proc->reg[params[0].value - 1] ^
 				*(REG_CAST *)proc->reg[params[1].value - 1];
-				*(REG_CAST *)proc->reg[params[2].value - 1] = len;
+				*(REG_CAST *)proc->reg[params[2].value - 1] = xor;
 			}
-	proc->carry = (len == 0) ? 1 : 0;
-	len = full_len_size(op_tab[7].reg_nb, params);
-	move_process_pc(proc, len + 2, e);
+	return (xor);
 }
 
 /*
@@ -93,14 +90,12 @@ void	op_xor(t_param *params, t_process *proc, t_env *e)
 ** jump a l'adresse donnee en parametre si le carry est a un, sinon fail
 */
 
-void	op_zjmp(t_param *params, t_process *proc, t_env *e)
+int		op_zjmp(t_param *params, t_process *proc, t_env *e)
 {
-	int			len;
-
-	len = 3;
+	(void)e;
 	if (proc->carry == 1)
-		len = params[0].value;
-	move_process_pc(proc, len, e);
+		params[0].size = params[0].value - 1;
+	return (0);
 }
 
 /*
@@ -110,19 +105,18 @@ void	op_zjmp(t_param *params, t_process *proc, t_env *e)
 ** si l'addition = 0 le carry passe a 1
 */
 
-void	op_ldi(t_param *params, t_process *proc, t_env *e)
+int		op_ldi(t_param *params, t_process *proc, t_env *e)
 {
 	int			addr;
-	int			len;
 
-	addr = (params[0].value + params[1].value) % IDX_MOD;
-	proc->carry = addr == 0 ? 1 : 0;
+	addr = 0;
 	if (params[2].value > 0 && params[2].value < REG_NUMBER)
 	{
+		addr = (params[0].value + params[1].value) % IDX_MOD;
 		addr = calc_mod(*(REG_CAST *)proc->pc + addr, MEM_SIZE);
 		*(REG_CAST *)proc->reg[params[2].value - 1] =
 			arena_get(e->arena, addr, REG_SIZE);
+		addr = params[0].value + params[1].value;
 	}
-	len = full_len_size(op_tab[9].reg_nb, params);
-	move_process_pc(proc, len + 2, e);
+	return (addr);
 }

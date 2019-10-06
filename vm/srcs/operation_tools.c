@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/06 16:14:42 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 19:31:19 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,32 +32,44 @@ t_process	*new_proc(t_process *proc, int value, int flag, t_env *e)
 	return (new);
 }
 
-void		get_params_len(t_param *params, t_op *op, uint8_t types)
+int			get_params_len(t_param *params, t_op *op, uint8_t types) // a jeter
 {
 	int		i;
 
 	i = 0;
-	if (op->reg_nb == 1)
-	{
-		params[0].type = op->types[0];
-		params[0].size = (op->opcode == 1) ? 4 : 2;
-		return ;
-	}
 	while (i < op->reg_nb)
 	{
-		params[i].type = types >> 6;
+		params[i].type = (op->reg_nb > 1) ? types >> 6 : op->types[0];
 		if (params[i].type == REG_CODE)
 			params[i].size = 1;
 		else if (params[i].type == DIR_CODE)
 			params[i].size = (op->direct_size) ? 2 : 4;
 		else if (params[i].type == IND_CODE)
 			params[i].size = 2;
+		else
+			return (0);
 		types = types << 2;
 		i++;
 	}
+	return (1);
 }
 
-static int	get_value(uint8_t *data, int index, int size)
+static int	get_param_size(int i, t_param *params, t_op *op, uint8_t type)
+{
+	type = type << (i * 2);
+	params[i].type = (op->reg_nb > 1) ? type >> 6 : op->types[i];
+	if (params[i].type == REG_CODE && op->types[i] & T_REG)
+		params[i].size = 1;
+	else if (params[i].type == DIR_CODE && op->types[i] & T_DIR)
+		params[i].size = (op->direct_size) ? 2 : 4;
+	else if (params[i].type == IND_CODE && op->types[i] & T_IND)
+		params[i].size = 2;
+	else
+		return (0);
+	return (1);
+}
+
+static int	get_param_value(uint8_t *data, int index, int size)
 {
 	int		i;
 	int		j;
@@ -78,23 +90,24 @@ static int	get_value(uint8_t *data, int index, int size)
 	return (*(int *)tab);
 }
 
-void		get_params_data(t_param *params, t_op *op, uint8_t *arena,
+int			get_params_data(t_param *params, t_op *op, uint8_t *arena,
 REG_CAST pc)
 {
-	uint8_t	*data;
-	int		i;
-	int		size;
+	uint8_t		*data;
+	int			i;
 
 	data = arena + pc;
 	i = 0;
-	size = 0;
 	while (i < op->reg_nb)
 	{
+		if (!get_param_size(i, params, op, *(uint8_t *)(data + 1)))
+			return (0);
 		if (op->reg_nb == 1)
-			params[i].value = get_value(arena, pc + 1, params[i].size);
+			params[i].value = get_param_value(arena, pc + 1, params[i].size);
 		else
-			params[i].value = get_value(arena, pc + size + 2, params[i].size);
-		size += params[i].size;
+			params[i].value = get_param_value(arena, pc + 2, params[i].size);
+		pc += params[i].size;
 		i++;
 	}
+	return (1);
 }

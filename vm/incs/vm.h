@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/06 15:48:18 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 19:21:51 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,29 +174,28 @@ uint32_t				byteswap_32(uint32_t x);
 /*
 ** Instructions Functions
 */
-void					op_live(t_param *params, t_process *proc, t_env *e);
-void					op_ld(t_param *params, t_process *proc, t_env *e);
-void					op_st(t_param *params, t_process *proc, t_env *e);
-void					op_add(t_param *params, t_process *proc, t_env *e);
-void					op_sub(t_param *params, t_process *proc, t_env *e);
-void					op_and(t_param *params, t_process *proc, t_env *e);
-void					op_or(t_param *params, t_process *proc, t_env *e);
-void					op_xor(t_param *params, t_process *proc, t_env *e);
-void					op_zjmp(t_param *params, t_process *proc, t_env *e);
-void					op_ldi(t_param *params, t_process *proc, t_env *e);
-void					op_sti(t_param *params, t_process *proc, t_env *e);
-void					op_fork(t_param *params, t_process *proc, t_env *e);
-void					op_lld(t_param *params, t_process *proc, t_env *e);
-void					op_lldi(t_param *params, t_process *proc, t_env *e);
-void					op_lfork(t_param *params, t_process *proc, t_env *e);
-void					op_aff(t_param *params, t_process *proc, t_env *e);
+int						op_live(t_param *params, t_process *proc, t_env *e);
+int						op_ld(t_param *params, t_process *proc, t_env *e);
+int						op_st(t_param *params, t_process *proc, t_env *e);
+int						op_add(t_param *params, t_process *proc, t_env *e);
+int						op_sub(t_param *params, t_process *proc, t_env *e);
+int						op_and(t_param *params, t_process *proc, t_env *e);
+int						op_or(t_param *params, t_process *proc, t_env *e);
+int						op_xor(t_param *params, t_process *proc, t_env *e);
+int						op_zjmp(t_param *params, t_process *proc, t_env *e);
+int						op_ldi(t_param *params, t_process *proc, t_env *e);
+int						op_sti(t_param *params, t_process *proc, t_env *e);
+int						op_fork(t_param *params, t_process *proc, t_env *e);
+int						op_lld(t_param *params, t_process *proc, t_env *e);
+int						op_lldi(t_param *params, t_process *proc, t_env *e);
+int						op_lfork(t_param *params, t_process *proc, t_env *e);
+int						op_aff(t_param *params, t_process *proc, t_env *e);
 
-void					handle_st(t_param *params, t_process *proc, t_env *e);
 int						handle_sti(t_param *params, t_process *proc, t_env *e);
 
-void					get_params_len(t_param *params, t_op *op,
+int						get_params_len(t_param *params, t_op *op,
 						uint8_t types);
-void					get_params_data(t_param *params, t_op *op,
+int						get_params_data(t_param *params, t_op *op,
 						uint8_t *arena, REG_CAST pc);
 t_process				*new_proc(t_process *proc, int value, int flag,
 						t_env *e);

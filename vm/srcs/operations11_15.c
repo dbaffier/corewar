@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:12:05 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/06 14:46:12 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 18:47:46 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,11 @@ extern struct s_op	op_tab[17];
 ** params[2].value, params[2].type);
 */
 
-void	op_sti(t_param *params, t_process *proc, t_env *e)
+int		op_sti(t_param *params, t_process *proc, t_env *e)
 {
-	int			len;
-
 	if (params[0].value > 0 && params[0].value < REG_NUMBER)
 		proc->carry = !handle_sti(params, proc, e);
-	len = full_len_size(op_tab[10].reg_nb, params);
-	move_process_pc(proc, len + 2, e);
+	return (0);
 }
 
 /*
@@ -47,14 +44,11 @@ void	op_sti(t_param *params, t_process *proc, t_env *e)
 ** si l'adresse = 0 bah ca boucle du coup
 */
 
-void	op_fork(t_param *params, t_process *proc, t_env *e)
+int		op_fork(t_param *params, t_process *proc, t_env *e)
 {
-	int			len;
-
 	if (params[0].value != 0)
 		proc->next = new_proc(proc, params[0].value, 0, e);
-	len = full_len_size(op_tab[11].reg_nb, params);
-	move_process_pc(proc, len + 1, e);
+	return (0);
 }
 
 /*
@@ -63,15 +57,12 @@ void	op_fork(t_param *params, t_process *proc, t_env *e)
 ** si le 1st param = 0 le carry passe a 1
 */
 
-void	op_lld(t_param *params, t_process *proc, t_env *e)
+int		op_lld(t_param *params, t_process *proc, t_env *e)
 {
-	int			len;
-
+	(void)e;
 	*(REG_CAST *)proc->reg[params[1].value] =
 		*(REG_CAST *)proc->pc + (params[0].value % MEM_SIZE);
-	proc->carry = params[1].value == 0 ? 1 : 0;
-	len = full_len_size(op_tab[12].reg_nb, params);
-	move_process_pc(proc, len + 2, e);
+	return (params[1].value);
 }
 
 /*
@@ -80,17 +71,14 @@ void	op_lld(t_param *params, t_process *proc, t_env *e)
 ** si l'addition = 0 le carry passe a 1
 */
 
-void	op_lldi(t_param *params, t_process *proc, t_env *e)
+int		op_lldi(t_param *params, t_process *proc, t_env *e)
 {
-	int			addr;
-	int			len;
+	int	addr;
 
 	addr = params[0].value + params[1].value;
 	*(REG_CAST *)proc->reg[params[2].value] =
 		((uint8_t *)e->arena)[*(REG_CAST *)proc->pc + addr];
-	proc->carry = addr == 0 ? 1 : 0;
-	len = full_len_size(op_tab[13].reg_nb, params);
-	move_process_pc(proc, len + 2, e);
+	return (addr);
 }
 
 /*
@@ -99,12 +87,9 @@ void	op_lldi(t_param *params, t_process *proc, t_env *e)
 ** si l'adresse = 0 bah ca boucle aussi
 */
 
-void	op_lfork(t_param *params, t_process *proc, t_env *e)
+int		op_lfork(t_param *params, t_process *proc, t_env *e)
 {
-	int			len;
-
 	if (params[0].value != 0)
 		proc->next = new_proc(proc, params[0].value, 1, e);
-	len = full_len_size(op_tab[14].reg_nb, params);
-	move_process_pc(proc, len + 1, e);
+	return (0);
 }

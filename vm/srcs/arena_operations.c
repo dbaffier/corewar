@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:38:06 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/05 16:46:35 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/06 17:29:14 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,10 @@ REG_CAST	arena_get(void *arena, REG_CAST pc, size_t size)
 		tab[size] = data[(pc + i) % MEM_SIZE];
 		i++;
 	}
+	if (i == 1)
+		return (*(char *)tab);
+	if (i == 2)
+		return (*(short *)tab);
 	return (*(REG_CAST *)tab);
 }
 
