@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/07 19:01:47 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/07 19:58:27 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,22 +89,30 @@ int		op_zjmp(t_param *params, t_process *proc, t_env *e)
 
 int		op_ldi(t_param *params, t_process *proc, t_env *e)
 {
+	int			ret;
 	int			addr;
 
-	addr = (params[0].type == REG_CODE) ?
-		*(REG_CAST *)proc->reg[params[0].value - 1] : params[0].value;
 	if (params[0].type == REG_CODE)
-		addr = *(REG_CAST *)proc->reg[params[0].value - 1];
+		ret = *(REG_CAST *)proc->reg[params[0].value - 1];
+	else if (params[0].type == DIR_CODE)
+		ret = params[0].value;
 	else
-		addr = params[0].value;
+		ret = arena_get(e->arena, *(REG_CAST *)proc->pc + params[0].value, REG_SIZE);
 	if (params[1].type == REG_CODE)
-	addr = (params[0].value + params[1].value) % IDX_MOD;
+		ret += *(REG_CAST *)proc->reg[params[1].value - 1];
+	else
+		ret += params[1].value;
+	addr = ret % IDX_MOD;
 	addr = calc_mod(*(REG_CAST *)proc->pc + addr, MEM_SIZE);
 	*(REG_CAST *)proc->reg[params[2].value - 1] =
 		arena_get(e->arena, addr, REG_SIZE);
-wprintw(e->ncu.info_win, "%d + %d = %d %% %d = %d\t\tret=%d\n",
-params[0].value, params[1].value, params[0].value + params[1].value,
-IDX_MOD, (params[0].value + params[1].value) % IDX_MOD,
-*(REG_CAST *)proc->reg[params[2].value - 1]);
-	return (params[0].value + params[1].value);
+	return (1);
 }
+
+/*
+** Subject does not specify what we should return in op_ldi
+**
+** Zaz V.M. seems to always return 1
+**
+** return (*(REG_CAST *)proc->reg[params[2].value - 1]);
+*/
