@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/07 19:58:27 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/07 20:16:58 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,13 +97,13 @@ int		op_ldi(t_param *params, t_process *proc, t_env *e)
 	else if (params[0].type == DIR_CODE)
 		ret = params[0].value;
 	else
-		ret = arena_get(e->arena, *(REG_CAST *)proc->pc + params[0].value, REG_SIZE);
+		ret = arena_get(e->arena, *(REG_CAST *)proc->pc + params[0].value,
+			REG_SIZE);
 	if (params[1].type == REG_CODE)
 		ret += *(REG_CAST *)proc->reg[params[1].value - 1];
 	else
 		ret += params[1].value;
-	addr = ret % IDX_MOD;
-	addr = calc_mod(*(REG_CAST *)proc->pc + addr, MEM_SIZE);
+	addr = *(REG_CAST *)proc->pc + (ret % IDX_MOD);
 	*(REG_CAST *)proc->reg[params[2].value - 1] =
 		arena_get(e->arena, addr, REG_SIZE);
 	return (1);

@@ -34,14 +34,14 @@ VM_SRC		+=	main.c					\
 				ncurses_init_end.c		\
 				ncurses_wgetch.c		\
 				op.c					\
-				remove_player.c			\
+				proc_functions.c		\
 				signals.c				\
 				swap_bytes.c			\
 				operation_tools.c		\
 				operations1_5.c			\
 				operations6_10.c		\
 				operations11_15.c		\
-				operations_aff.c		\
+				operations16.c			\
 
 CC			= gcc
 CFLAGS		= -Wall -Werror -Wextra

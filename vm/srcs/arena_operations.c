@@ -6,33 +6,36 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:38:06 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/06 17:29:14 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/07 20:39:10 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
 
-void		arena_copy(void *arena, REG_CAST pc, REG_CAST *value, size_t size)
+void		arena_copy(void *arena, int pc, REG_CAST *value, size_t size)
 {
 	uint8_t		*ptr;
+	size_t		offset;
 	size_t		i;
 
 	ptr = (uint8_t *)arena;
 	i = 0;
 	if (!arena || !value || size > REG_SIZE)
 		return ;
+	offset = calc_mod(pc, MEM_SIZE);
 	while (i < size)
 	{
-		ptr[(pc + i) % MEM_SIZE] = ((uint8_t *)value)[REG_SIZE - 1 - i];
+		ptr[(offset + i) % MEM_SIZE] = ((uint8_t *)value)[REG_SIZE - 1 - i];
 		i++;
 	}
 }
 
-REG_CAST	arena_get(void *arena, REG_CAST pc, size_t size)
+REG_CAST	arena_get(void *arena, int pc, size_t size)
 {
 	char		tab[REG_SIZE];
 	uint8_t		*data;
+	size_t		offset;
 	int			i;
 
 	ft_bzero(tab, REG_SIZE);
@@ -40,9 +43,10 @@ REG_CAST	arena_get(void *arena, REG_CAST pc, size_t size)
 	i = 0;
 	if (size > REG_SIZE)
 		return (0);
+	offset = calc_mod(pc, MEM_SIZE);
 	while (size--)
 	{
-		tab[size] = data[(pc + i) % MEM_SIZE];
+		tab[size] = data[(offset + i) % MEM_SIZE];
 		i++;
 	}
 	if (i == 1)
@@ -52,16 +56,18 @@ REG_CAST	arena_get(void *arena, REG_CAST pc, size_t size)
 	return (*(REG_CAST *)tab);
 }
 
-void		color_copy(short *colors, REG_CAST pc, short color, size_t size)
+void		color_copy(short *colors, int pc, short color, size_t size)
 {
+	size_t		offset;
 	size_t		i;
 
 	i = 0;
 	if (!colors || size > REG_SIZE)
 		return ;
+	offset = calc_mod(pc, MEM_SIZE);
 	while (i < size)
 	{
-		colors[(pc + i) % MEM_SIZE] = color;
+		colors[(offset + i) % MEM_SIZE] = color;
 		i++;
 	}
 }

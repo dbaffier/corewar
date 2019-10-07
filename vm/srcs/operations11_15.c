@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:12:05 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/06 18:47:46 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/07 21:01:29 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,29 @@ extern struct s_op	op_tab[17];
 ** additione les deux derniers param et va changer la valeur a l'adresse de
 ** l'addition avec la valeur dans le registre passé en 1eme parametre
 ** si l'addition = 0 le carry passe a 1
-**
-** wprintw(e->ncu.info_win, "p[0]{%d, %d, %d}, ", params[0].size,
-** params[0].value, params[0].type);
-** wprintw(e->ncu.info_win, "p[1]{%d, %d, %d}, ", params[1].size,
-** params[1].value, params[1].type);
-** wprintw(e->ncu.info_win, "p[2]{%d, %d, %d}\n", params[2].size,
-** params[2].value, params[2].type);
 */
 
 int		op_sti(t_param *params, t_process *proc, t_env *e)
 {
-	if (params[0].value > 0 && params[0].value < REG_NUMBER)
-		proc->carry = !handle_sti(params, proc, e);
-	return (0);
+	int		addr;
+
+	if (params[1].type == REG_CODE)
+		addr = *(REG_CAST *)proc->reg[params[1].value - 1];
+	else if (params[1].type == DIR_CODE)
+		addr = params[1].value;
+	else
+		addr = arena_get(e->arena, *(REG_CAST *)proc->pc + params[1].value,
+			REG_SIZE);
+	if (params[2].type == REG_CODE)
+		addr += *(REG_CAST *)proc->reg[params[2].value - 1];
+	else if (params[2].type == DIR_CODE)
+		addr += params[2].value;
+	addr = *(REG_CAST *)proc->pc + (addr % IDX_MOD);
+	arena_copy(e->arena, addr, (REG_CAST *)proc->reg[params[0].value - 1],
+		REG_SIZE);
+	color_copy(e->colors, addr, proc->color[0], REG_SIZE);
+	update_aff_arena(addr, REG_SIZE, *proc->color, e);
+	return (addr);
 }
 
 /*
@@ -48,7 +57,7 @@ int		op_fork(t_param *params, t_process *proc, t_env *e)
 {
 	if (params[0].value != 0)
 		proc->next = new_proc(proc, params[0].value, 0, e);
-	return (0);
+	return (proc->next != NULL);
 }
 
 /*
@@ -91,5 +100,5 @@ int		op_lfork(t_param *params, t_process *proc, t_env *e)
 {
 	if (params[0].value != 0)
 		proc->next = new_proc(proc, params[0].value, 1, e);
-	return (0);
+	return (proc->next != NULL);
 }

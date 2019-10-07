@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/07 18:45:35 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/07 20:37:56 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ int						get_args(char **av, t_env *e);
 int						get_player(t_env *e, char *av);
 int						get_arena(t_env *e);
 int						get_colors(t_env *e);
-t_process				*remove_player(t_process *proc, t_process **head);
+uint32_t				byteswap_32(uint32_t x);
 
 /*
 ** Ncurses Functions
@@ -150,7 +150,7 @@ void					update_aff_vmstatus(t_env *e);
 void					update_aff_champion_info(t_op *op, t_param *params,
 						t_process *proc, t_env *e);
 void					update_aff_champion_dead(t_env *e, t_process *proc);
-void					update_aff_arena(size_t addr, size_t size,
+void					update_aff_arena(int addr, int size,
 						short color, t_env *e);
 
 /*
@@ -161,20 +161,24 @@ int						play_game(ssize_t nb_cycles, t_env *e);
 void					dump_map(uint8_t *arena, size_t size);
 size_t					player_instruction(t_process *proc, t_env *e,
 						size_t nb_cycles);
+int						get_params(t_param *params, t_op *op, t_process *proc,
+						void *arena);
+t_process				*new_proc(t_process *proc, int value, int flag,
+						t_env *e);
+t_process				*remove_proc(t_process *proc, t_process **head);
 void					move_process_pc(t_process *proc, int len, t_env *e);
 REG_CAST				calc_mod(int len, size_t size);
-void					arena_copy(void *arena, REG_CAST pc, REG_CAST *value,
+void					arena_copy(void *arena, int pc, REG_CAST *value,
 						size_t size);
-REG_CAST				arena_get(void *arena, REG_CAST pc, size_t size);
-void					color_copy(short *colors, REG_CAST pc, short color,
+REG_CAST				arena_get(void *arena, int pc, size_t size);
+void					color_copy(short *colors, int pc, short color,
 						size_t size);
-uint16_t				byteswap_16(uint16_t x);
-uint32_t				byteswap_32(uint32_t x);
 
 /*
 ** Instructions Functions
 */
 int						op_live(t_param *params, t_process *proc, t_env *e);
+void					print_live(t_env *e, t_param *params, t_process *tail);
 int						op_ld(t_param *params, t_process *proc, t_env *e);
 int						op_st(t_param *params, t_process *proc, t_env *e);
 int						op_add(t_param *params, t_process *proc, t_env *e);
@@ -190,15 +194,5 @@ int						op_lld(t_param *params, t_process *proc, t_env *e);
 int						op_lldi(t_param *params, t_process *proc, t_env *e);
 int						op_lfork(t_param *params, t_process *proc, t_env *e);
 int						op_aff(t_param *params, t_process *proc, t_env *e);
-
-int						handle_sti(t_param *params, t_process *proc, t_env *e);
-
-int						get_params(t_param *params, t_op *op, t_process *proc,
-						void *arena);
-t_process				*new_proc(t_process *proc, int value, int flag,
-						t_env *e);
-int						full_len_size(unsigned short reg_nb,
-						t_param *params);
-void					print_live(t_env *e, t_param *params, t_process *tail);
 
 #endif

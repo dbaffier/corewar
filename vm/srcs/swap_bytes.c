@@ -6,16 +6,11 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 19:23:20 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/02 18:39:48 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/07 20:24:59 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
-
-uint16_t		byteswap_16(uint16_t x)
-{
-	return (((x >> 8) & 0xffu) | ((x & 0xffu) << 8));
-}
 
 uint32_t		byteswap_32(uint32_t x)
 {

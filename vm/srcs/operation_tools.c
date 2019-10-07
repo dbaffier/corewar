@@ -6,31 +6,12 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/07 18:57:30 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/07 20:29:15 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
-
-t_process	*new_proc(t_process *proc, int value, int flag, t_env *e)
-{
-	t_process *new;
-
-	new = ft_memalloc(sizeof(*new));
-	ft_memcpy(new, proc, sizeof(*new));
-	new->free_file[proc->pos]++;
-	new->instruction_wait += 1;
-	new->instruction = 0;
-	if (!flag)
-		move_process_pc(new, value % IDX_MOD, e);
-	else
-		move_process_pc(new, value, e);
-	new->prev = proc;
-	if ((new->next = proc->next) != NULL)
-		new->next->prev = new;
-	return (new);
-}
 
 static int	get_param_size(int i, t_param *params, t_op *op, uint8_t type)
 {
@@ -67,21 +48,6 @@ static int	get_param_value(uint8_t *data, int index, int size)
 		return (*(short *)tab);
 	return (*(int *)tab);
 }
-
-/*
-** static int	get_param_data(t_param *param, t_process *proc, void *arena)
-** {
-** 	if (param->type == REG_CODE)
-** 	{
-** 		if (param->value <= 0 || param->value >= REG_NUMBER)
-** 			return (0);
-** 		param->value = *(REG_CAST *)proc->reg[param->value - 1];
-** 	}
-** 	else if (param->type == IND_CODE)
-** 		param->value = arena_get(arena, *(REG_CAST *)proc->pc, REG_SIZE);
-** 	return (1);
-** }
-*/
 
 int			get_params(t_param *params, t_op *op, t_process *proc, void *arena)
 {

@@ -6,16 +6,16 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 21:30:31 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/06 20:34:18 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/07 20:41:40 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
 
-void			update_aff_vmstatus(t_env *e)
+void		update_aff_vmstatus(t_env *e)
 {
-	char		*status[2];
+	char	*status[2];
 
 	status[0] = "RUNNING";
 	status[1] = "PAUSED";
@@ -36,7 +36,7 @@ void			update_aff_vmstatus(t_env *e)
 	}
 }
 
-void			update_aff_vminfo(t_env *e, size_t cycle)
+void		update_aff_vminfo(t_env *e, size_t cycle)
 {
 	wattron(e->ncu.vm_win, A_BOLD);
 	wattron(e->ncu.vm_win, COLOR_PAIR(COREWAR_TEXT_COLOR));
@@ -51,7 +51,7 @@ void			update_aff_vminfo(t_env *e, size_t cycle)
 	wrefresh(e->ncu.vm_win);
 }
 
-void			update_aff_champion_info(t_op *op, t_param *params,
+void		update_aff_champion_info(t_op *op, t_param *params,
 t_process *proc, t_env *e)
 {
 	if (e->ncu.champ_win)
@@ -78,10 +78,10 @@ t_process *proc, t_env *e)
 	}
 }
 
-void			update_aff_champion_dead(t_env *e, t_process *proc)
+void		update_aff_champion_dead(t_env *e, t_process *proc)
 {
-	int			y;
-	int			x;
+	int		y;
+	int		x;
 
 	if (e->ncu.arena_win)
 	{
@@ -103,12 +103,11 @@ void			update_aff_champion_dead(t_env *e, t_process *proc)
 	}
 }
 
-void			update_aff_arena(size_t addr, size_t size, short color,
-t_env *e)
+void		update_aff_arena(int addr, int size, short color, t_env *e)
 {
-	size_t		pos;
-	int			x;
-	int			y;
+	size_t	pos;
+	int		x;
+	int		y;
 
 	if (e->ncu.arena_win)
 		while (size--)

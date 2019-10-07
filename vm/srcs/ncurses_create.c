@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:20:26 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/05 16:06:56 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/07 20:57:19 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int				create_arenabox(t_env *e)
 	int			winy;
 
 	winx = ARENA_LINE_LEN + 1;
-	winy = ARENA_VALUE_PER_LINE + 1;
+	winy = ARENA_VALUE_PER_LINE + 2;
 	if (!(e->ncu.arena_winbox = subwin(e->ncu.main_win, winy, winx, 0, 0)))
 		return (ERR_NCURSE_ARENABOX);
 	box(e->ncu.arena_winbox, 0, 0);
@@ -65,7 +65,7 @@ static int		create_infowin(t_env *e, int winx, int winy)
 	winy, winx - 2, winy + 1, COLS - winx + 1)))
 		return (ERR_NCURSE_VMWIN);
 	if (!(e->ncu.info_win = subwin(e->ncu.info_winbox,
-	winy, winx - 2, winy * 2 + 1, COLS - winx + 1)))
+	winy + 1, winx - 2, winy * 2 + 1, COLS - winx + 1)))
 		return (ERR_NCURSE_INFOWIN);
 	wbkgd(e->ncu.info_win, COLOR_PAIR(COREWAR_INFOWIN_COLOR));
 	scrollok(e->ncu.info_win, TRUE);
@@ -78,7 +78,7 @@ int				create_infobox(t_env *e)
 	int			winy;
 
 	winx = COLS - (ARENA_LINE_LEN + 1);
-	winy = ARENA_VALUE_PER_LINE + 1;
+	winy = ARENA_VALUE_PER_LINE + 2;
 	e->ncu.info_winbox = subwin(e->ncu.main_win, winy, winx, 0, COLS - winx);
 	if (!e->ncu.info_winbox)
 		return (ERR_NCURSE_INFOBOX);

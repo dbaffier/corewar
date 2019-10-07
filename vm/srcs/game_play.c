@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 23:05:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/06 14:05:56 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/07 20:28:23 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static size_t		check_players_alive(t_env *e)
 		if (!proc->is_alive)
 		{
 			update_aff_champion_dead(e, proc);
-			proc = remove_player(proc, &e->proc);
+			proc = remove_proc(proc, &e->proc);
 			continue ;
 		}
 		alive += proc->is_alive;
