@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/06 20:27:07 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/07 18:57:30 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,24 +68,41 @@ static int	get_param_value(uint8_t *data, int index, int size)
 	return (*(int *)tab);
 }
 
-int			get_params_data(t_param *params, t_op *op, uint8_t *arena,
-REG_CAST pc)
+/*
+** static int	get_param_data(t_param *param, t_process *proc, void *arena)
+** {
+** 	if (param->type == REG_CODE)
+** 	{
+** 		if (param->value <= 0 || param->value >= REG_NUMBER)
+** 			return (0);
+** 		param->value = *(REG_CAST *)proc->reg[param->value - 1];
+** 	}
+** 	else if (param->type == IND_CODE)
+** 		param->value = arena_get(arena, *(REG_CAST *)proc->pc, REG_SIZE);
+** 	return (1);
+** }
+*/
+
+int			get_params(t_param *params, t_op *op, t_process *proc, void *arena)
 {
-	uint8_t		*data;
+	REG_CAST	pc;
+	void		*data;
 	int			i;
 
-	data = arena + pc;
+	pc = *(REG_CAST *)proc->pc;
+	data = (char *)arena + pc;
 	i = 0;
 	while (i < op->reg_nb)
 	{
-		if (!get_param_size(i, params, op, *(uint8_t *)(data + 1)))
+		if (!get_param_size(i, params, op, *((uint8_t *)data + 1)))
 			return (0);
 		if (op->reg_nb == 1)
 			params[i].value = get_param_value(arena, pc + 1, params[i].size);
 		else
 			params[i].value = get_param_value(arena, pc + 2, params[i].size);
-		if (params[i].type == REG_CODE
-		&& (params[i].value <= 0 || params[i].value >= REG_NUMBER))
+		if (!(op->types[i] & params[i].type)
+		|| (params[i].type == REG_CODE
+			&& (params[i].value <= 0 || params[i].value >= REG_NUMBER)))
 			return (0);
 		pc += params[i].size;
 		i++;

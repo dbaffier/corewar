@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/06 20:49:24 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/07 19:01:47 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@ int		op_and(t_param *params, t_process *proc, t_env *e)
 	and = *(REG_CAST *)proc->reg[params[0].value - 1]
 		& *(REG_CAST *)proc->reg[params[1].value - 1];
 	*(REG_CAST *)proc->reg[params[2].value - 1] = and;
-wprintw(e->ncu.info_win, "%d & %d = %d (%#x)\n",
-*(REG_CAST *)proc->reg[params[0].value - 1],
-*(REG_CAST *)proc->reg[params[1].value - 1],
-*(REG_CAST *)proc->reg[params[2].value - 1],
-*(REG_CAST *)proc->reg[params[2].value - 1]);
 	return (and);
 }
 
@@ -52,11 +47,6 @@ int		op_or(t_param *params, t_process *proc, t_env *e)
 	or = *(REG_CAST *)proc->reg[params[0].value - 1]
 		| *(REG_CAST *)proc->reg[params[1].value - 1];
 	*(REG_CAST *)proc->reg[params[2].value - 1] = or;
-wprintw(e->ncu.info_win, "%d | %d = %d (%#x)\n",
-*(REG_CAST *)proc->reg[params[0].value - 1],
-*(REG_CAST *)proc->reg[params[1].value - 1],
-*(REG_CAST *)proc->reg[params[2].value - 1],
-*(REG_CAST *)proc->reg[params[2].value - 1]);
 	return (or);
 }
 
@@ -74,11 +64,6 @@ int		op_xor(t_param *params, t_process *proc, t_env *e)
 	xor = *(REG_CAST *)proc->reg[params[0].value - 1]
 		^ *(REG_CAST *)proc->reg[params[1].value - 1];
 	*(REG_CAST *)proc->reg[params[2].value - 1] = xor;
-wprintw(e->ncu.info_win, "%d ^ %d = %d (%#x)\n",
-*(REG_CAST *)proc->reg[params[0].value - 1],
-*(REG_CAST *)proc->reg[params[1].value - 1],
-*(REG_CAST *)proc->reg[params[2].value - 1],
-*(REG_CAST *)proc->reg[params[2].value - 1]);
 	return (xor);
 }
 
@@ -106,9 +91,20 @@ int		op_ldi(t_param *params, t_process *proc, t_env *e)
 {
 	int			addr;
 
+	addr = (params[0].type == REG_CODE) ?
+		*(REG_CAST *)proc->reg[params[0].value - 1] : params[0].value;
+	if (params[0].type == REG_CODE)
+		addr = *(REG_CAST *)proc->reg[params[0].value - 1];
+	else
+		addr = params[0].value;
+	if (params[1].type == REG_CODE)
 	addr = (params[0].value + params[1].value) % IDX_MOD;
 	addr = calc_mod(*(REG_CAST *)proc->pc + addr, MEM_SIZE);
 	*(REG_CAST *)proc->reg[params[2].value - 1] =
 		arena_get(e->arena, addr, REG_SIZE);
+wprintw(e->ncu.info_win, "%d + %d = %d %% %d = %d\t\tret=%d\n",
+params[0].value, params[1].value, params[0].value + params[1].value,
+IDX_MOD, (params[0].value + params[1].value) % IDX_MOD,
+*(REG_CAST *)proc->reg[params[2].value - 1]);
 	return (params[0].value + params[1].value);
 }

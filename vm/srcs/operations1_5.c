@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/06 20:48:10 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/07 18:59:19 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,16 @@ int		op_ld(t_param *params, t_process *proc, t_env *e)
 {
 	int			len;
 
-	if (params[1].value > 0 && params[1].value < REG_NUMBER)
+	if (params[0].type == REG_CODE)
 	{
-		if (params[0].type == REG_CODE)
-		{
-			len = calc_mod(*(REG_CAST *)proc->pc
-				+ params[0].value % IDX_MOD, MEM_SIZE);
-			*(REG_CAST *)proc->reg[params[1].value - 1] =
-				arena_get(e->arena, len, 4);
-		}
-		else if (params[0].type == DIR_CODE)
-			*(REG_CAST *)proc->reg[params[1].value - 1] = params[0].value;
-		else
-			return (0);
-		return (*(REG_CAST *)proc->reg[params[1].value - 1]);
+		len = calc_mod(*(REG_CAST *)proc->pc
+			+ params[0].value % IDX_MOD, MEM_SIZE);
+		*(REG_CAST *)proc->reg[params[1].value - 1] =
+			arena_get(e->arena, len, 4);
 	}
-	return (1);
+	else if (params[0].type == DIR_CODE)
+		*(REG_CAST *)proc->reg[params[1].value - 1] = params[0].value;
+	return (*(REG_CAST *)proc->reg[params[1].value - 1]);
 }
 
 /*
@@ -81,12 +75,8 @@ int		op_st(t_param *params, t_process *proc, t_env *e)
 {
 	int		ret;
 
-	if (params[0].value <= 0 || params[0].value >= REG_NUMBER)
-		return (0);
 	if (params[1].type == REG_CODE)
 	{
-		if (params[1].value <= 0 || params[1].value >= REG_NUMBER)
-			return (0);
 		*(REG_CAST *)proc->reg[params[1].value - 1] =
 		*(REG_CAST *)proc->reg[params[0].value - 1];
 	}
@@ -98,8 +88,6 @@ int		op_st(t_param *params, t_process *proc, t_env *e)
 		color_copy(e->colors, ret, proc->color[0], REG_SIZE);
 		update_aff_arena(ret, REG_SIZE, *proc->color, e);
 	}
-	else
-		return (0);
 	return (*(REG_CAST *)proc->reg[params[0].value - 1]);
 }
 
@@ -117,11 +105,6 @@ int		op_add(t_param *params, t_process *proc, t_env *e)
 	add = *(REG_CAST *)proc->reg[params[0].value - 1]
 		+ *(REG_CAST *)proc->reg[params[1].value - 1];
 	*(REG_CAST *)proc->reg[params[2].value - 1] = add;
-wprintw(e->ncu.info_win, "%d + %d = %d (%#x)\n",
-*(REG_CAST *)proc->reg[params[0].value - 1],
-*(REG_CAST *)proc->reg[params[1].value - 1],
-*(REG_CAST *)proc->reg[params[2].value - 1],
-*(REG_CAST *)proc->reg[params[2].value - 1]);
 	return (add);
 }
 
@@ -139,10 +122,5 @@ int		op_sub(t_param *params, t_process *proc, t_env *e)
 	sub = *(REG_CAST *)proc->reg[params[0].value - 1]
 		- *(REG_CAST *)proc->reg[params[1].value - 1];
 	*(REG_CAST *)proc->reg[params[2].value - 1] = sub;
-wprintw(e->ncu.info_win, "%d - %d = %d (%#x)\n",
-*(REG_CAST *)proc->reg[params[0].value - 1],
-*(REG_CAST *)proc->reg[params[1].value - 1],
-*(REG_CAST *)proc->reg[params[2].value - 1],
-*(REG_CAST *)proc->reg[params[2].value - 1]);
 	return (sub);
 }

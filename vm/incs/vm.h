@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/06 20:26:48 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/07 18:45:35 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,8 +193,8 @@ int						op_aff(t_param *params, t_process *proc, t_env *e);
 
 int						handle_sti(t_param *params, t_process *proc, t_env *e);
 
-int						get_params_data(t_param *params, t_op *op,
-						uint8_t *arena, REG_CAST pc);
+int						get_params(t_param *params, t_op *op, t_process *proc,
+						void *arena);
 t_process				*new_proc(t_process *proc, int value, int flag,
 						t_env *e);
 int						full_len_size(unsigned short reg_nb,

@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 17:35:43 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/06 20:26:31 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/07 18:39:52 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,12 @@ static void		launch_instruction(t_process *proc, t_env *e)
 		op_zjmp, op_ldi, op_sti, op_fork, op_lld, op_lldi, op_lfork, op_aff,
 	};
 	t_param		params[MAX_ARGS_NUMBER];
-	uint8_t		*arena;
 	t_op		*op;
 	int			ret;
 
 	ft_bzero(params, sizeof(params));
-	arena = (uint8_t *)e->arena;
 	op = op_tab + proc->instruction - 1;
-	if (get_params_data(params, op, arena, *(REG_CAST *)proc->pc))
+	if (get_params(params, op, proc, (uint8_t *)e->arena))
 	{
 		ret = instruction_function[proc->instruction - 1](params, proc, e);
 		if (op->modif_carry)
