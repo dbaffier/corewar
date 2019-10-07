@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/07 20:16:58 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/07 21:05:32 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,3 @@ int		op_ldi(t_param *params, t_process *proc, t_env *e)
 		arena_get(e->arena, addr, REG_SIZE);
 	return (1);
 }
-
-/*
-** Subject does not specify what we should return in op_ldi
-**
-** Zaz V.M. seems to always return 1
-**
-** return (*(REG_CAST *)proc->reg[params[2].value - 1]);
-*/
