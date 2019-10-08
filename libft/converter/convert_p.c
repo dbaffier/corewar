@@ -36,6 +36,7 @@ void			convert_p(t_format *data)
 	uintmax_t			n;
 	size_t				n_len;
 
+	n = 0;
 	conv_star(data);
 	get_arg_n(data, &n);
 	n_len = ft_uintlen_base(n, 16);

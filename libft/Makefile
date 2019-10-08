@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmonier <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/09 10:47:53 by mmonier           #+#    #+#              #
-#    Updated: 2019/06/25 04:12:38 by dbaffier         ###   ########.fr        #
+#    Updated: 2019/09/18 18:40:05 by gbourgeo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -134,20 +134,21 @@ SRCS = 	ft_memset.c										\
 		get_next_line.c									\
 		ft_strfjoin.c									\
 		ft_rand.c										\
+		ft_atoi_base.c									\
 
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
 
 %.o:%.c	
-	@$(CC) -o $@ $(CFLAGS) -I $(HEADER) -c $<
+	$(CC) -o $@ $(CFLAGS) -I $(HEADER) -c $<
 
 $(NAME): $(OBJS)
-	@ar rc $(NAME) $(OBJS)
-	@ranlib $(NAME)
+	ar rc $(NAME) $(OBJS)
+	ranlib $(NAME)
 
 clean:
-	@$(RM) $(OBJS)
+	$(RM) $(OBJS)
 
 fclean: clean
 	$(RM) $(NAME)

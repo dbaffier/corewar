@@ -1,0 +1,57 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/17 18:05:10 by gbourgeo          #+#    #+#             */
+/*   Updated: 2019/10/08 05:24:36 by naminei          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "vm.h"
+#include "libft.h"
+#include "ft_printf.h"
+
+static void		introduce_champ(t_process *proc)
+{
+	t_header	*play;
+
+	ft_printf("Introducing contestants...\n");
+	while (proc->next)
+		proc = proc->next;
+	while (proc)
+	{
+		play = (t_header *)proc->file;
+		ft_printf("* Player %d, weighting %d bytes, \"%s\" (\"%s\") !\n",
+				  proc->id, proc->data_size, play->prog_name, play->comment);
+		proc = proc->prev;
+	}
+}
+
+int				main(int ac, char **av)
+{
+	t_env		*e;
+	int			err;
+
+	e = &g_env;
+	ft_memset(e, 0, sizeof(*e));
+	e->progname = ft_strrchr(av[0], '/');
+	e->progname = (e->progname) ? e->progname + 1 : av[0];
+	signal(SIGINT, corewar_end);
+	if ((err = get_args(&ac, av, e)) == IS_OK)
+		if ((err = get_arena(e)) == IS_OK)
+			if ((err = ncurses_init(e)) == IS_OK)
+				if ((err = get_colors(e)) == IS_OK)
+				{
+					if (e->ncu.active == FALSE)
+						introduce_champ(e->proc);
+					launch_game(e);
+				}
+	ncurses_end(e);
+	free_env(e);
+	if (err)
+		corewar_errors(err, av[ac], e);
+	return (err);
+}
