@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_colors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 21:10:29 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/01 19:59:38 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/08 05:23:55 by naminei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int				get_colors(t_env *e)
 	t_process	*proc;
 
 	proc = e->proc;
-	if (!e->ncu.main_win)
+	if (e->ncu.active == FALSE)
 		return (IS_OK);
 	if (!(e->colors = malloc((MEM_SIZE) * sizeof(*e->colors))))
-		return (corewar_errors(ERR_MALLOC, NULL, e));
+		return (ERR_MALLOC);
 	fill_colors(e->colors, 1, MEM_SIZE);
 	while (proc)
 	{

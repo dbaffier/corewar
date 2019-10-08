@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_launch.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 21:48:51 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/06 13:08:02 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/08 05:30:19 by naminei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,17 @@ static void		set_game_parameters(t_env *e)
 
 void			launch_game(t_env *e)
 {
-	ssize_t		nb_cycles;
+	int			nb_cycles;
 	int			ch;
 
 	nb_cycles = 0;
 	ch = 0;
 	set_game_parameters(e);
-	while (1)
+	while (ch == 0)
 	{
 		if (e->term_too_small)
 			continue ;
-		if (e->ncu.active)
+		if (e->ncu.active == TRUE)
 		{
 			update_aff_vminfo(e, nb_cycles);
 			ch = ncurses_wgetch(&e->speed, &e->pause, e->ncu.info_win);
@@ -84,8 +84,7 @@ void			launch_game(t_env *e)
 			else if (ch == 0)
 				continue ;
 		}
-		if ((ch = play_game(nb_cycles, e)) != 0)
-			break ;
+		ch = play_game(nb_cycles, e);
 		nb_cycles++;
 	}
 	if (ch == -2)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_arena.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 21:02:58 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/09/23 21:02:58 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/08 05:02:58 by naminei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int				get_arena(t_env *e)
 	i = e->nb_players - 1;
 	proc = e->proc;
 	if ((e->arena = ft_memalloc(MEM_SIZE)) == NULL)
-		return (corewar_errors(ERR_MALLOC, NULL, e));
+		return (ERR_MALLOC);
 	while (proc)
 	{
 		pc = i * (MEM_SIZE / e->nb_players);

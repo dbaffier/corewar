@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_play.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 23:05:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/07 20:28:23 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/08 05:31:44 by naminei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ static size_t		check_players_alive(t_env *e)
 	return (alive);
 }
 
-int					play_game(ssize_t nb_cycles, t_env *e)
+int					play_game(int nb_cycles, t_env *e)
 {
 	t_process	*proc;
 
 	if (e->dump_cycle == nb_cycles)
 	{
-		if (!e->ncu.main_win)
+		if (e->ncu.active == FALSE)
 			dump_map(e->arena, MEM_SIZE);
 		return (-1);
 	}

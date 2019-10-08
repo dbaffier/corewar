@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/07 20:37:56 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/08 05:31:11 by naminei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@
 enum
 {
 	IS_OK,
+	ERR_MISSING_ARG,
+	ERR_UNKNOWN_ARG,
 	ERR_HELP,
 	ERR_DIGIT,
 	ERR_ZERO,
-	ERR_PARAM,
 	ERR_FILENAME,
 	ERR_MAX_CHAMP,
 	ERR_NUMBER,
@@ -91,7 +92,7 @@ typedef struct			s_env
 {
 	char				*progname;
 	t_ncurse			ncu;
-	ssize_t				dump_cycle;
+	int					dump_cycle;
 	int					id;
 	int					nb_players;
 	t_process			*proc;
@@ -124,13 +125,13 @@ void					ncurses_resizewindow(int sig);
 /*
 ** Errors && Free Functions
 */
-int						corewar_errors(int errnb, char *arg, t_env *e);
+void					corewar_errors(int errnb, char *arg, t_env *e);
 void					free_env(t_env *e);
 
 /*
 ** Get arguments Functions
 */
-int						get_args(char **av, t_env *e);
+int						get_args(int *ac, char **av, t_env *e);
 int						get_player(t_env *e, char *av);
 int						get_arena(t_env *e);
 int						get_colors(t_env *e);
@@ -157,7 +158,7 @@ void					update_aff_arena(int addr, int size,
 ** Game Functions
 */
 void					launch_game(t_env *e);
-int						play_game(ssize_t nb_cycles, t_env *e);
+int						play_game(int nb_cycles, t_env *e);
 void					dump_map(uint8_t *arena, size_t size);
 size_t					player_instruction(t_process *proc, t_env *e,
 						size_t nb_cycles);
