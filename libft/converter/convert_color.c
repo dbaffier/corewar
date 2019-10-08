@@ -87,9 +87,7 @@ int			get_color(t_format *data)
 {
 	char		*color;
 	char		*chunk;
-	size_t		color_size;
 
-	color_size = 0;
 	if (color_end(data->tail))
 	{
 		if ((chunk = get_chunk(data, '}')))

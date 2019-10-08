@@ -31,9 +31,7 @@ void		free_lst(t_va_list *head)
 int			ft_printf(const char *str, ...)
 {
 	t_format	data;
-	int			nb_char;
 
-	nb_char = 0;
 	ft_memset(&data, 0, sizeof(data));
 	data.tail = (char *)str;
 	data.print_buff = ft_print_buff;

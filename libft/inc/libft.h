@@ -108,5 +108,5 @@ char				*ft_strrev(char *str);
 int					get_next_line(const int fd, char **line);
 char				*ft_strfjoin(char const *s1, char const *s2);
 int					ft_rand(int min, int max, void *random);
-
+int					ft_atoi_base(char *str, int base);
 #endif
