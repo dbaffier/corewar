@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/07 20:13:43 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/09 19:37:04 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,14 @@ int		op_live(t_param *params, t_process *proc, t_env *e)
 
 int		op_ld(t_param *params, t_process *proc, t_env *e)
 {
-	if (params[0].type == REG_CODE)
+	if (params[0].type == DIR_CODE)
+		*(REG_CAST *)proc->reg[params[1].value - 1] = params[0].value;
+	else if (params[0].type == IND_CODE)
 	{
 		params[0].value = *(REG_CAST *)proc->pc + (params[0].value % IDX_MOD);
 		*(REG_CAST *)proc->reg[params[1].value - 1] =
 			arena_get(e->arena, params[0].value, REG_SIZE);
 	}
-	else if (params[0].type == DIR_CODE)
-		*(REG_CAST *)proc->reg[params[1].value - 1] = params[0].value;
 	return (*(REG_CAST *)proc->reg[params[1].value - 1]);
 }
 

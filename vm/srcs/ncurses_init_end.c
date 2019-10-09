@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ncurses_init_end.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:28:36 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/09 15:02:06 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/09 20:36:43 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ static void		init_colors(t_env *e)
 			COLOR_BLUE,
 			COLOR_RED,
 	};
-	short i;
-	int color_nb;
-	t_process *proc;
+	short			i;
+	int				color_nb;
+	t_process		*proc;
 
 	start_color();
 	use_default_colors();

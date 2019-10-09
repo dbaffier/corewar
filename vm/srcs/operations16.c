@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 19:23:33 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/07 20:30:35 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/09 19:37:51 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,11 @@ extern struct s_op	op_tab[17];
 int		op_aff(t_param *params, t_process *proc, t_env *e)
 {
 	if (e->ncu.info_win)
+	{
 		wprintw(e->ncu.info_win, "corewar : [%s] : \"%c\"\n",
 			((t_header *)proc->file)->prog_name, params[0].value);
+		wrefresh(e->ncu.info_win);
+	}
 	else
 		ft_printf("corewar : [%s] : \"%c\"\n",
 			((t_header *)proc->file)->prog_name, params[0].value);
@@ -38,9 +41,12 @@ void	print_live(t_env *e, t_param *params, t_process *tail)
 
 	proc = "un processus dit que le joueur";
 	if (e->ncu.info_win)
+	{
 		wprintw(e->ncu.info_win, "%s: %s %d(%s) est en vie\n",
 			e->progname, proc, params[0].value, (tail) ?
 				((t_header *)tail->file)->prog_name : "?");
+		wrefresh(e->ncu.info_win);
+	}
 	else
 		ft_printf("%s: %s %d(%s) est en vie\n",
 			e->progname, proc, params[0].value, (tail) ?

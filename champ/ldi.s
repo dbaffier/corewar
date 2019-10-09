@@ -16,12 +16,12 @@
  ldi		%0, %0, r3
  zjmp	%-10
  ldi		%-2000, %-4000, r3
- zjmp	%-10 # ours jump, zaz don't
+ zjmp	%-10
  st		r3, 500
-# ldi		%2000, r1, r3
-# st		r3, 500
+ ldi		%2000, r1, r3
+ st		r3, 500
  ldi		-2000, %-4000, r3
- zjmp	%-10 # ours jump, zaz don't
+ zjmp	%-10
  st		r3, 500
  ldi		%1000, r1, r3
  st		r3, 500

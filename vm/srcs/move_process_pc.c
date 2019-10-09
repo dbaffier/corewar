@@ -6,18 +6,18 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 22:54:42 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/07 20:22:46 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/09 19:18:17 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "vm_ncurse.h"
 
-REG_CAST		calc_mod(int len, size_t size)
+REG_CAST		calc_mod(int addr, size_t mod)
 {
-	while (len < 0)
-		len += size;
-	return (len % size);
+	while (addr < 0)
+		addr += mod;
+	return (addr % mod);
 }
 
 void			move_process_pc(t_process *proc, int len, t_env *e)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:05:10 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/08 16:04:37 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/09 20:09:05 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 static void		introduce_champ(t_process *proc)
 {
 	t_header	*play;
+	int			i;
 
+	i = 1;
 	ft_printf("Introducing contestants...\n");
 	while (proc->next)
 		proc = proc->next;
@@ -25,7 +27,7 @@ static void		introduce_champ(t_process *proc)
 	{
 		play = (t_header *)proc->file;
 		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
-				  proc->id, proc->data_size, play->prog_name, play->comment);
+				i++, proc->data_size, play->prog_name, play->comment);
 		proc = proc->prev;
 	}
 }

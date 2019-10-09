@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 17:35:43 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/07 18:39:52 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/09 19:36:36 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 #include "libft.h"
 
 extern struct s_op op_tab[17];
-
-/*
-** wprintw(e->ncu.info_win, "\"%s\":\n", op_tab[proc->instruction-1].reg_name);
-*/
 
 static int		instruction_size(t_op *op, t_param *params)
 {
@@ -64,10 +60,10 @@ size_t			player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
 	{
 		if (proc->instruction == 0)
 		{
-			proc->instruction = *((unsigned char *)e->arena +
+			proc->instruction = *((uint8_t *)e->arena +
 				*(REG_CAST *)proc->pc);
 			if (proc->instruction > 0 && (proc->instruction <
-				(unsigned char)(sizeof(op_tab) / sizeof(op_tab[0]))))
+				(uint8_t)(sizeof(op_tab) / sizeof(op_tab[0]))))
 				return (op_tab[proc->instruction - 1].cycle - 1);
 			else
 				move_process_pc(proc, 1, e);

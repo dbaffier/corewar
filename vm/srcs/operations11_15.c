@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:12:05 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/07 21:06:23 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/07 21:27:16 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ int		op_fork(t_param *params, t_process *proc, t_env *e)
 
 int		op_lld(t_param *params, t_process *proc, t_env *e)
 {
-	if (params[0].type == REG_CODE)
+	if (params[0].type == DIR_CODE)
+		*(REG_CAST *)proc->reg[params[1].value - 1] = params[0].value;
+	else if (params[0].type == IND_CODE)
 	{
 		params[0].value = *(REG_CAST *)proc->pc + params[0].value;
 		*(REG_CAST *)proc->reg[params[1].value - 1] =
 			arena_get(e->arena, params[0].value, REG_SIZE);
 	}
-	else if (params[0].type == DIR_CODE)
-		*(REG_CAST *)proc->reg[params[1].value - 1] = params[0].value;
 	return (*(REG_CAST *)proc->reg[params[1].value - 1]);
 }
 
