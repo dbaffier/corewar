@@ -6,7 +6,7 @@
 /*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 21:30:31 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/09 14:17:39 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/09 15:02:49 by naminei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ void		update_aff_arena(int addr, int size, short color, t_env *e)
 	int		y;
 
 	if (e->ncu.arena_win)
+	{
+		wattron(e->ncu.arena_win, COLOR_PAIR(COREWAR_ARENA_COLOR));
 		while (size--)
 		{
 			pos = calc_mod(addr, MEM_SIZE);
@@ -122,4 +124,6 @@ void		update_aff_arena(int addr, int size, short color, t_env *e)
 				*((uint8_t *)e->arena + pos));
 			addr++;
 		}
+		wattroff(e->ncu.arena_win, COLOR_PAIR(COREWAR_ARENA_COLOR));
+	}
 }

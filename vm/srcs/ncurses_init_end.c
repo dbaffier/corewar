@@ -6,7 +6,7 @@
 /*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:28:36 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/09 14:48:22 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/09 15:02:06 by naminei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,16 @@
 
 static void		init_pairs(void)
 {
-	init_pair(COREWAR_DFLT_COLOR, COLOR_BLACK, -1);
+	init_pair(COREWAR_DFLT_COLOR, COLOR_BLACK, COREWAR_DFLT_BKGD);
 	init_pair(COREWAR_TITLE_COLOR, COLOR_YELLOW, -1);
+	init_pair(COREWAR_ARENA_COLOR, COLOR_WHITE, COREWAR_DFLT_BKGD);
 	init_pair(COREWAR_CHAMPWIN_COLOR, COLOR_WHITE, COREWAR_CHAMP_BKGD);
 	init_pair(COREWAR_CHAMPALIVE_COLOR, COLOR_BLACK, COLOR_GREEN);
 	init_pair(COREWAR_CHAMPDEAD_COLOR, COLOR_BLACK, COLOR_RED);
 	init_pair(COREWAR_INFOWIN_COLOR, COLOR_WHITE, COREWAR_INFO_BKGD);
 	init_pair(COREWAR_TEXT_COLOR, COLOR_WHITE, -1);
 	init_pair(COREWAR_WINNER_COLOR, COLOR_BLACK, COLOR_BLUE);
+	init_color(COREWAR_DFLT_BKGD, 100, 100, 100);
 	init_color(COREWAR_CHAMP_BKGD, 100, 0, 200);
 	init_color(COREWAR_INFO_BKGD, 75, 0, 125);
 }
@@ -60,7 +62,7 @@ static void		init_colors(t_env *e)
 	while (proc)
 	{
 		proc->color[0] = i;
-		init_pair(i++, color_combo[color_nb], -1);
+		init_pair(i++, color_combo[color_nb], COREWAR_DFLT_BKGD);
 		proc->color[1] = i;
 		init_pair(i++, COLOR_BLACK, color_combo[color_nb]);
 		color_nb++;
