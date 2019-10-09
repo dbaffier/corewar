@@ -6,7 +6,7 @@
 /*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:05:10 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/08 05:24:36 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/08 16:04:37 by naminei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void		introduce_champ(t_process *proc)
 	while (proc)
 	{
 		play = (t_header *)proc->file;
-		ft_printf("* Player %d, weighting %d bytes, \"%s\" (\"%s\") !\n",
+		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 				  proc->id, proc->data_size, play->prog_name, play->comment);
 		proc = proc->prev;
 	}

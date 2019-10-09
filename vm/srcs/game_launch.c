@@ -6,7 +6,7 @@
 /*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 21:48:51 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/08 05:30:19 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/09 14:38:12 by naminei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void			launch_game(t_env *e)
 		if (e->ncu.active == TRUE)
 		{
 			update_aff_vminfo(e, nb_cycles);
-			ch = ncurses_wgetch(&e->speed, &e->pause, e->ncu.info_win);
+			ch = ncurses_wgetch(&e->speed, &e->pause, e->ncu.main_win);
 			if (ch == ERR)
 				return ;
 			else if (ch == 0)

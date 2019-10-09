@@ -6,11 +6,10 @@
 /*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:28:36 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/08 04:53:48 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/09 14:48:22 by naminei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "vm.h"
 #include "libft.h"
 
@@ -84,10 +83,6 @@ int				ncurses_init(t_env *e)
 	keypad(e->ncu.main_win, TRUE);
 	curs_set(0);
 	init_colors(e);
-	// if (COLS < ARENA_LINE_LEN || LINES < ARENA_COL_LEN)
-	// 	e->term_too_small = ncurses_termtoosmall(e);
-	// else if ((err = create_arenabox(e)) == IS_OK)
-	// 	err = create_infobox(e);
 	if ((err = create_arenabox(e)) == IS_OK)
 		err = create_infobox(e);
 	return (err);

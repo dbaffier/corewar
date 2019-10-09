@@ -6,7 +6,7 @@
 /*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 16:12:33 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/08 05:09:37 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/09 13:48:39 by naminei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void		corewar_usage(char *progname)
 static void		corewar_print_error(const char *str, char *arg, char *progname)
 {
 	ft_dprintf(2, "%s: %s", progname, str);
-	if (arg && str[ft_strlen(str) - 1] != '\t')
+	if (arg && str[ft_strlen(str) - 1] != '\n')
 		ft_dprintf(2, " `%s'", arg);
 	ft_dprintf(2, "\n");
 	if (*str == '-')
@@ -37,20 +37,20 @@ static void		corewar_print_error(const char *str, char *arg, char *progname)
 void			corewar_errors(int errnb, char *arg, t_env *e)
 {
 	static const char	*error[] = {
-		"-- missing argument.\t", "-- unknown argument", "-- help\t",
+		"-- missing argument.\n", "-- unknown argument", "-- help\n",
 		"value must contain only numbers", "wrong value",
 		"invalid filename", "too many champions received",
-		"number already taken", "-- missing champion.\t",
+		"number already taken", "-- missing champion.\n",
 		"impossible to open file", "impossible to lseek file for",
 		"malloc failed", "read failed",
 		"champion: size too small for", "champion: invalid header for",
 		"champion: champion size differ from header for",
 		"champion: size too big for",
-		"ncurses: Failed to init main Window.\t",
-		"ncurses: Failed to init arena Window Box.\t",
-		"ncurses: Failed to init arena Window.\t",
-		"Failed to init info Window Box.\t", "Failed to init champ Window.\t",
-		"Failed to init VM Window.\t", "Failed to init info Window.\t",
+		"ncurses: Failed to init main Window.\n",
+		"ncurses: Failed to init arena Window Box.\n",
+		"ncurses: Failed to init arena Window.\n",
+		"Failed to init info Window Box.\n", "Failed to init champ Window.\n",
+		"Failed to init VM Window.\n", "Failed to init info Window.\n",
 	};
 
 	if (errnb > 0 && errnb <= (int)(sizeof(error) / sizeof(error[0])))

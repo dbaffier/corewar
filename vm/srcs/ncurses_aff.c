@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ncurses_aff.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:47:32 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/06 14:56:19 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/09 14:15:43 by naminei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ static void		ncurses_aff_champion_info(t_process *proc, t_env *e)
 	t_header	*play;
 	int			x;
 
+	if (!e->ncu.champ_win)
+		return ;
 	play = (t_header *)proc->file;
 	x = ncurses_player_calc_x(proc->id) + 10;
 	proc->pos_y = (e->ncu.winy / 2) + (((e->nb_players * 3)) / 2) - 2;
@@ -96,6 +98,8 @@ static void		ncurses_aff_champion(t_env *e)
 
 static void		ncurses_aff_vminfo(t_env *e)
 {
+	if (!e->ncu.vm_win)
+		return ;
 	wattron(e->ncu.vm_win, A_BOLD);
 	wattron(e->ncu.vm_win, COLOR_PAIR(COREWAR_TEXT_COLOR));
 	update_aff_vmstatus(e);

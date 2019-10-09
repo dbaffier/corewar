@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_ncurse.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:40:54 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/06 14:13:18 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/09 14:39:19 by naminei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct		s_ncurse
 	int				winy;
 }					t_ncurse;
 
-int					ncurses_wgetch(int *speed, int *pause, WINDOW *info_win);
+int					ncurses_wgetch(int *speed, int *pause, WINDOW *win);
 int					ncurses_player_calc_x(int id);
 
 #endif

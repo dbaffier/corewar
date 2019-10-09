@@ -6,7 +6,7 @@
 /*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:55:24 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/08 05:35:39 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/09 13:30:58 by naminei          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,9 @@ void			dump_map(unsigned char *arena, size_t size)
 	{
 		if (i % ARENA_VALUE_PER_LINE == 0)
 			ft_printf("0x%04x : ", i);
-		ft_printf("%02x", arena[i]);
+		ft_printf("%02x ", arena[i]);
 		i++;
 		if (i % ARENA_VALUE_PER_LINE == 0)
 			ft_printf("\n");
-		else
-			ft_printf(" ");
 	}
 }
