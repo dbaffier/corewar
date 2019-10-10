@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/07 20:29:15 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/10 14:19:00 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,10 @@ static int	get_param_size(int i, t_param *params, t_op *op, uint8_t type)
 static int	get_param_value(uint8_t *data, int index, int size)
 {
 	int		i;
-	int		j;
 	char	tab[REG_SIZE];
 
 	ft_bzero(tab, REG_SIZE);
 	i = 0;
-	j = REG_SIZE - 1;
 	if (size > REG_SIZE)
 		return (0);
 	while (size--)

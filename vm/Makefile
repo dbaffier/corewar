@@ -56,7 +56,7 @@ CFLAGS		= -Wall -Werror -Wextra
 CFLAGS		+= -std=c11 -Wmissing-prototypes -pedantic -pedantic-errors -g3 -fsanitize=address
 
 INCS		= -I$(LFT_DIR)inc -I$(VM_INC_D) -I/Users/naminei/.brew/opt/ncurses/include
-LIBS		= -L$(LFT_DIR) -lft -L/Users/naminei/.brew/opt/ncurses/lib -lncurses -fsanitize=address
+LIBS		= -L$(LFT_DIR) -lft -lncurses -fsanitize=address
 
 RED			= \x1b[1;31m
 GREEN		= \x1b[1;32m

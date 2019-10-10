@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:05:10 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/08 16:04:37 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/10 14:17:01 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <signal.h>
 #include "vm.h"
 #include "libft.h"
 #include "ft_printf.h"

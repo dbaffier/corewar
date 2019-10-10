@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ncurses_init_end.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:28:36 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/09 15:02:06 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/10 14:18:24 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <signal.h>
 #include "vm.h"
 #include "libft.h"
 
