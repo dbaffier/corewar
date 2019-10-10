@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ncurses_aff_update.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 21:30:31 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/09 15:02:49 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/10 14:47:46 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void		update_aff_champion_dead(t_env *e, t_process *proc)
 	*((unsigned char *)e->arena + *(REG_CAST *)proc->pc));
 	wattroff(e->ncu.arena_win,
 		COLOR_PAIR(e->colors[*(REG_CAST *)proc->pc]));
-	if (proc->free_file[proc->pos] == 1)
+	if (*proc->free_file == 1)
 	{
 		x = ncurses_player_calc_x(proc->id) + 5;
 		wattron(e->ncu.champ_win, COLOR_PAIR(COREWAR_CHAMPDEAD_COLOR));

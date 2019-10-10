@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:45:03 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/07 21:01:50 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/10 14:45:58 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_process		*new_proc(t_process *proc, int value, int flag, t_env *e)
 
 	new = ft_memalloc(sizeof(*new));
 	ft_memcpy(new, proc, sizeof(*new));
-	new->free_file[proc->pos]++;
+	(*new->free_file)++;
 	new->instruction_wait += 1;
 	new->instruction = 0;
 	if (!flag)
@@ -43,7 +43,7 @@ t_process		*remove_proc(t_process *proc, t_process **head)
 		*head = next;
 	if (proc->next)
 		proc->next->prev = proc->prev;
-	if (proc->file && --proc->free_file[proc->pos] == 0)
+	if (proc->file && --(*proc->free_file) == 0)
 		free(proc->file);
 	ft_bzero(proc, sizeof(*proc));
 	free(proc);

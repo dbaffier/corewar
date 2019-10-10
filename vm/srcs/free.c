@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 00:34:57 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/08 04:47:35 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/10 14:48:43 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void		free_proc(t_process *proc)
 	while (proc)
 	{
 		next = proc->next;
-		if (proc->file && --proc->free_file[proc->pos] == 0)
+		if (proc->file && --(*proc->free_file) == 0)
 			free((proc)->file);
 		free(proc);
 		proc = next;
