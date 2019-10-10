@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 04:33:29 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/06/28 11:35:23 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/10 13:53:37 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
+# ifdef __linux__
+#  include <inttypes.h>
+# endif
 # include <stdlib.h>
 # include <stdarg.h>
 # include "libft.h"

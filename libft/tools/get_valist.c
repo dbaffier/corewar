@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_valist.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/31 20:22:33 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/06/23 21:36:06 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/10 14:30:30 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,7 @@ void			get_arg_n(t_format *data, void *dst)
 void			get_valist(t_format *data)
 {
 	int			n;
-	t_va_list	*vl;
 
-	vl = NULL;
 	data->tail++;
 	if (!ft_isdigit(*data->tail))
 		return ;

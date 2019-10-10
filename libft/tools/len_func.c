@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   len_func.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/30 20:32:34 by mmonier           #+#    #+#             */
-/*   Updated: 2019/06/11 03:29:25 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/10 14:30:01 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@
 void			ft_doublelen(t_convf *ptr)
 {
 	size_t		len;
-	int			tmp_len;
 	int			ni;
 
-	tmp_len = ptr->d_len;
 	len = 0;
 	ni = (int)ptr->n;
 	ptr->n_len = (ptr->n == 0) ? ptr->d_len + 1 : ptr->n_len;
