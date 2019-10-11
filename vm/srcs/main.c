@@ -6,10 +6,11 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:05:10 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/09 20:09:05 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/11 23:16:47 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <signal.h>
 #include "vm.h"
 #include "libft.h"
 #include "ft_printf.h"

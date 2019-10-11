@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_args.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/03 20:06:02 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/06/11 05:53:46 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/10 14:31:18 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void		getarg_null(void *dst, va_list *args)
 {
 	dst = NULL;
 	args = NULL;
+	(void)dst;
+	(void)args;
 }
 
 void		getarg_wchar(void *dst, va_list *args)

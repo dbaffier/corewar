@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:17:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/09 14:48:08 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/10 14:18:40 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <signal.h>
 #include "vm.h"
 
 void				corewar_end(int sig)

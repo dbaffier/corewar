@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   convert_star.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 22:17:53 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/06/19 03:05:35 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/10 14:16:10 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,14 @@ void	conv_star(t_format *data)
 		{
 			if (star < 0)
 				data->flag.opts |= OPT_MINUS;
-			data->flag.width = star < 0 ? star * -1 : star;
+			data->flag.width = star < 0 ? (star * -1) : star;
 		}
 	}
 	if (data->flag.star)
 	{
 		get_arg_n(data, &star2);
-		data->flag.precision = star2 < 0 ? data->flag.precision : star2;
+		data->flag.precision = star2 < 0 ?
+			data->flag.precision : (size_t)star2;
 		if (star2 < 0)
 			data->flag.opts &= ~OPT_PREC;
 	}

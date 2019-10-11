@@ -3,23 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_rand.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/18 05:06:42 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/06/25 03:52:49 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/10 14:13:19 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifdef __linux__
+# include <inttypes.h>
+#endif
 #include "libft.h"
 
 int			ft_rand(int min, int max, void *random)
 {
-	int		n;
-	int		rand;
+	uintptr_t	n;
+	uintptr_t	rand;
 
-	rand = (int)random;
-	n = (int)random;
-	n = (n < 0) ? -n : n;
+	rand = (uintptr_t)random;
+	n = (uintptr_t)random;
 	while (n >= 10)
 	{
 		rand += (n % 10);
