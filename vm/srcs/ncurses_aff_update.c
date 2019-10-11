@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 21:30:31 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/10 14:47:46 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/11 23:37:27 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,28 +102,5 @@ void		update_aff_champion_dead(t_env *e, t_process *proc)
 		wattron(e->ncu.champ_win, COLOR_PAIR(COREWAR_CHAMPDEAD_COLOR));
 		mvwprintw(e->ncu.champ_win, proc->pos_y, e->ncu.winx - 6, "DEAD ");
 		wattroff(e->ncu.champ_win, COLOR_PAIR(COREWAR_CHAMPDEAD_COLOR));
-	}
-}
-
-void		update_aff_arena(int addr, int size, short color, t_env *e)
-{
-	size_t	pos;
-	int		x;
-	int		y;
-
-	if (e->ncu.arena_win)
-	{
-		wattron(e->ncu.arena_win, COLOR_PAIR(COREWAR_ARENA_COLOR));
-		while (size--)
-		{
-			pos = calc_mod(addr, MEM_SIZE);
-			y = ((pos * 3) / ARENA_LINE_LEN) % MEM_SIZE;
-			x = ((pos * 3) % ARENA_LINE_LEN) % MEM_SIZE;
-			e->colors[pos] = color;
-			mvwprintw(e->ncu.arena_win, y, x, "%02x",
-				*((uint8_t *)e->arena + pos));
-			addr++;
-		}
-		wattroff(e->ncu.arena_win, COLOR_PAIR(COREWAR_ARENA_COLOR));
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/09 19:37:04 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/11 23:56:44 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		op_ld(t_param *params, t_process *proc, t_env *e)
 
 int		op_st(t_param *params, t_process *proc, t_env *e)
 {
-	int		ret;
+	int		offset;
 
 	if (params[1].type == REG_CODE)
 	{
@@ -79,11 +79,13 @@ int		op_st(t_param *params, t_process *proc, t_env *e)
 	}
 	else if (params[1].type == IND_CODE)
 	{
-		ret = *(REG_CAST *)proc->pc + (params[1].value % IDX_MOD);
-		arena_copy(e->arena, ret, (REG_CAST *)proc->reg[params[0].value - 1],
-			REG_SIZE);
-		color_copy(e->colors, ret, proc->color[0], REG_SIZE);
-		update_aff_arena(ret, REG_SIZE, *proc->color, e);
+		offset = *(REG_CAST *)proc->pc + (params[1].value % IDX_MOD);
+		arena_copy(offset, (REG_CAST *)proc->reg[params[0].value - 1],
+			proc->color[0], e);
+		// arena_copy(e->arena, ret, (REG_CAST *)proc->reg[params[0].value - 1],
+		// 	REG_SIZE);
+		color_copy(e->colors, offset, proc->color[0], REG_SIZE);
+		// update_aff_arena(ret, REG_SIZE, *proc->color, e);
 	}
 	return (*(REG_CAST *)proc->reg[params[0].value - 1]);
 }

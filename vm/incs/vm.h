@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/10 14:49:47 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/11 23:55:53 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,8 +152,8 @@ void					update_aff_vmstatus(t_env *e);
 void					update_aff_champion_info(t_op *op, t_param *params,
 						t_process *proc, t_env *e);
 void					update_aff_champion_dead(t_env *e, t_process *proc);
-void					update_aff_arena(int addr, int size,
-						short color, t_env *e);
+// void					update_aff_arena(int addr, int size,
+// 						short color, t_env *e);
 
 /*
 ** Game Functions
@@ -170,8 +170,10 @@ t_process				*new_proc(t_process *proc, int value, int flag,
 t_process				*remove_proc(t_process *proc, t_process **head);
 void					move_process_pc(t_process *proc, int len, t_env *e);
 REG_CAST				calc_mod(int len, size_t size);
-void					arena_copy(void *arena, int pc, REG_CAST *value,
-						size_t size);
+void					arena_copy(int offset, REG_CAST *value, short color,
+						t_env *e);
+// void					arena_copy(void *arena, int pc, REG_CAST *value,
+// 						size_t size);
 REG_CAST				arena_get(void *arena, int pc, size_t size);
 void					color_copy(short *colors, int pc, short color,
 						size_t size);

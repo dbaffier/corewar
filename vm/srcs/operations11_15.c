@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:12:05 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/07 21:27:16 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/11 23:57:10 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,27 @@ extern struct s_op	op_tab[17];
 
 int		op_sti(t_param *params, t_process *proc, t_env *e)
 {
-	int		addr;
+	int		offset;
 
 	if (params[1].type == REG_CODE)
-		addr = *(REG_CAST *)proc->reg[params[1].value - 1];
+		offset = *(REG_CAST *)proc->reg[params[1].value - 1];
 	else if (params[1].type == DIR_CODE)
-		addr = params[1].value;
+		offset = params[1].value;
 	else
-		addr = arena_get(e->arena, *(REG_CAST *)proc->pc + params[1].value,
+		offset = arena_get(e->arena, *(REG_CAST *)proc->pc + params[1].value,
 			REG_SIZE);
 	if (params[2].type == REG_CODE)
-		addr += *(REG_CAST *)proc->reg[params[2].value - 1];
+		offset += *(REG_CAST *)proc->reg[params[2].value - 1];
 	else if (params[2].type == DIR_CODE)
-		addr += params[2].value;
-	addr = *(REG_CAST *)proc->pc + (addr % IDX_MOD);
-	arena_copy(e->arena, addr, (REG_CAST *)proc->reg[params[0].value - 1],
-		REG_SIZE);
-	color_copy(e->colors, addr, proc->color[0], REG_SIZE);
-	update_aff_arena(addr, REG_SIZE, *proc->color, e);
-	return (addr);
+		offset += params[2].value;
+	offset = *(REG_CAST *)proc->pc + (offset % IDX_MOD);
+	arena_copy(offset, (REG_CAST *)proc->reg[params[0].value - 1],
+		proc->color[0], e);
+	// arena_copy(e->arena, offset, (REG_CAST *)proc->reg[params[0].value - 1],
+	// 	REG_SIZE);
+	color_copy(e->colors, offset, proc->color[0], REG_SIZE);
+	// update_aff_arena(offset, REG_SIZE, *proc->color, e);
+	return (offset);
 }
 
 /*
@@ -88,7 +90,7 @@ int		op_lld(t_param *params, t_process *proc, t_env *e)
 int		op_lldi(t_param *params, t_process *proc, t_env *e)
 {
 	int			ret;
-	int			addr;
+	int			offset;
 
 	if (params[0].type == REG_CODE)
 		ret = *(REG_CAST *)proc->reg[params[0].value - 1];
@@ -101,9 +103,9 @@ int		op_lldi(t_param *params, t_process *proc, t_env *e)
 		ret += *(REG_CAST *)proc->reg[params[1].value - 1];
 	else
 		ret += params[1].value;
-	addr = *(REG_CAST *)proc->pc + ret;
+	offset = *(REG_CAST *)proc->pc + ret;
 	*(REG_CAST *)proc->reg[params[2].value - 1] =
-		arena_get(e->arena, addr, REG_SIZE);
+		arena_get(e->arena, offset, REG_SIZE);
 	return (*(REG_CAST *)proc->reg[params[2].value - 1]);
 }
 
