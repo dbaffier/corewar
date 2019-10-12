@@ -6,37 +6,28 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:38:06 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/11 23:59:15 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/12 22:57:24 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
 
-static void	update_aff_arena(int offset, int size, short color, t_env *e)
+static t_bytes	*new_bytes(int offset, int nb_cycles, t_bytes *old)
 {
-	size_t	off;
-	int		x;
-	int		y;
+	t_bytes		*new;
 
-	if (e->ncu.arena_win)
-	{
-		wattron(e->ncu.arena_win, COLOR_PAIR(COREWAR_ARENA_COLOR));
-		while (size--)
-		{
-			off = calc_mod(offset, MEM_SIZE);
-			y = ((off * 3) / ARENA_LINE_LEN) % MEM_SIZE;
-			x = ((off * 3) % ARENA_LINE_LEN) % MEM_SIZE;
-			e->colors[off] = color;
-			mvwprintw(e->ncu.arena_win, y, x, "%02x",
-				*((uint8_t *)e->arena + off));
-			offset++;
-		}
-		wattroff(e->ncu.arena_win, COLOR_PAIR(COREWAR_ARENA_COLOR));
-	}
+	if (!(new = ft_memalloc(sizeof(*new))))
+		return (old);
+	new->cycle_to_print = nb_cycles + ARENA_COPY_DURATION;
+	new->offset = offset;
+	new->next = old;
+	if (old)
+		old->prev = new;
+	return (new);
 }
 
-void		arena_copy(int offset, REG_CAST *value, short color, t_env *e)
+void			arena_copy(int offset, REG_CAST *value, short color, t_env *e)
 {
 	uint8_t		*ptr;
 	size_t		off;
@@ -47,33 +38,19 @@ void		arena_copy(int offset, REG_CAST *value, short color, t_env *e)
 	if (!ptr || !value)
 		return ;
 	off = calc_mod(offset, MEM_SIZE);
-	while (i < REG_SIZE)
+	if (e->ncu.active == TRUE)
+		e->bytes = new_bytes(off, e->nb_cycles, e->bytes);
+	while (i++ < REG_SIZE)
 	{
-		ptr[(off + i) % MEM_SIZE] = ((uint8_t *)value)[REG_SIZE - 1 - i];
-		i++;
+		ptr[off] = ((uint8_t *)value)[REG_SIZE - i];
+		if (e->colors)
+			e->colors[off] = color;
+		off = (off + 1) % MEM_SIZE;
 	}
-	update_aff_arena(offset, REG_SIZE, color, e);
+	update_aff_arena(offset, COREWAR_ARENA_COLOR, e);
 }
 
-// void		arena_copy(void *arena, int pc, REG_CAST *value, size_t size)
-// {
-// 	uint8_t		*ptr;
-// 	size_t		offset;
-// 	size_t		i;
-
-// 	ptr = (uint8_t *)arena;
-// 	i = 0;
-// 	if (!arena || !value || size > REG_SIZE)
-// 		return ;
-// 	offset = calc_mod(pc, MEM_SIZE);
-// 	while (i < size)
-// 	{
-// 		ptr[(offset + i) % MEM_SIZE] = ((uint8_t *)value)[REG_SIZE - 1 - i];
-// 		i++;
-// 	}
-// }
-
-REG_CAST	arena_get(void *arena, int pc, size_t size)
+REG_CAST		arena_get(void *arena, int pc, size_t size)
 {
 	char		tab[REG_SIZE];
 	uint8_t		*data;
@@ -96,20 +73,4 @@ REG_CAST	arena_get(void *arena, int pc, size_t size)
 	if (i == 2)
 		return (*(short *)tab);
 	return (*(REG_CAST *)tab);
-}
-
-void		color_copy(short *colors, int pc, short color, size_t size)
-{
-	size_t		offset;
-	size_t		i;
-
-	i = 0;
-	if (!colors || size > REG_SIZE)
-		return ;
-	offset = calc_mod(pc, MEM_SIZE);
-	while (i < size)
-	{
-		colors[(offset + i) % MEM_SIZE] = color;
-		i++;
-	}
 }

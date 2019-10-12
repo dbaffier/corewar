@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 00:34:57 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/10 14:48:43 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/12 23:01:47 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,18 @@ static void		free_proc(t_process *proc)
 	}
 }
 
+static void		free_bytes(t_bytes *byte)
+{
+	t_bytes		*next;
+
+	while (byte)
+	{
+		next = byte->next;
+		free(byte);
+		byte = next;
+	}
+}
+
 void			free_env(t_env *e)
 {
 	free_proc(e->proc);
@@ -34,4 +46,5 @@ void			free_env(t_env *e)
 		free(e->arena);
 	if (e->colors)
 		free(e->colors);
+	free_bytes(e->bytes);
 }

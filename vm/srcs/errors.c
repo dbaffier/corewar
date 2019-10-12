@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 16:12:33 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/09 13:48:39 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/12 23:08:24 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,12 @@
 static void		corewar_usage(char *progname)
 {
 	ft_dprintf(2, "Usage : %s ", progname);
-	ft_dprintf(2, "[-dump nbr_cycles] [[-n number] champion1.cor] ...\n\n");
-	ft_dprintf(2, "\t-dump nbr_cycles\t: ");
+	ft_dprintf(2, "[-hv] [-dump nbr_cycles] [[-n number] champ1.cor] ...\n\n");
+	ft_dprintf(2, "\t-h\t\t\t: ");
+	ft_dprintf(2, "Display this help then exits.\n");
+	ft_dprintf(2, "\t-v\t\t\t: ");
+	ft_dprintf(2, "Graphical mode (ncurses).\n");
+	ft_dprintf(2, "\t-d, -dump nbr_cycles\t: ");
 	ft_dprintf(2, "Dumps memory after 'nbr_cycles' cycles then exits.\n");
 	ft_dprintf(2, "\t-n number\t\t: ");
 	ft_dprintf(2, "Fix a number to player. If missing, the player will ");

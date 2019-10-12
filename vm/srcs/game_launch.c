@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_launch.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 21:48:51 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/09 14:38:12 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/12 22:59:45 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,28 +65,25 @@ static void		set_game_parameters(t_env *e)
 
 void			launch_game(t_env *e)
 {
-	int			nb_cycles;
 	int			ch;
 
-	nb_cycles = 0;
 	ch = 0;
 	set_game_parameters(e);
 	while (ch == 0)
 	{
-		if (e->term_too_small)
-			continue ;
 		if (e->ncu.active == TRUE)
 		{
-			update_aff_vminfo(e, nb_cycles);
+			update_aff_vminfo(e);
 			ch = ncurses_wgetch(&e->speed, &e->pause, e->ncu.main_win);
 			if (ch == ERR)
 				return ;
 			else if (ch == 0)
 				continue ;
 		}
-		ch = play_game(nb_cycles, e);
-		nb_cycles++;
+		ch = play_game(e);
+		e->nb_cycles++;
 	}
+	e->bytes = check_bytes(e, INT32_MAX);
 	if (ch == -2)
 		and_the_winner_is(&e->ncu, &e->live);
 }

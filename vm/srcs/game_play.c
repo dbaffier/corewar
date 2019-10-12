@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   game_play.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 23:05:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/08 05:31:44 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/12 23:00:05 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
+#include "libft.h"
 
 static void			check_live_total(size_t nb_live, int *cycle_to_die)
 {
@@ -53,24 +54,54 @@ static size_t		check_players_alive(t_env *e)
 	return (alive);
 }
 
-int					play_game(int nb_cycles, t_env *e)
+t_bytes				*check_bytes(t_env *e, int cycle)
+{
+	t_bytes		*ret;
+	t_bytes		*byte;
+	t_bytes		*next;
+
+	ret = e->bytes;
+	byte = e->bytes;
+	while (byte)
+	{
+		if (byte->cycle_to_print <= cycle)
+		{
+			update_aff_arena(byte->offset, e->colors[byte->offset], e);
+			if (byte == ret)
+				ret = byte->next;
+			if (byte->prev)
+				byte->prev->next = byte->next;
+			if (byte->next)
+				byte->next->prev = byte->prev;
+			next = byte->next;
+			free(byte);
+			byte = next;
+		}
+		else
+			byte = byte->next;
+	}
+	return (ret);
+}
+
+int					play_game(t_env *e)
 {
 	t_process	*proc;
 
-	if (e->dump_cycle == nb_cycles)
+	if (e->dump_cycle == e->nb_cycles)
 	{
 		if (e->ncu.active == FALSE)
 			dump_map(e->arena, MEM_SIZE);
 		return (-1);
 	}
-	if (nb_cycles && nb_cycles % e->cycle_to_die == 0)
+	if (e->nb_cycles && e->nb_cycles % e->cycle_to_die == 0)
 		if (!check_players_alive(e))
 			return (-2);
 	proc = e->proc;
 	while (proc)
 	{
-		proc->instruction_wait += player_instruction(proc, e, nb_cycles);
+		proc->instruction_wait += player_instruction(proc, e);
 		proc = proc->next;
 	}
+	e->bytes = check_bytes(e, e->nb_cycles);
 	return (0);
 }

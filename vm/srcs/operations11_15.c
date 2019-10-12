@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:12:05 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/11 23:57:10 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/12 21:58:08 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,6 @@ int		op_sti(t_param *params, t_process *proc, t_env *e)
 	offset = *(REG_CAST *)proc->pc + (offset % IDX_MOD);
 	arena_copy(offset, (REG_CAST *)proc->reg[params[0].value - 1],
 		proc->color[0], e);
-	// arena_copy(e->arena, offset, (REG_CAST *)proc->reg[params[0].value - 1],
-	// 	REG_SIZE);
-	color_copy(e->colors, offset, proc->color[0], REG_SIZE);
-	// update_aff_arena(offset, REG_SIZE, *proc->color, e);
 	return (offset);
 }
 

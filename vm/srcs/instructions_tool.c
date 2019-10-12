@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 17:35:43 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/09 19:36:36 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/12 22:20:12 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ static void		launch_instruction(t_process *proc, t_env *e)
 	update_aff_champion_info(op, params, proc, e);
 }
 
-size_t			player_instruction(t_process *proc, t_env *e, size_t nb_cycles)
+size_t			player_instruction(t_process *proc, t_env *e)
 {
-	if (proc->instruction_wait > nb_cycles)
+	if (proc->instruction_wait > (size_t)e->nb_cycles)
 		return (0);
-	if (proc->instruction_wait == nb_cycles)
+	if (proc->instruction_wait == (size_t)e->nb_cycles)
 	{
 		if (proc->instruction == 0)
 		{

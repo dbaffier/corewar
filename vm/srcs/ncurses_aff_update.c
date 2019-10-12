@@ -6,12 +6,36 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 21:30:31 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/11 23:37:27 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/12 22:31:57 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
+
+void		update_aff_arena(int offset, short color, t_env *e)
+{
+	size_t	off;
+	int		i;
+	int		x;
+	int		y;
+
+	if (e->ncu.arena_win)
+	{
+		i = 0;
+		off = calc_mod(offset, MEM_SIZE);
+		wattron(e->ncu.arena_win, COLOR_PAIR(color));
+		while (i++ < REG_SIZE)
+		{
+			y = ((off * 3) / ARENA_LINE_LEN) % MEM_SIZE;
+			x = ((off * 3) % ARENA_LINE_LEN) % MEM_SIZE;
+			mvwprintw(e->ncu.arena_win, y, x, "%02x",
+				*((uint8_t *)e->arena + off));
+			off = (off + 1) % MEM_SIZE;
+		}
+		wattroff(e->ncu.arena_win, COLOR_PAIR(color));
+	}
+}
 
 void		update_aff_vmstatus(t_env *e)
 {
@@ -38,7 +62,7 @@ void		update_aff_vmstatus(t_env *e)
 	}
 }
 
-void		update_aff_vminfo(t_env *e, size_t cycle)
+void		update_aff_vminfo(t_env *e)
 {
 	if (!e->ncu.vm_win)
 		return ;
@@ -47,7 +71,7 @@ void		update_aff_vminfo(t_env *e, size_t cycle)
 	wclrtoeol(e->ncu.vm_win);
 	update_aff_vmstatus(e);
 	wclrtoeol(e->ncu.vm_win);
-	wprintw(e->ncu.vm_win, "Cycle: %d\n\n", cycle);
+	wprintw(e->ncu.vm_win, "Cycle: %d\n\n", e->nb_cycles);
 	wclrtoeol(e->ncu.vm_win);
 	wprintw(e->ncu.vm_win, "CYCLE_TO_DIE: %d", e->cycle_to_die);
 	wattroff(e->ncu.vm_win, COLOR_PAIR(COREWAR_TEXT_COLOR));

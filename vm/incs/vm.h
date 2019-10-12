@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/11 23:55:53 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/12 23:12:39 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,14 @@ typedef struct			s_process
 	struct s_process	*prev;
 }						t_process;
 
+typedef struct			s_bytes
+{
+	int					offset;
+	int					cycle_to_print;
+	struct s_bytes		*next;
+	struct s_bytes		*prev;
+}						t_bytes;
+
 typedef struct			s_env
 {
 	char				*progname;
@@ -100,12 +108,13 @@ typedef struct			s_env
 	size_t				free_file[MAX_PLAYERS];
 	void				*arena;
 	short				*colors;
+	int					nb_cycles;
 	int					pause;
 	int					speed;
 	int					cycle_to_die;
 	int					checks;
+	t_bytes				*bytes;
 	t_live				live;
-	int					term_too_small;
 }						t_env;
 
 struct s_env			g_env;
@@ -147,22 +156,20 @@ int						ncurses_termtoosmall(t_env *e);
 int						create_arenabox(t_env *e);
 int						create_infobox(t_env *e);
 void					ncurses_aff_all(t_env *e);
-void					update_aff_vminfo(t_env *e, size_t cycle);
+void					update_aff_vminfo(t_env *e);
 void					update_aff_vmstatus(t_env *e);
 void					update_aff_champion_info(t_op *op, t_param *params,
 						t_process *proc, t_env *e);
 void					update_aff_champion_dead(t_env *e, t_process *proc);
-// void					update_aff_arena(int addr, int size,
-// 						short color, t_env *e);
+void					update_aff_arena(int offset, short color, t_env *e);
 
 /*
 ** Game Functions
 */
 void					launch_game(t_env *e);
-int						play_game(int nb_cycles, t_env *e);
+int						play_game(t_env *e);
 void					dump_map(uint8_t *arena, size_t size);
-size_t					player_instruction(t_process *proc, t_env *e,
-						size_t nb_cycles);
+size_t					player_instruction(t_process *proc, t_env *e);
 int						get_params(t_param *params, t_op *op, t_process *proc,
 						void *arena);
 t_process				*new_proc(t_process *proc, int value, int flag,
@@ -172,11 +179,8 @@ void					move_process_pc(t_process *proc, int len, t_env *e);
 REG_CAST				calc_mod(int len, size_t size);
 void					arena_copy(int offset, REG_CAST *value, short color,
 						t_env *e);
-// void					arena_copy(void *arena, int pc, REG_CAST *value,
-// 						size_t size);
 REG_CAST				arena_get(void *arena, int pc, size_t size);
-void					color_copy(short *colors, int pc, short color,
-						size_t size);
+t_bytes					*check_bytes(t_env *e, int cycle);
 
 /*
 ** Instructions Functions

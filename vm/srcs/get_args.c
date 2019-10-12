@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_args.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 19:51:14 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/08 05:33:15 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/12 23:07:41 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	get_number(char *av, int *value, int zero)
 
 static int	get_option(int *i, char **av, t_env *e)
 {
-	if (ft_strequ(av[*i], "-dump"))
+	if (ft_strequ(av[*i], "-dump") || ft_strequ(av[*i], "-d"))
 		return (get_number(av[++(*i)], &e->dump_cycle, 1));
 	if (ft_strequ(av[*i], "-n"))
 		return (get_number(av[++(*i)], &e->id, 0));

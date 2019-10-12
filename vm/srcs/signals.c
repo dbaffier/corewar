@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:17:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/10 14:18:40 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/12 22:20:28 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void				ncurses_resizewindow(int sig)
 		if ((sig = create_infobox(&g_env)) == IS_OK)
 		{
 			ncurses_aff_all(&g_env);
-			g_env.term_too_small = 0;
 			return ;
 		}
 	}
