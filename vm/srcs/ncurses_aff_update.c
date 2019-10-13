@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 21:30:31 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/12 22:31:57 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/13 02:17:59 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void		update_aff_arena(int offset, short color, t_env *e)
 			off = (off + 1) % MEM_SIZE;
 		}
 		wattroff(e->ncu.arena_win, COLOR_PAIR(color));
+		wrefresh(e->ncu.arena_win);
 	}
 }
 

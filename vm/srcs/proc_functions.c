@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:45:03 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/10 14:45:58 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/13 02:22:21 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_process		*new_proc(t_process *proc, int value, int flag, t_env *e)
 	new->instruction_wait += 1;
 	new->instruction = 0;
 	if (!flag)
-		move_process_pc(new, value % IDX_MOD, e);
+		move_process_pc(new, ((short)value % IDX_MOD), e);
 	else
 		move_process_pc(new, value, e);
 	new->prev = proc;

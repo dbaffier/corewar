@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:05:10 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/11 23:16:47 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/13 03:32:13 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int				main(int ac, char **av)
 					launch_game(e);
 				}
 	ncurses_end(e);
+	if (e->dump_cycle == e->nb_cycles)
+		dump_map(e->arena, MEM_SIZE);
 	free_env(e);
 	if (err)
 		corewar_errors(err, av[ac], e);

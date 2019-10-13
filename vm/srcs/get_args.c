@@ -6,19 +6,19 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 19:51:14 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/12 23:07:41 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/13 04:30:26 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
 
-static int	get_number(char *av, int *value, int zero)
+int			get_number(char *av, int *value, int zero)
 {
 	int		i;
 
 	i = 0;
-	if (!av)
+	if (!av || !*av)
 		return (ERR_MISSING_ARG);
 	while (av[i] && ft_isspace(av[i]))
 		i++;
@@ -26,10 +26,12 @@ static int	get_number(char *av, int *value, int zero)
 		i++;
 	while (av[i] && ft_isdigit(av[i]))
 		i++;
-	if (!av[i])
+	if (!av[i] || (zero < 0 && av[i] == ','))
 	{
-		if ((*value = ft_atoi(av)) == 0 && !zero)
-			return (ERR_ZERO);
+		*value = ft_atoi(av);
+		if ((zero == 0 && *value == 0)
+		|| (zero < 0 && *value < 0))
+			return (ERR_WRONG_VALUE);
 		return (IS_OK);
 	}
 	return (ERR_DIGIT);
@@ -37,12 +39,14 @@ static int	get_number(char *av, int *value, int zero)
 
 static int	get_option(int *i, char **av, t_env *e)
 {
+	if (ft_strequ(av[*i], "-h"))
+		return (ERR_HELP);
 	if (ft_strequ(av[*i], "-dump") || ft_strequ(av[*i], "-d"))
 		return (get_number(av[++(*i)], &e->dump_cycle, 1));
 	if (ft_strequ(av[*i], "-n"))
 		return (get_number(av[++(*i)], &e->id, 0));
-	if (ft_strequ(av[*i], "-h"))
-		return (ERR_HELP);
+	if (ft_strequ(av[*i], "-p"))
+		return (get_pauses(av[++(*i)], &e->pauses));
 	if (ft_strequ(av[*i], "-v"))
 	{
 		e->ncu.active = TRUE;

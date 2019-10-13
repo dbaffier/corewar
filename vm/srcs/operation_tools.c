@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/11 23:17:06 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/13 00:54:25 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int			get_params(t_param *params, t_op *op, t_process *proc, void *arena)
 			params[i].value = get_param_value(arena, pc + 2, params[i].size);
 		if (!(op->types[i] & params[i].type)
 		|| (params[i].type == REG_CODE
-			&& (params[i].value <= 0 || params[i].value >= REG_NUMBER)))
+			&& (params[i].value < 1 || params[i].value > REG_NUMBER)))
 			return (0);
 		pc += params[i].size;
 		i++;

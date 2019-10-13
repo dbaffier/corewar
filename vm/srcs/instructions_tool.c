@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 17:35:43 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/12 22:20:12 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/13 00:54:40 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void		launch_instruction(t_process *proc, t_env *e)
 	op = op_tab + proc->instruction - 1;
 	if (get_params(params, op, proc, (uint8_t *)e->arena))
 	{
-		ret = instruction_function[proc->instruction - 1](params, proc, e);
+		ret = instruction_function[op->opcode - 1](params, proc, e);
 		if (op->modif_carry)
 			proc->carry = !ret;
 	}

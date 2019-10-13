@@ -3,29 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ncurses_create.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:20:26 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/09 14:46:13 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/13 03:52:55 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
-
-int				ncurses_termtoosmall(t_env *e)
-{
-	wclear(e->ncu.main_win);
-	wbkgd(e->ncu.main_win, COLOR_PAIR(COREWAR_DFLT_COLOR));
-	wattron(e->ncu.main_win, A_BOLD);
-	wattron(e->ncu.main_win, COLOR_PAIR(COREWAR_TEXT_COLOR));
-	mvwaddstr(e->ncu.main_win, (LINES * 0.5) - 1, (COLS * 0.5) - 3, "TERM");
-	mvwaddstr(e->ncu.main_win, (LINES * 0.5), (COLS * 0.5) - 4, "TOO SMALL!");
-	wattroff(e->ncu.main_win, COLOR_PAIR(COREWAR_TEXT_COLOR));
-	wattroff(e->ncu.main_win, A_BOLD);
-	wrefresh(e->ncu.main_win);
-	return (1);
-}
 
 /*
 ** WINDOW *subwin(WINDOW *orig, int nlines, int ncols, int beg_y, int beg_x);

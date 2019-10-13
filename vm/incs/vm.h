@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/12 23:12:39 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/13 03:57:31 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ enum
 	ERR_UNKNOWN_ARG,
 	ERR_HELP,
 	ERR_DIGIT,
-	ERR_ZERO,
+	ERR_WRONG_VALUE,
 	ERR_FILENAME,
 	ERR_MAX_CHAMP,
 	ERR_NUMBER,
@@ -60,6 +60,7 @@ enum
 	ERR_NCURSE_CHAMPWIN,
 	ERR_NCURSE_VMWIN,
 	ERR_NCURSE_INFOWIN,
+	ERR_NCURSE_WGETCH,
 };
 
 typedef struct			s_live
@@ -97,9 +98,16 @@ typedef struct			s_bytes
 	struct s_bytes		*prev;
 }						t_bytes;
 
+typedef struct			s_pause
+{
+	int					cycle_nb;
+	struct s_pause		*next;
+}						t_pause;
+
 typedef struct			s_env
 {
 	char				*progname;
+	t_pause				*pauses;
 	t_ncurse			ncu;
 	int					dump_cycle;
 	int					id;
@@ -108,6 +116,7 @@ typedef struct			s_env
 	size_t				free_file[MAX_PLAYERS];
 	void				*arena;
 	short				*colors;
+	int					ch;
 	int					nb_cycles;
 	int					pause;
 	int					speed;
@@ -123,7 +132,7 @@ typedef struct			s_param
 {
 	int					type;
 	int					value;
-	char				size;
+	int					size;
 }						t_param;
 
 /*
@@ -137,14 +146,17 @@ void					ncurses_resizewindow(int sig);
 */
 void					corewar_errors(int errnb, char *arg, t_env *e);
 void					free_env(t_env *e);
+t_pause					*remove_pause(t_pause *pauses);
 
 /*
 ** Get arguments Functions
 */
 int						get_args(int *ac, char **av, t_env *e);
-int						get_player(t_env *e, char *av);
 int						get_arena(t_env *e);
 int						get_colors(t_env *e);
+int						get_number(char *av, int *value, int zero);
+int						get_pauses(char *av, t_pause **pauses);
+int						get_player(t_env *e, char *av);
 uint32_t				byteswap_32(uint32_t x);
 
 /*
@@ -152,7 +164,6 @@ uint32_t				byteswap_32(uint32_t x);
 */
 int						ncurses_init(t_env *e);
 void					ncurses_end(t_env *e);
-int						ncurses_termtoosmall(t_env *e);
 int						create_arenabox(t_env *e);
 int						create_infobox(t_env *e);
 void					ncurses_aff_all(t_env *e);
@@ -162,6 +173,8 @@ void					update_aff_champion_info(t_op *op, t_param *params,
 						t_process *proc, t_env *e);
 void					update_aff_champion_dead(t_env *e, t_process *proc);
 void					update_aff_arena(int offset, short color, t_env *e);
+int						ncurses_wgetch(t_env *e);
+int						ncurses_player_calc_x(int id);
 
 /*
 ** Game Functions
@@ -180,7 +193,6 @@ REG_CAST				calc_mod(int len, size_t size);
 void					arena_copy(int offset, REG_CAST *value, short color,
 						t_env *e);
 REG_CAST				arena_get(void *arena, int pc, size_t size);
-t_bytes					*check_bytes(t_env *e, int cycle);
 
 /*
 ** Instructions Functions

@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:12:05 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/12 21:58:08 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/13 02:20:06 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		op_sti(t_param *params, t_process *proc, t_env *e)
 		offset += *(REG_CAST *)proc->reg[params[2].value - 1];
 	else if (params[2].type == DIR_CODE)
 		offset += params[2].value;
-	offset = *(REG_CAST *)proc->pc + (offset % IDX_MOD);
+	offset = *(REG_CAST *)proc->pc + ((short)offset % IDX_MOD);
 	arena_copy(offset, (REG_CAST *)proc->reg[params[0].value - 1],
 		proc->color[0], e);
 	return (offset);

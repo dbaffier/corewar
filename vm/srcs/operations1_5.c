@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/12 22:07:14 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/13 00:57:32 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,15 @@ int		op_live(t_param *params, t_process *proc, t_env *e)
 
 int		op_ld(t_param *params, t_process *proc, t_env *e)
 {
+	int		offset;
+
 	if (params[0].type == DIR_CODE)
 		*(REG_CAST *)proc->reg[params[1].value - 1] = params[0].value;
 	else if (params[0].type == IND_CODE)
 	{
-		params[0].value = *(REG_CAST *)proc->pc + (params[0].value % IDX_MOD);
+		offset = *(REG_CAST *)proc->pc + ((short)params[0].value % IDX_MOD);
 		*(REG_CAST *)proc->reg[params[1].value - 1] =
-			arena_get(e->arena, params[0].value, REG_SIZE);
+			arena_get(e->arena, offset, REG_SIZE);
 	}
 	return (*(REG_CAST *)proc->reg[params[1].value - 1]);
 }
@@ -79,7 +81,7 @@ int		op_st(t_param *params, t_process *proc, t_env *e)
 	}
 	else if (params[1].type == IND_CODE)
 	{
-		offset = *(REG_CAST *)proc->pc + (params[1].value % IDX_MOD);
+		offset = *(REG_CAST *)proc->pc + ((short)params[1].value % IDX_MOD);
 		arena_copy(offset, (REG_CAST *)proc->reg[params[0].value - 1],
 			proc->color[0], e);
 	}

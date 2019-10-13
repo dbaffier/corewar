@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 00:34:57 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/12 23:01:47 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/13 03:17:13 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,18 @@ static void		free_bytes(t_bytes *byte)
 	}
 }
 
+static void		free_pauses(t_pause *pauses)
+{
+	t_pause		*next;
+
+	while (pauses)
+	{
+		next = pauses->next;
+		free(pauses);
+		pauses = next;
+	}
+}
+
 void			free_env(t_env *e)
 {
 	free_proc(e->proc);
@@ -47,4 +59,5 @@ void			free_env(t_env *e)
 	if (e->colors)
 		free(e->colors);
 	free_bytes(e->bytes);
+	free_pauses(e->pauses);
 }

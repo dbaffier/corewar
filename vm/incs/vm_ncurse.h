@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:40:54 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/12 22:49:52 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/13 03:44:30 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,5 @@ typedef struct		s_ncurse
 	int				winx;
 	int				winy;
 }					t_ncurse;
-
-int					ncurses_wgetch(int *speed, int *pause, WINDOW *win);
-int					ncurses_player_calc_x(int id);
 
 #endif
