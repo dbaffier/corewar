@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/13 02:20:44 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/13 04:34:31 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ int		op_or(t_param *params, t_process *proc, t_env *e)
 	int	or;
 
 	(void)e;
+printf("%d %d %d\t", params[0].type, params[0].value, params[0].size);
+printf("%d %d %d\t", params[1].type, params[1].value, params[1].size);
+printf("%d %d %d\n", params[2].type, params[2].value, params[2].size);
 	or = *(REG_CAST *)proc->reg[params[0].value - 1]
 		| *(REG_CAST *)proc->reg[params[1].value - 1];
 	*(REG_CAST *)proc->reg[params[2].value - 1] = or;
