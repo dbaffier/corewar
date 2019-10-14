@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:12:05 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/14 08:47:49 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/15 01:00:42 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int		op_sti(t_param *params, t_process *proc, t_env *e)
 int		op_fork(t_param *params, t_process *proc, t_env *e)
 {
 	if (params[0].value != 0)
-		proc->next = new_proc(proc, params[0].value, 0, e);
-	return (proc->next != NULL);
+		proc->prev = new_proc(proc, params[0].value, 0, e);
+	return (!proc->carry);
 }
 
 /*
@@ -111,6 +111,6 @@ int		op_lldi(t_param *params, t_process *proc, t_env *e)
 int		op_lfork(t_param *params, t_process *proc, t_env *e)
 {
 	if (params[0].value != 0)
-		proc->next = new_proc(proc, params[0].value, 1, e);
-	return (proc->next != NULL);
+		proc->prev = new_proc(proc, params[0].value, 1, e);
+	return (!proc->carry);
 }

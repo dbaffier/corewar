@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/27 22:54:42 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/14 08:45:04 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/15 00:03:52 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ REG_CAST		calc_mod(int addr, size_t mod)
 
 void			move_process_pc(t_process *proc, int len, t_env *e)
 {
-	update_aff_arena(*(REG_CAST *)proc->pc, 1,
-	(short[2]){0, e->colors[*(REG_CAST *)proc->pc]}, e);
+	if (e->colors)
+		update_aff_arena(*(REG_CAST *)proc->pc, 1,
+		(short[2]){0, e->colors[*(REG_CAST *)proc->pc]}, e);
 	*(REG_CAST *)proc->pc = calc_mod(*(REG_CAST *)proc->pc + len, MEM_SIZE);
 	update_aff_arena(*(REG_CAST *)proc->pc, 1,
 	(short[2]){0, proc->color[1]}, e);

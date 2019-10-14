@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 17:35:43 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/14 08:49:45 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/15 00:04:22 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ static void		launch_instruction(t_process *proc, t_env *e)
 			proc->carry = !ret;
 	}
 	move_process_pc(proc, instruction_size(op, params), e);
-wprintw(e->ncu.info_win, "%d: pc=%#x\n", proc->pos, *(REG_CAST *)proc->pc);
-wrefresh(e->ncu.info_win);
 	update_aff_champion_info(op, params, proc, e);
 }
 
