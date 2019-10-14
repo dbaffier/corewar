@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 23:40:54 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/13 03:44:30 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/14 03:25:31 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define ARENA_VALUE_PER_LINE	64
 # define ARENA_LINE_LEN			(ARENA_VALUE_PER_LINE * 3)
 # define ARENA_COL_LEN			(MEM_SIZE / ARENA_VALUE_PER_LINE)
-# define ARENA_COPY_DURATION	40
+# define ARENA_COPY_DURATION	50
 
 enum
 {

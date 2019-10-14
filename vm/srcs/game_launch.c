@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 21:48:51 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/13 04:10:17 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/14 08:44:15 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ static t_bytes	*check_bytes(t_env *e, int cycle)
 	ret = e->bytes;
 	byte = e->bytes;
 	while (byte)
-	{
 		if (byte->cycle_to_print <= cycle)
 		{
-			update_aff_arena(byte->offset, e->colors[byte->offset], e);
+			update_aff_arena(byte->offset, REG_SIZE,
+			(short[2]){1, byte->color}, e);
 			if (byte == ret)
 				ret = byte->next;
 			if (byte->prev)
@@ -101,7 +101,6 @@ static t_bytes	*check_bytes(t_env *e, int cycle)
 		}
 		else
 			byte = byte->next;
-	}
 	return (ret);
 }
 

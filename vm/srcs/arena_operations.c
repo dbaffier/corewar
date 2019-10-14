@@ -6,21 +6,22 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/01 18:38:06 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/13 00:46:05 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/14 08:51:11 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
 
-static t_bytes	*new_bytes(int offset, int nb_cycles, t_bytes *old)
+static t_bytes	*new_bytes(int offset, short color, int nb_cycle, t_bytes *old)
 {
 	t_bytes		*new;
 
 	if (!(new = ft_memalloc(sizeof(*new))))
 		return (old);
-	new->cycle_to_print = nb_cycles + ARENA_COPY_DURATION;
 	new->offset = offset;
+	new->cycle_to_print = nb_cycle + ARENA_COPY_DURATION;
+	new->color = color;
 	new->next = old;
 	if (old)
 		old->prev = new;
@@ -39,18 +40,16 @@ void			arena_copy(int offset, REG_CAST *value, short color, t_env *e)
 		return ;
 	off = calc_mod(offset, MEM_SIZE);
 	if (e->ncu.active == TRUE)
-		e->bytes = new_bytes(off, e->nb_cycles, e->bytes);
+		e->bytes = new_bytes(off, color, e->nb_cycles, e->bytes);
 	while (i++ < REG_SIZE)
 	{
 		ptr[off] = ((uint8_t *)value)[REG_SIZE - i];
-		if (e->colors)
-			e->colors[off] = color;
 		off = (off + 1) % MEM_SIZE;
 	}
-	update_aff_arena(offset, COREWAR_ARENA_COLOR, e);
+	update_aff_arena(offset, REG_SIZE, (short[2]){1, COREWAR_ARENA_COLOR}, e);
 }
 
-REG_CAST		arena_get(void *arena, int pc, size_t size)
+REG_CAST		arena_get(void *arena, int pc)
 {
 	char		tab[REG_SIZE];
 	uint8_t		*data;
@@ -60,17 +59,8 @@ REG_CAST		arena_get(void *arena, int pc, size_t size)
 	ft_bzero(tab, REG_SIZE);
 	data = (uint8_t *)arena;
 	i = 0;
-	if (size > REG_SIZE)
-		return (0);
 	offset = calc_mod(pc, MEM_SIZE);
-	while (size--)
-	{
-		tab[size] = data[(offset + i) % MEM_SIZE];
-		i++;
-	}
-	if (i == 1)
-		return (*(char *)tab);
-	if (i == 2)
-		return (*(short *)tab);
+	while (i++ < REG_SIZE)
+		tab[REG_SIZE - i] = data[(offset + i - 1) % MEM_SIZE];
 	return (*(REG_CAST *)tab);
 }

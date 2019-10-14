@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ncurses_aff.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: naminei <naminei@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:47:32 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/09 14:15:43 by naminei          ###   ########.fr       */
+/*   Updated: 2019/10/14 05:02:09 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ static void		ncurses_aff_champion_info(t_process *proc, t_env *e)
 	wattron(e->ncu.champ_win, COLOR_PAIR(COREWAR_CHAMPALIVE_COLOR));
 	mvwprintw(e->ncu.champ_win, proc->pos_y, e->ncu.winx - 6, "ALIVE");
 	wattroff(e->ncu.champ_win, COLOR_PAIR(COREWAR_CHAMPALIVE_COLOR));
+	mvwprintw(e->ncu.champ_win, proc->pos_y + 2, 0, "Processes: %d",
+	*proc->free_file);
 }
 
 static void		ncurses_aff_champion(t_env *e)
@@ -103,7 +105,7 @@ static void		ncurses_aff_vminfo(t_env *e)
 	wattron(e->ncu.vm_win, A_BOLD);
 	wattron(e->ncu.vm_win, COLOR_PAIR(COREWAR_TEXT_COLOR));
 	update_aff_vmstatus(e);
-	wprintw(e->ncu.vm_win, "Cycle: 0\n\n");
+	wprintw(e->ncu.vm_win, "Cycle: %d\n\n", e->nb_cycles);
 	wprintw(e->ncu.vm_win, "CYCLE_TO_DIE: %d\n\n", e->cycle_to_die);
 	wprintw(e->ncu.vm_win, "CYCLE_DELTA: %d\n\n", CYCLE_DELTA);
 	wprintw(e->ncu.vm_win, "NBR_LIVE: %d\n\n", NBR_LIVE);

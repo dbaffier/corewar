@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:12:05 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/13 02:20:06 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/14 08:47:49 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ int		op_sti(t_param *params, t_process *proc, t_env *e)
 	else if (params[1].type == DIR_CODE)
 		offset = params[1].value;
 	else
-		offset = arena_get(e->arena, *(REG_CAST *)proc->pc + params[1].value,
-			REG_SIZE);
+		offset = arena_get(e->arena, *(REG_CAST *)proc->pc + params[1].value);
 	if (params[2].type == REG_CODE)
 		offset += *(REG_CAST *)proc->reg[params[2].value - 1];
 	else if (params[2].type == DIR_CODE)
@@ -41,7 +40,7 @@ int		op_sti(t_param *params, t_process *proc, t_env *e)
 	offset = *(REG_CAST *)proc->pc + ((short)offset % IDX_MOD);
 	arena_copy(offset, (REG_CAST *)proc->reg[params[0].value - 1],
 		proc->color[0], e);
-	return (offset);
+	return (!proc->carry);
 }
 
 /*
@@ -72,7 +71,7 @@ int		op_lld(t_param *params, t_process *proc, t_env *e)
 	{
 		params[0].value = *(REG_CAST *)proc->pc + params[0].value;
 		*(REG_CAST *)proc->reg[params[1].value - 1] =
-			arena_get(e->arena, params[0].value, REG_SIZE);
+		arena_get(e->arena, params[0].value);
 	}
 	return (*(REG_CAST *)proc->reg[params[1].value - 1]);
 }
@@ -93,15 +92,13 @@ int		op_lldi(t_param *params, t_process *proc, t_env *e)
 	else if (params[0].type == DIR_CODE)
 		ret = params[0].value;
 	else
-		ret = arena_get(e->arena, *(REG_CAST *)proc->pc + params[0].value,
-			REG_SIZE);
+		ret = arena_get(e->arena, *(REG_CAST *)proc->pc + params[0].value);
 	if (params[1].type == REG_CODE)
 		ret += *(REG_CAST *)proc->reg[params[1].value - 1];
 	else
 		ret += params[1].value;
 	offset = *(REG_CAST *)proc->pc + ret;
-	*(REG_CAST *)proc->reg[params[2].value - 1] =
-		arena_get(e->arena, offset, REG_SIZE);
+	*(REG_CAST *)proc->reg[params[2].value - 1] = arena_get(e->arena, offset);
 	return (*(REG_CAST *)proc->reg[params[2].value - 1]);
 }
 

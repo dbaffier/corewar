@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/13 03:57:31 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/14 08:48:19 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct			s_bytes
 {
 	int					offset;
 	int					cycle_to_print;
+	short				color;
 	struct s_bytes		*next;
 	struct s_bytes		*prev;
 }						t_bytes;
@@ -172,7 +173,8 @@ void					update_aff_vmstatus(t_env *e);
 void					update_aff_champion_info(t_op *op, t_param *params,
 						t_process *proc, t_env *e);
 void					update_aff_champion_dead(t_env *e, t_process *proc);
-void					update_aff_arena(int offset, short color, t_env *e);
+void					update_aff_arena(int offset, int size, short color[2],
+						t_env *e);
 int						ncurses_wgetch(t_env *e);
 int						ncurses_player_calc_x(int id);
 
@@ -187,18 +189,19 @@ int						get_params(t_param *params, t_op *op, t_process *proc,
 						void *arena);
 t_process				*new_proc(t_process *proc, int value, int flag,
 						t_env *e);
-t_process				*remove_proc(t_process *proc, t_process **head);
+t_process				*remove_proc(t_process *proc, t_process **head,
+						t_env *e);
 void					move_process_pc(t_process *proc, int len, t_env *e);
 REG_CAST				calc_mod(int len, size_t size);
 void					arena_copy(int offset, REG_CAST *value, short color,
 						t_env *e);
-REG_CAST				arena_get(void *arena, int pc, size_t size);
+REG_CAST				arena_get(void *arena, int pc);
 
 /*
 ** Instructions Functions
 */
-int						op_live(t_param *params, t_process *proc, t_env *e);
 void					print_live(t_env *e, t_param *params, t_process *tail);
+int						op_live(t_param *params, t_process *proc, t_env *e);
 int						op_ld(t_param *params, t_process *proc, t_env *e);
 int						op_st(t_param *params, t_process *proc, t_env *e);
 int						op_add(t_param *params, t_process *proc, t_env *e);

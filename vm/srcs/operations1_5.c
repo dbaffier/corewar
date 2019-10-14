@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/13 00:57:32 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/14 08:01:52 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		op_ld(t_param *params, t_process *proc, t_env *e)
 	{
 		offset = *(REG_CAST *)proc->pc + ((short)params[0].value % IDX_MOD);
 		*(REG_CAST *)proc->reg[params[1].value - 1] =
-			arena_get(e->arena, offset, REG_SIZE);
+			arena_get(e->arena, offset);
 	}
 	return (*(REG_CAST *)proc->reg[params[1].value - 1]);
 }
@@ -67,7 +67,8 @@ int		op_ld(t_param *params, t_process *proc, t_env *e)
 /*
 ** DIRECT STORE 0x03
 ** inverse de load charge le registre passe en 1st param dans le 2nd param
-** meme fonctionnement pour le carry
+** meme fonctionnement pour le carry.
+**	return (*(REG_CAST *)proc->reg[params[0].value - 1]);
 */
 
 int		op_st(t_param *params, t_process *proc, t_env *e)
@@ -82,10 +83,16 @@ int		op_st(t_param *params, t_process *proc, t_env *e)
 	else if (params[1].type == IND_CODE)
 	{
 		offset = *(REG_CAST *)proc->pc + ((short)params[1].value % IDX_MOD);
+wattron(e->ncu.info_win, COLOR_PAIR(proc->pos));
+wprintw(e->ncu.info_win, "%d: store (r%d)%#x in %#x %#x + (%#x [%#x] %% %d)\n",
+proc->pos, params[0].value, *(REG_CAST *)proc->reg[params[0].value - 1], offset,
+*(REG_CAST *)proc->pc, (short)params[1].value, params[1].value, IDX_MOD);
+wattroff(e->ncu.info_win, COLOR_PAIR(proc->pos));
+wrefresh(e->ncu.info_win);
 		arena_copy(offset, (REG_CAST *)proc->reg[params[0].value - 1],
-			proc->color[0], e);
+			proc->pos + COREWAR_COLOR_END/*proc->color[0]*/, e);
 	}
-	return (*(REG_CAST *)proc->reg[params[0].value - 1]);
+	return (!proc->carry);
 }
 
 /*
