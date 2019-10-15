@@ -54,10 +54,16 @@ LFT_DIR		= ../libft/
 
 CC			= gcc
 CFLAGS		= -Wall -Werror -Wextra
-CFLAGS		+= -std=c11 -Wmissing-prototypes -pedantic -pedantic-errors -g3 -fsanitize=address
+CFLAGS		+= -std=c11 -Wmissing-prototypes -pedantic -pedantic-errors -g3
+ifeq ($(LEAKS),)
+CFLAGS		+= -fsanitize=address
+endif
 
 INCS		= -I$(LFT_DIR)inc -I$(VM_INC_D) -I/Users/naminei/.brew/opt/ncurses/include
-LIBS		= -L$(LFT_DIR) -lft -lncurses -fsanitize=address
+LIBS		= -L$(LFT_DIR) -lft -lncurses
+ifeq ($(LEAKS),)
+LIBS		+= -fsanitize=address
+endif
 
 RED			= \x1b[1;31m
 GREEN		= \x1b[1;32m
