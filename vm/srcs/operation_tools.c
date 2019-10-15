@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/13 00:54:25 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/15 23:46:51 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,15 @@ static int	get_param_value(uint8_t *data, int index, int size)
 int			get_params(t_param *params, t_op *op, t_process *proc, void *arena)
 {
 	REG_CAST	pc;
-	void		*data;
+	uint8_t		*data;
 	int			i;
 
 	pc = *(REG_CAST *)proc->pc;
-	data = (char *)arena + pc;
+	data = (uint8_t *)arena + (pc + 1) % MEM_SIZE;
 	i = 0;
 	while (i < op->reg_nb)
 	{
-		if (!get_param_size(i, params, op, *((uint8_t *)data + 1)))
+		if (!get_param_size(i, params, op, *data))
 			return (0);
 		if (op->reg_nb == 1)
 			params[i].value = get_param_value(arena, pc + 1, params[i].size);

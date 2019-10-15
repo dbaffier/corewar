@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 21:30:31 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/14 23:58:35 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/15 23:34:52 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ t_process *proc, t_env *e)
 
 void		update_aff_champion_dead(t_env *e, t_process *proc)
 {
+	if (!e->ncu.champ_win)
+		return ;
 	update_aff_arena(*(REG_CAST *)proc->pc, 1,
 	(short[2]){0, e->colors[*(REG_CAST *)proc->pc]}, e);
 	if (*proc->free_file == 1)
