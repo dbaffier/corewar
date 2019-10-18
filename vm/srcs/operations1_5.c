@@ -6,11 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2019/10/18 19:27:30 by bmellon          ###   ########.fr       */
-=======
-/*   Updated: 2019/10/18 20:09:47 by gbourgeo         ###   ########.fr       */
->>>>>>> d04b7e485372b40fe6095fc9534b7f7842e15eb1
+/*   Updated: 2019/10/18 22:42:55 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +38,7 @@ int		op_live(t_param *params, t_process *proc, t_env *e)
 		}
 		tail = tail->next;
 	}
+	//print_live(e, params, tail);
 	proc->is_alive++;
 	return (0);
 }
