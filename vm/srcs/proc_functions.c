@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:45:03 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/15 02:20:50 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/18 23:30:56 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_process		*new_proc(t_process *proc, int value, int flag, t_env *e)
 
 	new = ft_memalloc(sizeof(*new));
 	ft_memcpy(new, proc, sizeof(*new));
-// new->pos = *new->free_file;
+new->pos = *new->free_file;
 	(*new->free_file)++;
 	new->instruction_wait += 1;
 	new->instruction = 0;
@@ -48,6 +48,8 @@ t_process		*new_proc(t_process *proc, int value, int flag, t_env *e)
 		move_process_pc(new, ((short)value % IDX_MOD), e);
 	else
 		move_process_pc(new, value, e);
+	// while (proc->prev && proc->prev->id == proc->id)
+	// 	proc = proc->prev;
 	new->next = proc;
 	if ((new->prev = proc->prev) != NULL)
 		new->prev->next = new;
@@ -57,7 +59,7 @@ t_process		*new_proc(t_process *proc, int value, int flag, t_env *e)
 	return (new);
 }
 
-t_process		*remove_proc(t_process *proc, t_process **head, t_env *e)
+t_process		*remove_proc(t_process *proc, t_env *e)
 {
 	t_process	*next;
 
@@ -65,7 +67,7 @@ t_process		*remove_proc(t_process *proc, t_process **head, t_env *e)
 	if (proc->prev)
 		proc->prev->next = proc->next;
 	else
-		*head = next;
+		e->proc = proc->next;
 	if (proc->next)
 		proc->next->prev = proc->prev;
 	if (proc->file && --(*proc->free_file) == 0)
