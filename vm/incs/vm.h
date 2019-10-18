@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/14 08:48:19 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/18 20:04:14 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ typedef struct			s_env
 	int					pause;
 	int					speed;
 	int					cycle_to_die;
+	int					last_cycle_to_die;
 	int					checks;
 	t_bytes				*bytes;
 	t_live				live;
