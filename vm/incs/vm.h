@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/18 20:04:14 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/18 23:30:23 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,8 +190,7 @@ int						get_params(t_param *params, t_op *op, t_process *proc,
 						void *arena);
 t_process				*new_proc(t_process *proc, int value, int flag,
 						t_env *e);
-t_process				*remove_proc(t_process *proc, t_process **head,
-						t_env *e);
+t_process				*remove_proc(t_process *proc, t_env *e);
 void					move_process_pc(t_process *proc, int len, t_env *e);
 REG_CAST				calc_mod(int len, size_t size);
 void					arena_copy(int offset, REG_CAST *value, short color,

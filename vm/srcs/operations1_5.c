@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/18 22:42:55 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/10/18 23:36:34 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,18 @@ int		op_st(t_param *params, t_process *proc, t_env *e)
 	else if (params[1].type == IND_CODE)
 	{
 		offset = *(REG_CAST *)proc->pc + ((short)params[1].value % IDX_MOD);
+for (t_process *proc1=e->proc;proc1;proc1=proc1->next)
+	wprintw(e->ncu.info_win, "%d ", proc1->pos);
+wprintw(e->ncu.info_win, "\n");
+if (*(REG_CAST *)proc->pc > MEM_SIZE / 2)
+wprintw(e->ncu.info_win, "%d: r%d: %#x -> %#x + (%#x %% %d) = %#x\n",
+proc->pos,
+params[0].value,
+*(REG_CAST *)proc->reg[params[0].value - 1],
+*(REG_CAST *)proc->pc,
+(short)params[1].value,
+IDX_MOD,
+offset);
 		arena_copy(offset, (REG_CAST *)proc->reg[params[0].value - 1],
 			proc->color[0], e);
 	}

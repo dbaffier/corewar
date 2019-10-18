@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 23:05:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/18 20:34:39 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/18 23:34:44 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static size_t	check_players_alive(t_env *e)
 		if (!proc->is_alive)
 		{
 			update_aff_champion_dead(e, proc);
-			proc = remove_proc(proc, &e->proc, e);
+			proc = remove_proc(proc, e);
 			continue ;
 		}
 		alive += proc->is_alive;
@@ -74,9 +74,13 @@ int				play_game(t_env *e)
 	while (proc)
 	{
 		proc->instruction_wait += player_instruction(proc, e);
+		proc = proc->next;
+	}
+	proc = e->proc;
+	while (proc)
+	{
 		update_aff_arena(*(REG_CAST *)proc->pc, 1,
 		(short[2]){0, proc->color[1]}, e);
-		proc = proc->next;
 	}
 	return (0);
 }
