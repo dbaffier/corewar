@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations1_5.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/15 01:14:17 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/18 19:27:30 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		op_live(t_param *params, t_process *proc, t_env *e)
 		}
 		tail = tail->next;
 	}
-	print_live(e, params, tail);
+	//print_live(e, params, tail);
 	proc->is_alive++;
 	return (0);
 }
