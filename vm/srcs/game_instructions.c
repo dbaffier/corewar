@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   instructions_tool.c                                :+:      :+:    :+:   */
+/*   game_instructions.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 17:35:43 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/19 00:46:38 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/19 20:57:39 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int		instruction_size(t_op *op, t_param *params)
 	int	len;
 
 	i = 0;
-	len = (op->reg_nb == 1) ? 1 : 2;
+	len = (op->reg_nb == 1 && op->types[0] == T_DIR) ? 1 : 2;
 	while (i < op->reg_nb)
 	{
 		len += params[i].size;
@@ -52,7 +52,7 @@ static void		launch_instruction(t_process *proc, t_env *e)
 	update_aff_champion_info(op, params, proc, e);
 }
 
-size_t			player_instruction(t_process *proc, t_env *e)
+size_t			play_instruction(t_process *proc, t_env *e)
 {
 	if (proc->instruction_wait > (size_t)e->nb_cycles)
 		return (0);

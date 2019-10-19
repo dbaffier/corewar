@@ -6,30 +6,32 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 23:05:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/19 00:02:24 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/19 20:57:20 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 
-static void		check_live_total(size_t nb_live, int *cycle, int *last, int nb)
+static void		check_live_total(size_t nb_alive, t_env *e)
 {
-	if (nb_live >= NBR_LIVE)
+	if (nb_alive >= NBR_LIVE)
 	{
-		*last = nb - 1;
-		if ((*cycle = *cycle - CYCLE_DELTA) < 0)
-			*cycle = 0;
+		e->last_cycle_to_die = e->nb_cycles - 1;
+		if ((e->cycle_to_die = e->cycle_to_die - CYCLE_DELTA) < 0)
+			e->cycle_to_die = 0;
+		update_aff_vminfo(e);
 	}
 }
 
-static void		check_max_checks(int *checks, int *cycle, int *last, int nb)
+static void		check_max_checks(t_env *e)
 {
-	if (++(*checks) == MAX_CHECKS)
+	if (++(e->checks) == MAX_CHECKS)
 	{
-		*last = nb - 1;
-		if ((*cycle = *cycle - CYCLE_DELTA) < 0)
-			*cycle = 0;
-		*checks = 0;
+		e->last_cycle_to_die = e->nb_cycles - 1;
+		if ((e->cycle_to_die = e->cycle_to_die - CYCLE_DELTA) < 0)
+			e->cycle_to_die = 0;
+		e->checks = 0;
+		update_aff_vminfo(e);
 	}
 }
 
@@ -52,9 +54,8 @@ static size_t	check_players_alive(t_env *e)
 		proc->is_alive = 0;
 		proc = proc->next;
 	}
-	check_live_total(alive, &e->cycle_to_die, &e->last_cycle_to_die, e->nb_cycles);
-	check_max_checks(&e->checks, &e->cycle_to_die, &e->last_cycle_to_die, e->nb_cycles);
-	update_aff_vminfo(e);
+	check_live_total(alive, e);
+	check_max_checks(e);
 	return (alive);
 }
 
@@ -63,24 +64,16 @@ int				play_game(t_env *e)
 	t_process	*proc;
 
 	if (e->dump_cycle == e->nb_cycles)
-	{
 		return (-3);
-	}
-	if ((e->nb_cycles - e->last_cycle_to_die)
-	&& (e->nb_cycles - e->last_cycle_to_die) % e->cycle_to_die == 0)
-		if (!check_players_alive(e))
+	if (!e->cycle_to_die || ((e->nb_cycles - e->last_cycle_to_die)
+	&& (e->nb_cycles - e->last_cycle_to_die) % e->cycle_to_die == 0))
+		// if (e->dump_cycle < 0)
+		if (!e->cycle_to_die || !check_players_alive(e))
 			return (-2);
 	proc = e->proc;
 	while (proc)
 	{
-		proc->instruction_wait += player_instruction(proc, e);
-		proc = proc->next;
-	}
-	proc = e->proc;
-	while (proc)
-	{
-		update_aff_arena(*(REG_CAST *)proc->pc, 1,
-		(short[2]){0, proc->color[1]}, e);
+		proc->instruction_wait += play_instruction(proc, e);
 		proc = proc->next;
 	}
 	return (0);

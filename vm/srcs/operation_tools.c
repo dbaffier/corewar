@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/15 23:46:51 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/19 15:13:35 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 static int	get_param_size(int i, t_param *params, t_op *op, uint8_t type)
 {
 	type = type << (i * 2);
-	params[i].type = (op->reg_nb > 1) ? type >> 6 : op->types[i];
+	params[i].type = (op->reg_nb > 1 || op->types[0] != T_DIR) ?
+	type >> 6 : op->types[i];
 	if (params[i].type == REG_CODE && op->types[i] & T_REG)
 		params[i].size = 1;
 	else if (params[i].type == DIR_CODE && op->types[i] & T_DIR)
@@ -60,7 +61,7 @@ int			get_params(t_param *params, t_op *op, t_process *proc, void *arena)
 	{
 		if (!get_param_size(i, params, op, *data))
 			return (0);
-		if (op->reg_nb == 1)
+		if (op->reg_nb == 1 && op->types[0] == T_DIR)
 			params[i].value = get_param_value(arena, pc + 1, params[i].size);
 		else
 			params[i].value = get_param_value(arena, pc + 2, params[i].size);

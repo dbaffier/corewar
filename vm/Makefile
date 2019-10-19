@@ -20,6 +20,7 @@ VM_SRC		+=	main.c					\
 				dump_map.c				\
 				errors.c				\
 				free.c					\
+				game_instructions.c		\
 				game_launch.c			\
 				game_play.c				\
 				get_arena.c				\
@@ -27,9 +28,9 @@ VM_SRC		+=	main.c					\
 				get_colors.c			\
 				get_pauses.c			\
 				get_player.c			\
-				instructions_tool.c		\
 				move_process_pc.c		\
 				ncurses_aff_update.c	\
+				ncurses_aff_update2.c	\
 				ncurses_aff.c			\
 				ncurses_create.c		\
 				ncurses_init_end.c		\
