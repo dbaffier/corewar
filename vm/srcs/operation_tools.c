@@ -6,7 +6,7 @@
 /*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/20 20:49:14 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/10/20 20:54:27 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	get_params_size(t_param *params, t_op *op, uint8_t data_type)
 	int		i;
 
 	i = 0;
-	if (op->reg_nb > 1 || op->types[0] != T_DIR)
+	if (op->reg_nb > 1 && op->types[0] != T_DIR)
 		while (i < op->reg_nb)
 		{
 			type = data_type;
@@ -34,9 +34,10 @@ static int	get_params_size(t_param *params, t_op *op, uint8_t data_type)
 			else
 				return (0);
 			i++;
+			type = type << 2;
 		}
 	else
-		params[0].type = op->types[0];
+		params[i].type = op->types[0];
 	return (1);
 }
 
