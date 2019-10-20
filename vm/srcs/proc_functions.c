@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proc_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:45:03 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/20 19:19:54 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/20 21:11:40 by bmellon          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,15 @@ t_process		*new_proc(t_process *proc, int value, int flag, t_env *e)
 		move_process_pc(new, value, e);
 	while (proc->prev && proc->prev->id == proc->id)
 		proc = proc->prev;
+	new->next = proc;
 	if ((new->prev = proc->prev) != NULL)
 	{
 		new->prev->next = new;
-		proc->prev = new;
+		
 	}
 	else
 		e->proc = new;
-	new->next = proc;
+	proc->prev = new;
 	update_aff_processes(e);
 	return (new);
 }
