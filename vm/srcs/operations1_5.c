@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/19 20:59:11 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/20 21:34:50 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		op_live(t_param *params, t_process *proc, t_env *e)
 		}
 		tail = tail->next;
 	}
-	// print_live(e, params, tail);
+	print_live(e, params, tail);
 	proc->is_alive++;
 	return (0);
 }

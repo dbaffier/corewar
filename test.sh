@@ -17,12 +17,12 @@ i=$2
 
 while [ $i -le $3 ]
 do
+	printf "Testing cycle $i"\\r
 	./corewar -n -1 $filename -d $i > a
 	./corewar_zaz $filename -d $i > b
 	diff a b
 	ret=$?
 	if test $ret -eq 1 ; then
-		echo Cycle: $i
 		exit 1
 	fi
 	((i++))
