@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/18 23:30:23 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/19 14:47:42 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,49 +153,50 @@ t_pause					*remove_pause(t_pause *pauses);
 /*
 ** Get arguments Functions
 */
-int						get_args(int *ac, char **av, t_env *e);
+uint32_t				byteswap_32(uint32_t x);
 int						get_arena(t_env *e);
+int						get_args(int *ac, char **av, t_env *e);
 int						get_colors(t_env *e);
 int						get_number(char *av, int *value, int zero);
 int						get_pauses(char *av, t_pause **pauses);
 int						get_player(t_env *e, char *av);
-uint32_t				byteswap_32(uint32_t x);
 
 /*
 ** Ncurses Functions
 */
-int						ncurses_init(t_env *e);
-void					ncurses_end(t_env *e);
 int						create_arenabox(t_env *e);
 int						create_infobox(t_env *e);
 void					ncurses_aff_all(t_env *e);
-void					update_aff_vminfo(t_env *e);
-void					update_aff_vmstatus(t_env *e);
-void					update_aff_champion_info(t_op *op, t_param *params,
-						t_process *proc, t_env *e);
-void					update_aff_champion_dead(t_env *e, t_process *proc);
+void					ncurses_end(t_env *e);
+int						ncurses_init(t_env *e);
+int						ncurses_player_calc_x(int id);
+int						ncurses_wgetch(t_env *e);
 void					update_aff_arena(int offset, int size, short color[2],
 						t_env *e);
-int						ncurses_wgetch(t_env *e);
-int						ncurses_player_calc_x(int id);
+void					update_aff_champion_dead(t_env *e, t_process *proc);
+void					update_aff_champion_info(t_op *op, t_param *params,
+						t_process *proc, t_env *e);
+void					update_aff_process_pc(t_env *e);
+void					update_aff_vminfo(t_env *e);
+void					update_aff_vmstatus(t_env *e);
 
 /*
 ** Game Functions
 */
-void					launch_game(t_env *e);
-int						play_game(t_env *e);
-void					dump_map(uint8_t *arena, size_t size);
-size_t					player_instruction(t_process *proc, t_env *e);
-int						get_params(t_param *params, t_op *op, t_process *proc,
-						void *arena);
-t_process				*new_proc(t_process *proc, int value, int flag,
-						t_env *e);
-t_process				*remove_proc(t_process *proc, t_env *e);
-void					move_process_pc(t_process *proc, int len, t_env *e);
-REG_CAST				calc_mod(int len, size_t size);
 void					arena_copy(int offset, REG_CAST *value, short color,
 						t_env *e);
 REG_CAST				arena_get(void *arena, int pc);
+REG_CAST				calc_mod(int len, size_t size);
+void					dump_map(uint8_t *arena, size_t size);
+int						get_params(t_param *params, t_op *op, t_process *proc,
+						void *arena);
+void					launch_game(t_env *e);
+void					move_process_pc(t_process *proc, int len, t_env *e);
+t_process				*new_proc(t_process *proc, int value, int flag,
+						t_env *e);
+int						play_game(t_env *e);
+size_t					play_instruction(t_process *proc, t_env *e);
+t_process				*remove_proc(t_process *proc, t_env *e);
 
 /*
 ** Instructions Functions

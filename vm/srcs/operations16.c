@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 19:23:33 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/09 19:37:51 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/19 20:58:57 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,13 @@ int		op_aff(t_param *params, t_process *proc, t_env *e)
 	if (e->ncu.info_win)
 	{
 		wprintw(e->ncu.info_win, "corewar : [%s] : \"%c\"\n",
-			((t_header *)proc->file)->prog_name, params[0].value);
+			((t_header *)proc->file)->prog_name,
+			*(REG_CAST *)proc->reg[params[0].value - 1]);
 		wrefresh(e->ncu.info_win);
 	}
-	else
-		ft_printf("corewar : [%s] : \"%c\"\n",
-			((t_header *)proc->file)->prog_name, params[0].value);
+	// else
+	// 	ft_printf("corewar : [%s] : \"%c\"\n",
+	// 		((t_header *)proc->file)->prog_name, params[0].value);
 	return (params[0].value);
 }
 

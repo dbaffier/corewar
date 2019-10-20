@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 21:48:51 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/14 08:44:15 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/19 19:29:54 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void		print_win_str(int ch, t_ncurse *ncu, t_live *live)
 	if (ch == -1)
 		str = "ncurses: wgetch failed.";
 	else if (ch == -2)
-		str = (live->last_id) ? "Le joueur %d(%s) a gagné !" :
-								"Aucun champion n'a gagné.";
+		str = (live->last_id) ? "Contestant %d, \"%s\", has won !" :
+								"No contestant has won !";
 	else
 		str = "Dump !";
 	quit = "Press 'q' to quit...";
@@ -34,7 +34,7 @@ static void		print_win_str(int ch, t_ncurse *ncu, t_live *live)
 		len += ft_strlen(live->name);
 	x = (len > ncu->winx) ? 0 : ncu->winx / 2 - len / 2;
 	wattron(ncu->info_win, COLOR_PAIR(COREWAR_WINNER_COLOR));
-	mvwprintw(ncu->info_win, ncu->winy - 2, x, str, live->last_id, live->name);
+	mvwprintw(ncu->info_win, ncu->winy - 2, x, str, -live->last_id, live->name);
 	wattroff(ncu->info_win, COLOR_PAIR(COREWAR_WINNER_COLOR));
 	mvwprintw(ncu->info_win, ncu->winy - 1, 0, quit);
 }
@@ -43,27 +43,28 @@ static void		print_win_str(int ch, t_ncurse *ncu, t_live *live)
 ** MC HAMMER
 */
 
-static void		and_the_winner_is(int ch, t_ncurse *ncu, t_live *live, t_env *e)
+static void		and_the_winner_is(int ch, t_env *e)
 {
-	if (ncu->info_win)
+	if (e->ncu.info_win)
 	{
-		print_win_str(ch, ncu, live);
+		print_win_str(ch, &e->ncu, &e->live);
 		if (ch == -3)
 			return ;
-		wrefresh(ncu->info_win);
-		nodelay(ncu->info_win, FALSE);
-		while (wgetch(ncu->info_win) != 'q')
-			print_win_str(ch, ncu, live);
+		wrefresh(e->ncu.info_win);
+		nodelay(e->ncu.info_win, FALSE);
+		while (wgetch(e->ncu.info_win) != 'q')
+			print_win_str(ch, &e->ncu, &e->live);
 		return ;
 	}
 	if (ch == -1)
 		corewar_errors(ERR_NCURSE_WGETCH, NULL, e);
 	else if (ch == -2)
 	{
-		if (live->last_id)
-			ft_printf("Le joueur %d(%s) a gagné\n", live->last_id, live->name);
+		if (e->live.last_id != 0)
+			ft_printf("Contestant %d, \"%s\", has won !\n",
+			-e->live.last_id, e->live.name);
 		else
-			ft_printf("Aucun champion n'a gagné.\n");
+			ft_printf("No contestant has won !\n");
 	}
 }
 
@@ -124,6 +125,7 @@ void			launch_game(t_env *e)
 		if (!(ret = play_game(e)))
 			e->nb_cycles++;
 		e->bytes = check_bytes(e, e->nb_cycles);
+		update_aff_process_pc(e);
 	}
-	and_the_winner_is(ret, &e->ncu, &e->live, e);
+	and_the_winner_is(ret, e);
 }
