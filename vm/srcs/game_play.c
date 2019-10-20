@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/28 23:05:11 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/19 20:57:20 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/20 21:37:06 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int				play_game(t_env *e)
 		return (-3);
 	if (!e->cycle_to_die || ((e->nb_cycles - e->last_cycle_to_die)
 	&& (e->nb_cycles - e->last_cycle_to_die) % e->cycle_to_die == 0))
-		// if (e->dump_cycle < 0)
 		if (!e->cycle_to_die || !check_players_alive(e))
 			return (-2);
 	proc = e->proc;
