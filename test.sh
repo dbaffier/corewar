@@ -2,9 +2,9 @@
 
 num='^[0-9]+$'
 filename=$1
-
-if ! [[ ${filename:${#filename}-4} = '.cor' ]] || ! [[ $2 =~ $num ]] || ! [[ $3 =~ $num ]] ; then
-   echo "$0 [*.cor] [begin (0-9)] [end (0-9)]"
+filename2=$2
+if ! [[ ${filename:${#filename}-4} = '.cor' ]] || ! [[ ${filename:${#filename}-4} = '.cor' ]] || ! [[ $3 =~ $num ]] || ! [[ $4 =~ $num ]] ; then
+   echo "$0 [*.cor] [*.cor] [begin (0-9)] [end (0-9)]"
    exit 1
 fi
 
@@ -13,13 +13,13 @@ if ! [[ test -eq 0 ]] ; then
 	exit 1
 fi
 
-i=$2
+i=$3
 
-while [ $i -le $3 ]
+while [ $i -le $4 ]
 do
 	printf "Testing cycle $i"\\r
-	./corewar -n -1 $filename -d $i > a
-	./corewar_zaz $filename -d $i > b
+	./corewar -n -1 $filename -n -2 $filename2 -d $i > a
+	./corewar_zaz $filename $filename2 -d $i > b
 	diff a b
 	ret=$?
 	if test $ret -eq 1 ; then
