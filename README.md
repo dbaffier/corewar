@@ -18,7 +18,9 @@ _This is the program that will compile your champions and translate them of the 
 _This is the "arena" in which the champions will run. It offers many features, all useful for fighting champions. It goes without saying that it makes it possible to execute several processes simultaneously; we asks you for an arena, not a simulator of one-man show._
 
 ## CHAMPION
-_Soon to come_
+**.name** "Clownito"
+
+**.comment** "Los Santos del Pablos muchos Clownitos del tacos y nachos ranchos con Sergio Ramos"
 
 ## AUTHORS
 - :monkey: [Dorian BAFFIER](https://github.com/dbaffier)
