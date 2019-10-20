@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:45:03 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/19 20:58:33 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/20 19:19:54 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ t_process		*new_proc(t_process *proc, int value, int flag, t_env *e)
 	while (proc->prev && proc->prev->id == proc->id)
 		proc = proc->prev;
 	if ((new->prev = proc->prev) != NULL)
+	{
 		new->prev->next = new;
+		proc->prev = new;
+	}
 	else
 		e->proc = new;
 	new->next = proc;
-	proc->prev = new;
 	update_aff_processes(e);
 	return (new);
 }

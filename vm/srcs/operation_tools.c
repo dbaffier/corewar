@@ -6,26 +6,33 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/19 15:13:35 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/20 18:50:35 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
 
-static int	get_param_size(int i, t_param *params, t_op *op, uint8_t type)
+static int	get_params_size(t_param *params, t_op *op, uint8_t type)
 {
-	type = type << (i * 2);
-	params[i].type = (op->reg_nb > 1 || op->types[0] != T_DIR) ?
-	type >> 6 : op->types[i];
-	if (params[i].type == REG_CODE && op->types[i] & T_REG)
-		params[i].size = 1;
-	else if (params[i].type == DIR_CODE && op->types[i] & T_DIR)
-		params[i].size = (op->direct_size) ? 2 : 4;
-	else if (params[i].type == IND_CODE && op->types[i] & T_IND)
-		params[i].size = 2;
-	else
-		return (0);
+	int		i;
+
+	i = 0;
+	while (i < op->reg_nb)
+	{
+		type = type << (i * 2);
+		params[i].type = (op->reg_nb > 1 || op->types[0] != T_DIR) ?
+		type >> 6 : op->types[i];
+		if (params[i].type == REG_CODE && op->types[i] & T_REG)
+			params[i].size = 1;
+		else if (params[i].type == DIR_CODE && op->types[i] & T_DIR)
+			params[i].size = (op->direct_size) ? 2 : 4;
+		else if (params[i].type == IND_CODE && op->types[i] & T_IND)
+			params[i].size = 2;
+		else
+			return (0);
+		i++;
+	}
 	return (1);
 }
 
@@ -56,11 +63,11 @@ int			get_params(t_param *params, t_op *op, t_process *proc, void *arena)
 
 	pc = *(REG_CAST *)proc->pc;
 	data = (uint8_t *)arena + (pc + 1) % MEM_SIZE;
+	if (!get_params_size(params, op, *data))
+		return (0);
 	i = 0;
 	while (i < op->reg_nb)
 	{
-		if (!get_param_size(i, params, op, *data))
-			return (0);
 		if (op->reg_nb == 1 && op->types[0] == T_DIR)
 			params[i].value = get_param_value(arena, pc + 1, params[i].size);
 		else
