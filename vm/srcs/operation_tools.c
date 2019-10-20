@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/20 20:52:14 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/20 21:07:26 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,22 @@ static int	get_params_size(t_param *params, t_op *op, uint8_t data_type)
 	int		i;
 
 	i = 0;
-	if (op->reg_nb > 1 && op->types[0] != T_DIR)
-		while (i < op->reg_nb)
-		{
-			type = data_type;
-			type = type << (i * 2);
-			params[i].type = type >> 6;
-			if (params[i].type == REG_CODE && op->types[i] & T_REG)
-				params[i].size = 1;
-			else if (params[i].type == DIR_CODE && op->types[i] & T_DIR)
-				params[i].size = (op->direct_size) ? 2 : 4;
-			else if (params[i].type == IND_CODE && op->types[i] & T_IND)
-				params[i].size = 2;
-			else
-				return (0);
-			i++;
-			type = type << 2;
-		}
-	else
-		params[i].type = op->types[0];
+	while (i < op->reg_nb)
+	{
+		type = data_type;
+		type = type << (i * 2);
+		params[i].type = (op->reg_nb > 1 || op->types[0] != T_DIR) ? type >> 6 : op->types[0];
+		if (params[i].type == REG_CODE && op->types[i] & T_REG)
+			params[i].size = 1;
+		else if (params[i].type == DIR_CODE && op->types[i] & T_DIR)
+			params[i].size = (op->direct_size) ? 2 : 4;
+		else if (params[i].type == IND_CODE && op->types[i] & T_IND)
+			params[i].size = 2;
+		else
+			return (0);
+		i++;
+		type = type << 2;
+	}
 	return (1);
 }
 
