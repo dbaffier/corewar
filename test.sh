@@ -17,6 +17,7 @@ i=$2
 
 while [ $i -le $3 ]
 do
+	echo "testing cycle $i"
 	./corewar -n -1 $filename -d $i > a
 	./corewar_zaz $filename -d $i > b
 	diff a b
