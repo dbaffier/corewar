@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 19:51:14 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/13 04:30:26 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/20 22:22:16 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,12 @@ static int	get_option(int *i, char **av, t_env *e)
 	if (ft_strequ(av[*i], "-p"))
 		return (get_pauses(av[++(*i)], &e->pauses));
 	if (ft_strequ(av[*i], "-v"))
-	{
 		e->ncu.active = TRUE;
-		return (IS_OK);
-	}
-	return (ERR_UNKNOWN_ARG);
+	else if (ft_strequ(av[*i], "-a"))
+		e->aff = TRUE;
+	else
+		return (ERR_UNKNOWN_ARG);
+	return (IS_OK);
 }
 
 int			get_args(int *ac, char **av, t_env *e)
@@ -65,6 +66,7 @@ int			get_args(int *ac, char **av, t_env *e)
 	i = 1;
 	e->dump_cycle = -1;
 	e->ncu.active = FALSE;
+	e->aff = FALSE;
 	while (av[i] && err == IS_OK)
 	{
 		if (av[i][0] == '-')

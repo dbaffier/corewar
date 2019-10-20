@@ -6,14 +6,14 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:45:03 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/20 21:15:57 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/20 22:51:58 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
 
-static void		update_aff_processes(t_env *e)
+static void		update_aff_processes(t_process *proc, t_env *e)
 {
 	int			i;
 	int			total;
@@ -24,10 +24,16 @@ static void		update_aff_processes(t_env *e)
 	color = A_BOLD | COLOR_PAIR(COREWAR_CHAMPWIN_COLOR);
 	if (e->ncu.champ_win)
 	{
+		wattron(e->ncu.champ_win, color);
+		wmove(e->ncu.champ_win, proc->pos_y + 2, 0);
+		wclrtoeol(e->ncu.champ_win);
+		mvwprintw(e->ncu.champ_win, proc->pos_y + 2, 0, "Processes: %d",
+		*proc->free_file);
 		while (i < MAX_PLAYERS)
 			total += e->free_file[i++];
 		i = e->ncu.winy - 1;
-		wattron(e->ncu.champ_win, color);
+		wmove(e->ncu.champ_win, i, 0);
+		wclrtoeol(e->ncu.champ_win);
 		mvwprintw(e->ncu.champ_win, i, 0, "Processes: %d", total);
 		wattroff(e->ncu.champ_win, color);
 		wrefresh(e->ncu.champ_win);
@@ -55,7 +61,7 @@ t_process		*new_proc(t_process *proc, int value, int flag, t_env *e)
 	else
 		e->proc = new;
 	proc->prev = new;
-	update_aff_processes(e);
+	update_aff_processes(proc, e);
 	return (new);
 }
 
@@ -72,9 +78,9 @@ t_process		*remove_proc(t_process *proc, t_env *e)
 		proc->next->prev = proc->prev;
 	if (proc->file && --(*proc->free_file) == 0)
 		free(proc->file);
+	update_aff_processes(proc, e);
 	ft_bzero(proc, sizeof(*proc));
 	free(proc);
-	update_aff_processes(e);
 	return (next);
 }
 

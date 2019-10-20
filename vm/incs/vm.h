@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/19 14:47:42 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/20 22:23:08 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct			s_env
 	char				*progname;
 	t_pause				*pauses;
 	t_ncurse			ncu;
+	bool				aff;
 	int					dump_cycle;
 	int					id;
 	int					nb_players;
