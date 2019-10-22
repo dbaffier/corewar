@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 18:36:48 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/02 17:38:07 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/22 20:56:50 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int		register_check(t_env *e, t_aolist *head, t_token *curr, int pos)
 		return (syntax_error(e, E_PARAM, curr->err, head->line));
 	if (!str_is_number(curr->lab))
 		return (syntax_error(e, E_PARAM, curr->err, head->line));
-	if (ft_atoi(curr->lab) > 16 || ft_atoi(curr->lab) < 1)
+	if (ft_atoi(curr->lab) > 99 || ft_atoi(curr->lab) < 0)
 		return (syntax_error(e, E_PARAM, curr->err, head->line));
 	curr->val = ft_atoi(curr->lab);
 	head->arg[pos] = T_REG;

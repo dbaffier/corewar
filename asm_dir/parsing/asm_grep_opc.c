@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 23:25:39 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/03 17:02:16 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/21 20:13:59 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static char		*dup_opcode(char *line, size_t *i)
 
 	s = *i;
 	e = 0;
-	while (line[*i] && ft_isalnum(line[*i]))
+	while (line[*i] && (ft_isalnum(line[*i]) || line[*i] == '_'))
 		*i = *i + 1;
 	if (!(new = malloc(sizeof(char) * (*i - s) + 1)))
 		return (NULL);

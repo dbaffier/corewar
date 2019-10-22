@@ -1,5 +1,6 @@
 .name "Ultimate"
-.comment "hello"
+.comment "hello
+blabla"
 
 ld %0, r2
 zjmp %:var170
