@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/03 17:02:15 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/03 17:22:35 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/23 01:56:32 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ static void	trunc_dir(t_data *data, int count_trunc)
 void		handle_dotdot(t_data *data)
 {
 	if (ft_strcmp(data->file_name, ".") == 0)
+	{
+		free(data->file_name);
 		data->file_name = getcwd(NULL, 0);
+	}
 	if (ft_strcmp(data->file_name, "../") == 0
 			|| ft_strcmp(data->file_name, "..") == 0
 			|| count_moveup(data->file_name, "../") > 0)
@@ -111,5 +114,6 @@ char		*cut_path(char *file)
 		len_p++;
 	}
 	without_path[i] = '\0';
+	free(file);
 	return (without_path);
 }

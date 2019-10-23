@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 00:02:04 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/03 16:52:04 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/22 21:01:07 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-static char		*dup_dot(char *line, size_t *i)
+static char			*dup_dot(char *line, size_t *i)
 {
 	char		*new;
 	size_t		s;
@@ -36,7 +36,7 @@ static char		*dup_dot(char *line, size_t *i)
 	return (new);
 }
 
-static char		*dup_all(char *val, size_t *i)
+static char			*dup_all(char *val, size_t *i)
 {
 	char		*new;
 	size_t		s;
@@ -59,7 +59,7 @@ static char		*dup_all(char *val, size_t *i)
 	return (new);
 }
 
-static int		quoted(char *val, size_t *i)
+static int			quoted(char *val, size_t *i)
 {
 	int		j;
 
@@ -87,7 +87,36 @@ static int		quoted(char *val, size_t *i)
 	return (0);
 }
 
-int				create_dot(t_token **head, char *val, size_t *i)
+static char			*dup_multiple(t_env *e, char *val, size_t *i)
+{
+	char	*dup;
+	char	*line;
+
+	line = NULL;
+	if ((dup = ft_strjoin(&val[*i], "\n")) == NULL)
+		return (NULL);
+	while (val[*i])
+		*i = *i + 1;
+	while (get_next_line(e->fd, &line) > 0)
+	{
+		e->line = e->line + 1;
+		dup = ft_strjoinfree(dup, line, 1);
+		dup = ft_strjoinfree(dup, "\n", 1);
+		if (line && ft_strchr(line, '"'))
+			break ;
+		free(line);
+	}
+	free(line);
+	if (dup[ft_strlen(dup) - 2] == '"')
+	{
+		dup[ft_strlen(dup) - 2] = '\0';
+		return (dup);
+	}
+	free(dup);
+	return (NULL);
+}
+
+int					create_dot(t_env *e, t_token **head, char *val, size_t *i)
 {
 	t_token		*ptr;
 	t_token		*new;
@@ -99,7 +128,7 @@ int				create_dot(t_token **head, char *val, size_t *i)
 	new->type |= DOT;
 	if (!(next = ft_memalloc(sizeof(t_token))))
 		return (ERR_MALLOC);
-	next->lab = quoted(val, i) ? dup_all(val, i) : NULL;
+	next->lab = quoted(val, i) ? dup_all(val, i) : dup_multiple(e, val, i);
 	next->type |= DOT_ARG;
 	new->next = next;
 	if (*head == NULL)

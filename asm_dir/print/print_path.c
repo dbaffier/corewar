@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 21:09:58 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/03 18:03:33 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/23 01:39:09 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,14 @@ static char		*get_path(char *file)
 void			print_path(t_data *data)
 {
 	char *path;
+	char *cwd;
 
 	path = get_path(data->file_name);
+	cwd = getcwd(NULL, 0);
 	if (data->e->flag & FLAG_GP)
-		ft_printf("%s/%s\n", getcwd(NULL, 0), data->file_name);
+		ft_printf("%s/%s\n", cwd, data->file_name);
 	else
-		ft_printf("%s/%s\n", getcwd(NULL, 0), path);
+		ft_printf("%s/%s\n", cwd, path);
 	free(path);
+	free(cwd);
 }

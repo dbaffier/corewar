@@ -26,7 +26,7 @@
 # sera copiee la valeur du 1er param
 
 # FORK : Crée un nouveau processus, qui hérite des diﬀérents états de son père,
- # à part son PC, qui est mis à (PC + (1er paramètre % IDX_MOD)).
+# à part son PC, qui est mis à (PC + (1er paramètre % IDX_MOD)).
 
 # LLD : similaire a ld sans la restriction de IDX_MOD (ici 512) (a confirmer)
 

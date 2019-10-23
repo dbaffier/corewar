@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 23:13:32 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/30 23:49:04 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/23 02:05:51 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int		create_file(t_info *inf, char *file)
 		i++;
 	}
 	i -= 2;
-	while (i++ < len)
+	while (i++ < len - 1)
 	{
 		inf->ds_name[i] = DOT_DS[j];
 		j++;

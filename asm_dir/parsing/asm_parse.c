@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 01:48:11 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/02 18:08:35 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/21 20:36:09 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	assign_next(t_env *e, char **line, t_aolist *head)
 	if (c == 0 && ++c)
 	{
 		head->line = e->line;
-		if ((tok_create(head, line)) > 0)
+		if ((tok_create(e, head, line)) > 0)
 			return (ERR_MALLOC);
 	}
 	else if (str_alnum(*line))
@@ -46,7 +46,7 @@ static int	assign_next(t_env *e, char **line, t_aolist *head)
 		if (!(new = ft_memalloc(sizeof(t_aolist))))
 			return (ERR_MALLOC);
 		new->line = e->line;
-		if ((tok_create(new, line)) > 0)
+		if ((tok_create(e, new, line)) > 0)
 			return (ERR_MALLOC);
 		push_front(e->aolist, new, 0);
 	}

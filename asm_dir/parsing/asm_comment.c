@@ -6,37 +6,32 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 18:49:40 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/03 17:04:16 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/22 21:03:59 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 #include "libft.h"
 
-int	asm_comment(t_aolist *head, char **line)
+int	asm_comment(t_aolist *head, char **line, char c)
 {
 	char	*str;
 	char	*new;
 	char	*tmp;
-	size_t	i;
 	size_t	len;
 
-	new = ft_strchr(*line, COMMENT_CHAR);
+	new = ft_strchr(*line, c);
 	len = new - *line;
-	new = malloc(sizeof(char) * ft_strlen(new) + 1);
-	i = 0;
+	if (!(new = malloc(sizeof(char) * ft_strlen(new) + 1)))
+		return (ERR_MALLOC);
 	str = *line;
-	while (str[len + i])
-	{
-		new[i] = str[len + i];
-		i++;
-	}
-	new[i] = '\0';
+	ft_strcpy(new, &str[len]);
 	head->comment = new;
-	str = malloc(sizeof(char) * len + 1);
-	i = 0;
+	if (!(str = malloc(sizeof(char) * (len + 1))))
+		return (ERR_MALLOC);
 	tmp = *line;
-	strncpy(str, tmp, len);
+	ft_strncpy(str, tmp, len);
+	str[len] = '\0';
 	free(*line);
 	*line = str;
 	return (0);

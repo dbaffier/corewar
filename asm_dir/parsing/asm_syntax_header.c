@@ -6,18 +6,16 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 00:59:21 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/02 00:17:08 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/22 20:59:14 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "asm.h"
 
-static int		asm_syntax_header_bis(t_env *e, t_aolist *head)
+static int				asm_syntax_comment(t_token *ptr2,
+		t_env *e, t_aolist *head)
 {
-	t_token		*ptr2;
-
-	ptr2 = head->next->tok;
 	if (ft_strcmp(ptr2->lab, COMMENT_CMD_STRING))
 		return (syntax_error(e, ERR_COMMENT_H, NULL, head->next->line));
 	if (ptr2->next)
@@ -32,16 +30,11 @@ static int		asm_syntax_header_bis(t_env *e, t_aolist *head)
 	return (0);
 }
 
-int				asm_syntax_header(t_env *e, t_aolist *head)
+static int				asm_syntax_name(t_token *ptr, t_env *e, t_aolist *head)
 {
-	t_token		*ptr;
-
-	if (!head)
-		return (syntax_error(e, ERR_NAME_H, NULL, 1));
-	ptr = head->tok;
 	if (ft_strcmp(ptr->lab, NAME_CMD_STRING))
 		return (syntax_error(e, ERR_NAME_H, NULL, head->line));
-	if (ptr->next)
+	if (ptr)
 	{
 		if (!ptr->next->lab)
 			return (syntax_error(e, ERR_NAMENOTF, NULL, head->next->line));
@@ -50,6 +43,27 @@ int				asm_syntax_header(t_env *e, t_aolist *head)
 	}
 	else
 		return (syntax_error(e, ERR_NAME_H, NULL, head->line));
-	asm_syntax_header_bis(e, head);
+	return (0);
+}
+
+int						asm_syntax_header(t_env *e, t_aolist *head)
+{
+	t_token		*ptr;
+
+	if (!head)
+		return (syntax_error(e, ERR_NAME_H, NULL, 1));
+	ptr = head->tok;
+	if (!ft_strcmp(ptr->lab, NAME_CMD_STRING))
+	{
+		asm_syntax_name(ptr, e, head);
+		asm_syntax_comment(head->next->tok, e, head);
+	}
+	else if (!ft_strcmp(ptr->lab, COMMENT_CMD_STRING))
+	{
+		asm_syntax_comment(ptr, e, head);
+		asm_syntax_name(head->next->tok, e, head);
+	}
+	else
+		return (syntax_error(e, ERR_NAME_H, NULL, head->line));
 	return (0);
 }

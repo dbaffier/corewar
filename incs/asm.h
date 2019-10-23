@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:19:41 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/03 18:34:39 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/21 23:04:35 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ typedef struct		s_env
 	size_t		size;
 	char		*fd_name;
 	char		*fd_user;
+	t_aolist	*save;
 	t_aolist	*aolist;
 }					t_env;
 
@@ -114,17 +115,17 @@ extern t_op			g_op_tab[17];
 int			asm_file_open(t_env *e, char *file);
 int			asm_file(int ac, char **av, int i);
 
-int			asm_comment(t_aolist *head, char **line);
+int			asm_comment(t_aolist *head, char **line, char c);
 char		*str_s_e(char *line, int s, int e);
 char		**ft_strsplitws(const char *s);
 int			create_label(t_token **head, char *val, size_t *i);
-int			create_dot(t_token **head, char *val, size_t *i);
+int			create_dot(t_env *e, t_token **head, char *val, size_t *i);
 int			grep_opcode(t_token **head, char *line, size_t *i);
 int			grep_arg(t_token *head, char *line, size_t *i);
 int			is_label(char *line, int start);
 int			set_id(t_token *head);
 size_t		chunk_size(t_token *tok, int id);
-int			tok_create(t_aolist *head, char **line);
+int			tok_create(t_env *e, t_aolist *head, char **line);
 int			parser(t_env *e, char *file);
 void		ft_freetab(char ***table);
 void		push_front(void *head, void *new, int type);

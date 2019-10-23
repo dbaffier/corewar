@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 19:57:32 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/03 16:52:53 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/21 22:18:53 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_aolist		*brother_link(t_aolist *head, t_token *curr)
 		{
 			if (!ft_strcmp(curr->lab, ptr->lab))
 			{
-				if (ptr->next == NULL)
+				if (ptr->next == NULL && head->next)
 					return (head->next);
 				else
 					return (head);

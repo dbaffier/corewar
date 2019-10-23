@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:03:52 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/03 16:58:36 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/23 02:29:25 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ int				dump_to_file(t_env *e)
 	if ((e->flag & FLAG_P) || (e->flag & FLAG_GP))
 		print_path(&data);
 	close(data.fd);
+	free(data.file_name);
 	return (0);
 }

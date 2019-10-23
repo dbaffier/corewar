@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 19:05:46 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/03 16:51:48 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/21 00:48:18 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int				is_label(char *line, int start)
 {
 	while (line[start])
 	{
-		if (line[start] == ':')
+		if (line[start] == ':' && line[start - 1] && line[start - 1] != '%')
 			return (1);
 		if (line[start] == '\t' || line[start] == ' ')
 			return (0);

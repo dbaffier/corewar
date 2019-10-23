@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:15:33 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/03 18:35:18 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/23 02:29:29 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,13 @@ int			main(int ac, char **av)
 	parse_narg(&e, ac, i);
 	if (e.flag & FLAG_D)
 		return (deasm(&e, av, i));
-	if (e.flag & FLAG_S)
-		printf("----%s\n", av[i]);
 	i = get_user_entry(&e, av, i);
 	if ((ret = asm_file(ac, av, i)) > 0)
+	{
+		if (e.fd_user)
+			free(e.fd_user);
 		return (err_file(ret));
+	}
 	if ((ret = parser(&e, av[i])) > 0)
 		return (err_file(ret));
 	if ((ret = dump_to_file(&e)) > 0)
