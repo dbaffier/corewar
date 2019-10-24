@@ -1,8 +1,13 @@
-*.o
-*.a
 *.cor
 *.swp
 *.swo
 *.out
 *.dSYM
 asm
+obj
+objs
+corewar
+*.o
+*.a
+.vscode
+.deps

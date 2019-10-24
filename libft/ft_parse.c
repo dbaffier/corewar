@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 22:09:19 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/21 23:05:27 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/24 21:28:13 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,6 @@ void			apply_flag(t_format *data)
 
 void			ft_parse(t_format *data)
 {
-	int		i;
-
-	i = 0;
 	while (*data->tail)
 	{
 		if (*data->tail == '%')

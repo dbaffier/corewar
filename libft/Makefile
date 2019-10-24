@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mmonier <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/09 10:47:53 by mmonier           #+#    #+#              #
-#    Updated: 2019/06/25 04:12:38 by dbaffier         ###   ########.fr        #
+#    Updated: 2019/09/18 18:40:05 by gbourgeo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,13 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror
 
-RM = rm -f
+RM = rm -rf
 
 NAME = libft.a
 
 HEADER = inc/
+
+OBJ_D = objs/
 
 SRCS = 	ft_memset.c										\
 	   	ft_bzero.c										\
@@ -96,58 +98,76 @@ SRCS = 	ft_memset.c										\
 		ft_printf.c										\
 		ft_dprintf.c									\
 		ft_parse.c										\
-		converter/get_converter.c						\
-		converter/convert_c.c							\
-		converter/convert_s.c							\
-		converter/convert_o.c							\
-		converter/convert_p.c							\
-		converter/convert_x.c							\
-		converter/convert_gx.c							\
-		converter/convert_u.c							\
-		converter/convert_f.c							\
-		converter/convert_d.c							\
-		converter/convert_b.c							\
-		converter/convert_r.c							\
-		converter/convert_gc.c							\
-		converter/convert_gs.c							\
-		converter/convert_gr.c							\
-		converter/convert_k.c							\
-		converter/convert_color.c						\
-		converter/convert_star.c						\
-		tools/float_to_string.c							\
-		tools/ft_utoa.c									\
-		tools/len_func.c								\
-		tools/get_date.c								\
-		tools/get_flags.c								\
-		tools/write_wchar.c								\
-		tools/get_valist.c								\
-		tools/get_args.c								\
-		tools/get_arg_int.c								\
-		tools/convert_base.c							\
-		tools/write_char.c								\
-		tools/get_char_conv.c							\
-		tools/apostrophe_flag.c							\
-		tools/convert_ubase.c							\
-		tools/ft_intmax_toa.c							\
-		tools/check_mask.c								\
-		tools/get_specifier.c							\
 		get_next_line.c									\
 		ft_strfjoin.c									\
 		ft_rand.c										\
+		ft_atoi_base.c									\
 
-OBJS = $(SRCS:.c=.o)
+OBJS = $(addprefix $(OBJ_D), $(SRCS:.c=.o))
 
-all: $(NAME)
+CONV_D = converter/
+CONV_S = get_converter.c					\
+		convert_c.c							\
+		convert_s.c							\
+		convert_o.c							\
+		convert_p.c							\
+		convert_x.c							\
+		convert_gx.c						\
+		convert_u.c							\
+		convert_f.c							\
+		convert_d.c							\
+		convert_b.c							\
+		convert_r.c							\
+		convert_gc.c						\
+		convert_gs.c						\
+		convert_gr.c						\
+		convert_k.c							\
+		convert_color.c						\
+		convert_star.c						\
 
-%.o:%.c	
-	@$(CC) -o $@ $(CFLAGS) -I $(HEADER) -c $<
+OBJS += $(addprefix $(OBJ_D), $(CONV_S:.c=.o))
+
+TOOL_D = tools/
+TOOL_S = float_to_string.c						\
+		ft_utoa.c								\
+		len_func.c								\
+		get_date.c								\
+		get_flags.c								\
+		write_wchar.c							\
+		get_valist.c							\
+		get_args.c								\
+		get_arg_int.c							\
+		convert_base.c							\
+		write_char.c							\
+		get_char_conv.c							\
+		apostrophe_flag.c						\
+		convert_ubase.c							\
+		ft_intmax_toa.c							\
+		check_mask.c							\
+		get_specifier.c							\
+
+OBJS += $(addprefix $(OBJ_D), $(TOOL_S:.c=.o))
+
+all: $(OBJ_D) $(NAME)
+
+$(OBJ_D):
+	@mkdir -p $@
+
+$(OBJ_D)%.o:%.c
+	$(CC) -o $@ $(CFLAGS) -I $(HEADER) -c $<
+
+$(OBJ_D)%.o:$(CONV_D)%.c
+	$(CC) -o $@ $(CFLAGS) -I $(HEADER) -c $<
+
+$(OBJ_D)%.o:$(TOOL_D)%.c
+	$(CC) -o $@ $(CFLAGS) -I $(HEADER) -c $<
 
 $(NAME): $(OBJS)
-	@ar rc $(NAME) $(OBJS)
-	@ranlib $(NAME)
+	ar rc $@ $^
+	ranlib $@
 
 clean:
-	@$(RM) $(OBJS)
+	$(RM) $(OBJ_D)
 
 fclean: clean
 	$(RM) $(NAME)

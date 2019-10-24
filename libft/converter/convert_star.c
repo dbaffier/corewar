@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   convert_star.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/10 22:17:53 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/06/19 03:05:35 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/12 23:11:28 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,29 @@
 
 void	conv_star(t_format *data)
 {
-	int			star;
+	int			star[2];
 	t_format	*save;
-	int			star2;
 
-	star = 0;
-	star2 = 0;
+	star[0] = 0;
+	star[1] = 0;
 	save = data;
 	if (msk(data, OPT_HSTAR))
 	{
-		get_arg_n(data, &star);
+		get_arg_n(data, &star[0]);
 		data = save;
 		if (data->flag.width == 0)
 		{
-			if (star < 0)
+			if (star[0] < 0)
 				data->flag.opts |= OPT_MINUS;
-			data->flag.width = star < 0 ? star * -1 : star;
+			data->flag.width = star[0] < 0 ? (star[0] * -1) : star[0];
 		}
 	}
 	if (data->flag.star)
 	{
-		get_arg_n(data, &star2);
-		data->flag.precision = star2 < 0 ? data->flag.precision : star2;
-		if (star2 < 0)
+		get_arg_n(data, &star[1]);
+		data->flag.precision = star[1] < 0 ?
+			data->flag.precision : (size_t)star[1];
+		if (star[1] < 0)
 			data->flag.opts &= ~OPT_PREC;
 	}
 }
