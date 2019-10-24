@@ -6,7 +6,7 @@
 #    By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/18 16:01:33 by bmellon           #+#    #+#              #
-#    Updated: 2019/10/24 21:31:48 by dbaffier         ###   ########.fr        #
+#    Updated: 2019/10/24 22:15:23 by gbourgeo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,6 +79,7 @@ $(OBJS_DIR):
 	@mkdir -p $@
 
 $(NAME): $(OBJS_VM)
+	make -C $(LFT_DIR)
 	$(CC) -o $@ $^ $(LIBS)
 
 $(OBJS_DIR)%.o: $(VM_SRC_D)%.c
@@ -94,9 +95,11 @@ $(DEP_DIR)%.d: ;
 clean:
 	$(RM) -rf $(OBJS_DIR)
 	$(RM) -rf $(DEP_DIR)
+	make -C $(LFT_DIR) clean
 
 fclean: clean
 	$(RM) $(NAME)
+	make -C $(LFT_DIR) fclean
 
 re: fclean all
 
