@@ -1,4 +1,0 @@
-.name "bonjour"
-.comment "hello"
-
-
