@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/02 00:06:19 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/03 17:36:12 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/23 02:09:58 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,16 @@ static char		*get_path(char *file)
 void			dsflag_print(t_info *inf)
 {
 	char *path;
+	char *cwd;
 
+	cwd = getcwd(NULL, 0);
 	path = get_path(inf->ds_name);
 	if (inf->e->flag & FLAG_P || inf->e->flag & FLAG_GP)
 	{
 		if (inf->e->flag & FLAG_GP)
-			ft_printf("%s/%s\n", getcwd(NULL, 0), inf->ds_name);
+			ft_printf("%s/%s\n", cwd, inf->ds_name);
 		else
-			ft_printf("%s/%s\n", getcwd(NULL, 0), path);
+			ft_printf("%s/%s\n", cwd, path);
 	}
 	if (inf->e->flag & FLAG_O)
 	{
@@ -54,6 +56,7 @@ void			dsflag_print(t_info *inf)
 		ft_printf(" created, you can now use it to recompile or else.\n");
 	}
 	free(path);
+	free(cwd);
 }
 
 void			dswrite_warning(t_info *inf)

@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 21:09:58 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/23 01:44:45 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/23 03:53:15 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ static char		*get_path(char *file)
 
 void			print_path(t_data *data)
 {
-	char	*cwd;
-	char	*path;
+	char *path;
+	char *cwd;
 
 	cwd = getcwd(NULL, 0);
 	path = get_path(data->file_name);
@@ -74,6 +74,6 @@ void			print_path(t_data *data)
 		ft_printf("%s/%s\n", cwd, data->file_name);
 	else
 		ft_printf("%s/%s\n", cwd, path);
-	free(cwd);
 	free(path);
+	free(cwd);
 }

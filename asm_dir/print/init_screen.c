@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 00:28:15 by mmonier           #+#    #+#             */
-/*   Updated: 2019/10/03 18:01:21 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/10/23 01:21:38 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int		print_first(t_data *data)
 	pthread_create(&thread, NULL, thread_quit, &arg);
 	while (arg.stop)
 	{
-		if (MSG && MSG[i])
+		if (i < 73)
 		{
 			mvwprintw(data->main_win, data->y, data->x, "%c", MSG[i]);
 			wrefresh(data->main_win);
