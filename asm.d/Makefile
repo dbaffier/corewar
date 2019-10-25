@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/26 23:23:36 by dbaffier          #+#    #+#              #
-#    Updated: 2019/10/24 21:31:55 by dbaffier         ###   ########.fr        #
+#    Updated: 2019/10/25 03:02:14 by gbourgeo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ RM = /bin/rm -rf
 
 SRCS_DIR = asm_dir/
 
-CONV_DIR = conversion/
+CONV_DIR = $(SRCS_DIR)conversion/
 SRCS +=	binary.c				\
 		create_corfile.c		\
 		cw_hexdump.c			\
@@ -41,7 +41,7 @@ SRCS +=	binary.c				\
 		user_file.c				\
 		cut_path.c				\
 
-PARSE_DIR = parsing/
+PARSE_DIR = $(SRCS_DIR)parsing/
 SRCS += asm_aolist.c			\
 		asm_arg.c				\
 		asm_comment.c			\
@@ -65,7 +65,7 @@ SRCS += asm_aolist.c			\
 		parse_flag.c			\
 		syntax_analysis.c		\
 
-PRINT_DIR = print/
+PRINT_DIR = $(SRCS_DIR)print/
 SRCS += buffer_functions.c		\
 		handle_colors.c			\
 		handle_zero.c			\
@@ -79,56 +79,54 @@ SRCS += buffer_functions.c		\
 		asm_helper.c			\
 		parse_narg.c			\
 
-WRITING_DIR = writing/
+WRITING_DIR = $(SRCS_DIR)writing/
 SRCS += write_header.c			\
 		write_magic.c			\
 		write_opc.c				\
 		write_param.c			\
 		write_type.c			\
 
-DEASM_DIR = deasm/
+DEASM_DIR = $(SRCS_DIR)deasm/
 SRCS += deasm.c					\
 		deasm_file.c			\
 		dswrite_instructions.c	\
 		dswrite_opc.c			\
 		print.c					\
 
-all: $(OBJS_DIR) $(DEPS_DIR) $(LIBFT_LIB) $(NAME)
-
-$(OBJS_DIR):
-	@mkdir -p $@
+all:  $(DEPS_DIR) $(OBJS_DIR) $(NAME)
 
 $(DEPS_DIR):
 	@mkdir -p $@
 
-$(LIBFT_LIB):
-	@make -C $(LIBFT_PATH)
+$(OBJS_DIR):
+	@mkdir -p $@
 
 $(NAME): $(OBJS)
+	@make -C $(LIBFT_PATH)
 	$(CC) $^ -o $@ $(LIBFT_LINK)
 
-$(OBJS_DIR)%.o: $(SRCS_DIR)$(CONV_DIR)%.c
-$(OBJS_DIR)%.o: $(SRCS_DIR)$(CONV_DIR)%.c $(DEPS_DIR)%.d
+$(OBJS_DIR)%.o: $(CONV_DIR)%.c
+$(OBJS_DIR)%.o: $(CONV_DIR)%.c $(DEPS_DIR)%.d
 	$(CC) -MT $@ -MMD -MP -MF $(DEPS_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
 	@mv -f $(DEPS_DIR)$*.Td $(DEPS_DIR)$*.d && touch $@
 
-$(OBJS_DIR)%.o: $(SRCS_DIR)$(PARSE_DIR)%.c
-$(OBJS_DIR)%.o: $(SRCS_DIR)$(PARSE_DIR)%.c $(DEPS_DIR)%.d
+$(OBJS_DIR)%.o: $(PARSE_DIR)%.c
+$(OBJS_DIR)%.o: $(PARSE_DIR)%.c $(DEPS_DIR)%.d
 	$(CC) -MT $@ -MMD -MP -MF $(DEPS_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
 	@mv -f $(DEPS_DIR)$*.Td $(DEPS_DIR)$*.d && touch $@
 
-$(OBJS_DIR)%.o: $(SRCS_DIR)$(PRINT_DIR)%.c
-$(OBJS_DIR)%.o: $(SRCS_DIR)$(PRINT_DIR)%.c $(DEPS_DIR)%.d
+$(OBJS_DIR)%.o: $(PRINT_DIR)%.c
+$(OBJS_DIR)%.o: $(PRINT_DIR)%.c $(DEPS_DIR)%.d
 	$(CC) -MT $@ -MMD -MP -MF $(DEPS_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
 	@mv -f $(DEPS_DIR)$*.Td $(DEPS_DIR)$*.d && touch $@
 
-$(OBJS_DIR)%.o: $(SRCS_DIR)$(WRITING_DIR)%.c
-$(OBJS_DIR)%.o: $(SRCS_DIR)$(WRITING_DIR)%.c $(DEPS_DIR)%.d
+$(OBJS_DIR)%.o: $(WRITING_DIR)%.c
+$(OBJS_DIR)%.o: $(WRITING_DIR)%.c $(DEPS_DIR)%.d
 	$(CC) -MT $@ -MMD -MP -MF $(DEPS_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
 	@mv -f $(DEPS_DIR)$*.Td $(DEPS_DIR)$*.d && touch $@
 
-$(OBJS_DIR)%.o: $(SRCS_DIR)$(DEASM_DIR)%.c
-$(OBJS_DIR)%.o: $(SRCS_DIR)$(DEASM_DIR)%.c $(DEPS_DIR)%.d
+$(OBJS_DIR)%.o: $(DEASM_DIR)%.c
+$(OBJS_DIR)%.o: $(DEASM_DIR)%.c $(DEPS_DIR)%.d
 	$(CC) -MT $@ -MMD -MP -MF $(DEPS_DIR)$*.Td $(CFLAGS) -o $@ -c $< $(INCS)
 	@mv -f $(DEPS_DIR)$*.Td $(DEPS_DIR)$*.d && touch $@
 
@@ -136,8 +134,6 @@ $(DEPS_DIR)%.d: ;
 .PRECIOUS: $@
 
 -include $(DEPS)
-
-re: fclean all
 
 clean:
 	@make -C $(LIBFT_PATH) clean
@@ -147,3 +143,7 @@ clean:
 fclean: clean
 	@make -C $(LIBFT_PATH) fclean
 	@$(RM) $(NAME)
+
+re: fclean all
+
+.PHONY: clean fclean all re
