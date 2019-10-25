@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+         #
+#    By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/18 16:01:33 by bmellon           #+#    #+#              #
-#    Updated: 2019/10/24 22:15:23 by gbourgeo         ###   ########.fr        #
+#    Updated: 2019/10/25 02:57:49 by gbourgeo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,13 +56,13 @@ LFT_DIR		= ../libft/
 CC			= gcc
 CFLAGS		= -Wall -Werror -Wextra
 CFLAGS		+= -std=c11 -Wmissing-prototypes -pedantic -pedantic-errors -g3
-ifeq ($(LEAKS),)
+ifeq ($(SAN),"1")
 CFLAGS		+= -fsanitize=address
 endif
 
 INCS		= -I$(LFT_DIR)inc -I$(VM_INC_D) -I/Users/naminei/.brew/opt/ncurses/include
 LIBS		= -L$(LFT_DIR) -lft -lncurses
-ifeq ($(LEAKS),)
+ifeq ($(SAN),"1")
 LIBS		+= -fsanitize=address
 endif
 
