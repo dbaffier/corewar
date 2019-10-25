@@ -3,22 +3,22 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+         #
+#    By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/18 16:01:33 by bmellon           #+#    #+#              #
-#    Updated: 2019/10/24 22:15:03 by gbourgeo         ###   ########.fr        #
+#    Updated: 2019/10/25 03:13:14 by gbourgeo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 VM		= vm.d/
 ASM		= asm.d/
 
-all: vm asm
+all: vm vasm
 
 vm:
 	make -C $(VM)
 
-asm:
+vasm:
 	make -C $(ASM)
 
 clean:
