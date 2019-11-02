@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 00:02:04 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/25 01:42:03 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/11/02 21:23:43 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,12 +107,11 @@ static char			*dup_multiple(t_env *e, char *val, size_t *i)
 		free(line);
 	}
 	free(line);
-	if (ft_strchr(dup, '"'))
-		if (dup[ft_strlen(dup) - 2] == '"')
-		{
-			dup[ft_strlen(dup) - 2] = '\0';
-			return (dup);
-		}
+	if (ft_strchr(dup, '"') && dup[ft_strlen(dup) - 2] == '"')
+	{
+		dup[ft_strlen(dup) - 2] = '\0';
+		return (dup);
+	}
 	free(dup);
 	return (NULL);
 }

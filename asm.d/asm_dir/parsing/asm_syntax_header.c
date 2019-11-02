@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 00:59:21 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/25 01:49:49 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/11/02 21:24:18 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,6 @@ int						asm_syntax_header(t_env *e, t_aolist *head)
 	if (!head)
 		return (syntax_error(e, ERR_NAME_H, NULL, 1));
 	ptr = head->tok;
-	//if (!ptr || !ptr->lab)
-		//return (syntax_error(e, ERR_NAME_H, NULL, head->line));
 	if (!ft_strcmp(ptr->lab, NAME_CMD_STRING))
 	{
 		asm_syntax_name(ptr, e, head);

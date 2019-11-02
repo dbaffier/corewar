@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 19:51:09 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/10 14:49:59 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/10/25 02:51:29 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ static int		get_player_data(t_process *proc)
 		ret = ERR_OPEN;
 	else if ((proc->file_size = lseek(fd, 0, SEEK_END)) < 0)
 		ret = ERR_LSEEK;
+	else if (proc->file_size < (off_t)sizeof(t_header))
+		ret = ERR_SIZE_LOW;
+	else if (proc->file_size > (off_t)sizeof(t_header) + CHAMP_MAX_SIZE)
+		ret = ERR_SIZE_HIGH;
 	else if ((proc->file = malloc(proc->file_size)) == NULL)
 		ret = ERR_MALLOC;
 	else if (lseek(fd, 0, SEEK_SET) < 0)
