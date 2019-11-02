@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 00:59:21 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/11/02 21:24:18 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/11/02 22:20:34 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 #include "asm.h"
 
 static int				asm_syntax_comment(t_token *ptr2,
-		t_env *e, t_aolist *head)
+		t_env *e, t_aolist *hd)
 {
 	if (!ptr2)
-		return (syntax_error(e, ERR_COMMENT_H, NULL, head->next->line));
+		return (syntax_error(e, ERR_COMMENT_H, NULL, hd->next->line));
 	if (ft_strcmp(ptr2->lab, COMMENT_CMD_STRING))
-		return (syntax_error(e, ERR_COMMENT_H, NULL, head->next->line));
+		return (syntax_error(e, ERR_COMMENT_H, NULL, hd->next->line));
 	if (ptr2)
 	{
 		if (!ptr2->next)
-			return (syntax_error(e, ERR_COMNOTF, NULL, head->next->line));
+			return (syntax_error(e, ERR_COMNOTF, NULL, hd->next->line));
 		if (!ptr2->next->lab || ft_strlen(ptr2->next->lab) > 2048)
 		{
-			if (head->next)
-				return (syntax_error(e, ERR_COMMENT_LEN, NULL, head->next->line));
+			if (hd->next)
+				return (syntax_error(e, ERR_COMMENT_LEN, NULL, hd->next->line));
 			else
-				return (syntax_error(e, ERR_NAME_LEN, NULL, head->line));
+				return (syntax_error(e, ERR_NAME_LEN, NULL, hd->line));
 		}
 	}
 	else
-		return (syntax_error(e, ERR_COMMENT_H, NULL, head->next->line));
+		return (syntax_error(e, ERR_COMMENT_H, NULL, hd->next->line));
 	return (0);
 }
 
