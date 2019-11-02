@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 22:17:03 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/21 23:05:08 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/25 22:49:46 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,14 @@ static int	eval_asm_file(char *file)
 int			asm_file_open(t_env *e, char *file)
 {
 	int		fd;
+	char	c;
 
+	if ((fd = open(file, O_RDONLY)) == -1)
+		return (ERR_OPEN);
+	if (read(fd, &c, 1))
+		if (c == '\0')
+			exit(1);
+	close(fd);
 	if ((fd = open(file, O_RDONLY)) == -1)
 		return (ERR_OPEN);
 	e->fd_name = file;

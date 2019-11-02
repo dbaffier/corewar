@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 19:46:48 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/21 22:59:47 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/10/25 01:24:45 by dbaffier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ int				syntax_analysis(t_env *e, t_aolist *aolist)
 	e->size = size_full(aolist);
 	if ((ret = asm_syntax_header(e, aolist)) > 0)
 		return (ret);
-	aolist = aolist->next->next;
+	if (aolist->next)
+		aolist = aolist->next->next;
 	head = aolist;
 	if (aolist == NULL)
 		return (syntax_error(e, E_OPC, NULL, 0));
