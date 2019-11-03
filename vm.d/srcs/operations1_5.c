@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/20 23:40:56 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/03 21:01:17 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int		op_live(t_param *params, t_process *proc, t_env *e)
 		{
 			tail->is_alive++;
 			e->live.last_id = params[0].value;
-			ft_strncpy(e->live.name, ((t_header *)tail->file)->prog_name,
+			if (tail->file)
+				ft_strncpy(e->live.name, ((t_header *)tail->file)->prog_name,
 							PROG_NAME_LENGTH + 1);
 			break ;
 		}

@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 19:51:09 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/25 02:51:29 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/03 21:43:22 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int				get_player(t_env *e, char *av)
 		return (ERR_MAX_CHAMP);
 	if (check_id(e->proc, &e->id))
 		return (ERR_NUMBER);
-	if ((proc = ft_memalloc(sizeof(*proc))) == NULL)
+	if ((proc = ft_memalloc(sizeof(t_process))) == NULL)
 		return (ERR_MALLOC);
 	proc->pos = e->nb_players;
 	proc->id = e->id;

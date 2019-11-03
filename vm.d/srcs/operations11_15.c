@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:12:05 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/19 19:27:32 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/03 22:05:09 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,6 @@ int		op_lldi(t_param *params, t_process *proc, t_env *e)
 int		op_lfork(t_param *params, t_process *proc, t_env *e)
 {
 	if (params[0].value != 0)
-		proc->prev = new_proc(proc, params[0].value, 1, e);
+		new_proc(proc, params[0].value, 1, e);
 	return (!proc->carry);
 }

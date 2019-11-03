@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/25 02:46:52 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/03 21:12:23 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ t_process				*new_proc(t_process *proc, int value, int flag,
 						t_env *e);
 int						play_game(t_env *e);
 size_t					play_instruction(t_process *proc, t_env *e);
-t_process				*remove_proc(t_process *proc, t_env *e);
+t_process				*remove_proc(t_process **proc, t_env *e);
 
 /*
 ** Instructions Functions

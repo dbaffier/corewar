@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:47:32 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/14 05:02:09 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/03 22:23:58 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ static void		ncurses_aff_arena(t_env *e)
 {
 	size_t		i;
 	t_process	*proc;
+	short		color;
 
 	i = 0;
-	if (!e->ncu.arena_win || !e->arena || !e->colors)
-		return ;
+	color = 0;
 	while (i < MEM_SIZE)
 	{
 		wattron(e->ncu.arena_win, COLOR_PAIR(e->colors[i]));
 		if ((proc = e->proc))
 			while (proc)
 			{
-				if (*(REG_CAST *)proc->pc == i)
+				if (*(REG_CAST *)proc->pc == i && (color = proc->color[i]))
 					wattron(e->ncu.arena_win, COLOR_PAIR(proc->color[1]));
 				proc = proc->next;
 			}
@@ -44,6 +44,9 @@ static void		ncurses_aff_arena(t_env *e)
 		wattron(e->ncu.arena_win, COLOR_PAIR(COREWAR_DFLT_COLOR));
 		if (++i % ARENA_VALUE_PER_LINE != 0)
 			wprintw(e->ncu.arena_win, " ");
+		wattroff(e->ncu.arena_win, COLOR_PAIR(e->colors[i - 1]));
+		wattroff(e->ncu.arena_win, COLOR_PAIR(color));
+		wattroff(e->ncu.arena_win, COLOR_PAIR(COREWAR_DFLT_COLOR));
 	}
 	wrefresh(e->ncu.arena_win);
 }
@@ -119,7 +122,8 @@ void			ncurses_aff_all(t_env *e)
 {
 	if (e->ncu.active == FALSE)
 		return ;
-	ncurses_aff_arena(e);
+	if (e->ncu.arena_win && e->arena && e->colors)
+		ncurses_aff_arena(e);
 	ncurses_aff_champion(e);
 	ncurses_aff_vminfo(e);
 }

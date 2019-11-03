@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:45:03 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/10/20 23:38:30 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/03 22:03:49 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ t_process		*new_proc(t_process *proc, int value, int flag, t_env *e)
 {
 	t_process	*new;
 
-	new = ft_memalloc(sizeof(*new));
+	if (!(new = ft_memalloc(sizeof(*new))))
+		return (NULL);
 	ft_memcpy(new, proc, sizeof(*new));
 	(*new->free_file)++;
 	new->instruction_wait += 1;
@@ -65,22 +66,27 @@ t_process		*new_proc(t_process *proc, int value, int flag, t_env *e)
 	return (new);
 }
 
-t_process		*remove_proc(t_process *proc, t_env *e)
+t_process		*remove_proc(t_process **proc, t_env *e)
 {
+	t_process	*p;
 	t_process	*next;
 
-	next = proc->next;
-	if (proc->prev)
-		proc->prev->next = proc->next;
+	p = *proc;
+	if (!p)
+		return (NULL);
+	next = p->next;
+	if (p->prev)
+		p->prev->next = p->next;
 	else
-		e->proc = proc->next;
-	if (proc->next)
-		proc->next->prev = proc->prev;
-	if (proc->file && --(*proc->free_file) == 0)
-		free(proc->file);
-	update_aff_processes(proc, e);
-	ft_bzero(proc, sizeof(*proc));
-	free(proc);
+		e->proc = p->next;
+	if (p->next)
+		p->next->prev = p->prev;
+	if (p->file && --(*p->free_file) == 0)
+		ft_strdel((char **)&p->file);
+	update_aff_processes(p, e);
+	ft_bzero(p, sizeof(*p));
+	free(*proc);
+	*proc = NULL;
 	return (next);
 }
 
