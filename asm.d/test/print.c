@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 18:56:21 by mmonier           #+#    #+#             */
-/*   Updated: 2019/11/05 00:29:07 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/11/07 15:15:14 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static int	getsize(int type)
 		return (128);
 	if (type == E_COMMENT)
 		return (2048);
-	//	return (2048 - (128 + (2 * 4)));
 	return (1);
 }
 
@@ -48,7 +47,6 @@ static void	getvalue(t_print *print, t_val *val)
 	print->val = val;
 	val->type = gettype(print->pos);
 	val->size = getsize(val->type);
-	printf("val size : [%d]\n", val->size);
 }
 
 void		visuprint(t_print *print)
@@ -64,21 +62,6 @@ void		visuprint(t_print *print)
 		if ((ret = read(print->fd, &buff, 1)) <= 0)
 			return ;
 		printcurrent(print, buff);
-	//	printf("val size : [%d]\n", val.size);
-		if (print->pos == 4)
-			printf("\n\nEND OF MN\n");
-		else if (print->pos == 128 + 4)
-			printf("\n\n END OF NAME\n");
-		else if (print->pos == 136)
-			printf("\n\n END OF PADDING\n");
-		else if (print->pos == 140)
-			printf("\n\nEND OF SIZE\n");
-		else if (print->pos == 140 + 2048)
-			printf("\n\n END OF COMMENT\n");
-		else if (print->pos == 2189)
-			printf("\n\n END OF OPCODE\n");
-		if (buff == 0x0c)
-			break ;
 		if (val.size == 0)
 		{
 			if (print->pos > 2192)
@@ -88,7 +71,12 @@ void		visuprint(t_print *print)
 		}
 		print->pos += 1;
 		val.size -= 1;
-		//ft_printf("val size : %d\n", val.size);
-		//getchar();
+		char c = getchar();
+		if (c == 27 || c == 'q')
+		{
+			endwin();
+			close(print->fd);
+			exit(0);
+		}
 	}
 }

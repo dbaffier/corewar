@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 18:48:46 by mmonier           #+#    #+#             */
-/*   Updated: 2019/11/04 22:57:46 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/11/07 15:32:44 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdlib.h>
 # include <curses.h>
 # include <stdio.h>
+
+#define COLOR_CURRENT 7
 
 enum	e_type
 {

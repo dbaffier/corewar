@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 22:10:13 by mmonier           #+#    #+#             */
-/*   Updated: 2019/11/05 00:27:07 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/11/07 16:58:28 by mmonier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,26 @@ static void		printtype(t_print *print, t_val *val)
 
 void			printcurrent(t_print *print, unsigned char buff)
 {
-	ft_printf("0%x ", buff);
-	printtype(print, print->val);
+	static int	x = 2;
+	static int	y = 2;
+	char		sep;
+	WINDOW		*hexwin;
+
+	hexwin = subwin(print->win, y + 2, 53, 1, 1);
+	sep = 0;
+	if (x > 50)
+	{
+		x = 2;
+		y++;
+	}
+	box(hexwin, 0, 0);
+    touchwin(hexwin);
+	prefresh(hexwin, y + 2, 53, 1, 1, 0, 0);
+	mvwprintw(print->win, y, x, "%x", buff);
+	wrefresh(print->win);
+	wclear(hexwin);
+	//printtype(print, print->val);
+	if (x == 22)
+		x += 3;
+	x += 3;
 }
