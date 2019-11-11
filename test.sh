@@ -21,7 +21,7 @@ do
 #	./corewar -n -1 $filename -n -2 $filename2 -d $i > a
 	#	./corewar_zaz $filename $filename2 -d $i > b
 	./corewar -n -1 champ/winner/Bazou.cor -n -2 champ/winner/_.cor -n -3 champ/winner/Octobre_Rouge_V4.2.cor -a -d $i > a
-	./corewar_zaz champ/winner/Bazou.cor champ/winner/_.cor champ/winner/Octobre_Rouge_V4.2.cor -v 1 -d $i > b
+	./champ/corewar_zaz champ/winner/Bazou.cor champ/winner/_.cor champ/winner/Octobre_Rouge_V4.2.cor -v 1 -d $i > b
 	
 #	./corewar -n -1 test.cor -n -2 asm.d/unitest_asm/valid/Car.cor -n -3 asm.d/unitest_asm/valid/Car.cor -n -4 asm.d/unitest_asm/valid/Car.cor -d $i > a
 #	./corewar_zaz test.cor asm.d/unitest_asm/valid/Car.cor asm.d/unitest_asm/valid/Car.cor asm.d/unitest_asm/valid/Car.cor -d $i > b

@@ -6,13 +6,12 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 18:12:05 by bmellon           #+#    #+#             */
-/*   Updated: 2019/11/11 19:40:50 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/11 22:26:35 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <limits.h>
 #include "vm.h"
-#include "libft.h"
-#include "ft_printf.h"
 
 extern struct s_op	op_tab[17];
 
@@ -25,24 +24,28 @@ extern struct s_op	op_tab[17];
 
 int		op_sti(t_param *params, t_process *proc, t_env *e)
 {
+	int		val_a;
+	int		val_b;
 	int		offset;
 
-	offset = 0;
 	if (params[1].type == REG_CODE)
-		offset = *(REG_CAST *)proc->reg[params[1].value - 1];
+		val_a = *(REG_CAST *)proc->reg[params[1].value - 1];
 	else if (params[1].type == DIR_CODE)
-		offset = params[1].value;
+		val_a = params[1].value;
 	else if (params[0].type == IND_CODE)
-		offset = arena_get(e->arena, *(REG_CAST *)proc->pc + params[1].value);
+		val_a = arena_get(e->arena, *(REG_CAST *)proc->pc + params[1].value);
 	else
 		return (!proc->carry);
 	if (params[2].type == REG_CODE)
-		offset += *(REG_CAST *)proc->reg[params[2].value - 1];
+		val_b = *(REG_CAST *)proc->reg[params[2].value - 1];
 	else if (params[2].type == DIR_CODE)
-		offset += params[2].value;
+		val_b = params[2].value;
 	else
 		return (!proc->carry);
-	offset = *(REG_CAST *)proc->pc + ((short)offset % IDX_MOD);
+	if (val_a > USHRT_MAX || val_b > USHRT_MAX)
+		offset = *(REG_CAST *)proc->pc + ((val_a + val_b) % IDX_MOD);
+	else
+		offset = *(REG_CAST *)proc->pc + ((short)(val_a + val_b) % IDX_MOD);
 	arena_copy(offset, (REG_CAST *)proc->reg[params[0].value - 1],
 		proc->color[0], e);
 	return (!proc->carry);
