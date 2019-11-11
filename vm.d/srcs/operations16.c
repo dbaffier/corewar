@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 19:23:33 by bmellon           #+#    #+#             */
-/*   Updated: 2019/11/11 03:49:18 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/11 19:44:40 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,7 @@ void	print_live(t_env *e, t_param *params, t_process *proc, t_process *tail)
 	char		*str;
 
 	str = "un processus dit que le joueur";
-	if (e->ncu.info_win)
-	{
-		mvwprintw(e->ncu.champ_win, proc->pos_y + 2, 0, "Processes: %d, "
-		"Lives: %d, Last Live: %d", *proc->free_file,
-		e->live_live[proc->pos][0], e->live_live[proc->pos][1]);
-		wrefresh(e->ncu.champ_win);
-	}
+	update_aff_processes_live(proc, e);
 	if (e->aff == TRUE)
 	{
 		if (e->ncu.info_win)
@@ -60,9 +54,8 @@ void	print_live(t_env *e, t_param *params, t_process *proc, t_process *tail)
 					((t_header *)tail->file)->prog_name : "?");
 			wrefresh(e->ncu.info_win);
 		}
-		else
-			ft_printf("%s: %s %d(%s) est en vie\n",
-				e->progname, str, params[0].value, (tail) ?
-					((t_header *)tail->file)->prog_name : "?");
+		else if (tail)
+			ft_printf("Player %d (%s) is said to be alive\n",
+				-params[0].value, ((t_header *)tail->file)->prog_name);
 	}
 }

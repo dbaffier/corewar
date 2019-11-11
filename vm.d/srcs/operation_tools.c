@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/11/11 03:35:47 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/11 18:35:01 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ static int	param_size(t_param *param, t_op *op)
 		param->size = (op->direct_size) ? 2 : 4;
 	else if (param->type == IND_CODE)
 		param->size = 2;
+	else
+		param->size = 0;
 	return (0);
 }
 

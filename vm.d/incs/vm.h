@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/11/11 03:39:38 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/11 17:49:31 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,6 +181,7 @@ void					update_aff_champion_info(t_op *op, t_param *params,
 void					update_aff_process_pc(t_env *e);
 void					update_aff_vminfo(t_env *e);
 void					update_aff_vmstatus(t_env *e);
+void					update_aff_processes_live(t_process *proc, t_env *e);
 
 /*
 ** Game Functions

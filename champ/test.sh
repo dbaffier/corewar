@@ -1,13 +1,27 @@
 #!/bin/bash
 
+usage="$0 [[*.cor] [...] (1 min, 4 max)] [begin (0-9)] [end (0-9)]"
 num='^[0-9]+$'
-filename=$1
-filename2=$2
-if ! [[ ${filename:${#filename}-4} = '.cor' ]] || ! [[ ${filename:${#filename}-4} = '.cor' ]] || ! [[ $3 =~ $num ]] || ! [[ $4 =~ $num ]] ; then
-   echo "$0 [*.cor] [*.cor] [begin (0-9)] [end (0-9)]"
+
+args=$#
+
+begin=$#-1
+end=$#-2
+
+if [[ $args < 3 ]] || [[ $args >6 ]]
+   echo $usage
    exit 1
 fi
 
+filename=$1
+if ! [[ ${filename:${#filename}-4} = '.cor' ]]
+   echo $usage
+   exit 1
+fi
+
+filename2=$2
+if ! [[ ${filename:${#filename}-4} = '.cor' ]] || ! [[ $3 =~ $num ]] || ! [[ $4 =~ $num ]] ; then
+  
 make -j 8
 if ! [[ test -eq 0 ]] ; then
 	exit 1

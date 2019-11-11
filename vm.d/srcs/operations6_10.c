@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/20 21:05:33 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/11 19:38:28 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,16 @@ int		op_and(t_param *params, t_process *proc, t_env *e)
 		calc = params[0].value;
 	else if (params[0].type == IND_CODE)
 		calc = arena_get(e->arena, *(REG_CAST *)proc->pc + params[0].value);
+	else
+		return (calc);
 	if (params[1].type == REG_CODE)
 		calc &= *(REG_CAST *)proc->reg[params[1].value - 1];
 	else if (params[1].type == DIR_CODE)
 		calc &= params[1].value;
 	else if (params[1].type == IND_CODE)
 		calc &= arena_get(e->arena, *(REG_CAST *)proc->pc + params[1].value);
+	else
+		return (calc);
 	*(REG_CAST *)proc->reg[params[2].value - 1] = calc;
 	return (calc);
 }
@@ -60,12 +64,16 @@ int		op_or(t_param *params, t_process *proc, t_env *e)
 		calc = params[0].value;
 	else if (params[0].type == IND_CODE)
 		calc = arena_get(e->arena, *(REG_CAST *)proc->pc + params[0].value);
+	else
+		return (calc);
 	if (params[1].type == REG_CODE)
 		calc |= *(REG_CAST *)proc->reg[params[1].value - 1];
 	else if (params[1].type == DIR_CODE)
 		calc |= params[1].value;
 	else if (params[1].type == IND_CODE)
 		calc |= arena_get(e->arena, *(REG_CAST *)proc->pc + params[1].value);
+	else
+		return (calc);
 	*(REG_CAST *)proc->reg[params[2].value - 1] = calc;
 	return (calc);
 }
@@ -87,12 +95,16 @@ int		op_xor(t_param *params, t_process *proc, t_env *e)
 		calc = params[0].value;
 	else if (params[0].type == IND_CODE)
 		calc = arena_get(e->arena, *(REG_CAST *)proc->pc + params[0].value);
+	else
+		return (calc);
 	if (params[1].type == REG_CODE)
 		calc ^= *(REG_CAST *)proc->reg[params[1].value - 1];
 	else if (params[1].type == DIR_CODE)
 		calc ^= params[1].value;
 	else if (params[1].type == IND_CODE)
 		calc ^= arena_get(e->arena, *(REG_CAST *)proc->pc + params[1].value);
+	else
+		return (calc);
 	*(REG_CAST *)proc->reg[params[2].value - 1] = calc;
 	return (calc);
 }
@@ -129,10 +141,14 @@ int		op_ldi(t_param *params, t_process *proc, t_env *e)
 		ret = params[0].value;
 	else if (params[0].type == IND_CODE)
 		ret = arena_get(e->arena, *(REG_CAST *)proc->pc + params[0].value);
+	else
+		return (1);
 	if (params[1].type == REG_CODE)
 		ret += *(REG_CAST *)proc->reg[params[1].value - 1];
 	else if (params[1].type == DIR_CODE)
 		ret += params[1].value;
+	else
+		return (1);
 	addr = *(REG_CAST *)proc->pc + ((short)ret % IDX_MOD);
 	*(REG_CAST *)proc->reg[params[2].value - 1] = arena_get(e->arena, addr);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 21:48:51 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/11/11 04:21:18 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/11 19:44:00 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,5 @@ void			launch_game(t_env *e)
 		e->bytes = check_bytes(e, e->nb_cycles);
 		update_aff_process_pc(e);
 	}
-// printf("%d %d %d %d %d\n", e->dump_cycle, e->nb_cycles, e->nb_cycles - e->last_cycle_to_die + 1, e->cycle_to_die, ret);
 	and_the_winner_is(ret, e);
 }
