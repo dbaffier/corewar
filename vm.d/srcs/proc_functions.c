@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:45:03 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/11/03 22:03:49 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/11 03:43:47 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ static void		update_aff_processes(t_process *proc, t_env *e)
 		wattron(e->ncu.champ_win, color);
 		wmove(e->ncu.champ_win, proc->pos_y + 2, 0);
 		wclrtoeol(e->ncu.champ_win);
-		mvwprintw(e->ncu.champ_win, proc->pos_y + 2, 0, "Processes: %d",
-		*proc->free_file);
+		mvwprintw(e->ncu.champ_win, proc->pos_y + 2, 0, "Processes: %d, "
+		"Lives: %d, Last Live: %d", *proc->free_file,
+		e->live_live[proc->pos][0], e->live_live[proc->pos][1]);
 		while (i < MAX_PLAYERS)
 			total += e->free_file[i++];
 		i = e->ncu.winy - 1;

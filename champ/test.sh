@@ -19,7 +19,7 @@ while [ $i -le $4 ]
 do
 	printf "Testing cycle $i"\\r
 	./corewar -n -1 $filename -n -2 $filename2 -d $i > a
-	./corewar_zaz $filename $filename2 -d $i > b
+	~/Downloads/vm_champs/corewar $filename $filename2 -d $i > b
 	diff a b
 	ret=$?
 	if test $ret -eq 1 ; then

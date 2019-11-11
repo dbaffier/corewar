@@ -3,22 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   operation_tools.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bmellon <bmellon@student.42.fr>            +#+  +:+       +#+        */
+/*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/20 21:47:34 by bmellon          ###   ########.fr       */
+/*   Updated: 2019/11/11 03:35:47 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm.h"
 #include "libft.h"
 
+static int	param_size(t_param *param, t_op *op)
+{
+	if (param->type == REG_CODE)
+		param->size = 1;
+	else if (param->type == DIR_CODE)
+		param->size = (op->direct_size) ? 2 : 4;
+	else if (param->type == IND_CODE)
+		param->size = 2;
+	return (0);
+}
+
 static int	get_params_size(t_param *params, t_op *op, uint8_t data_type)
 {
 	uint8_t	type;
 	int		i;
+	int		ok;
 
 	i = 0;
+	ok = 1;
 	while (i < op->reg_nb)
 	{
 		type = data_type;
@@ -32,11 +45,11 @@ static int	get_params_size(t_param *params, t_op *op, uint8_t data_type)
 		else if (params[i].type == IND_CODE && op->types[i] & T_IND)
 			params[i].size = 2;
 		else
-			return (0);
+			ok = param_size(params + i, op);
 		i++;
 		type = type << 2;
 	}
-	return (1);
+	return (ok);
 }
 
 static int	get_param_value(uint8_t *data, int index, int size)
@@ -64,11 +77,11 @@ int			get_params(t_param *params, t_op *op, t_process *proc, void *arena)
 	uint8_t		*data;
 	int			i;
 
+	i = 0;
 	pc = *(REG_CAST *)proc->pc;
 	data = (uint8_t *)arena + (pc + 1) % MEM_SIZE;
 	if (!get_params_size(params, op, *data))
 		return (0);
-	i = 0;
 	while (i < op->reg_nb)
 	{
 		if (op->reg_nb == 1 && op->types[0] == T_DIR)

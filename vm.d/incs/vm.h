@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 03:16:00 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/11/03 21:12:23 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/11 03:39:38 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ typedef struct			s_env
 	int					checks;
 	t_bytes				*bytes;
 	t_live				live;
+	int					live_live[MAX_PLAYERS][2];
 }						t_env;
 
 struct s_env			g_env;
@@ -202,7 +203,8 @@ t_process				*remove_proc(t_process **proc, t_env *e);
 /*
 ** Instructions Functions
 */
-void					print_live(t_env *e, t_param *params, t_process *tail);
+void					print_live(t_env *e, t_param *params, t_process *proc,
+						t_process *tail);
 int						op_live(t_param *params, t_process *proc, t_env *e);
 int						op_ld(t_param *params, t_process *proc, t_env *e);
 int						op_st(t_param *params, t_process *proc, t_env *e);

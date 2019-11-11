@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 19:23:33 by bmellon           #+#    #+#             */
-/*   Updated: 2019/10/20 23:40:44 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/11 03:49:18 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,30 @@ int		op_aff(t_param *params, t_process *proc, t_env *e)
 	return (params[0].value);
 }
 
-void	print_live(t_env *e, t_param *params, t_process *tail)
+void	print_live(t_env *e, t_param *params, t_process *proc, t_process *tail)
 {
-	char		*proc;
+	char		*str;
 
-	proc = "un processus dit que le joueur";
+	str = "un processus dit que le joueur";
+	if (e->ncu.info_win)
+	{
+		mvwprintw(e->ncu.champ_win, proc->pos_y + 2, 0, "Processes: %d, "
+		"Lives: %d, Last Live: %d", *proc->free_file,
+		e->live_live[proc->pos][0], e->live_live[proc->pos][1]);
+		wrefresh(e->ncu.champ_win);
+	}
 	if (e->aff == TRUE)
 	{
 		if (e->ncu.info_win)
 		{
 			wprintw(e->ncu.info_win, "%s: %s %d(%s) est en vie\n",
-				e->progname, proc, params[0].value, (tail) ?
+				e->progname, str, params[0].value, (tail) ?
 					((t_header *)tail->file)->prog_name : "?");
 			wrefresh(e->ncu.info_win);
 		}
 		else
 			ft_printf("%s: %s %d(%s) est en vie\n",
-				e->progname, proc, params[0].value, (tail) ?
+				e->progname, str, params[0].value, (tail) ?
 					((t_header *)tail->file)->prog_name : "?");
 	}
 }

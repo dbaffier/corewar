@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/25 16:47:32 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/11/03 22:23:58 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/11 03:31:36 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void		ncurses_aff_champion_info(t_process *proc, t_env *e)
 	play = (t_header *)proc->file;
 	x = ncurses_player_calc_x(proc->id) + 10;
 	proc->pos_y = (e->ncu.winy / 2) + (((e->nb_players * 3)) / 2) - 2;
-	proc->pos_y -= proc->pos * 3;
+	proc->pos_y -= proc->pos * 4;
 	wattron(e->ncu.champ_win, COLOR_PAIR(proc->color[1]));
 	mvwprintw(e->ncu.champ_win, proc->pos_y, 0, "Player %d ", proc->id);
 	wattroff(e->ncu.champ_win, COLOR_PAIR(proc->color[1]));
@@ -78,8 +78,9 @@ static void		ncurses_aff_champion_info(t_process *proc, t_env *e)
 	wattron(e->ncu.champ_win, COLOR_PAIR(COREWAR_CHAMPALIVE_COLOR));
 	mvwprintw(e->ncu.champ_win, proc->pos_y, e->ncu.winx - 6, "ALIVE");
 	wattroff(e->ncu.champ_win, COLOR_PAIR(COREWAR_CHAMPALIVE_COLOR));
-	mvwprintw(e->ncu.champ_win, proc->pos_y + 2, 0, "Processes: %d",
-	*proc->free_file);
+	mvwprintw(e->ncu.champ_win, proc->pos_y + 2, 0, "Processes: %d, Lives: %d,"
+	" Last Live: %d", *proc->free_file, e->live_live[proc->pos][0],
+	e->live_live[proc->pos][1]);
 }
 
 static void		ncurses_aff_champion(t_env *e)

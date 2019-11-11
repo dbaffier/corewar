@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 23:42:45 by bmellon           #+#    #+#             */
-/*   Updated: 2019/11/03 21:01:17 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/11 03:42:03 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int		op_live(t_param *params, t_process *proc, t_env *e)
 	{
 		if (params[0].value == tail->id)
 		{
+			e->live_live[tail->pos][0] += 1;
+			e->live_live[tail->pos][1] = e->nb_cycles;
 			tail->is_alive++;
 			e->live.last_id = params[0].value;
 			if (tail->file)
@@ -39,8 +41,10 @@ int		op_live(t_param *params, t_process *proc, t_env *e)
 		}
 		tail = tail->next;
 	}
-	print_live(e, params, tail);
+	e->live_live[proc->pos][0] += 1;
+	e->live_live[proc->pos][1] = e->nb_cycles;
 	proc->is_alive++;
+	print_live(e, params, proc, tail);
 	return (0);
 }
 
