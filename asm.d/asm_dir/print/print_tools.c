@@ -6,10 +6,13 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 02:29:10 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/26 22:37:39 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/11/12 14:45:24 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifdef __linux__
+# define _XOPEN_SOURCE 500
+#endif
 #include "cw_hexdump.h"
 
 void			print_legend(t_data *data, int x, int y)

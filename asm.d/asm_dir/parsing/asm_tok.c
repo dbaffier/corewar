@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/18 18:00:21 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/25 02:37:27 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:42:36 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ static int		create_token(t_token **head, char *line, size_t *i)
 static int		tokenize(t_env *e, t_token **head, char **line, size_t *i)
 {
 	char	*s;
-	size_t	len;
 
-	len = 0;
 	s = *line;
 	if (s[*i] == '.')
 		return (create_dot(e, head, *line, i));

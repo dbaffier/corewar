@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 21:40:14 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/03 17:01:31 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:42:12 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ static void		parse_splited(t_token *ptr, char *str)
 static t_token	*parse_arg(t_token *ptr, char **splited, size_t *size)
 {
 	size_t		i;
-	t_token		*save;
 
 	i = 0;
-	save = ptr;
 	while (splited[i])
 	{
 		parse_splited(ptr, splited[i]);

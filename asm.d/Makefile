@@ -6,7 +6,7 @@
 #    By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/26 23:23:36 by dbaffier          #+#    #+#              #
-#    Updated: 2019/11/02 21:19:34 by dbaffier         ###   ########.fr        #
+#    Updated: 2019/11/12 14:49:10 by gbourgeo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS += -std=c11 -Wmissing-prototypes -pedantic -pedantic-errors
 
 LIBFT_PATH = ../libft
 LIBFT_LIB = $(LIBFT_PATH)/libft.a
-LIBFT_LINK = -L$(LIBFT_PATH) -lft -lncurses
+LIBFT_LINK = -L$(LIBFT_PATH) -lft -lncurses -pthread
 
 INC_DIR = incs/
 INCS = -I$(LIBFT_PATH)/inc -I$(INC_DIR)

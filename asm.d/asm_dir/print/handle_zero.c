@@ -6,7 +6,7 @@
 /*   By: mmonier <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 21:59:31 by mmonier           #+#    #+#             */
-/*   Updated: 2019/09/28 00:56:29 by mmonier          ###   ########.fr       */
+/*   Updated: 2019/11/12 14:43:13 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,6 @@ static void		zero_loop(t_data *data)
 
 void			print_zero_line(t_data *data)
 {
-	int i;
-
-	i = 0;
 	data->x = 3;
 	if (data->e->flag & FLAG_O)
 		print_offset(data);

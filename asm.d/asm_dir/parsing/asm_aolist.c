@@ -6,7 +6,7 @@
 /*   By: dbaffier <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/22 18:51:48 by dbaffier          #+#    #+#             */
-/*   Updated: 2019/10/21 21:37:58 by dbaffier         ###   ########.fr       */
+/*   Updated: 2019/11/12 14:41:44 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,6 @@ void	push_front(void *head, void *new, int type)
 
 int		set_id(t_token *head)
 {
-	int		i;
-
-	i = 0;
 	if (head == NULL)
 		return (-1);
 	if (head->type == LABEL)
