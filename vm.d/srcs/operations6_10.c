@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/21 17:51:30 by bmellon           #+#    #+#             */
-/*   Updated: 2019/11/11 22:00:21 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/12 02:26:51 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int		op_zjmp(t_param *params, t_process *proc, t_env *e)
 {
 	(void)e;
 	if (proc->carry == 1)
-		params[0].size = params[0].value - 1;
+		params[0].size = (short)(params[0].value - 1);
 	return (0);
 }
 

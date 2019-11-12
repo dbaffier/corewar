@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/05 17:35:43 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/11/11 03:32:08 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/12 02:16:28 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int		instruction_size(t_op *op, t_param *params)
 		len += params[i].size;
 		i++;
 	}
-	return (len);
+	return (len % IDX_MOD);
 }
 
 static void		launch_instruction(t_process *proc, t_env *e)

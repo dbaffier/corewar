@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 20:05:26 by bmellon           #+#    #+#             */
-/*   Updated: 2019/11/11 18:35:01 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/11 23:00:39 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ static int	get_param_value(uint8_t *data, int index, int size)
 		tab[size] = data[(index + i) % MEM_SIZE];
 		i++;
 	}
-	if (size == 2)
-		return (*(short *)tab);
 	return (*(int *)tab);
 }
 
