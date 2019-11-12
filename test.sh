@@ -9,7 +9,7 @@ filename2=$2
 #fi
 
 make -j 8
-if ! [[ test -eq 0 ]] ; then
+if [[ test -ne 0 ]] ; then
 	exit 1
 fi
 
