@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 18:05:10 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/11/03 21:19:56 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/15 17:13:01 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,12 @@ static void		introduce_champ(t_process *proc)
 
 	i = 1;
 	ft_printf("Introducing contestants...\n");
-	while (proc->next)
-		proc = proc->next;
 	while (proc)
 	{
 		play = (t_header *)proc->file;
 		ft_printf("* Player %d, weighing %d bytes, \"%s\" (\"%s\") !\n",
 				i++, proc->data_size, play->prog_name, play->comment);
-		proc = proc->prev;
+		proc = proc->next;
 	}
 }
 

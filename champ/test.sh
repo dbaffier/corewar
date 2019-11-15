@@ -4,22 +4,19 @@ usage="$0 [[*.cor] [...] (1 min, 4 max)] [begin (0-9)] [end (0-9)]"
 num='^[0-9]+$'
 
 args=$#
+array=($@)
 
-begin=$#-1
-end=$#-2
-
-if [[ $args < 3 ]] || [[ $args >6 ]]
+if [[ $args < 3 ]] || [[ $args > 6 ]]; then
    echo $usage
    exit 1
 fi
 
-filename=$1
+for f in array
 if ! [[ ${filename:${#filename}-4} = '.cor' ]]
    echo $usage
    exit 1
 fi
 
-filename2=$2
 if ! [[ ${filename:${#filename}-4} = '.cor' ]] || ! [[ $3 =~ $num ]] || ! [[ $4 =~ $num ]] ; then
   
 make -j 8

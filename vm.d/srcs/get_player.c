@@ -6,7 +6,7 @@
 /*   By: gbourgeo <gbourgeo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 19:51:09 by gbourgeo          #+#    #+#             */
-/*   Updated: 2019/11/03 21:43:22 by gbourgeo         ###   ########.fr       */
+/*   Updated: 2019/11/15 17:13:48 by gbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ static int		check_id(t_process *proc, int *id)
 int				get_player(t_env *e, char *av)
 {
 	t_process	*proc;
+	t_process	*ptr;
 
 	if (e->nb_players >= MAX_PLAYERS)
 		return (ERR_MAX_CHAMP);
@@ -110,10 +111,15 @@ int				get_player(t_env *e, char *av)
 	proc->id = e->id;
 	proc->free_file = &e->free_file[e->nb_players];
 	proc->file_name = av;
-	proc->next = e->proc;
-	if (proc->next)
-		proc->next->prev = proc;
-	e->proc = proc;
+	ptr = e->proc;
+	if (ptr)
+		while (ptr->next)
+			ptr = ptr->next;
+	if (ptr)
+		ptr->next = proc;
+	else
+		e->proc = proc;
+	proc->prev = ptr;
 	e->id = 0;
 	e->nb_players++;
 	return (get_player_data(proc));

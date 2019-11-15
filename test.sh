@@ -37,4 +37,5 @@ do
 	((i++))
 done
 echo ""
+/bin/rm -f a b c
 exit 0
